@@ -15,7 +15,7 @@ const chronicle01 = ()=>{
                 <h3>
                 Chronicles of the Underworld Vol 1: Infernal Storm's Eerie Enchantment at Psychosounds Festival 2023
                 </h3>
-                <p className="lead"> By Daria aeonian </p>
+                <p className="lead"> By Daria aeonia </p>
                 <hr className="bg-dark"></hr>
 
                 </div>

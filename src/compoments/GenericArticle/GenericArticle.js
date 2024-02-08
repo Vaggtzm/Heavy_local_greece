@@ -15,13 +15,18 @@ const DefaultArticle = ()=>{
             }
             const data = await response.json();
             setArticles(data);
+            console.log(data)
           } catch (error) {
             console.error('Error fetching data:', error.message);
           }
         };
     
         fetchData();
-      }, []);
+      },[name]);
+          // Έλεγχος αν τα δεδομένα έχουν φορτωθεί
+    if (!articles || Object.keys(articles).length === 0) {
+      return <p>Loading...</p>;
+  }
     return(
         <>
         <Navigation />
@@ -35,7 +40,7 @@ const DefaultArticle = ()=>{
 
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                <img className="img-fluid" src={articles.img01}/>
+                <img className="img-fluid" src={articles.img01} />
                  <p className="lead"><span dangerouslySetInnerHTML={{ __html: articles.details }}></span> </p>
 
                     
