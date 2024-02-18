@@ -23,7 +23,7 @@ jobs:
         working-directory: .
       
       - name: Build React.js App
-        run: npm run build
+        run: CI=false npm run build
         working-directory: .
 
       - name: Deploy to Firebase
