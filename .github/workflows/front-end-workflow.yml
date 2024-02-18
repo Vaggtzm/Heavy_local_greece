@@ -19,4 +19,3 @@ jobs:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_ACCOUNT }}"
           projectId: pavlos-quantum-loop
-          channelId: live
