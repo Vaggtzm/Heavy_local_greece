@@ -3,15 +3,12 @@ import Navigation from "../compoments/Navigation/Navigation";
 import './home.css';
 import Reka from './../assets/mysticpath.jpg';
 import klage from './../assets/sumit-01.jpg';
-import Vapa from './../assets/vapa.jpg';
 import Necrosis from './../assets/tortuga02.jpg';
-import infernal from './../assets/infernalstorm.JPEG';
 import Monkey from './../assets/startTheMonkey.jpg';
 import Anorimoi from './../assets/Events/anorimoi.jpg';
 import Cyanide4 from './../assets/Events/cyanide.jpg';
 import Chronicle02 from './../assets/chronicles/chronicle-02/yothiria-02.jpg';
 import Contact from "../compoments/ContactForm/contact";
-import Donate from "../compoments/donate/donate";
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import Carousel from './../compoments/carousel/carousel';
@@ -34,14 +31,14 @@ const Home = (props) => {
                                     <hr className="bg-dark" />
                                     <hr className="bg-dark" />
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div className="col-md-12">
                         <Carousel />
 
                         </div>
-                    </div> 
+                    </div>
                     <hr className="bg-dark" />
                    <h4>Events:</h4>
                    <div className="row bg-secondary p-3">
@@ -49,16 +46,16 @@ const Home = (props) => {
                     <h4>Start The monkey Tour</h4>
                     <hr className="bg-dark" />
                     <img src={Monkey} className="img-fluid" />
-                   </div>                   
+                   </div>
                    <div className="col-md-6 text-center">
                     <p className="lead">Tour Dates</p>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <p className="lead">28/3 OldSkulls club Sofia</p>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <p className="lead">29/3 Hope Live club Kazanluk</p>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <p className="lead">29/3 Steki Peri Viou Karditsa</p>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <p className="caption">Tickets only in hard copy </p>
 
                    </div>
@@ -68,11 +65,11 @@ const Home = (props) => {
                     <h4>Αnorimoi live at Ioannina</h4>
                     <hr className="bg-dark" />
                     <img src={Anorimoi} className="img-fluid" />
-                   </div>  
-                 
+                   </div>
+
                    <div className="col-md-6 text-center">
                     <h4>Studio 203 </h4>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <a className="nav-link" href="https://web.facebook.com/events/400855992360466"><i className="bi bi-facebook">Facebook Event</i></a>
                     <p className="lead">Pre sale at :Indian Rock Cafe , Manthos Optical </p>
                     <a href="https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.more.com%2Fmusic%2Fanorimoi-30-xronia-apotyxies-liveioannina%2F%3Ffbclid%3DIwAR1915F_-MPi5cRp6sC5LVjp9gT2JYG5tF7Rs0s0vQY0PcAZQ2fspYZ6vL8&h=AT01zSaTze3gNypOquOhnh6BqXMI0FU9w3rUYAut5dT4PuZptQd3A13TH0CM-cf_tu1d6DvxPB6dP6c-NGt1etnnsRlbsTIq1omsechZMm0I1MZ6mHPSRA8H-9jp&__tn__=q&c[0]=AT3jUUA3mCyDPknb3HOH648_hbjADxkngdQlIRKFiXeBzzj8c-L7yxpwKelwJYl-T9eMUIsZ7521mZgpleC5qCmmZDWPGTQQJtgtORW9YccWvo8i5ku03mkYssBwuyHjyb-kdTfBSFse1RGNgBl8Tvq1jgwd" className="btn btn-danger">Book Online</a>
@@ -81,11 +78,11 @@ const Home = (props) => {
                     <h4>Cyanide 4 x Lucenthia X Felony Case live at ioannina </h4>
                     <hr className="bg-dark" />
                     <img src={Cyanide4} className="img-fluid" />
-                   </div>  
-                 
+                   </div>
+
                    <div className="col-md-6 text-center">
                     <h4>Studio 203 </h4>
-                    <hr className="bg-dark" /> 
+                    <hr className="bg-dark" />
                     <a className="nav-link" href="https://web.facebook.com/events/394208573082399/"><i className="bi bi-facebook">Facebook Event</i></a>
                     <p className="lead">Pre sale at :Indian Rock Cafe , Manthos Optical </p>
                     <a href="https://www.more.com/music/cyanide-4-live-in-ioannina-17/2/24/" className="btn btn-danger">Book Online</a>
@@ -103,7 +100,7 @@ const Home = (props) => {
                                 <div className="card-body">
                                     <h5 className="card-title">Order Of The Ebon Hand:Review</h5>
                                     <p className="card-text">Αφού έμεινα μαγεμένος από τη συναυλία των Yoth Iria (27/01/2024) στα Ιωάννινα, και ιδιαιτέρως από την ενέργεια και τη παραστατικότητα του Merkaal (Ορέστη) θέλησα να μάθω περισσότερα για τη δουλειά του στο χώρο του Μέταλ και έτσι ανακάλυψα τους Order of the Ebon Hand</p>
-                                    <a href="/Order-Of-The-Ebon-Hand-archive" className="btn btn-primary">Read More</a>
+                                    <a href="/article/Order-Of-The-Ebon-Hand-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -113,7 +110,7 @@ const Home = (props) => {
                                 <div className="card-body">
                                     <h5 className="card-title">Summit - Catharsis: Μια δυσοίωνη εφιαλτική τελετουργία (προεπισκόπηση/κριτική τραγουδιού) + πληροφορίες για την μπάντα</h5>
                                     <p className="card-text">Summit: Αργοί, ερεβώδεις και πεσσιμιστές! Οι Νορβηγοί αυτοί αγγελιαφόροι του νιχιλισμού ορμώμενοι εκ Τρόντχαϊμ , αποτελούν μια αξιοσημείωτη πινελιά στο παραδοσιακό epic doom metal. Ποιοι είναι οι Summit; Ξεκίνησαν το 2007 ως μια παλιάς σχολής death metal μπάντα με το όνομα Funeralopolis, ενώ το 2009 άλλαξαν το όνομα σε Summit. Η περίοδος αυτή διήρκεσε ως το 2010 κυκλοφορώντας τρία demos: τα Arche, Ontos και Apeiron. Έπειτα οι Summit ξεκίνησαν να εξερευνούν τα εδάφη της doom με διάφορες αλλαγές στο σχήμα. Κυκλοφόρησαν για την πρώτη τους περίοδο ως αμιγώς doomers ένα demo με 3 κομμάτια</p>
-                                    <a href="/Summit-catharsis-archive" className="btn btn-primary">Read More</a>
+                                    s<a href="/article/Summit-catharsis-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
