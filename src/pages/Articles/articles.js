@@ -4,6 +4,9 @@ import ScentOfThrons from './../../assets/DevourTheWill.jpg';
 import UrbanPsyche from './../../assets/UrbanPshyce.jpg';
 import Lioneye  from './../../assets/lioneye.jpg';
 import Yothiria from './../../assets/liveYothiria.jpg';
+import OrderOfTheEbonHand from './../../assets/order-02.jpg';
+import SummitCatharsis from './../../assets/sumit-01.jpg';
+import TorutugalSacrifice from './../../assets/tortuga02.jpg';
 import Socials from "../../compoments/SocialMedia/socials";
 import "./../home.css"
 const Articles =()=>{
@@ -38,15 +41,35 @@ const Articles =()=>{
                 <Socials />
             </div>
             <hr className="bg-dark" />
+            <p className="lead">Update 05/02/2024</p>
             <div className="col-md-6 bg-secondary p-4">
-                <h4>Lioneye-S.E.X: Κριτική από τον Βαγγέλη Τζίμα</h4>
-                <img src={Lioneye} className="img-fluid" />
+                <h4>Order Of The Ebon Hand:Review</h4>
+                <img src={OrderOfTheEbonHand} className="img-fluid" />
             </div>
             <div className="col-md-6 bg-secondary p-4 text-center">
-                <p className="lead">Ας ταξιδέψουμε λίγο πίσω στον χρόνο, σε μια περίοδο όπου αυτό το περιοδικό βρισκόταν ακόμη στον ψηφιακό κόσμο. Ήταν εκεί που οι τοπικοί μας Glam metallers, οι Lioneye, έκαναν το εντυπωσιακό τους ποδαρικό για το 2024 με το νέο τους άλμπουμ, το S.E.X. Η μπάντα παρουσιάζει ένα EP που φέρνει στο φως πέντε κομμάτια, όπου το καθένα από αυτά αποτελεί ένα ξεχωριστό μουσικό ταξίδι με την μοναδική υπογραφή της εν λόγω μπάντας. Το tracklist περιλαμβάνει τα “The Game”, “Sin City Blues”, “Grind Down”, “S.E.X.” και “I Can’t Miss You Anymore”, προσφέροντας συνολικά 20 λεπτά ακρόασης. .</p>
-                <a href="/lioneye-archive" className="btn btn-danger">Read More</a>
+                <p className="lead">Αφού έμεινα μαγεμένος από τη συναυλία των Yoth Iria (27/01/2024) στα Ιωάννινα, και ιδιαιτέρως από την ενέργεια και τη παραστατικότητα του Merkaal (Ορέστη) θέλησα να μάθω περισσότερα για τη δουλειά του στο χώρο του Μέταλ και έτσι ανακάλυψα τους Order of the Ebon Hand</p>
+                <a href="/article/Order-Of-The-Ebon-Hand-archive" className="btn btn-danger">Read More</a>
                 <Socials />
             </div>
+            <div className="col-md-6 bg-secondary p-4">
+                <h4>Summit - Catharsis: Μια δυσοίωνη εφιαλτική τελετουργία (προεπισκόπηση/κριτική τραγουδιού) + πληροφορίες για την μπάντα</h4>
+                <img src={SummitCatharsis} className="img-fluid" />
+            </div>
+            <div className="col-md-6 bg-secondary p-4 text-center">
+                <p className="lead">Summit: Αργοί, ερεβώδεις και πεσσιμιστές! Οι Νορβηγοί αυτοί αγγελιαφόροι του νιχιλισμού ορμώμενοι εκ Τρόντχαϊμ , αποτελούν μια αξιοσημείωτη πινελιά στο παραδοσιακό epic doom metal. Ποιοι είναι οι Summit; Ξεκίνησαν το 2007 ως μια παλιάς σχολής death metal μπάντα με το όνομα Funeralopolis, ενώ το 2009 άλλαξαν το όνομα σε Summit. Η περίοδος αυτή διήρκεσε ως το 2010 κυκλοφορώντας τρία demos: τα Arche, Ontos και Apeiron. Έπειτα οι Summit ξεκίνησαν να εξερευνούν τα εδάφη της doom με διάφορες αλλαγές στο σχήμα. Κυκλοφόρησαν για την πρώτη τους περίοδο ως αμιγώς doomers ένα demo με 3 κομμάτια</p>
+                <a href="/article/Summit-catharsis-archive" className="btn btn-danger">Read More</a>
+                <Socials />
+            </div>
+            <div className="col-md-6 bg-secondary p-4">
+                <h4>Tortugal Sacrifice: The Many Faces Of Death Review</h4>
+                <img src={TorutugalSacrifice} className="img-fluid" />
+            </div>
+            <div className="col-md-6 bg-secondary p-4 text-center">
+                <p className="lead">Όλα ξεκίνησαν όταν τις προάλλες μου έστειλε μήνυμα ο συνμεταλλάς αδερφός Μιχάλης (See: Μιχάλης Αντωνόπουλος: Reka: Το διεθνές ατμοσφαιρικό δυστοπικό “Ποτάμι” της Ρωσίας) και με ρώτησε αν θα ήθελα να γράψω κριτική για μικρές μπάντες εγχώριες και εξωτερικού. Αρχικά, ήμουν σκεπτικός λόγω πιεσμένου χρόνου αλλά αμέσως του είπα να μου στείλει σύνδεσμο να ακούσω και να γράψω έστω και δοκιμαστικά.Όπως είπα και στον ίδιο, τον τελευταίο καιρό είχα καιρό να ακούσω νέα μουσική και μου φάνηκε πρώτης τάξεως ευκαιρία.ακούσω νέες Underground παραγωγές. Και κάπως έτσι ξεκινά και η ένταξή μου στο περιοδικό Heavy Local. Αλλά ας αφήσουμε στην άκρη αυτές τις λεπτομέρειες και πάμε κατευθείαν στο ψητό. Λίγες ώρες αργότερα, τα ξημερώματα με βρήκαν να ακούω το άλμπουμ The Many Faces Of Death του 2022 των νεαρών Brutal Death Metallers Καναδών Tortugal Sacrifice ύστερα από μια ταινία θρίλερ που είχα παρακολουθήσει τα μεσάνυχτα</p>
+                <a href="/Tortuga-Sacrifice-archive" className="btn btn-danger">Read More</a>
+                <Socials />
+            </div>
+
             <hr className="bg-dark" />
             <div className="col-md-12">
                 <h3>Live Reports:</h3>

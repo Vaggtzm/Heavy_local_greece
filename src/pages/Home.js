@@ -1,9 +1,9 @@
 import React  from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import './home.css';
-import Reka from './../assets/mysticpath.jpg';
-import klage from './../assets/sumit-01.jpg';
-import Necrosis from './../assets/tortuga02.jpg';
+import Reka from './../assets/aherusia-bacchus.jpg';
+import klage from './../assets/funeralChasm.jpg';
+import Necrosis from './../assets/Asomata.jpg';
 import Monkey from './../assets/startTheMonkey.jpg';
 import Anorimoi from './../assets/Events/anorimoi.jpg';
 import Cyanide4 from './../assets/Events/cyanide.jpg';
@@ -98,8 +98,9 @@ const Home = (props) => {
                             <div className="card">
                                 <img src={Reka} className="img-fluid" alt="News Image" />
                                 <div className="card-body">
-                                    <h5 className="card-title">Order Of The Ebon Hand:Review</h5>
-                                    <p className="card-text">Αφού έμεινα μαγεμένος από τη συναυλία των Yoth Iria (27/01/2024) στα Ιωάννινα, και ιδιαιτέρως από την ενέργεια και τη παραστατικότητα του Merkaal (Ορέστη) θέλησα να μάθω περισσότερα για τη δουλειά του στο χώρο του Μέταλ και έτσι ανακάλυψα τους Order of the Ebon Hand</p>
+                                    <h5 className="card-title">Aherusia - Bacchus ~ Epiphanies of The Crazy God (2022):Review</h5>
+                                    <p className="card-text">Οι Aherusia είναι μια από τις πιο DIY μπάντες που θα μπορούσε να ακούσει κανείς αλλά επίσης και μια από τις πιο πρωτοποριακές και περίπλοκες στο στιχουργικό και ορχηστρικό κομμάτι της metal. Από το 1997 ως τις μέρες μας παράγουν ένα υπέροχο έργο, το αμάλγαμα της σύνθεσης μεταξύ folk και black metal, καθώς η μυστηριακότητα της ίδιας της παράδοσης και των παραδοσιακών οργάνων και η περιπετειώδης μυθολογία συναντούν το σύγχρονο μυστικιστικό και πνευματικό στοιχείο της black στην ελληνική σκηνή. Το πιο καινοτόμο στοιχείο είναι ότι όλα σχεδόν τα κομμάτια των Aherusia είναι γραμμένα στην Ελληνιστική Κοινή, την γλώσσα που για αιώνες μιλιόταν σχεδόν σε όλη την Οικουμένη.
+</p>
                                     <a href="/article/Order-Of-The-Ebon-Hand-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
