@@ -40,10 +40,10 @@ const DefaultArticle = ()=>{
 
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                <img className="img-fluid" src={articles.img01} />
+                <img className="img-fluid w-100" src={articles.img01} />
                  <p className="lead"><span dangerouslySetInnerHTML={{ __html: articles.details }}></span> </p>
 
-                    
+
                 </div>
                 <div className="col-md-6">
 

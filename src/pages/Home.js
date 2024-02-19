@@ -99,9 +99,11 @@ const Home = (props) => {
                                 <img src={Reka} className="img-fluid" alt="News Image" />
                                 <div className="card-body">
                                     <h5 className="card-title">Aherusia - Bacchus ~ Epiphanies of The Crazy God (2022):Review</h5>
-                                    <p className="card-text">Οι Aherusia είναι μια από τις πιο DIY μπάντες που θα μπορούσε να ακούσει κανείς αλλά επίσης και μια από τις πιο πρωτοποριακές και περίπλοκες στο στιχουργικό και ορχηστρικό κομμάτι της metal. Από το 1997 ως τις μέρες μας παράγουν ένα υπέροχο έργο, το αμάλγαμα της σύνθεσης μεταξύ folk και black metal, καθώς η μυστηριακότητα της ίδιας της παράδοσης και των παραδοσιακών οργάνων και η περιπετειώδης μυθολογία συναντούν το σύγχρονο μυστικιστικό και πνευματικό στοιχείο της black στην ελληνική σκηνή. Το πιο καινοτόμο στοιχείο είναι ότι όλα σχεδόν τα κομμάτια των Aherusia είναι γραμμένα στην Ελληνιστική Κοινή, την γλώσσα που για αιώνες μιλιόταν σχεδόν σε όλη την Οικουμένη.
-</p>
-                                    <a href="/article/Order-Of-The-Ebon-Hand-archive" className="btn btn-primary">Read More</a>
+                                    <p className="card-text">Οι Aherusia είναι μια από τις πιο DIY μπάντες που θα μπορούσε να ακούσει κανείς αλλά επίσης και μια από τις πιο πρωτοποριακές 
+                                    και περίπλοκες στο στιχουργικό και ορχηστρικό κομμάτι της metal. 
+                                    Από το 1997 ως τις μέρες μας παράγουν ένα υπέροχο έργο, το αμάλγαμα της σύνθεσης μεταξύ folk και black metal, 
+                                    καθώς η μυστηριακότητα της ίδιας της παράδοσης και των παραδοσιακών οργάνων και η περιπετειώδης μυθολογία συναντούν το σύγχρονο μυστικιστικό και πνευματικό στοιχείο</p>
+                                    <a href="/article/Aherusia-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -109,9 +111,11 @@ const Home = (props) => {
                             <div className="card">
                                 <img src={klage} className="card-img-top  w-100" alt="News Image" />
                                 <div className="card-body">
-                                    <h5 className="card-title">Summit - Catharsis: Μια δυσοίωνη εφιαλτική τελετουργία (προεπισκόπηση/κριτική τραγουδιού) + πληροφορίες για την μπάντα</h5>
-                                    <p className="card-text">Summit: Αργοί, ερεβώδεις και πεσσιμιστές! Οι Νορβηγοί αυτοί αγγελιαφόροι του νιχιλισμού ορμώμενοι εκ Τρόντχαϊμ , αποτελούν μια αξιοσημείωτη πινελιά στο παραδοσιακό epic doom metal. Ποιοι είναι οι Summit; Ξεκίνησαν το 2007 ως μια παλιάς σχολής death metal μπάντα με το όνομα Funeralopolis, ενώ το 2009 άλλαξαν το όνομα σε Summit. Η περίοδος αυτή διήρκεσε ως το 2010 κυκλοφορώντας τρία demos: τα Arche, Ontos και Apeiron. Έπειτα οι Summit ξεκίνησαν να εξερευνούν τα εδάφη της doom με διάφορες αλλαγές στο σχήμα. Κυκλοφόρησαν για την πρώτη τους περίοδο ως αμιγώς doomers ένα demo με 3 κομμάτια</p>
-                                    s<a href="/article/Summit-catharsis-archive" className="btn btn-primary">Read More</a>
+                                    <h5 className="card-title">Funeral Chasm - Omniversal Existence:Review</h5>
+                                    <p className="card-text">
+                                    Οι Funeral Chasm είναι μια πρόσφατα ιδρυθείσαι μπάντα (2020) funeral doom metal από τη Φινλανδία, με έντονες επιρροές από τη gothic σκηνή των 90s, όπως αναφέρουν οι ίδιοι. Αυτό προσέθεσε έναν ποιητικό τόνο στον ήχο τους, τον οποίο πρόσεξα κατά την πρώτη ακρόαση του Omniversal Existence, που κυκλοφόρησε το 2022. Η μπάντα αποτελείται από δύο μέλη (Sjaelepest, Dany Woe) με βάση τη Φινλανδία και έχει στο ενεργητικό της ένα άλμπουμ, το οποίο επέλεξα να αναθεωρήσω σήμερα.
+                                    </p>
+                                    <a href="/article/FuneralChasm-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
@@ -119,9 +123,11 @@ const Home = (props) => {
                             <div className="card">
                                 <img src={Necrosis} className="card-img-top" alt="News Image" />
                                 <div className="card-body">
-                                    <h5 className="card-title">Tortugal Sacrifice: The Many Faces Of Death Review</h5>
-                                    <p className="card-text">Όλα ξεκίνησαν όταν τις προάλλες μου έστειλε μήνυμα ο συνμεταλλάς αδερφός Μιχάλης (See: Μιχάλης Αντωνόπουλος: Reka: Το διεθνές ατμοσφαιρικό δυστοπικό “Ποτάμι” της Ρωσίας) και με ρώτησε αν θα ήθελα να γράψω κριτική για μικρές μπάντες εγχώριες και εξωτερικού. Αρχικά, ήμουν σκεπτικός λόγω πιεσμένου χρόνου αλλά αμέσως του είπα να μου στείλει σύνδεσμο να ακούσω και να γράψω έστω και δοκιμαστικά.Όπως είπα και στον ίδιο, τον τελευταίο καιρό είχα καιρό να ακούσω νέα μουσική και μου φάνηκε πρώτης τάξεως ευκαιρία.ακούσω νέες Underground παραγωγές. Και κάπως έτσι ξεκινά και η ένταξή μου στο περιοδικό Heavy Local. Αλλά ας αφήσουμε στην άκρη αυτές τις λεπτομέρειες και πάμε κατευθείαν στο ψητό. Λίγες ώρες αργότερα, τα ξημερώματα με βρήκαν να ακούω το άλμπουμ The Many Faces Of Death του 2022 των νεαρών Brutal Death Metallers Καναδών Tortugal Sacrifice ύστερα από μια ταινία θρίλερ που είχα παρακολουθήσει τα μεσάνυχτα</p>
-                                    <a href="/Tortuga-Sacrifice-archive" className="btn btn-primary">Read More</a>
+                                    <h5 className="card-title"></h5>
+                                    <p className="card-text">
+                                    Οι Asomata είναι μια ροκ μπάντα από την Αθήνα που προσδιορίζει τη μουσική της ως ροκ με σκληρά ριφ, επιβλητικά φωνητικά και έντονο ρυθμό! Ακούγοντας το πρώτο τους EP, μπορώ να επιβεβαιώσω αυτήν τη δήλωση. Αναδεικνύουν τις ροκ ρίζες τους με μια αισθητική που μας επιστρέφει στα '90s, διατηρώντας παράλληλα επιρροές από το Pop Punk, όπως αυτές μας έγιναν γνωστές από τους Green Day
+                                    </p>
+                                    <a href="/article/Asomata-archive" className="btn btn-primary">Read More</a>
                                 </div>
                             </div>
                         </div>
