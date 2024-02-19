@@ -8,7 +8,9 @@ import Footer from "../../compoments/footer/footer";
 import Yothiria01 from './../../assets/liveYothiria.jpg';
 import scentVarvara from './../../assets/scent-varvara.jpg';
 import Katharsis from './../../assets/katharsis.jpg';
-import yothirialive from './../../assets/yothirialive.jpg'
+import yothirialive from './../../assets/yothirialive.jpg';
+import PageWithComments from "../../compoments/Comments/comment";
+
 const Yothiria = ()=>{
     return(
         <>
@@ -51,6 +53,7 @@ const Yothiria = ()=>{
                      </p>
                      <img src={yothirialive} className="img-fluid shadow-lg rounded-3 w-100  pb-4"></img>
 
+                     <PageWithComments />
 
 
                 </div>

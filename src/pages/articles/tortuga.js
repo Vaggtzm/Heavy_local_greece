@@ -6,6 +6,7 @@ import Tortuga02Image from './../../assets/tortuga02.jpg'; // Corrected import
 import Tortuga03Image from './../../assets/tortugal-03.jpg'; // Corrected import
 
 import ReadMore from "./../../compoments/ReadMore/ReadMore"; // Corrected path
+import PageWithComments from "../../compoments/Comments/comment";
 
 const Tortuga = () => {
     return (
@@ -52,6 +53,7 @@ const Tortuga = () => {
 Εδώ θα ευχαριστήσω την ομάδα του Heavy Local και τον Μιχάλη για την πρόταση που μου έκαναν και που με δέχθηκαν στην ομάδα τους. Το εκτιμώ ιδιαίτερα και θα βάλω τα δυνατά μου να μην σας απογοητεύσω. Και φυσικά, θα συνεχίσουμε να rockάρουμε δυνατά και με τους αναγνώστες. 
                         </p>
 
+                        <PageWithComments />
 
                     </div>
                     <ReadMore />

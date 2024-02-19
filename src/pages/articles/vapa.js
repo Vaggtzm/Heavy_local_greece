@@ -6,6 +6,7 @@ import Donate from "../../compoments/donate/donate";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import vapa from "./../../assets/vapa.jpg";
 import vapa02 from "./../../assets/Vapa02.jpg";
+import PageWithComments from "../../compoments/Comments/comment";
 
 const Vapa = ()=>{
     return(
@@ -50,6 +51,7 @@ const Vapa = ()=>{
 
                     Πώς θα συνεχίσει αυτό το μουσικό ταξίδι; Μόνο ο Vapa γνωρίζει, και αυτή η αβεβαιότητα προσθέτει μια προκλητική πτυχή στην εμπειρία του "Memories of a Flawless World."
                     </p>
+                    <PageWithComments />
 
                 </div>
                 <ReadMore />

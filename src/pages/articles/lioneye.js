@@ -7,6 +7,8 @@ import Footer from "../../compoments/footer/footer";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import Contact from "../../compoments/ContactForm/contact";
 import Donate from "../../compoments/donate/donate";
+import PageWithComments from "../../compoments/Comments/comment";
+
 const Lioneye = ()=> {
   return(
     <>
@@ -45,6 +47,8 @@ const Lioneye = ()=> {
 
 Το αν οι Lioneye ξυπνήσουν μνήμες ή αποκτήσουν νέους οπαδούς είναι ένα ερώτημα που θα απαντηθεί έπειτα από 20 λεπτά ακρόασης.
           </p>
+          <PageWithComments />
+
           <hr className="bg-dark"></hr>
 
           <ReadMore />

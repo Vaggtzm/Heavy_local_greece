@@ -8,6 +8,7 @@ import Contact from "../../compoments/ContactForm/contact";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import Donate from "./../../compoments/donate/donate";
 import Footer from "../../compoments/footer/footer";
+import PageWithComments from "../../compoments/Comments/comment";
 
 const StartTheMonkey = () => {
     return (
@@ -62,6 +63,8 @@ const StartTheMonkey = () => {
                     <img src={StartTheMonkey02} className="img-fluid rounded-4 w-100  shadow-lg  p-2" />
                     <p className="lead">
                     Ένα καινούργιο στοιχείο για το συγκρότημα είναι η προσθήκη του φλάουτου, το οποίο απουσίαζε από το προηγούμενο EP. Αυτό θα μπορούσε να υποδηλώσει μια στροφή προς πιο συμφωνικά μονοπάτια, διατηρώντας ταυτόχρονα εντούτοις την πρωτοτυπία και το DIY ύφος. Οι StartTheMonkey εξελίσσονται με το καινοτόμο πνεύμα τους στην δημιουργία ενός παράξενου και ενδιαφέροντος απόκοσμου ήχου.                     </p>
+                    <PageWithComments />
+
                     <ReadMore />
 
                   </div>

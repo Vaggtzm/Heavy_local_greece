@@ -8,6 +8,9 @@ import OrderOfTheEbonHand from './../../assets/order-02.jpg';
 import SummitCatharsis from './../../assets/sumit-01.jpg';
 import TorutugalSacrifice from './../../assets/tortuga02.jpg';
 import Socials from "../../compoments/SocialMedia/socials";
+import order from './../../assets/order.jpg';
+import summit from './../../assets/sumit-01.jpg';
+import tortuga from './../../assets/tortuga.jpg';
 import "./../home.css"
 const Articles =()=>{
     return(
@@ -51,6 +54,7 @@ const Articles =()=>{
                 <a href="/article/Order-Of-The-Ebon-Hand-archive" className="btn btn-danger">Read More</a>
                 <Socials />
             </div>
+<<<<<<< Updated upstream
             <div className="col-md-6 bg-secondary p-4">
                 <h4>Summit - Catharsis: Μια δυσοίωνη εφιαλτική τελετουργία (προεπισκόπηση/κριτική τραγουδιού) + πληροφορίες για την μπάντα</h4>
                 <img src={SummitCatharsis} className="img-fluid" />
@@ -67,6 +71,34 @@ const Articles =()=>{
             <div className="col-md-6 bg-secondary p-4 text-center">
                 <p className="lead">Όλα ξεκίνησαν όταν τις προάλλες μου έστειλε μήνυμα ο συνμεταλλάς αδερφός Μιχάλης (See: Μιχάλης Αντωνόπουλος: Reka: Το διεθνές ατμοσφαιρικό δυστοπικό “Ποτάμι” της Ρωσίας) και με ρώτησε αν θα ήθελα να γράψω κριτική για μικρές μπάντες εγχώριες και εξωτερικού. Αρχικά, ήμουν σκεπτικός λόγω πιεσμένου χρόνου αλλά αμέσως του είπα να μου στείλει σύνδεσμο να ακούσω και να γράψω έστω και δοκιμαστικά.Όπως είπα και στον ίδιο, τον τελευταίο καιρό είχα καιρό να ακούσω νέα μουσική και μου φάνηκε πρώτης τάξεως ευκαιρία.ακούσω νέες Underground παραγωγές. Και κάπως έτσι ξεκινά και η ένταξή μου στο περιοδικό Heavy Local. Αλλά ας αφήσουμε στην άκρη αυτές τις λεπτομέρειες και πάμε κατευθείαν στο ψητό. Λίγες ώρες αργότερα, τα ξημερώματα με βρήκαν να ακούω το άλμπουμ The Many Faces Of Death του 2022 των νεαρών Brutal Death Metallers Καναδών Tortugal Sacrifice ύστερα από μια ταινία θρίλερ που είχα παρακολουθήσει τα μεσάνυχτα</p>
                 <a href="/Tortuga-Sacrifice-archive" className="btn btn-danger">Read More</a>
+=======
+            <p className="lead">Update 5/02/2024</p>
+            <div className="col-md-6 bg-secondary p-4">
+                <h4>Order Of The Ebon Hand:Review απο τον ριν</h4>
+                <img src={order} className="img-fluid" />
+            </div>
+            <div className="col-md-6 bg-secondary p-4 text-center">
+                <p className="lead">Αφού έμεινα μαγεμένος από τη συναυλία των Yoth Iria (27/01/2024) στα Ιωάννινα, και ιδιαιτέρως από την ενέργεια και τη παραστατικότητα του Merkaal (Ορέστη) θέλησα να μάθω περισσότερα για τη δουλειά του στο χώρο του Μέταλ και έτσι ανακάλυψα τους Order of the Ebon Hand</p>
+                <a href="/Order-Of-The-Ebon-Hand-archive" className="btn btn-danger">Read More</a>
+                <Socials />
+            </div>
+            <div className="col-md-6 bg-secondary p-4">
+                <h4>Summit Catharsis: Review από τον Μιχάλη Αντωνόπουλο </h4>
+                <img src={summit} className="img-fluid" />
+            </div>
+            <div className="col-md-6 bg-secondary p-4 text-center">
+                <p className="lead">Summit: Αργοί, ερεβώδεις και πεσσιμιστές! Οι Νορβηγοί αυτοί αγγελιαφόροι του νιχιλισμού ορμώμενοι εκ Τρόντχαϊμ , αποτελούν μια αξιοσημείωτη πινελιά στο παραδοσιακό epic doom metal</p>
+                <a href="/Summit-catharsis-archive" className="btn btn-danger">Read More</a>
+                <Socials />
+            </div>
+            <div className="col-md-6 bg-secondary p-4">
+                <h4>Tortugal Sacrifice: The Many Faces Of Death Review από τον Vladu K.</h4>
+                <img src={tortuga} className="img-fluid" />
+            </div>
+            <div className="col-md-6 bg-secondary p-4 text-center">
+                <p className="lead">Όλα ξεκίνησαν όταν τις προάλλες μου έστειλε μήνυμα ο συνμεταλλάς αδερφός Μιχάλης (See: Μιχάλης Αντωνόπουλος: Reka: Το διεθνές ατμοσφαιρικό δυστοπικό “Ποτάμι” της Ρωσίας) και με ρώτησε αν θα ήθελα να γράψω κριτική για μικρές μπάντες εγχώριες και εξωτερικού. Αρχικά, ήμουν σκεπτικός λόγω πιεσμένου χρόνου αλλά αμέσως του είπα να μου στείλει σύνδεσμο να ακούσω και να γράψω έστω και δοκιμαστικά.</p>
+                <a href="/Tortuga-sacrifice-archive" className="btn btn-danger">Read More</a>
+>>>>>>> Stashed changes
                 <Socials />
             </div>
 

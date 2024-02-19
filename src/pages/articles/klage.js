@@ -7,6 +7,7 @@ import Contact from "../../compoments/ContactForm/contact";
 import Donate from "../../compoments/donate/donate";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import Footer from "../../compoments/footer/footer";
+import PageWithComments from "../../compoments/Comments/comment";
 
 const Klage = ()=>{
     return(

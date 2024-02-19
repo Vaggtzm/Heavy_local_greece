@@ -16,11 +16,18 @@ import Reka from './pages/articles/reka';
 import Klage from './pages/articles/klage';
 import Akral from './pages/articles/akral';
 import Chronicle01 from './pages/articles/chronicle-01';
+import Asomata from './pages/articles/Asomata';
 import Order from './pages/articles/order';
 import Summit from './pages/articles/summit';
 import Tortuga from './pages/articles/tortuga';
+import Interview from './pages/articles/TortugalIntrerview';
 import Chronicle02 from './pages/articles/chronicle-02';
-
+import Aleah from './pages/articles/Aleah';
+import Liquify from './pages/articles/liquify';
+import Prisson from './pages/articles/PrissonMassacre';
+import SadoStathanas from './pages/articles/SadoSathanas';
+import Funeral from './pages/articles/funeral';
+import Aherusia from './pages/articles/Aherusia';
 import DefaultArticle from './compoments/GenericArticle/GenericArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -105,6 +112,14 @@ function App() {
       <Route path='/Summit-catharsis-archive' element={<Summit />}/>
       <Route path='/Tortuga-Sacrifice-archive' element={<Tortuga />}/>
       <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<Chronicle02 />}/>
+      <Route path='/legends-2-archive' element={<Aleah />}/>
+      <Route path='/Liquify-archive' element={<Liquify />}/>
+      <Route path='/The-Dark-Prison-Massacre-archive' element={<Prisson />}/>
+      <Route path='/Totrugal-Sacrifice-Interview-archive' element={<Interview />}/>
+      <Route path='/SadoSathanas-Review-archive' element={<SadoStathanas />}/>
+      <Route path='/Asomata-Review-archive' element={<Asomata />}/>
+      <Route path='/Funeral-chasm-review-archive' element={<Funeral/>}/>
+      <Route path='/Αheusia-Bacchus-epiphanies-of-the-crazy-god-archive' element={<Aherusia/>}/>
 
 
       <Route path='/article/:name' element={<DefaultArticle/>}/>

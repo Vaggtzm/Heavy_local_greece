@@ -4,7 +4,7 @@ import ReadMore from "../../compoments/ReadMore/ReadMore";
 import pic01 from './../../assets/chronicles/chronicle-01/01.jpg';
 import pic02 from './../../assets/chronicles/chronicle-01/02.JPEG';
 import pic03 from './../../assets/chronicles/chronicle-01/03.JPEG';
-
+import PageWithComments from "../../compoments/Comments/comment";
 const chronicle01 = ()=>{
     return(
         <>
@@ -56,6 +56,8 @@ Embrace The Storm!”, wrote Infernal Storm after the show.
 Infernal Storm's style of black metal pays homage to the 90s era while incorporating old school atmospheric and symphonic elements, resulting in a sound uniquely their own. Their production is dark and raw, enhancing the overall atmosphere of occultism and darkness that permeates the lyrics. Infernal Storm has serious plans to release an album and then perform again in Europe.
 
  </p>
+<PageWithComments />
+
 
 
                 </div>    
@@ -66,10 +68,10 @@ Infernal Storm's style of black metal pays homage to the 90s era while incorpora
                     <hr className="bg-dark"></hr>
                     <img src={pic03} className="img-fluid w-75 h-25 m-4" />
 
-                </div>               
-                <ReadMore />
+                </div>
 
             </div>
+            <ReadMore />
         </div>
         </>
     )

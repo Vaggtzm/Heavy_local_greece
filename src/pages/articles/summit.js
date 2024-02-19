@@ -4,6 +4,7 @@ import './articles.css'
 import summit from './../../assets/sumit-01.jpg';
 import sumit02 from './../../assets/sumit-live.jpg';
 import ReadMore from "../../compoments/ReadMore/ReadMore";
+import PageWithComments from "../../compoments/Comments/comment";
 
 const Summit = ()=>{
     return(
@@ -61,6 +62,7 @@ const Summit = ()=>{
 Στο κομμάτι των επιρροών, το τραγούδι αυτό φαίνεται να έχει επιρροές από τους Σουηδούς θρυλικούς doomers Candlemass, ενώ γενικότερα οι Summit στο ευρύτερο πλαίσιο των τεχνοτροπικών τους ιδιαιτεροτήτων μπορεί να διακρίνει κανείς στοιχεία από τους Βρετανούς πατριάρχες του είδους της Doom, τους Black Sabbath και τους Αμερικανούς γερόλυκους epic doomers Solitude Aeturnus.
 
                     </p>
+                    <PageWithComments />
 
                 </div>
                 <ReadMore />

@@ -3,6 +3,7 @@ import Navigation from "./../../compoments/Navigation/Navigation";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import pic01 from './../../assets/chronicles/chronicle-02/Yothiria01.jpg';
 import pic02 from './../../assets/chronicles/chronicle-02/yothiria-02.jpg';
+import PageWithComments from "../../compoments/Comments/comment";
 
 const chronicle02 = ()=>{
     return(
@@ -37,6 +38,7 @@ Punctual and with an overflowing enthusiasm, the band brought to the stage a mag
  The band's flawless performance acted as a potent elixir, revitalizing the weary audience after a night of indulgence and revelry. With every note and beat executed to perfection, they commanded the attention of all, their magnetic stage presence and unwavering skill keeping the crowd alert and engaged despite the lateness of the hour.
 Yoth Iria performed for the first time in Romania. The next concert will be in Poland, where the band will perform alongside Shining and Samael, according to the Yoth’s Iria Instagram Page. </p>
 
+<PageWithComments />
 
                 </div>    
                 <div className="col-md-6 border-right-1">

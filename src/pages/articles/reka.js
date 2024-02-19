@@ -8,6 +8,7 @@ import Reka01 from "./../../assets/Reka02.jpg";
 import Reka02 from "./../../assets/reka03.jpg";
 import Reka03 from "./../../assets/rekalogo.jpg";
 import Footer from "../../compoments/footer/footer";
+import PageWithComments from "../../compoments/Comments/comment";
 
 const Reka = ()=>{
     return(
@@ -78,6 +79,7 @@ const Reka = ()=>{
                     <img src={Reka02} className="img-fluid w-100 m-2 rounded-3 shadow-lg" />
                     <p className="lead">
                     Δισκογραφικά έχουν κυκλοφορήσει 5 άλμπουμ και 1 EP και 2 singles (το EP και το ένα single είναι με split), τα οποία θα εμφανιστούν παρακάτω μαζί με τα ονόματα του τωρινού σχήματος και όσων έχουν περάσει από την μπάντα. Τον Οκτώβριο του 2023 ανακοίνωσαν ότι πρόκειται να κυκλοφορήσει το 7ο άλμπουμ τους με το όνομα “退廃 το οποίο σημαίνει Decadance (ελλ. Παρακμή). Έχουν παίξει σε χώρες όπως η Ουκρανία το 2021 και έχουν περιοδεύσει στην Νοτιοανατολική Ασία, σε χώρες όπως η Μαλαισία, το Βιετνάμ, η Σιγκαπούρη, η Ταϊβάν και η Ινδονησία το καλοκαίρι του 2020 και τον χειμώνα του 2019 περιόδευσαν στο Μεξικό.                    </p>
+                    <PageWithComments />
 
                 </div>
                 <ReadMore />

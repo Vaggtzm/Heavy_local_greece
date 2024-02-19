@@ -6,6 +6,8 @@ import Contact from "../../compoments/ContactForm/contact";
 import Donate from "../../compoments/donate/donate";
 import Footer from "../../compoments/footer/footer";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
+import PageWithComments from "../../compoments/Comments/comment";
+
 const Infliction = ()=>{
     return(
         <>
@@ -59,6 +61,8 @@ Glenn Benton: “Λέω να μην κατηγορείτε άτομα όπως �
 Donald Roberts: “Αυτό που θα μπορούσε κάλλιστα η μουσική να κάνει θα ήταν απλώς να ενισχύει πεποιθήσεις οι οποίες είχαν ήδη ενσταλάξει”. (Ο Donald Roberts για την μέταλ αναφέρει ξεκάθαρα με συμβουλευτικό χαρακτήρα ότι τα καταθλιπτικά παιδιά και εκείνα με ιστορικό βίας θα ήταν καλό να μείνουν μακριά από την death metal ή οποιοδήποτε άλλο υποείδος της extreme). 
 
                     </p>
+                    <PageWithComments />
+
                 </div>
             </div>
            </div>
