@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "/rss",
+        "function": "generateRSS"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
