@@ -1,47 +1,55 @@
 import React from "react";
-import RekaReadmore from "./../../assets/order.jpg";
-import KlageReadMore from "./../../assets/sumit-01.jpg";
-import NecrosisReadMore from "./../../assets/tortuga.jpg";
+import AcidMammoth from "./../../assets/AcidMammoth_main.jpg";
+import ThyDarkenedShade from "./../../assets/thyDarkenedShade01.jpg";
+import ADE from "./../../assets/ADE01.jpg";
 const ReadMore = ()=>{
     return(
         <>
-        <div className="containter">
+        <div className="container">
+        <h4>Heavy Local Reviews</h4>
         <div className="row mt-4">
-        <div className="col-md-4">
-        <div className="card">
-            
-            <img src={RekaReadmore} className="img-fluid" alt="News Image" />
-            <div className="card-body">
-                <h5 className="card-title">Order Of The Ebon Hand:Review</h5>
-                <p className="card-text">Αφού έμεινα μαγεμένος από τη συναυλία των Yoth Iria (27/01/2024) στα Ιωάννινα, και ιδιαιτέρως από την ενέργεια και τη παραστατικότητα του Merkaal (Ορέστη) θέλησα να μάθω περισσότερα για τη δουλειά του στο χώρο του Μέταλ και έτσι ανακάλυψα τους Order of the Ebon Hand</p>
-                <a href="/Order-Of-The-Ebon-Hand-archive" className="btn btn-primary">Read More</a>
+            <div className="col-md-4">
+                <div className="card p-4">
+                <img className="card-img-top shadow-lg " src={AcidMammoth}></img>
+                <h4 className="card-title">Echoes of Doom: Reflecting on Acid Mammoth's “Caravan”:Review(Eng)</h4>
+                    <div className="card-body text-center">
+                        <p className="lead">Intrigued by the sound of Acid Mammoth’s previous endeavor, “Under Acid Hoof”, I found myself drawn once more into the cavernous depths of their third big offering, “Caravan”.
+Originating from Greece, a land more synonymous with stoner rock anthems than the brooding depths of heavy doom, Acid Mammoth defies expectations with their sophomore release.</p>
+                       <a href="/article/Acid-Mammoth-archive" className="btn btn-primary">Read More</a>
+                    </div>
+                </div>
             </div>
-        </div>
+            <div className="col-md-4">
+            <div className="card p-4">
+                <img className=" card-img-top shadow-lg" src={ThyDarkenedShade}></img>
+                <h4 className="card-title"> Thy Darkened Shade:Review (Eng)</h4>
+                    <div className="card-body text-center">
+                        <p className="lead">
+                        “Liber Lvcifer II: Mahapralaya” marks the highly anticipated second installment of Thy Darkened Shade’s theosophic trilogy, following their acclaimed debut “Liber Lvcifer I: Khem Sedjet.”
+                        </p>
+                       <a href="/article/Thy-Darkened-Shade-archive" className="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+
+            </div>
+            <div className="col-md-4">
+            <div className="card text-center">
+            <img className=" card-img-top shadow-lg" src={ADE}></img>
+                <h4 className="card-title">ADE - Obolus :Review</h4>
+                    <div className="card-body text-center">
+                        <p className="lead">
+                        Οι Ade είναι μια tech death metal μπάντα από την Ρώμη, την Ιταλική πρωτεύουσα,  η οποία ιδρύθηκε το 2007 και ασχολείται στα τραγούδια της με την αρχαία Ρωμαϊκή ιστορία. στοιχείο της παραδοσιακής πολεμικής Ρωμαϊκής μουσικής με την ταχύτητα, την τεχνικότητα και το brutal στοιχείο της death οι Ade δημιουργούν έναν επικό και σκληρό αλλά ταυτόχρονα προσεγμένο ήχο, ο οποίος παράλληλα και ψυχαγωγεί το αυτί και κάνει τον νου να μαθαίνει.
+                        </p>
+                       <a href="/article/ADE-Obulus-archive" className="btn btn-primary">Read More</a>
+
+                    </div>
+
+            </div>
+
+          </div>
+        <hr className="bg-dark" />
 
         </div>
-                            <div className="col-md-4">
-                            <div className="card">
-                                <img src={KlageReadMore} className="card-img-top  w-100" alt="News Image" />
-                                <div className="card-body">
-                                    <h5 className="card-title">Summit - Catharsis: Μια δυσοίωνη εφιαλτική τελετουργία (προεπισκόπηση/κριτική τραγουδιού) + πληροφορίες για την μπάντα</h5>
-                                    <p className="card-text">Summit: Αργοί, ερεβώδεις και πεσσιμιστές! Οι Νορβηγοί αυτοί αγγελιαφόροι του νιχιλισμού ορμώμενοι εκ Τρόντχαϊμ , αποτελούν μια αξιοσημείωτη πινελιά στο παραδοσιακό epic doom metal. Ποιοι είναι οι Summit; Ξεκίνησαν το 2007 ως μια παλιάς σχολής death metal μπάντα με το όνομα Funeralopolis, ενώ το 2009 άλλαξαν το όνομα σε Summit. Η περίοδος αυτή διήρκεσε ως το 2010 κυκλοφορώντας τρία demos: τα Arche, Ontos και Apeiron. Έπειτα οι Summit ξεκίνησαν να εξερευνούν τα εδάφη της doom με διάφορες αλλαγές στο σχήμα. Κυκλοφόρησαν για την πρώτη τους περίοδο ως αμιγώς doomers ένα demo με 3 κομμάτια</p>
-                                    <a href="/Summit-catharsis-archive" className="btn btn-primary">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="card">
-                                <img src={NecrosisReadMore} className="card-img-top" alt="News Image" />
-                                <div className="card-body">
-                                    <h5 className="card-title">Tortugal Sacrifice: The Many Faces Of Death Review</h5>
-                                    <p className="card-text">Όλα ξεκίνησαν όταν τις προάλλες μου έστειλε μήνυμα ο συνμεταλλάς αδερφός Μιχάλης (See: Μιχάλης Αντωνόπουλος: Reka: Το διεθνές ατμοσφαιρικό δυστοπικό “Ποτάμι” της Ρωσίας) και με ρώτησε αν θα ήθελα να γράψω κριτική για μικρές μπάντες εγχώριες και εξωτερικού. Αρχικά, ήμουν σκεπτικός λόγω πιεσμένου χρόνου αλλά αμέσως του είπα να μου στείλει σύνδεσμο να ακούσω και να γράψω έστω και δοκιμαστικά.Όπως είπα και στον ίδιο, τον τελευταίο καιρό είχα καιρό να ακούσω νέα μουσική και μου φάνηκε πρώτης τάξεως ευκαιρία.ακούσω νέες Underground παραγωγές. Και κάπως έτσι ξεκινά και η ένταξή μου στο περιοδικό Heavy Local. Αλλά ας αφήσουμε στην άκρη αυτές τις λεπτομέρειες και πάμε κατευθείαν στο ψητό. Λίγες ώρες αργότερα, τα ξημερώματα με βρήκαν να ακούω το άλμπουμ The Many Faces Of Death του 2022 των νεαρών Brutal Death Metallers Καναδών Tortugal Sacrifice ύστερα από μια ταινία θρίλερ που είχα παρακολουθήσει τα μεσάνυχτα</p>
-                                    <a href="/Tortuga-Sacrifice-archive" className="btn btn-primary">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        </div>
         </div>
         </>
     )

@@ -1,0 +1,11 @@
+{
+    "title": "Test" ,
+    "sub":"From Test",
+     "date":"20/02/2024" ,
+    "content": "<p class='lead'>A </p>" ,
+    "details": "test." ,
+    "Socials": "<p class'lead'><a href='https://web.facebook.com/acidmammoth' ><i class ='bi bi-facebook'></i> </a> <a href='https://www.instagram.com/acidmammoth/' ><i class ='bi bi-instagram'></i> </a> <a href='https://open.spotify.com/artist/6VM0lR9Yr3VeXe4ZYB5f7T' ><i class ='bi bi-spotify'></i> </a> <a  href='https://www.youtube.com/channel/UCmygJ5FA0V8DlOZFe-eqsEg' ><i class ='bi bi-youtube'></i> </a> </p>              " ,
+    "img01" :"https://heavy-local.com/assets/AcidMammothSecond.jpg" ,
+    "img02":"https://heavy-local.com/assets/AherusiaFull.jpg"
+    
+}
