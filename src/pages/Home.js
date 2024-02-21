@@ -9,11 +9,14 @@ import Contact from "../compoments/ContactForm/contact";
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import Carousel from "./../compoments/carousel/carousel";
+import Notification from "../compoments/messaging/Message";
 const Home = () => {
   return (
     <>
       <Navigation />
+      <Notification />
       <header>
+
         <div className="container mt-4">
           <div className="row text-center bg-secondary p-3 m-2 shadow-lg">
             <div className="col-md-12">

@@ -8,6 +8,10 @@ import LegendV0L2 from './pages/articles/Aleah';
 import DefaultArticle from './compoments/GenericArticle/GenericArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+
+
+
 function App() {
   // Initialize Firebase
 

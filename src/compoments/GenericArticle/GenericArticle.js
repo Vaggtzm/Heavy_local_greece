@@ -1,13 +1,24 @@
-import React , { useEffect, useState }from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "./../Navigation/Navigation";
 import ReadMore from "./../ReadMore/ReadMore";
 import { useParams } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
+
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
+
+    // Συνάρτηση για αποθήκευση του άρθρου στο Firestore
+    const saveArticleToFirestore = async (articleData) => {
+        try {
+            const docRef = await addDoc(collection(db, "Articles"), articleData);
+            console.log("Document written with ID: ", docRef.id);
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,16 +38,6 @@ const DefaultArticle = () => {
 
         fetchData();
     }, [name]);
-
-    // Συνάρτηση για αποθήκευση του άρθρου στο Firestore
-    const saveArticleToFirestore = async (articleData) => {
-        try {
-            const docRef = await addDoc(collection(db, "Articles"), articleData);
-            console.log("Document written with ID: ", docRef.id);
-        } catch (error) {
-            console.error("Error adding document: ", error);
-        }
-    };
 
     // Έλεγχος αν τα δεδομένα έχουν φορτωθεί
     if (!articles || Object.keys(articles).length === 0) {

@@ -1,16 +1,33 @@
-import firebase from 'firebase/app';
-import 'firebase/messaging';
+import React, { useState, useEffect } from "react";
+import { requestPermission, onMessageListener } from "./../../firebase";
+import { Toaster, toast } from "react-hot-toast";
 
-const messaging = firebase.messaging();
+function Notification() {
+  const [notification, setNotification] = useState({ title: "", body: "" });
 
+  useEffect(() => {
+    requestPermission();
+    const unsubscribe = onMessageListener().then((payload) => {
+      setNotification({
+        title: payload?.notification?.title,
+        body: payload?.notification?.body,
+      });
+      toast.success(`${payload.notification?.title}: ${payload?.notification?.body}`, {
+        duration: 6000,
+        position: "top-right",
+      });
+    });
 
-messaging.requestPermission().then(()=>{
-    console.log("uprove permission");
-    return messaging.getToken()
-}).then((token)=>{
-    console.log("Fcm token is :" + token);
-}) .catch((error)=> {
-    console.log('Erorr while approving the notification');
-});
+    return () => {
+      unsubscribe.catch((err) => console.log("failed :", err));
+    };
+  }, []);
 
-export default messaging;
+  return (
+    <div>
+      <Toaster />
+    </div>
+  );
+}
+
+export default Notification;
