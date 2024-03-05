@@ -26,7 +26,7 @@ const ArtGallery = () => {
                 <div className="col-sm-12 col-md-4">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/bridge.jpg"
+                    href={GalleryItem01}
                   >
                     <img
                       src={GalleryItem01}
@@ -38,7 +38,7 @@ const ArtGallery = () => {
                 <div className="col-sm-6 col-md-4">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/park.jpg"
+                    href={GalleryItem02}
                   >
                     <img
                       src={GalleryItem02}
@@ -50,7 +50,7 @@ const ArtGallery = () => {
                 <div className="col-sm-6 col-md-4">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/tunnel.jpg"
+                    href={GalleryItem03}
                   >
                     <img
                       src={GalleryItem03}
@@ -63,7 +63,7 @@ const ArtGallery = () => {
                 <div className="col-sm-12 col-md-8">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/traffic.jpg"
+                    href={GalleryItem04}
                   >
                     <img
                       src={GalleryItem04}
@@ -75,7 +75,7 @@ const ArtGallery = () => {
                 <div className="col-sm-6 col-md-4">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/rails.jpg"
+                    href={GalleryItem05}
                   >
                     <img
                       src={GalleryItem05}
@@ -87,7 +87,7 @@ const ArtGallery = () => {
                 <div className="col-sm-6 col-md-4">
                   <a
                     className="lightbox"
-                    href="https://raw.githubusercontent.com/LeshikJanz/libraries/master/Related%20images/Bootstrap%20example/coast.jpg"
+                    href={GalleryItem06}
                   >
                     <img
                       src={GalleryItem06}
