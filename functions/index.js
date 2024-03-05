@@ -1,6 +1,9 @@
 const RSS = require('rss');
 const axios = require('axios');
 const functions = require('firebase-functions');
+const express = require('express');
+const moment = require('moment');
+
 
 // Function to read the contents of the JSON files
 async function readJSONFileFromURL(url) {
@@ -24,7 +27,7 @@ async function fetchArticlesList(url) {
     }
 }
 
-exports.generateRSS = functions.https.onRequest(async (req, res) => {
+const  generateRSS = async (req, res) => {
     const ARTICLES_URL = 'https://heavy-local.com/articles/articles.txt';
     fetchArticlesList(ARTICLES_URL)
         .then(async articlesList => {
@@ -39,21 +42,21 @@ exports.generateRSS = functions.https.onRequest(async (req, res) => {
 
             // Process each article
             for (const article of articlesList) {
-                const articleData = readJSONFileFromURL(`https://heavy-local.com/articles/${article}.json`);
+                const articleData = await readJSONFileFromURL(`https://heavy-local.com/articles/${article}.json`);
                 if (articleData) {
                     const articleUrl = `https://heavy-local.com/article/${article}`;
                     feed.item({
                         title: articleData.title,
                         description: articleData.content,
                         url: articleUrl,
-                        guid: articleUrl,
-                        date: new Date(articleData.date),
+                        date: moment(articleData.date, "DD/MM/YYYY").format("ddd, DD MMM YYYY HH:mm:ss ZZ"),
                     });
+                    console.log(articleData)
                 }
             }
 
             // Generate the RSS feed XML
-            const rssFeedXML = feed.xml();
+            const rssFeedXML = feed.xml({indent: true});
 
             // Write the RSS feed XML to a file
             res.set('Content-Type', 'text/xml');
@@ -63,4 +66,16 @@ exports.generateRSS = functions.https.onRequest(async (req, res) => {
         .catch(error => {
             res.status(500).send('Error fetching articles list:', error.message);
         });
+}
+
+
+/*const app = express();
+
+// Define a route that simulates the incoming request to your Cloud Function
+app.get('/rss-feed', generateRSS);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
+*/
+exports.generateRSS = functions.https.onRequest(generateRSS);
