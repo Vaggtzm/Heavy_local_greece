@@ -1,7 +1,7 @@
 
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getMessaging ,getToken ,onMessage } from 'firebase/messaging';
+//import { getMessaging ,getToken ,onMessage } from 'firebase/messaging';
 import {getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -22,46 +22,46 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const messaging = getMessaging(app);
+//export const messaging = getMessaging(app);
 
 export const db = getFirestore(app);
 
-export const requestPermission = () => {
+//export const requestPermission = () => {
 
-  console.log("Requesting User Permission......");
-  Notification.requestPermission().then((permission) => {
+  //console.log("Requesting User Permission......");
+  //Notification.requestPermission().then((permission) => {
 
-    if (permission === "granted") {
+    //if (permission === "granted") {
 
-      console.log("Notification User Permission Granted."); 
-      return getToken(messaging, { vapidKey: ` BH6mVEsEd5LCloBMfYKte9lf3AAA9kw367Deb-_NYosgAk6_xP3d5R_YFGQSXYKdI1sDjdS3ZycB-qvyoHi-kUY  ` })
-        .then((currentToken) => {
+      //console.log("Notification User Permission Granted."); 
+      //return getToken(messaging, { vapidKey: ` BH6mVEsEd5LCloBMfYKte9lf3AAA9kw367Deb-_NYosgAk6_xP3d5R_YFGQSXYKdI1sDjdS3ZycB-qvyoHi-kUY  ` })
+        //.then((currentToken) => {
 
-          if (currentToken) {
+        //  if (currentToken) {
 
-            console.log('Client Token: ', currentToken);
-          } else {
+            //console.log('Client Token: ', currentToken);
+          //} else {
             
-            console.log('Failed to generate the app registration token.');
-          }
-        })
-        .catch((err) => {
+            //console.log('Failed to generate the app registration token.');
+          //}
+        //})
+        //.catch((err) => {
 
-          console.log('An error occurred when requesting to receive the token.', err);
-        });
-    } else {
+        //  console.log('An error occurred when requesting to receive the token.', err);
+      //  });
+    //} else {
+//
+  //    console.log("User Permission Denied.");
+    //}
+  //}//);
 
-      console.log("User Permission Denied.");
-    }
-  });
+//}//
 
-}
+//requestPermission();
 
-requestPermission();
-
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
-});
+//export const onMessageListener = () =>
+  //new Promise((resolve) => {
+    //onMessage(messaging, (payload) => {
+      //resolve(payload);
+    //});
+//});
