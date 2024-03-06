@@ -8,7 +8,17 @@ import GalleryItem03 from './GalleryItems/art-item-03.jpg';
 import GalleryItem04 from './GalleryItems/art-item-04.jpg';
 import GalleryItem05 from './GalleryItems/gallery-item05.jpg';
 import GalleryItem06 from './GalleryItems/gallery-item06.jpg';
+
 const ArtGallery = () => {
+  const galleryItems = [
+    { image: GalleryItem01, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: αφηρημένο σκίτσο ανάποδη πεντάλφα, του Ριν", descriptionEng:"Description: abstract sketch of an inverted pentagram" },
+    { image: GalleryItem02,  title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: τοπίο εμπνευσμένο από τα album cover του His Majesty at the Swamp των Varathron και του Non Serviam των Rotting Christ", descriptionEng:"Description: landscape sketch inspired by the album covers of His Majesty at the Swamp - Varathron and Non Serviam - Rotting Christ."  },
+    { image: GalleryItem03,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: monster concept art, του Ριν", descriptionEng:"Description: monster concept art, by Rin" },
+    { image: GalleryItem04, title: "Απο την βαρβαρα " , descriptionGrekk:"Περιγραφή: Artwork για το sigle του συγκροτηματος scent of thorns ", descriptionEng:"Description: Artwork cover for 'devour the will ' by scent of thorns " },
+    { image: GalleryItem05,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: γρήγορο σκίτσο φωτογραφίας του Euronymous (Mayhem) με μολύβι, του Ριν", descriptionEng:"Description: quick sketch of a photo depicting Euronymous (Mayhem), done with pencil by Rin"  },
+    { image: GalleryItem06, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: σκίτσο του δαίμονα Buer για αυτοκόλλητα, του Ριν", descriptionEng:"Description: Illustration of the demon Buer as a sticker design, by Rin" }
+  ];
+
   return (
     <>
       <Navigation />
@@ -23,79 +33,31 @@ const ArtGallery = () => {
           <div className="container gallery-container">
             <div className="tz-gallery">
               <div className="row">
-                <div className="col-sm-12 col-md-4">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem01}
-                  >
-                    <img
-                      src={GalleryItem01}
-                      alt="Bridge"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem02}
-                  >
-                    <img
-                      src={GalleryItem02}
-                      alt="Park"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem03}
-                  >
-                    <img
-                      src={GalleryItem03}
-                      alt="Tunnel"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
-                <hr className="bg-dark" />
-                <div className="col-sm-12 col-md-8">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem04}
-                  >
-                    <img
-                      src={GalleryItem04}
-                      alt="Traffic"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem05}
-                  >
-                    <img
-                      src={GalleryItem05}
-                      alt="Coast"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                  <a
-                    className="lightbox"
-                    href={GalleryItem06}
-                  >
-                    <img
-                      src={GalleryItem06}
-                      alt="Rails"
-                      className="img-fluid w-100 h-100"
-                    />
-                  </a>
-                </div>
+                {galleryItems.map((item, index) => (
+                  <div className="col-sm-12 col-md-4" key={index}>
+                    <div className="card mb-3">
+                      <a
+                        className="lightbox"
+                        href={item.image}
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.description}
+                          className="card-img-top"
+                        />
+                      </a>
+                      <div className="card-body">
+                        <h5 className="card-title">{item.title}</h5>
+                        <p className="card-text">
+                          {item.descriptionGrekk}
+                        </p>
+                        <p className="card-text">
+                          {item.descriptionEng}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
