@@ -31,6 +31,8 @@ const Home = () => {
                   <Contact />
                   <Socials />
                   <hr className="bg-dark" />
+                  <h5>Help us to grow </h5>
+                   <a href="https://www.buymeacoffee.com/tzimasvagg7" className="btn btn-primary w-50">Donate</a>
                   <hr className="bg-dark" />
                 </div>
               </div>
@@ -43,55 +45,47 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container">
-        <h4>Heavy Local Reviews</h4>
-        <div className="row mt-4">
-            <div className="col-md-4">
-                <div className="card p-4">
-                <img className="card-img-top shadow-lg " src={Dreariness}></img>
-                <h4 className="card-title">Of Mystical Journeys, Eerie Realms and Ancient Traditions: “Transumanza” Album Review</h4>
-                    <div className="card-body text-center">
-                        <p className="lead">
-                        In the eerie realm where ancient traditions converge with modern sonic fury, Dawn of a Dark Age’s latest opus, “Transumanza” serves as a bewitching portal to a realm of primeval wisdom and malevolent secrets. With a multitude of genres swirling amidst haunting melodies and ferocious Black Metal, this album, released under the imprint of “My Kingdom Music” label, is not merely music but a transcendental voyage through the heartlands of Italy's folklore and darkness.                         </p>
-                       <a href="/article/Dawn_of_the_dark_Age-archive" className="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-            </div>
-            <div className="col-md-4">
-            <div className="card p-4">
-                <img className=" card-img-top shadow-lg" src={Zong}></img>
-                <h4 className="card-title"> They Came From Visions Review:Review</h4>
-                    <div className="card-body text-center">
-                        <p className="lead">
-                        A Symphony of Despair
-From the brooding depths of “Equinox Ablaze” to the haunting echoes of “Twilight Robes”, each track on the album unveils a sinister narrative, weaving a tapestry of fear and foreboding. While rooted in the traditions of Black Metal, the band members infuse their compositions with touches of melodicism, creating a soundscape that is both atmospheric and evocative.
-What sets “The Twilight Robes” apart is its unapologetic embrace of folk horror. Through a series of vignettes
-                             </p>
-                       <a href="/article/they-came-from-visions-archive" className="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-
-            </div>
-            <div className="col-md-4">
-            <div className="card p-4">
-                <img className=" card-img-top shadow-lg" src={Disimulator}></img>
-                <h4 className="card-title"> Xoth:Review(ENG)</h4>
-                    <div className="card-body text-center">
-                    <p className="lead">
-                    Upon pushing the play button on the very first song "Reptilian Bloodsport", I was immediately hit with a powerful, menacing riff that really felt like it came from outer space. Then came the thunderous blastbeats, the vocals that were shifting as quick as sound can get, the melodies that felt so alien and pompous. The exciting, dynamic choruses put the listener in the mood for adventure, battles, traveling among the cosmos. 
-Similar to the music, the very well written and poetic lyrics are of epic galactic wars, legendary weapons, unusual invasive species with malicious plans,
-
-                    </p>
-                     
-                       <a href="/article/Xoth-archive" className="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-
-            </div>
-
-        <hr className="bg-dark" />
-
+  <h4>Heavy Local Reviews</h4>
+  <div className="row mt-4 text-center">
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Dreariness} alt="Dreariness"></img>
+        <div className="card-body">
+          <h4 className="card-title">Of Mystical Journeys, Eerie Realms and Ancient Traditions: “Transumanza” Album Review</h4>
+          <p className="card-text lead">
+            In the eerie realm where ancient traditions converge with modern sonic fury, Dawn of a Dark Age’s latest opus, “Transumanza” serves as a bewitching portal to a realm of primeval wisdom and malevolent secrets. With a multitude of genres swirling amidst haunting melodies and ferocious Black Metal, this album, released under the imprint of “My Kingdom Music” label, is not merely music but a transcendental voyage through the heartlands of Italy's folklore and darkness.
+          </p>
+          <a href="/article/Dawn_of_the_dark_Age-archive" className="btn btn-primary">Read More</a>
         </div>
+      </div>
+    </div>
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Zong} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">They Came From Visions Review</h4>
+          <p className="card-text lead">
+            A Symphony of Despair
+            From the brooding depths of “Equinox Ablaze” to the haunting echoes of “Twilight Robes”, each track on the album unveils a sinister narrative, weaving a tapestry of fear and foreboding. While rooted in the traditions of Black Metal, the band members infuse their compositions with touches of melodicism, creating a soundscape that is both atmospheric and evocative.
+          </p>
+          <a href="/article/they-came-from-visions-archive" className="btn btn-primary">Read More</a>
         </div>
+      </div>
+    </div>
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Disimulator} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">Xoth Review (ENG)</h4>
+          <p className="card-text lead">
+            Upon pushing the play button on the very first song "Reptilian Bloodsport", I was immediately hit with a powerful, menacing riff that really felt like it came from outer space. Then came the thunderous blastbeats, the vocals that were shifting as quick as sound can get, the melodies that felt so alien and pompous. The exciting, dynamic choruses put the listener in the mood for adventure, battles, traveling among the cosmos.
+          </p>
+          <a href="/article/Xoth-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
       </header>
       <section className="live-chornicles">
         <div className="container">

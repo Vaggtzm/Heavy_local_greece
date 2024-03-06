@@ -46,12 +46,7 @@ const DefaultArticle = () => {
 
     return (
         <>
-          <Helmet>
-          <meta property="og:image" content={articles.img01} />
-        <meta property="og:title" content={articles.title} />
-        <meta property="og:description" content={articles.sub} />
-          </Helmet>
-            <Navigation />
+                    <Navigation />
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">

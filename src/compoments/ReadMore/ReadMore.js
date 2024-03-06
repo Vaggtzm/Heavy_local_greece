@@ -9,7 +9,7 @@ const ReadMore = ()=>{
         <h4>Heavy Local Reviews</h4>
         <div className="row mt-4">
             <div className="col-md-4">
-                <div className="card p-4">
+                <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg " src={SacrificeInFire}></img>
                 <h4 className="card-title">Sacrifice In Fire:Review</h4>
                     <div className="card-body text-center">
@@ -23,7 +23,7 @@ const ReadMore = ()=>{
                 </div>
             </div>
             <div className="col-md-4">
-            <div className="card p-4">
+            <div className="card h-100 w-100">
                 <img className=" card-img-top shadow-lg" src={BluesCondors}></img>
                 <h4 className="card-title"> Blues Condors - 45 Blues:Review</h4>
                     <div className="card-body text-center">
@@ -36,7 +36,7 @@ const ReadMore = ()=>{
 
             </div>
             <div className="col-md-4">
-            <div className="card text-center">
+            <div className="card text-center h-100 w-100">
             <img className=" card-img-top shadow-lg" src={ADE}></img>
                 <h4 className="card-title">Veins of Darkness: Udåd Emerges with Raw Norwegian Black Metal</h4>
                     <div className="card-body text-center">

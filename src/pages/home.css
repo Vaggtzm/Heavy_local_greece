@@ -1,36 +1,77 @@
 
-
+/* home.css */
 @font-face {
-    font-family: unifractur;
-    src: url(./../compoments/Navigation/unifrakturmaguntia/UnifrakturMaguntia-Book.ttf);
+    font-family: Font-1;
+    src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
 }
-.font-1{
-    font-family: unifractur;
+/* Στυλ για το header */
+header {
+    background-color: #343a40; /* Χρώμα φόντου */
+    color: white; /* Χρώμα κειμένου */
+    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+  }
+  
+  /* Στυλ για τα κεντρικά στοιχεία του header */
+  .jumbotron {
+    background-color: transparent; /* Διαφάνεια στο background του jumbotron */
+  }
+  
+  .jumbotron h1, .jumbotron p {
+    margin-bottom: 20px; /* Απόσταση κάτω */
+  }
+  
+  /* Στυλ για τον τίτλο */
+  .font-1 {
+    color: #0a0701; /* Χρώμα γραμματοσειράς */
+    font-family: Font-1;
 
-}
-header{
-    /**width: 100%;**/
-   /** height: 100vh;**/
-    background-image: url(../../public/og.png);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-
-}
-.MetalLegends{
-    width: 100%;
-    height: 100vh;
-    background-image: url(./../assets/legends.jpg);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-}
-
-
-.live-chornicles{
-    width: 100%;
-    height: 60vh;
-
-}
+  }
+  
+  /* Στυλ για την ενότητα με τα reviews */
+  .reviews-section {
+    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+  }
+  
+  .card {
+    margin-bottom: 20px; /* Απόσταση κάτω */
+  }
+  
+  .card-img-top {
+    height: 200px; /* Ύψος εικόνας */
+    object-fit: cover; /* Κάλυψη του πλάτους και του ύψους του περιεχομένου */
+  }
+  
+  .card-title {
+    font-size: 20px; /* Μέγεθος γραμματοσειράς του τίτλου */
+  }
+  
+  .card-text {
+    font-size: 16px; /* Μέγεθος γραμματοσειράς του κειμένου */
+  }
+  
+  /* Στυλ για την ενότητα με τις live chronicles */
+  .live-chornicles {
+    background-color: #f8f9fa; /* Χρώμα φόντου */
+    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+  }
+  
+  .live-chornicles h4 {
+    margin-bottom: 30px; /* Απόσταση κάτω */
+  }
+  
+  .live-chornicles img {
+    max-width: 100%; /* Μέγιστο πλάτος εικόνας */
+    height: auto; /* Αυτόματο ύψος */
+  }
+  
+  /* Στυλ για την ενότητα με τους Metal Legends */
+  .MetalLegends {
+    background-color: #343a40; /* Χρώμα φόντου */
+    color: white; /* Χρώμα κειμένου */
+    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+  }
+  
+  .MetalLegends h3, .MetalLegends p {
+    margin-bottom: 20px; /* Απόσταση κάτω */
+  }
+  
