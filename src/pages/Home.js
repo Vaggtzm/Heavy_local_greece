@@ -4,6 +4,7 @@ import "./home.css";
 import Dreariness from './../assets/Dawn_of_a_Dark_Age_Album.jpg';
 import Zong from './../assets/They_Came_from_Visions_Album.jpg';
 import Disimulator from './../assets/Exogalactic.jpg';
+import spell from './../assets/LiveSpell.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
 import Footer from "../compoments/footer/footer";
@@ -84,6 +85,20 @@ const Home = () => {
         </div>
       </div>
     </div>
+    <hr className="bg-white"></hr>
+    <h3>Ανταποκριση Spellbound x Ushala x Tuber live στα Ιωαννινα </h3>
+    <hr className="bg-white"></hr>
+      <div className='col-md-6'>
+<img src={spell} className="img-fluid"></img>
+      </div>
+
+      <div className='col-md-6'>
+        <p className="lead">
+        Μια πολύ ωραία βραδιά γεμάτη από ενορχηστρώσεις, με προεξέχοντες τους μπασίστες όλων των συμμετεχόντων συγκροτημάτων οι οποίοι έδωσαν λαϊκιστί τα πάντα, στους χώρους της stoner, της ψυχεδέλειας και της post που ταξίδεψε κάθε ακροατή από την αρχή ως το τέλος η οποία διοργανώθηκε από την Bullet Productions έλαβε μέρος την Κυριακή. Από τους Spellbound ως τους Tuber όλοι έδωσαν τον καλύτερο εαυτό τους στην απόδοση ενώ ο χώρος από θέμα ακουστικής ήταν ικανοποιητικός από την σκηνή ως τα πιο πίσω μέρη του σχεδόν κατάμεστου venue του Πολυχώρου. Πάμε να δούμε ξεχωριστά την κάθε μπάντα! Πριν προχωρήσω ωστόσο σε περαιτέρω ανάλυση ας προσθέσω ότι το live διήρκεσε σχεδόν 4 ώρες, από τις 8 το βράδυ ως κοντά μεσάνυχτα! 
+        </p>
+        <a className="btn btn-danger" href="/article/live-coreresponse-archive">Read More</a>
+      </div>
+
   </div>
 </div>
       </header>

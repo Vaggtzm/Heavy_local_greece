@@ -8,6 +8,11 @@ import GalleryItem03 from './GalleryItems/art-item-03.jpg';
 import GalleryItem04 from './GalleryItems/art-item-04.jpg';
 import GalleryItem05 from './GalleryItems/gallery-item05.jpg';
 import GalleryItem06 from './GalleryItems/gallery-item06.jpg';
+import gothLady01 from './GalleryItems/Goth01.png';
+import gothLady02 from './GalleryItems/goth02.png';
+import gothLady03 from './GalleryItems/goth03.png';
+import gothLady04 from './GalleryItems/goth04.png';
+
 
 const ArtGallery = () => {
   const galleryItems = [
@@ -16,7 +21,12 @@ const ArtGallery = () => {
     { image: GalleryItem03,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: monster concept art, του Ριν", descriptionEng:"Description: monster concept art, by Rin" },
     { image: GalleryItem04, title: "Απο την βαρβαρα " , descriptionGrekk:"Περιγραφή: Artwork για το sigle του συγκροτηματος scent of thorns ", descriptionEng:"Description: Artwork cover for 'devour the will ' by scent of thorns " },
     { image: GalleryItem05,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: γρήγορο σκίτσο φωτογραφίας του Euronymous (Mayhem) με μολύβι, του Ριν", descriptionEng:"Description: quick sketch of a photo depicting Euronymous (Mayhem), done with pencil by Rin"  },
-    { image: GalleryItem06, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: σκίτσο του δαίμονα Buer για αυτοκόλλητα, του Ριν", descriptionEng:"Description: Illustration of the demon Buer as a sticker design, by Rin" }
+    { image: GalleryItem06, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: σκίτσο του δαίμονα Buer για αυτοκόλλητα, του Ριν", descriptionEng:"Description: Illustration of the demon Buer as a sticker design, by Rin" },
+    { image: gothLady01, title: " Απο την Goth lady (by goth Lady  )" },
+    { image: gothLady02, title: "Απο την Goth lady  Απο την Goth lady (by goth Lady )"  },
+    { image: gothLady03, title: " Απο την Goth lady (by goth Lady )"  },
+    { image: gothLady04, title: " Απο την Goth lady (by goth Lady )"  }
+
   ];
 
   return (

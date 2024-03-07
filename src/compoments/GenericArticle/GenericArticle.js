@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
-import { Helmet } from "react-helmet-async";
+import { HelmetProvider } from "react-helmet-async";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -46,7 +46,14 @@ const DefaultArticle = () => {
 
     return (
         <>
-                    <Navigation />
+        <HelmetProvider>
+            <meta property="og:title" content={articles.title} />
+            <meta property="og:description" content={articles.sub} />
+            <meta property="og:image" content={articles.img} />
+            <meta property="og:url" content="https://heavylocal-2257a.web.app/" />
+            <meta property="og:type" content="website" />
+        </HelmetProvider>                   
+         <Navigation />
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">
