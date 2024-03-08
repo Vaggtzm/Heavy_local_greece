@@ -47,11 +47,11 @@ const DefaultArticle = () => {
     return (
         <>
         <HelmetProvider>
-            <meta property="og:title" content={articles.title} />
-            <meta property="og:description" content={articles.sub} />
-            <meta property="og:image" content={articles.img} />
-            <meta property="og:url" content="https://heavylocal-2257a.web.app/" />
-            <meta property="og:type" content="website" />
+        <meta property="og:title" content={articles.title} />
+    <meta property="og:description" content={articles.sub} />
+    <meta property="og:image" content={articles.img01} /> {/* Προσαρμόστε τη μεταβλητή ανάλογα με την κύρια φωτογραφία */}
+    <meta property="og:url" content="https://heavylocal-2257a.web.app/" />
+    <meta property="og:type" content="article" /> {/* Χρησιμοποιήστε "article" αν το περιεχόμενο είναι άρθρο */}
         </HelmetProvider>                   
          <Navigation />
             <div className="container">
