@@ -1,9 +1,9 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Dreariness from './../assets/Dawn_of_a_Dark_Age_Album.jpg';
-import Zong from './../assets/They_Came_from_Visions_Album.jpg';
-import Disimulator from './../assets/Exogalactic.jpg';
+import Venus from './../assets/Venus.jpg';
+import Faloda from './../assets/Falooda_Demo_2024_artwork.jpg';
+import Disimulator from './../assets/InnerLord.webp';
 import spell from './../assets/LiveSpell.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -50,26 +50,25 @@ const Home = () => {
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Dreariness} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Venus} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Of Mystical Journeys, Eerie Realms and Ancient Traditions: “Transumanza” Album Review</h4>
+          <h4 className="card-title">Venus - Obscured Until Observed (Album Review)</h4>
           <p className="card-text lead">
-            In the eerie realm where ancient traditions converge with modern sonic fury, Dawn of a Dark Age’s latest opus, “Transumanza” serves as a bewitching portal to a realm of primeval wisdom and malevolent secrets. With a multitude of genres swirling amidst haunting melodies and ferocious Black Metal, this album, released under the imprint of “My Kingdom Music” label, is not merely music but a transcendental voyage through the heartlands of Italy's folklore and darkness.
+          Ένα απόγευμα σαν το σημερινό ακούγοντας μουσική (πρωτότυπο!) υπέπεσε στην αντίληψή μου ένα κρυφό διαμάντι, το οποίο αδημονούσε να φανερωθεί. Αυτό το διαμαντάκι ήταν το άλμπουμ των Progressive Thrash Αθηναίων Venus που ακούει στο όνομα Obscured Until Observed και άξιζε πάρα πολύ στο να λάβει την δική του ξεχωριστή προεπισκόπηση στο ηλεκτρονικό περιοδικό μας!Οι Venus είναι όπως προείπα μια progressive thrash Αθηναϊκή μπάντα, η οποία συστάθηκε μόλις το 2021 από τους Γιώργο Βεργίνη (κιθάρες/φωνητικά) και Αντώνη Αβτζή (κιθάρες φωνητικά) και στα 3 χρόνια ύπαρξής της έχει ήδη καταφέρει να βγάλει ένα πλήρους διάρκειας άλμπουμ (Obscured Until Observed), ένα EP (Project Lamda) και 2 single (Artificially Prolonged Existence & Circus Strange). Θέματά τους είναι η επιστημονική φαντασία, η μυθολογία, η τεχνολογία και το horror. Πάμε για το άλμπουμ τώρα! 
           </p>
-          <a href="/article/Dawn_of_the_dark_Age-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Venus-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Zong} alt="Zong"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Faloda} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">They Came From Visions Review</h4>
+          <h4 className="card-title">A Sonic Feast Like No Other: Falooda’s Demo Review(ΕNG)</h4>
           <p className="card-text lead">
-            A Symphony of Despair
-            From the brooding depths of “Equinox Ablaze” to the haunting echoes of “Twilight Robes”, each track on the album unveils a sinister narrative, weaving a tapestry of fear and foreboding. While rooted in the traditions of Black Metal, the band members infuse their compositions with touches of melodicism, creating a soundscape that is both atmospheric and evocative.
-          </p>
-          <a href="/article/they-came-from-visions-archive" className="btn btn-primary">Read More</a>
+          Step into a world where the musical boundaries dissolve, and chaos reigns supreme. Falooda, a noise/punk/experimental group hailing from Athens, Greece, takes inspiration from the exotic Mughlai dessert to concoct a sonic feast like no other. With their self-released demo hitting the airwaves, get ready to embark on a journey of auditory exploration that’s as mesmerizing as it is unpredictable!
+Exploring the Unconventional</p>
+          <a href="/article/Faloda-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
@@ -77,11 +76,10 @@ const Home = () => {
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={Disimulator} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Xoth Review (ENG)</h4>
+          <h4 className="card-title">Summoning Malevolent Witchery: Innerload’s “Mater Tenebrarum” Review (ENG)</h4>
           <p className="card-text lead">
-            Upon pushing the play button on the very first song "Reptilian Bloodsport", I was immediately hit with a powerful, menacing riff that really felt like it came from outer space. Then came the thunderous blastbeats, the vocals that were shifting as quick as sound can get, the melodies that felt so alien and pompous. The exciting, dynamic choruses put the listener in the mood for adventure, battles, traveling among the cosmos.
-          </p>
-          <a href="/article/Xoth-archive" className="btn btn-primary">Read More</a>
+          If you choose to title your album after one of the Three Mothers, it ought to evoke a palpable aura of sinister witchcraft. Drawing inspiration from the works of Thomas De Quincey and the nightmarish visions of Dario Argento, Innerload’s third album, “Mater Tenebrarum”, a production done in collaboration with the French label “Great Dane Records” beckons the listeners into the realm of “Our Lady of Darkness”. But does this Venetian band truly capture the essence of horror within their music? Let’s find out!          </p>
+          <a href="/article/InnerLord-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
