@@ -131,12 +131,13 @@ Exploring the Unconventional</p>
                 Σήμερα Στο Legends
               </h3>
               <p className="lead text-white">
-              Into the Abyss: The Lifelover Story Unveiled(ENG)</p>
+              "Ο Σκοτεινός Μύθος Που κρυβει το ονομα των NightStalker"</p>
               <p className="lead text-white">
-              Throughout the annals of music history, only a few bands have managed to imprint their genre as deeply as Lifelover. Hailing from Sweden, Lifelover emerged in 2005, crafting a unique sound, exploring themes of suicide, depression, nihilism, and cynicism.
+              Nightstalker, η εμβληματική μπάντα. Ποιος δεν έχει τύχει να τους ακούσει έστω και για μια φορά; Μια stoner μπάντα με αρκετά χρόνια στο ενεργητικό της και κλασικές συνθέσεις όπως το “Dead Rock Commandos” και το “Children of the Sun”, οι οποίες έχουν την τιμητική τους σε αρκετές Ελληνικές playlist.
 
+Παίρνοντας τα πράγματα από την αρχή, το όνομα Nightstalker προέκυψε από από τα Αμερικανικά ΜΜΕ ως παρατσούκλι για τον κατά συρροή δολοφόνο Ρίτσαρντ Ραμίρεζ (1960-2013) που καταδικάστηκε για 13 δολοφονίες, 5 απόπειρες και 11 βιασμούς.
               </p>
-                            <a href="/legends-3-archive" className="btn btn-primary">
+                            <a href="/legends-4-archive" className="btn btn-primary">
                 Read More
               </a>
             </div>
