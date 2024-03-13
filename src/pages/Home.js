@@ -1,7 +1,7 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import WIckedWizard from './../assets/WickedWizard.png';
+import WIckedWizard from './../assets/IdiotsCorrected.webp';
 import Hexaban from './../assets/Hexaban.webp';
 import Demande from './../assets/Demande.webp';
 import spell from './../assets/LiveSpell.jpg';
