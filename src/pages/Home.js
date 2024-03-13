@@ -1,9 +1,9 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Venus from './../assets/Venus.jpg';
-import Faloda from './../assets/Falooda_Demo_2024_artwork.jpg';
-import Disimulator from './../assets/InnerLord.webp';
+import WIckedWizard from './../assets/WickedWizard.png';
+import Hexaban from './../assets/Hexaban.webp';
+import Demande from './../assets/Demande.webp';
 import spell from './../assets/LiveSpell.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -50,36 +50,44 @@ const Home = () => {
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Venus} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={WIckedWizard} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Venus - Obscured Until Observed (Album Review)</h4>
+          <h4 className="card-title">Wicked Wizzard - Warlords of the Dark Realm (Album Review)</h4>
           <p className="card-text lead">
-          Ένα απόγευμα σαν το σημερινό ακούγοντας μουσική (πρωτότυπο!) υπέπεσε στην αντίληψή μου ένα κρυφό διαμάντι, το οποίο αδημονούσε να φανερωθεί. Αυτό το διαμαντάκι ήταν το άλμπουμ των Progressive Thrash Αθηναίων Venus που ακούει στο όνομα Obscured Until Observed και άξιζε πάρα πολύ στο να λάβει την δική του ξεχωριστή προεπισκόπηση στο ηλεκτρονικό περιοδικό μας!Οι Venus είναι όπως προείπα μια progressive thrash Αθηναϊκή μπάντα, η οποία συστάθηκε μόλις το 2021 από τους Γιώργο Βεργίνη (κιθάρες/φωνητικά) και Αντώνη Αβτζή (κιθάρες φωνητικά) και στα 3 χρόνια ύπαρξής της έχει ήδη καταφέρει να βγάλει ένα πλήρους διάρκειας άλμπουμ (Obscured Until Observed), ένα EP (Project Lamda) και 2 single (Artificially Prolonged Existence & Circus Strange). Θέματά τους είναι η επιστημονική φαντασία, η μυθολογία, η τεχνολογία και το horror. Πάμε για το άλμπουμ τώρα! 
+          Οι Ισπανοί Wicked Wizzard είναι μια μπάντα η οποία αντιπροσωπεύει τον αγνό ήχο του stoner των 70s όπως “πρωτοπλάστηκε” από τους αξεπέραστους Black Sabbath. Η τριάδα των Iñigo Jauregui, Unai Minguez και Mikel Bidaurrazaga, ιδρυμένοι το 2017 και ορμώμενοι από την Mungia της Βασκονίας, το 2020 συνέθεσε ένα άλμπουμ το οποίο μπορώ να ακούω προσωπικά με τις ώρες και το συστήνω ανεπιφύλακτα σε όλους τους αναγνώστες μας.
+
+Τεχνικά οι Wicked Wizzard είναι πιστοί στις stoner αρχές, το μπάσο είναι το Α και το Ω, βαριά distortions με δυναμικά groovy riffs και clean vocals, ενώ τηρούν την προαναφερθείσα αγνότητα της πρωταρχικής stoner μορφής επιτυγχάνοντας στο να δημιουργήσουν έναν υπερβατικό και δυναμικό ήχο με σαφή δομή και μια εξαίσια σκοτεινή ατμοσφαιρικότητα, φουντώνοντας την φαντασία μας και φέρνοντάς μας στην πολυπόθητη έκσταση!          </p>
+          <a href="/article/Wicked_wizzard-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Hexaban} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">Spellbinding Soundscapes: “As the Night Approaches”Album Review(ΕNG)</h4>
+          <p className="card-text lead">
+          Prepare to be engulfed by the shadows as Hexenbann unleashes their sonic onslaught “As the Night Approaches”! From the explosive opening track to the haunting finale, the album is a masterclass in modern Metal, highlighting the band members’ skill and unwavering commitment to their artistry.
+Embracing the Night: Hexenbann's Evocative Ode to Darkness
+
+Hexenbann wastes no time in grabbing your attention with the spellbinding album. From the moment the first note hits, you're thrust into a whirlwind of frenetic energy and unrelenting aggression. The blistering guitar riffs and thunderous drums set the stage for an auditory assault that refuses to let up. With its relentless intensity and haunting atmosphere, “As the Night Approaches” serves as the perfect introduction to the dark and mysterious world of Hexenbann. The album delves into realms of mysticism, painting vivid scenes of nature's majesty and exploring the darkest recesses of human existence. Through enchanting narratives and thought-provoking introspection, the band navigates themes of life's complexities, juxtaposing dark, dissonant atmospheres with moments of luminous optimism. Much like the cycle of day and night, the album’s message resonates—where light and warmth flourish by day, only to fade into the cold embrace of darkness as dusk falls.
           </p>
-          <a href="/article/Venus-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Hexaban-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Faloda} alt="Zong"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Demande} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">A Sonic Feast Like No Other: Falooda’s Demo Review(ΕNG)</h4>
+          <h4 className="card-title">The Depths of Human Torment: Demande à la Poussière Presents “Kintsugi” (ENG)</h4>
           <p className="card-text lead">
-          Step into a world where the musical boundaries dissolve, and chaos reigns supreme. Falooda, a noise/punk/experimental group hailing from Athens, Greece, takes inspiration from the exotic Mughlai dessert to concoct a sonic feast like no other. With their self-released demo hitting the airwaves, get ready to embark on a journey of auditory exploration that’s as mesmerizing as it is unpredictable!
-Exploring the Unconventional</p>
-          <a href="/article/Faloda-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Disimulator} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">Summoning Malevolent Witchery: Innerload’s “Mater Tenebrarum” Review (ENG)</h4>
-          <p className="card-text lead">
-          If you choose to title your album after one of the Three Mothers, it ought to evoke a palpable aura of sinister witchcraft. Drawing inspiration from the works of Thomas De Quincey and the nightmarish visions of Dario Argento, Innerload’s third album, “Mater Tenebrarum”, a production done in collaboration with the French label “Great Dane Records” beckons the listeners into the realm of “Our Lady of Darkness”. But does this Venetian band truly capture the essence of horror within their music? Let’s find out!          </p>
-          <a href="/article/InnerLord-archive" className="btn btn-primary">Read More</a>
+          In a melodic cascade that echoes through the shadows, Demande à la Poussière introduces “Kintsugi”, providing a window into the haunting depths of the forthcoming album. The song masterfully blends elements of Black Metal, Doom, and Sludge, crafting a narrative steeped in anguish and introspection.
+Of Darkness, Wounds and Symphonies
+
+“Kintsugi” draws the listeners into a realm cloaked in darkness, where apocalyptic atmospheres and anguished voices hold sway. It unravels like a sinister tableau, each note carving deeper into the psyche, trailing haunting melodies in its wake.Despite its bleak landscape, “Kintsugi” is not devoid of light. Amidst the gloomy sludge scenery, melodic sparks emerge, piercing through the darkness like distant stars in an endless night. These fleeting moments of brightness add depth and dimension to the sonic tapestry woven by Demande à la Poussière. With “Kintsugi”, Demande à la Poussière invites the listeners on an introspective journey. Delving into the wounds of the human condition, the song serves as a mirror reflecting the depths of despair and melancholy. Through their music, the Parisian ensemble navigates the complexities of existence with raw honesty and unflinching authenticity.
+          </p>
+          <a href="/article/Demande_a_la_poussiere-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
