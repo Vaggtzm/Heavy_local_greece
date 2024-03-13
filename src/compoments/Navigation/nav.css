@@ -1,8 +1,9 @@
 
 
-.Brand{
-    font-family: magnutia;
-    font-size: 2rem;
+.brand{
+    width: 9rem;
+    height: 5rem;
+    border-radius: 10px;
     padding-inline: 2rem;
 }
 .link{
