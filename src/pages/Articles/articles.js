@@ -5,6 +5,9 @@ import InAutumn from './../../assets/automn.jpeg'
 import xoth  from './../../assets/Exogalactic.jpg'
 import DawnOfTheDarkAge from './../../assets/Dawn_of_a_Dark_Age_Album.jpg'
 import TheyCameFromVissions from './../../assets/They_Came_from_Visions_Album.jpg'
+import Venus from './../../assets/Venus.jpg';
+import Falooda from './../../assets/Falooda_Demo_2024_artwork.jpg';
+import InnerLoad from './../../assets/InnerLord.webp';
 import "./../home.css"
 const Articles =()=>{
     return(
@@ -16,6 +19,54 @@ const Articles =()=>{
             </h5>
             <hr className="bg-dark"></hr>
             <div className="row text-center">
+            <p className="lead">11.03.24</p>
+              <div className="col-md-6">
+              <h4>Venus:Obscured Until Observed-Album Review</h4>
+                <img src={Venus} className="img-fluid"></img>
+              </div>
+              <div className="col-md-6">
+                <h3>Απο τον Μιχαλη</h3>
+                <p className="lead">
+                Ένα απόγευμα σαν το σημερινό ακούγοντας μουσική (πρωτότυπο!) υπέπεσε στην αντίληψή μου ένα κρυφό διαμάντι, το οποίο αδημονούσε να φανερωθεί. Αυτό το διαμαντάκι ήταν το άλμπουμ των Progressive Thrash Αθηναίων Venus που ακούει στο όνομα Obscured Until Observed και άξιζε πάρα πολύ στο να λάβει την δική του ξεχωριστή προεπισκόπηση στο ηλεκτρονικό περιοδικό μας!Οι Venus είναι όπως προείπα μια progressive thrash Αθηναϊκή μπάντα, η οποία συστάθηκε μόλις το 2021 από τους Γιώργο Βεργίνη (κιθάρες/φωνητικά) και Αντώνη Αβτζή (κιθάρες φωνητικά) και στα 3 χρόνια ύπαρξής της έχει ήδη καταφέρει να βγάλει ένα πλήρους διάρκειας άλμπουμ (Obscured Until Observed), ένα EP (Project Lamda) και 2 single (Artificially Prolonged Existence & Circus Strange). Θέματά τους είναι η επιστημονική φαντασία, η μυθολογία, η τεχνολογία και το horror. Πάμε για το άλμπουμ τώρα! 
+                </p>
+                <a href="/article/Venus-archive" className="btn btn-danger">Read More</a>
+              </div>
+
+
+              <div className="col-md-6">
+              <h4>Falooda:Demo-Review</h4>  
+              <img src={Falooda} className="img-fluid"></img>
+
+              </div>
+              <div className="col-md-6">
+                <h3>By Daria</h3>
+                <p className="lead">
+                Exploring the Unconventional
+
+Falooda’s debut demo is a sonic odyssey into the realm of the avant-garde. With tracks like “Orizuru 折鶴”, the band shatters preconceived notions of music, inviting the listeners to delve into a world where experimentation knows no limits. In just two minutes, the band members establish themselves as pioneers of the bizarre, leaving a trail of intrigue in their wake.“Boolean Religion” is a whirlwind of goth-infused pop punk and chaotic noise, with Falooda fearlessly embracing the absurd. From surreal vocals to an ending that defies comprehension, this track is a testament to the band’s irreverent creativity. Strap in for a ride that's as exhilarating as it is bewildering! And there’s more… In “Bottleneck” the band cranks up the intensity, delivering a sonic onslaught that's sure to leave the listeners breathless. With blistering speed and unbridled chaos, they command attention and demand to be heard. This is music at its most visceral – raw, unapologetic, and utterly captivating. As the demo draws to a close with “Disaster Recovery”, Falooda plunges into the depths of aural discomfort. It’s an experience that's as unsettling as it is fascinating, challenging listeners to confront the limits of their own perception. This is not just music; it's a voyage into the unknown, with Falooda as your unflinching guide.
+                </p>
+                <a href="/article/Faloda-archive" className="btn btn-danger">Read More</a>
+              </div>
+
+
+              <div className="col-md-6">
+              <h3>Inner Load: Album-review</h3>
+              <img src={InnerLoad} className="img-fluid"></img>
+              </div>
+              <div className="col-md-6">
+                <h3>by Daria</h3>
+                <p className="lead">
+                A Thrash-Infused Odyssey
+
+Once categorized as a Heavy Metal ensemble, Innerload’s musical terrain in “Mater Tenebrarum” strongly gravitates towards the realms of Thrash Metal and Melodic Death Metal. Led by the coarse vocals of Marco Cortese, the band embarks on a relentless gallop through themes of addiction, nightmares, and schizophrenia. While the album initially seems familiar, it’s not until the third track, “Asylum”, that we’re ensnared in horror motifs, only to be thrust back into a Soulfly-like stomper. The album’s length provides ample room for metallic licks and solos, with “Gemini” echoing the exuberance of bands like Children Of Bodom.
+Embracing the Macabre: Peaks and Valleys
+
+Anticipation builds for the titular track, promising a descent into the macabre. While it gradually embraces its sinister undertones, tracks like “Again” feature clean vocals that, although earnest, could benefit from refinement to enhance their impact. Throughout the album’s progression, recurring themes of darkness and despair are delicately woven, contributing to its atmospheric allure.
+                </p>
+                <a href="/article/InnerLord-archive" className="btn btn-danger">Read More</a>
+
+              </div>
+
             <p className="lead">6.03.24</p>
             <div className="col-md-6">
                     <h3>Xoth:Exogalactic-Review</h3>
