@@ -1,9 +1,9 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Mnima from './../assets/Mnima.jpg';
-import Kroheim from './../assets/kroheim.jpg';
-import Passengers from './../assets/passengers.jpeg';
+import Mnima from './../assets/ForeverFalling.jpg';
+import Kroheim from './../assets/Nitritono_Band.webp';
+import Passengers from './../assets/Ignis_Absconditus_Album.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -54,9 +54,13 @@ const Home = () => {
         <div className="card-body">
           <h4 className="card-title">Mnima :Band Review</h4>
           <p className="card-text lead">
-          Είναι γεγονός πως μετά από δύο χρόνια από το τελευταίο τους full-length, οι Έλληνες noise black metallers Μνήμα (Mnima) επέστρεψαν με μια πολύ δυνατή νέα κυκλοφορία αποτελούμενη από 4 αργά και βασανιστικά κομμάτια. Τα "Καταραμένα Λείψανα" ήρθαν υποσχόμενα να σηκώσουν τις τρίχες στους σβέρκους μας, με τα απόμακρα, θλιμμένα riffs, τον μόνιμο ήχο των ραδιοφωνικών παρασίτων και τα απόκοσμα ουρλιαχτά γεμάτα οδύνη.
+          A Unique Blend: Doom, Death, and Synth
 
-Ένα ακόμα αφιέρωμα στους τρόμους και τον μυστικισμό που κρύβει η τελετή της κηδείας, ο πόνος του θανάτου και η ματαιότητα του θνητού κόσμου του ανθρώπου. Εκεί που όλα τελειώνουν εκτός από τη μιζέρια, την αποσύνθεση και την παράνοια. Στο cover που στολίζει το συγκεκριμένο άλμπουμ βλέπουμε δύο χρώματα, μόνο το έντονο κόκκινο μέσα σε κατάμαυρο φόντο. Στα δεξιά του πλαισίου παριστάνεται ο εσταυρωμένος σε μια κατάσταση που προκαλεί απελπισία στα μάτια του θεατή. Μα αυτό που πραγματικά προκαλεί απόγνωση στη ψυχή είναι ο ήχος που συνοδεύεται από το album cover.  </p>
+The album, released on 27/11/2021 via MSH Music Group, opens with the haunting instrumental track “Bless This Floor”, where Carleo’s masterful piano work and synth strings set a captivating tone. From there, the listener is immersed in a world of slow, heavy compositions, expertly crafted to avoid monotony. Carleo’s use of keyboards adds a unique dimension to the genre, seamlessly integrating with the powerful instrumentation to create a sound both familiar and fresh.
+Powerful Instrumentation and Haunting Vocals
+
+Throughout the album, the guitar and bass work together to create a formidable wall of sound, with clear bass tones complementing the powerful guitar riffs. While there are no guitar solos, the absence is hardly felt, as the strength of the compositions lies in their cohesion rather than flashy displays. The drumming, characterized by impactful snare hits and resonant cymbals, further bolsters the album’s intensity. However, it is John Suffering’s vocals that truly steal the spotlight. His deep growls, devoid of any artificial manipulation, convey an otherworldly presence that adds depth to each track. Particularly noteworthy are his performances on tracks like “Dark Friend”, “I Will Never Sleep”, “To Die in Silence”, and “Dark Painting of the I”, where his vocal prowess shines brightest.
+          </p>
           <a href="/article/forever-falling-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
@@ -67,8 +71,7 @@ const Home = () => {
         <div className="card-body">
           <h4 className="card-title">Kromheim - Band review</h4>
           <p className="card-text lead">
-          Οι Kromheim ξεκίνησαν ως ένα one - man project το 2020 στην Πολωνία, μια χώρα με αξιέπαινη παρουσία στον χώρο της extreme metal, με μπάντες όπως οι Vader και οι Behemoth να έχουν αναδειχθεί και να έχουν αφήσει ανεξίτηλο το σημάδι τους παγκοσμίως. Ιδρυτής τους ήταν ο Mikołaj Popławski (Μικολάι Ποπλιάβσκι) ο οποίος αποφάσισε το 2022 να μετακινηθεί στην Αγγλία όπου θα μετέτρεπε τους Kromheim σε μπάντα με κανονική σύνθεση, στο πλήρωμα από το 2022 θα συμμετείχαν εφεξής οι Duncan Arkley (μπάσο)  και Sot (κιθάρες). Το πρώτο τους έργο θα ήταν το 2020 το EP με όνομα Kromheim, στο οποίο ο Ποπλιάβσκι τα είχε αναλάβει εξ ολοκλήρου όλα μόνος του συνθετικά και ορχηστρικά, το 2022 με την συμμετοχή των Arkley και Sot πλέον θα κυκλοφορούσαν ένα single το The Landing ενώ το 2023 σε μια πλήρως παραγωγική χρονιά θα έβγαζαν στην δημοσιότητα 2 singles (War/ World Reborn) και το πρώτο τους πλήρες album το Journey To Divinity.
-          </p>
+          Italian Post-Metal sensation Nitritono storms back into the limelight with their latest single “Non È Questa La Vita Che Sognavo Da Bambina”, offering a tantalizing preview of their forthcoming album “Cecità”. Evolving their signature sound into a captivating blend of atmospheric tranquility and thunderous intensity, Nitritono’s latest offering promises to push the boundaries of their craft further than ever before. Drawing inspiration from José Saramago’s literary masterpiece of the same name, the band delves deep into themes of existentialism, isolation, and the human condition, crafting an album that is as introspective as it is intense. “Non È Questa La Vita Che Volevo Da Bambina”          </p>
           <a href="/article/Nitriono-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
@@ -79,12 +82,53 @@ const Home = () => {
         <div className="card-body">
           <h4 className="card-title">Chaos and Charms: “Passengers in Panic”</h4>
           <p className="card-text lead">
-          Οι Passengers in Panic, μια εξ Αθηνών Progressive/Folk metal μπάντα, είναι μια ξεχωριστή δύναμη στην Ελληνική underground σκηνή. Αντλώντας στοιχεία από το ευρύ φάσμα της κλασικής μέταλ, τις μελωδίες της παραδοσιακής Ελληνικής μουσική και της πανκοειδούς (sic) hard rock, ο ετερόκλητος ήχος τους αιχμαλωτίζει τους ακροατές από την πρώτη κιόλας συγχορδία.
-          </p>
+          From the Abyss… They Come!
+
+“Golden Horses of a Dying Future” is a ten-track odyssey through the realms of metal, rock, doom, dark metal, and post-metal. Each composition is a portal, inviting listeners to immerse themselves in a hypnotic, magnetically charged experience. From the ethereal whispers of “Shadows” to the pulsating groove of “Mr. Smith”, the album unveils layers of darkness with theatrical flair.
+The Gates of Horror Dimensions
+
+In “Wolfheart”, Ignis Absconditus delves into the unpredictable territories of dark rock, while “Lucid Madness” captivates with its vibrancy, leaving listeners trembling in its wake. With “Carousel of the Departed” the gates to horror dimensions swing open, leading to an aggressive triumph of decadence in “Seagull's Laughter” The band’s Italian roots echo through the dark doom sounds of “Weight of Knowledge” culminating in the haunting conclusion of “Chasm Of Deceit”.
+A Tapestry of Influence
+
+Drawing inspiration from the greats of the ‘80s and the icons of doom, Ignis Absconditus crafts a narrative that is incisive. Their sound resonates with the echoes of Christian Death while embracing the extravagance of alternative, progressive, and avant-garde bands.           </p>
           <a href="/article/Ignis-Absconditus-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
+    <h4>Heavy Local Reviews (GR)</h4>
+
+    <div className="col-md-12 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Kroheim} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">Kromheim - Band review</h4>
+          <p className="card-text lead">
+          From the Abyss… They Come!
+
+“Golden Horses of a Dying Future” is a ten-track odyssey through the realms of metal, rock, doom, dark metal, and post-metal. Each composition is a portal, inviting listeners to immerse themselves in a hypnotic, magnetically charged experience. From the ethereal whispers of “Shadows” to the pulsating groove of “Mr. Smith”, the album unveils layers of darkness with theatrical flair.
+The Gates of Horror Dimensions
+
+In “Wolfheart”, Ignis Absconditus delves into the unpredictable territories of dark rock, while “Lucid Madness” captivates with its vibrancy, leaving listeners trembling in its wake. With “Carousel of the Departed” the gates to horror dimensions swing open, leading to an aggressive triumph of decadence in “Seagull's Laughter” The band’s Italian roots echo through the dark doom sounds of “Weight of Knowledge” culminating in the haunting conclusion of “Chasm Of Deceit”.
+A Tapestry of Influence
+
+Drawing inspiration from the greats of the ‘80s and the icons of doom, Ignis Absconditus crafts a narrative that is incisive. Their sound resonates with the echoes of Christian Death while embracing the extravagance of alternative, progressive, and avant-garde bands.           </p>
+          <a href="/article/Bird-stone-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
     <hr className="bg-white"></hr>
     <h3>Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
     <hr className="bg-white"></hr>
