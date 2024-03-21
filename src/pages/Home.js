@@ -4,7 +4,7 @@ import "./home.css";
 import Mnima from './../assets/Mnima.jpg';
 import Kroheim from './../assets/kroheim.jpg';
 import Passengers from './../assets/passengers.jpeg';
-import spell from './../assets/LiveSpell.jpg';
+import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
 import Footer from "../compoments/footer/footer";
@@ -46,7 +46,7 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container">
-  <h4>Heavy Local Reviews</h4>
+  <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
@@ -57,7 +57,7 @@ const Home = () => {
           Είναι γεγονός πως μετά από δύο χρόνια από το τελευταίο τους full-length, οι Έλληνες noise black metallers Μνήμα (Mnima) επέστρεψαν με μια πολύ δυνατή νέα κυκλοφορία αποτελούμενη από 4 αργά και βασανιστικά κομμάτια. Τα "Καταραμένα Λείψανα" ήρθαν υποσχόμενα να σηκώσουν τις τρίχες στους σβέρκους μας, με τα απόμακρα, θλιμμένα riffs, τον μόνιμο ήχο των ραδιοφωνικών παρασίτων και τα απόκοσμα ουρλιαχτά γεμάτα οδύνη.
 
 Ένα ακόμα αφιέρωμα στους τρόμους και τον μυστικισμό που κρύβει η τελετή της κηδείας, ο πόνος του θανάτου και η ματαιότητα του θνητού κόσμου του ανθρώπου. Εκεί που όλα τελειώνουν εκτός από τη μιζέρια, την αποσύνθεση και την παράνοια. Στο cover που στολίζει το συγκεκριμένο άλμπουμ βλέπουμε δύο χρώματα, μόνο το έντονο κόκκινο μέσα σε κατάμαυρο φόντο. Στα δεξιά του πλαισίου παριστάνεται ο εσταυρωμένος σε μια κατάσταση που προκαλεί απελπισία στα μάτια του θεατή. Μα αυτό που πραγματικά προκαλεί απόγνωση στη ψυχή είναι ο ήχος που συνοδεύεται από το album cover.  </p>
-          <a href="/article/mnima-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/forever-falling-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
@@ -69,7 +69,7 @@ const Home = () => {
           <p className="card-text lead">
           Οι Kromheim ξεκίνησαν ως ένα one - man project το 2020 στην Πολωνία, μια χώρα με αξιέπαινη παρουσία στον χώρο της extreme metal, με μπάντες όπως οι Vader και οι Behemoth να έχουν αναδειχθεί και να έχουν αφήσει ανεξίτηλο το σημάδι τους παγκοσμίως. Ιδρυτής τους ήταν ο Mikołaj Popławski (Μικολάι Ποπλιάβσκι) ο οποίος αποφάσισε το 2022 να μετακινηθεί στην Αγγλία όπου θα μετέτρεπε τους Kromheim σε μπάντα με κανονική σύνθεση, στο πλήρωμα από το 2022 θα συμμετείχαν εφεξής οι Duncan Arkley (μπάσο)  και Sot (κιθάρες). Το πρώτο τους έργο θα ήταν το 2020 το EP με όνομα Kromheim, στο οποίο ο Ποπλιάβσκι τα είχε αναλάβει εξ ολοκλήρου όλα μόνος του συνθετικά και ορχηστρικά, το 2022 με την συμμετοχή των Arkley και Sot πλέον θα κυκλοφορούσαν ένα single το The Landing ενώ το 2023 σε μια πλήρως παραγωγική χρονιά θα έβγαζαν στην δημοσιότητα 2 singles (War/ World Reborn) και το πρώτο τους πλήρες album το Journey To Divinity.
           </p>
-          <a href="/article/Kromheim_-_Band_review-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Nitriono-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
@@ -81,22 +81,21 @@ const Home = () => {
           <p className="card-text lead">
           Οι Passengers in Panic, μια εξ Αθηνών Progressive/Folk metal μπάντα, είναι μια ξεχωριστή δύναμη στην Ελληνική underground σκηνή. Αντλώντας στοιχεία από το ευρύ φάσμα της κλασικής μέταλ, τις μελωδίες της παραδοσιακής Ελληνικής μουσική και της πανκοειδούς (sic) hard rock, ο ετερόκλητος ήχος τους αιχμαλωτίζει τους ακροατές από την πρώτη κιόλας συγχορδία.
           </p>
-          <a href="/article/Chaos_and_Charm-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Ignis-Absconditus-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <hr className="bg-white"></hr>
-    <h3>Ανταποκριση Spellbound x Ushala x Tuber live στα Ιωαννινα </h3>
+    <h3>Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
     <hr className="bg-white"></hr>
       <div className='col-md-6'>
-<img src={spell} className="img-fluid"></img>
+<img src={Astronomica} className="img-fluid"></img>
       </div>
 
       <div className='col-md-6'>
         <p className="lead">
-        Μια πολύ ωραία βραδιά γεμάτη από ενορχηστρώσεις, με Προεξάρχοντες τους μπασίστες όλων των συμμετεχόντων συγκροτημάτων οι οποίοι έδωσαν λαϊκιστί τα πάντα, στους χώρους της stoner, της ψυχεδέλειας και της post που ταξίδεψε κάθε ακροατή από την αρχή ως το τέλος η οποία διοργανώθηκε από την 3P LAB έλαβε μέρος την Κυριακή. Από τους Spellbound ως τους Tuber όλοι έδωσαν τον καλύτερο εαυτό τους στην απόδοση ενώ ο χώρος από θέμα ακουστικής ήταν ικανοποιητικός από την σκηνή ως τα πιο πίσω μέρη του σχεδόν κατάμεστου venue του Πολυχώρου. Πάμε να δούμε ξεχωριστά την κάθε μπάντα! Πριν προχωρήσω ωστόσο σε περαιτέρω ανάλυση ας προσθέσω ότι το live διήρκεσε σχεδόν 4 ώρες, από τις 8 το βράδυ ως κοντά μεσάνυχτα! 
-        </p>
-        <a className="btn btn-danger" href="/article/live-coreresponse-archive">Read More</a>
+        Οι openers Dark Parrot, Γιαννιώτες, φρέσκο αίμα στον χώρο του μέταλ, είναι τέσσερις νεαροί με μπόλικο μεράκι και ταλέντο να μοιράσουν. Ο Φίλιππος (φωνή), ο Νότης (κιθάρα και δεύτερη φωνή), ο Νίο (μπάσο) και ο Δημήτρης (ντραμς) έχουν έρθει υποσχόμενοι να ταρακουνήσουν, να ξεσηκώσουν και να κρατήσουν αναμμένη την φλόγα στη μέταλ σκηνή των Ιωαννίνων και της Ελλάδας ευρύτερα. Με χιούμορ και καλή διάθεση, ο Φίλιππος μας καλωσόρισε στο event, αναγνωρίζοντας πρώτη από όλους τη μητέρα του στο κοινό, πράγμα υπέροχο να βλέπει κανείς τους γονείς να στηρίζουν τα παιδιά τους στο μουσικό ταξίδι τους. Συνεχίζοντας, ερμήνευσαν κομμάτια alt / punk rock / nu metal ρεπερτορίου, συμπεριλαμβανομένων και δύο δικών τους κομματιών, δίνοντας μας μια γεύση για τις επόμενες κυκλοφορίες τους. Το κλίμα ήταν θερμό, με την ενέργεια των παιδιών στη σκηνή αλλά και με το εύθυμο χιούμορ και τα πειράγματα των μελών της μπάντας, ιδιαίτερα του Φιλίππου και του Νότη ενδιάμεσα από κάθε τραγούδι. Τα παιδιά έκλεισαν με ένα δικό τους αντιπολεμικό κομμάτι, όπως είπαν 'in the making', αντιμετωπίζοντας την επικαιρότητα. Στη συνέχεια, αφού μας χάρισαν μια υπέροχη εισαγωγή, παρέδωσαν τη σκυτάλη στους…        </p>
+        <a className="btn btn-danger" href="/article/astronomica-response-archive">Read More</a>
       </div>
 
   </div>

@@ -50,7 +50,7 @@ const DefaultArticle = () => {
         <meta property="og:title" content={articles.title} />
     <meta property="og:description" content={articles.sub} />
     <meta property="og:image" content={articles.img01} /> {/* Προσαρμόστε τη μεταβλητή ανάλογα με την κύρια φωτογραφία */}
-    <meta property="og:url" content="https://heavylocal-2257a.web.app/" />
+    <meta property="og:url" content="https://heavy-local.com" />
     <meta property="og:type" content="article" /> {/* Χρησιμοποιήστε "article" αν το περιεχόμενο είναι άρθρο */}
         </HelmetProvider>                   
          <Navigation />
