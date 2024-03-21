@@ -4,6 +4,7 @@ import "./home.css";
 import Mnima from './../assets/ForeverFalling.jpg';
 import Kroheim from './../assets/Nitritono_Band.webp';
 import Passengers from './../assets/Ignis_Absconditus_Album.webp';
+import  Bird from './../assets/BirdStone.jpg'
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -52,7 +53,7 @@ const Home = () => {
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={Mnima} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Mnima :Band Review</h4>
+          <h4 className="card-title">A Synth-Infused Dirge of Doom: “Suspended over the Immanent” by Forever Falling </h4>
           <p className="card-text lead">
           A Unique Blend: Doom, Death, and Synth
 
@@ -69,7 +70,7 @@ Throughout the album, the guitar and bass work together to create a formidable w
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={Kroheim} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Kromheim - Band review</h4>
+          <h4 className="card-title">Nitritono Drops Explosive Single “Non È Questa La Vita Che Sognavo Da Bambina” from Upcoming Album “Cecità”</h4>
           <p className="card-text lead">
           Italian Post-Metal sensation Nitritono storms back into the limelight with their latest single “Non È Questa La Vita Che Sognavo Da Bambina”, offering a tantalizing preview of their forthcoming album “Cecità”. Evolving their signature sound into a captivating blend of atmospheric tranquility and thunderous intensity, Nitritono’s latest offering promises to push the boundaries of their craft further than ever before. Drawing inspiration from José Saramago’s literary masterpiece of the same name, the band delves deep into themes of existentialism, isolation, and the human condition, crafting an album that is as introspective as it is intense. “Non È Questa La Vita Che Volevo Da Bambina”          </p>
           <a href="/article/Nitriono-archive" className="btn btn-primary">Read More</a>
@@ -80,7 +81,7 @@ Throughout the album, the guitar and bass work together to create a formidable w
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={Passengers} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Chaos and Charms: “Passengers in Panic”</h4>
+          <h4 className="card-title">Ethereal Descent: Unveiling Ignis Absconditus’ “Golden Horses of a Dying Future”</h4>
           <p className="card-text lead">
           From the Abyss… They Come!
 
@@ -99,20 +100,13 @@ Drawing inspiration from the greats of the ‘80s and the icons of doom, Ignis A
 
     <div className="col-md-12 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Kroheim} alt="Zong"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Bird} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Kromheim - Band review</h4>
+          <h4 className="card-title">Birdstone - “Méandres” (Single Review)</h4>
           <p className="card-text lead">
-          From the Abyss… They Come!
+          Ξεφεύγοντας για λίγο από τον σκληρό ήχο της extreme metal και πηγαίνοντας προς πιο αισθηματικά και τρυφερά εδάφια αυτή την περίοδο, έτυχε να πέσει στην αντίληψή μου κάτι που ιδιαιτέρως οι αναγνώστες μας του γυναικείου φύλου θα εκτιμήσουν δεόντως, ένεκεν και της Παγκόσμιας Ημέρας Ποίησης, και αυτό το κάτι είναι το “Méandres” των Γάλλων Birdstone, μια ελεγειακή progressive μπάντα η οποία αυτό τον Μάρτιο κυκλοφόρησε ένα single το οποίο ζέστανε το είναι μου και ξύπνησε ένα αίσθημα νοσταλγίας, έχοντας καιρό να ερωτευτώ.
 
-“Golden Horses of a Dying Future” is a ten-track odyssey through the realms of metal, rock, doom, dark metal, and post-metal. Each composition is a portal, inviting listeners to immerse themselves in a hypnotic, magnetically charged experience. From the ethereal whispers of “Shadows” to the pulsating groove of “Mr. Smith”, the album unveils layers of darkness with theatrical flair.
-The Gates of Horror Dimensions
-
-In “Wolfheart”, Ignis Absconditus delves into the unpredictable territories of dark rock, while “Lucid Madness” captivates with its vibrancy, leaving listeners trembling in its wake. With “Carousel of the Departed” the gates to horror dimensions swing open, leading to an aggressive triumph of decadence in “Seagull's Laughter” The band’s Italian roots echo through the dark doom sounds of “Weight of Knowledge” culminating in the haunting conclusion of “Chasm Of Deceit”.
-A Tapestry of Influence
-
-Drawing inspiration from the greats of the ‘80s and the icons of doom, Ignis Absconditus crafts a narrative that is incisive. Their sound resonates with the echoes of Christian Death while embracing the extravagance of alternative, progressive, and avant-garde bands.           </p>
-          <a href="/article/Bird-stone-archive" className="btn btn-primary">Read More</a>
+Οι Birdstone είναι μια progressive rock μπάντα με έντονα heavy blues και mystic rock στοιχεία η οποία ιδρύθηκε το 2015 στην Γαλλία (διόλου τυχαία μια από τις πιο ρομαντικές και ερωτικές χώρες του πλανήτη) και αποτελείται από τους 1) Basile Chevalier-Coudrain (κιθάρα, πρώτα φωνητικά, μαντολίνο, πλήκτρα), 2) Edwige Thirion (μπάσο, κιθάρα, δεύτερα φωνητικά) και 3) Léo Gaufreteau (ντραμς, δεύτερα φωνητικά). Από το 2015 ως τώρα έχουν κυκλοφορήσει ένα EP (The Cage - 2017), δυο άλμπουμ (Seer - 2019 & Loss -2022) και 4 singles (Madness - 2022, The Trail - 2022, Hotline - 2023 & Méandres - 2024). Όπως οι ίδιοι δηλώνουν είναι μια μπάντα που οδηγείται από μια ακαταμάχητη επιθυμία να ενώσει την πνευματική δύναμη των Blues με τον πλούτο της progressive rock. Στα σταυροδρόμια των μυθολογικών θεμάτων, του εσωτερισμού και των απλών ανθρώπινων παθών, το τρίο αφηγείται τις εσώτερες διαμάχες των ανθρώπων, όπως επίσης και τους μυστικιστικούς τους στόχους. Κάθε συναυλία μετατρέπεται σε μια άγρια τελετουργία στην οποία οι ακροατές και οι μουσικοί με χρυσά πρόσωπα πολεμούν μαζί για την σωτηρία των ψυχών τους. Πράγματι ακούγοντάς τους επιβεβαιώνω την αυτοαναφορικότητα τους, καθώς με έκαναν να νιώσω ένα τρυφερό χάδι και μια γαλήνια αύρα μέσα μου ενώ τριγύρω τα πάντα βρίσκονται εντός ενός ταχύτατου και χαοτικού καταστροφικού τυφώνος.</p>          <a href="/article/Bird-stone-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
