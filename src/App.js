@@ -10,6 +10,7 @@ import DefaultArticle from './compoments/GenericArticle/GenericArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from './firebase'
 import LifeLover from './pages/articles/Chronicle-lifeLover';
+import Vertigo from './pages/articles/Vertigo-archive';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
       <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<ChronicleVOL2 />} />
       <Route path='/legends-2-archive' element={<LegendV0L2 />} />
       <Route path='/legends-4-archive' element={<LegendVOl3 />} />
+      <Route path='//Vertigo-archive' element={<Vertigo />} />
 
       <Route path='/article/:name' element={<DefaultArticle/>}/>
       

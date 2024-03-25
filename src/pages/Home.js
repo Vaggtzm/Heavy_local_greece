@@ -1,10 +1,10 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Mnima from './../assets/ForeverFalling.jpg';
-import Kroheim from './../assets/Nitritono_Band.webp';
-import Passengers from './../assets/Ignis_Absconditus_Album.webp';
-import  Bird from './../assets/BirdStone.jpg'
+import SleapDealer from './../assets/SleepDealer.webp';
+import Holler from './../assets/Holler_Members.jpg';
+import ECR from './../assets/ECR_LIMF_album.jpg';
+import  Vertigo from './../assets/Vertigo.jpg'
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -51,68 +51,63 @@ const Home = () => {
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Mnima} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={SleapDealer} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">A Synth-Infused Dirge of Doom: “Suspended over the Immanent” by Forever Falling </h4>
+          <h4 className="card-title">Band Review: Sleep Dealer </h4>
           <p className="card-text lead">
-          A Unique Blend: Doom, Death, and Synth
+          If I were asked about the best album or song that Sleep Dealer has produced, I definitely couldn’t provide an exact or proper answer that would suit the question.You can also choose your best song or best album, but I would certainly opt for the complete discography without skipping any albums. Eventually, you wouldn’t want to skip any songs from each album either.Every single note in each song has its own charming vibration. Sleep Dealer’s music speaks volumes, resonating deeply and offering solace during dark times.How is it possible for someone to fluently communicate in complex languages like JavaScript while simultaneously nurturing our immune system with assurance and self-love?          </p>
+          <a href="/article/Sleep-Dealer-review" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Holler} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere</h4>
+          <p className="card-text lead">
+          Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere
 
-The album, released on 27/11/2021 via MSH Music Group, opens with the haunting instrumental track “Bless This Floor”, where Carleo’s masterful piano work and synth strings set a captivating tone. From there, the listener is immersed in a world of slow, heavy compositions, expertly crafted to avoid monotony. Carleo’s use of keyboards adds a unique dimension to the genre, seamlessly integrating with the powerful instrumentation to create a sound both familiar and fresh.
-Powerful Instrumentation and Haunting Vocals
+Terence Holler’s “Reborn” pulsates with an electrifying energy, a testament to his unyielding spirit and artistic resurgence. Under the esteemed banner of Scarlet Records, Holler’s journey through the realms of rock is accompanied by a vibrant visual narrative. The album cover, adorned with radiant hues and a cyberpunk allure, serves as a prelude to the sonic odyssey awaiting listeners.
+Unveiling a New Era
 
-Throughout the album, the guitar and bass work together to create a formidable wall of sound, with clear bass tones complementing the powerful guitar riffs. While there are no guitar solos, the absence is hardly felt, as the strength of the compositions lies in their cohesion rather than flashy displays. The drumming, characterized by impactful snare hits and resonant cymbals, further bolsters the album’s intensity. However, it is John Suffering’s vocals that truly steal the spotlight. His deep growls, devoid of any artificial manipulation, convey an otherworldly presence that adds depth to each track. Particularly noteworthy are his performances on tracks like “Dark Friend”, “I Will Never Sleep”, “To Die in Silence”, and “Dark Painting of the I”, where his vocal prowess shines brightest.
+Terence Holler, the enigmatic Brooklyn-born rock luminary, strides boldly into the limelight with his inaugural solo endeavor, “Reborn”. Departing from the labyrinthine soundscape of Eldritch, Holler charts a new course, drawing inspiration from the timeless allure of classic rock. This album marks not only a musical evolution but a deeply personal journey for Holler, whose raw emotion and unabashed influences are palpable throughout.            </p>
+          <a href="/article/Holler-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={ECR} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">Philosophical Reverberations: ECR.LINF’s “Belluaires” Reviewed</h4>
+          <p className="card-text lead">
+          Chaos and Melancholy Intertwined
+
+From the tumultuous depths of “Le Désespoir du Prophète” to the haunting corridors of “Tribunal de l’Âme”, ECR.LINF navigates a labyrinth of emotions with prowess. The French vocals, intense and vindictive, have an immense power of guiding the listeners through a journey that oscillates between chaos and melancholy, echoing the existential ponderings of philosophers past..
           </p>
-          <a href="/article/forever-falling-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Kroheim} alt="Zong"></img>
-        <div className="card-body">
-          <h4 className="card-title">Nitritono Drops Explosive Single “Non È Questa La Vita Che Sognavo Da Bambina” from Upcoming Album “Cecità”</h4>
-          <p className="card-text lead">
-          Italian Post-Metal sensation Nitritono storms back into the limelight with their latest single “Non È Questa La Vita Che Sognavo Da Bambina”, offering a tantalizing preview of their forthcoming album “Cecità”. Evolving their signature sound into a captivating blend of atmospheric tranquility and thunderous intensity, Nitritono’s latest offering promises to push the boundaries of their craft further than ever before. Drawing inspiration from José Saramago’s literary masterpiece of the same name, the band delves deep into themes of existentialism, isolation, and the human condition, crafting an album that is as introspective as it is intense. “Non È Questa La Vita Che Volevo Da Bambina”          </p>
-          <a href="/article/Nitriono-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Passengers} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">Ethereal Descent: Unveiling Ignis Absconditus’ “Golden Horses of a Dying Future”</h4>
-          <p className="card-text lead">
-          From the Abyss… They Come!
-
-“Golden Horses of a Dying Future” is a ten-track odyssey through the realms of metal, rock, doom, dark metal, and post-metal. Each composition is a portal, inviting listeners to immerse themselves in a hypnotic, magnetically charged experience. From the ethereal whispers of “Shadows” to the pulsating groove of “Mr. Smith”, the album unveils layers of darkness with theatrical flair.
-The Gates of Horror Dimensions
-
-In “Wolfheart”, Ignis Absconditus delves into the unpredictable territories of dark rock, while “Lucid Madness” captivates with its vibrancy, leaving listeners trembling in its wake. With “Carousel of the Departed” the gates to horror dimensions swing open, leading to an aggressive triumph of decadence in “Seagull's Laughter” The band’s Italian roots echo through the dark doom sounds of “Weight of Knowledge” culminating in the haunting conclusion of “Chasm Of Deceit”.
-A Tapestry of Influence
-
-Drawing inspiration from the greats of the ‘80s and the icons of doom, Ignis Absconditus crafts a narrative that is incisive. Their sound resonates with the echoes of Christian Death while embracing the extravagance of alternative, progressive, and avant-garde bands.           </p>
-          <a href="/article/Ignis-Absconditus-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/ECR-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <h4>Heavy Local Reviews (GR)</h4>
-
-    <div className="col-md-12 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Bird} alt="Zong"></img>
+    <div className="col-md-12">
+    <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Vertigo} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Birdstone - “Méandres” (Single Review)</h4>
+          <h4 className="card-title">Psyanide-Vertigo:review</h4>
           <p className="card-text lead">
-          Ξεφεύγοντας για λίγο από τον σκληρό ήχο της extreme metal και πηγαίνοντας προς πιο αισθηματικά και τρυφερά εδάφια αυτή την περίοδο, έτυχε να πέσει στην αντίληψή μου κάτι που ιδιαιτέρως οι αναγνώστες μας του γυναικείου φύλου θα εκτιμήσουν δεόντως, ένεκεν και της Παγκόσμιας Ημέρας Ποίησης, και αυτό το κάτι είναι το “Méandres” των Γάλλων Birdstone, μια ελεγειακή progressive μπάντα η οποία αυτό τον Μάρτιο κυκλοφόρησε ένα single το οποίο ζέστανε το είναι μου και ξύπνησε ένα αίσθημα νοσταλγίας, έχοντας καιρό να ερωτευτώ.
+          Τον Γενάρη του 2020 βρισκόμουν παρών σε συναυλία των Suicidal Angels (απλά επικοί) και μαζί τους ως support band βρίσκονταν και οι Θεσσαλονικείς Psyanide. Αυτή ήταν και η πρώτη μου επαφή με την μουσική τους. Μετά την συναυλία το πρώτο πράγμα το οποίο αναζήτησα στο internet ήταν φυσικά το συγκρότημα Psyanide. Η μουσική τους και περισσότερο η ενέργεια που ξεχείλιζε από αυτήν είχαν κατακλύσει την ψυχή μου. Χρειαζόμουν περισσότερο Psyanide. 
+	Φυσικά, δεν χρειάζεται να μπω σε λεπτομέρειες λέγοντας ότι άκουσα κατευθείαν το άλμπουμ τους I Declare War (ακούστε το χθες). Από τότε οι Θεσσαλονικείς Melodeath/Groove Metalers κατέχουν θέση ανάμεσα στα αγαπημένα μου -τουλάχιστον ελληνικά- συγκροτήματα. 
+	Λίαν προσφάτως εξεπλάγην ευχάριστα μαθαίνοντας για την νέα τους κυκλοφορία υπό τον τίτλο Vertigo. Περιττό να σας πω ότι το έχω ήδη ακούσει αρκετές φορές και ότι η εντύπ- μισό λεπτό. Βιάζομαι χωρίς λόγο.
+	Λοιπόν, το άλμπουμ Vertigo των Psyanide διαρκεί 51 λεπτά και 13 δευτερόλεπτα. Η αλήθεια είναι ότι όσες φορές το άκουσα κατέληξα να ομολογώ «Τελείωσε κιόλας;». Ο δίσκος αποτελείται από δέκα κομμάτια. Ξεκινά με το τραγούδι Vertigo το οποίο δίνει και το όνομα στο άλμπουμ. Έξυπνο και ατμοσφαιρικό intro το οποίο αμέσως διαδέχεται ένα κύμα ενέργειας το οποίο σε ταρακουνάει για τα καλά. Σοφή επιλογή να ξεκινάει ο δίσκος με το συγκεκριμένο κομμάτι. Οι Θεσσαλονικείς από την αρχή δείχνουν πως έχουν μεγάλα κότσια. Οι μελωδίες, τα riffs, οι στίχοι και φυσικά τα φωνητικά σε ταξιδεύουν. Σε ταξιδεύουν σε ένα κόσμο με τα αστέρια από πάνω σου και να ονειρεύεσαι ότι ταξιδεύεις με ταχύτητα φωτός όπως λένε και οι στίχοι.
+	Ο δίσκος συνεχίζει να κινείται με το ίδιο σκληρό ανάλογο ύφος. Το κομμάτι Vertigo το διαδέχεται το εξίσου φαντασμαγορικό Empires Down το οποίο από την αρχή σε εκτοξεύει σε ακτίνα χιλιομέτρων. Το συγκεκριμένο κομμάτι καταφέρνει να περάσει το επαναστατικό του μήνυμα χωρίς όμως να φανεί ιδιαίτερα πολιτικό συνάμα αλλά έμμεσα και ποιητικά. Περιττό να σχολιάσουμε ότι στο τεχνικό κομμάτι παραμένουν τρομεροί
 
-Οι Birdstone είναι μια progressive rock μπάντα με έντονα heavy blues και mystic rock στοιχεία η οποία ιδρύθηκε το 2015 στην Γαλλία (διόλου τυχαία μια από τις πιο ρομαντικές και ερωτικές χώρες του πλανήτη) και αποτελείται από τους 1) Basile Chevalier-Coudrain (κιθάρα, πρώτα φωνητικά, μαντολίνο, πλήκτρα), 2) Edwige Thirion (μπάσο, κιθάρα, δεύτερα φωνητικά) και 3) Léo Gaufreteau (ντραμς, δεύτερα φωνητικά). Από το 2015 ως τώρα έχουν κυκλοφορήσει ένα EP (The Cage - 2017), δυο άλμπουμ (Seer - 2019 & Loss -2022) και 4 singles (Madness - 2022, The Trail - 2022, Hotline - 2023 & Méandres - 2024). Όπως οι ίδιοι δηλώνουν είναι μια μπάντα που οδηγείται από μια ακαταμάχητη επιθυμία να ενώσει την πνευματική δύναμη των Blues με τον πλούτο της progressive rock. Στα σταυροδρόμια των μυθολογικών θεμάτων, του εσωτερισμού και των απλών ανθρώπινων παθών, το τρίο αφηγείται τις εσώτερες διαμάχες των ανθρώπων, όπως επίσης και τους μυστικιστικούς τους στόχους. Κάθε συναυλία μετατρέπεται σε μια άγρια τελετουργία στην οποία οι ακροατές και οι μουσικοί με χρυσά πρόσωπα πολεμούν μαζί για την σωτηρία των ψυχών τους. Πράγματι ακούγοντάς τους επιβεβαιώνω την αυτοαναφορικότητα τους, καθώς με έκαναν να νιώσω ένα τρυφερό χάδι και μια γαλήνια αύρα μέσα μου ενώ τριγύρω τα πάντα βρίσκονται εντός ενός ταχύτατου και χαοτικού καταστροφικού τυφώνος.</p>          <a href="/article/Bird-stone-archive" className="btn btn-primary">Read More</a>
+          </p>
+          <a href="/Vertigo-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    
-
-
 
 
 
