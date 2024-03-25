@@ -17,10 +17,6 @@ const Carousel = ()=>{
     }
     return(
         <>
-                                            <h4>Take a look at our Art Gallery</h4>
-                                    <p className="lead">Metal inspired artworks by YOU</p>
-                                    <p className="lead">Submit your art at: heavylocalgreece@gmail.com</p>
-
        <Slider{...settings}>
         <div>
              <img src={CarouselItem} alt="Slide 1" />
