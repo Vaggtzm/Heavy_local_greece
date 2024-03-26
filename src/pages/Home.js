@@ -12,9 +12,12 @@ import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import Carousel from "./../compoments/carousel/carousel";
 import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
+import MetaTags from "../compoments/MetaTags/Meta";
+import Logo from "./../assets/HeavyLocalLogo.jpg";
 const Home = () => {
   return (
     <>
+    <MetaTags title="Heavy Local Magazine" image={Logo} ></MetaTags>
       <Navigation />
       <header>
 

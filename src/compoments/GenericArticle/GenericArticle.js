@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
-import { HelmetProvider } from "react-helmet-async";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -46,13 +45,6 @@ const DefaultArticle = () => {
 
     return (
         <>
-        <HelmetProvider>
-        <meta property="og:title" content={articles.title} />
-    <meta property="og:description" content={articles.sub} />
-    <meta property="og:image" content={articles.img01} /> {/* Προσαρμόστε τη μεταβλητή ανάλογα με την κύρια φωτογραφία */}
-    <meta property="og:url" content="https://heavy-local.com" />
-    <meta property="og:type" content="article" /> {/* Χρησιμοποιήστε "article" αν το περιεχόμενο είναι άρθρο */}
-        </HelmetProvider>                   
          <Navigation />
             <div className="container">
                 <div className="row">
