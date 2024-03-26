@@ -11,6 +11,7 @@ import Contact from "../compoments/ContactForm/contact";
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import Carousel from "./../compoments/carousel/carousel";
+import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
 const Home = () => {
   return (
     <>
@@ -32,6 +33,7 @@ const Home = () => {
                   <hr className="bg-dark" />
                   <Contact />
                   <Socials />
+                  <SocialBar/>
                   <hr className="bg-dark" />
                   <h5>Help us to grow </h5>
                    <a href="https://www.buymeacoffee.com/tzimasvagg7" className="btn btn-primary w-50">Donate</a>
