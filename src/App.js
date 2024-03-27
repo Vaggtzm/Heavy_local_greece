@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
