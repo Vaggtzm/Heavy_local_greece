@@ -4,7 +4,9 @@ import "./home.css";
 import SleapDealer from './../assets/SleepDealer.webp';
 import Holler from './../assets/Holler_Members.jpg';
 import ECR from './../assets/ECR_LIMF_album.jpg';
-import  Vertigo from './../assets/Vertigo.jpg'
+import  AutumnMachineryImg from './../assets/AutumnMachinery.webp'
+import ShadowImg from './../assets/434074293_849333507205481_2363706038138989976_n.webp';
+import PrimoridalBand from './../assets/Primordial.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Contact from "../compoments/ContactForm/contact";
@@ -52,6 +54,18 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container">
+        <div className="row">
+        <div className="col-md-6">
+        <h3>Primordial Black Interview on heavy local(ENG)</h3>
+        <img src={PrimoridalBand}  className="img-fluid shadow-lg rounded-2"/>
+        </div>
+<div className="col-md-6">
+  <p className="lead">
+  From the shadows of Carthage, Tunisia emerges Primordial Black, a band that defies convention and embraces the depths of darkness within their music. Since their inception in 2022, this enigmatic ensemble has carved a path through the metal landscape, melding Black, Heavy, and Groove Metal into a haunting symphony that resonates with themes of death, history, literature, and eldritch horrors. As they continue to captivate audiences with their ominous melodies and profound lyricism, we delve into the abyss with Primordial Black to uncover the essence of their sound and the infernal forces that drive them forward.
+  </p>
+  <a href="/Primordial-black-archive" className="btn btn-danger">Read More</a>
+</div>
+        </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
@@ -96,33 +110,35 @@ From the tumultuous depths of “Le Désespoir du Prophète” to the haunting c
       </div>
     </div>
     <h4>Heavy Local Reviews (GR)</h4>
-    <div className="col-md-12">
+    <div className="col-md-6">
     <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Vertigo} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={AutumnMachineryImg} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Psyanide-Vertigo:review</h4>
+          <h4 className="card-title">Φθινοπωρινά ταξίδια αντισυμβατικότητας και διαφορετικότητας - Autumn Machinery - Never looked so good (Album Review)</h4>
           <p className="card-text lead">
-          Τον Γενάρη του 2020 βρισκόμουν παρών σε συναυλία των Suicidal Angels (απλά επικοί) και μαζί τους ως support band βρίσκονταν και οι Θεσσαλονικείς Psyanide. Αυτή ήταν και η πρώτη μου επαφή με την μουσική τους. Μετά την συναυλία το πρώτο πράγμα το οποίο αναζήτησα στο internet ήταν φυσικά το συγκρότημα Psyanide. Η μουσική τους και περισσότερο η ενέργεια που ξεχείλιζε από αυτήν είχαν κατακλύσει την ψυχή μου. Χρειαζόμουν περισσότερο Psyanide. 
-	Φυσικά, δεν χρειάζεται να μπω σε λεπτομέρειες λέγοντας ότι άκουσα κατευθείαν το άλμπουμ τους I Declare War (ακούστε το χθες). Από τότε οι Θεσσαλονικείς Melodeath/Groove Metalers κατέχουν θέση ανάμεσα στα αγαπημένα μου -τουλάχιστον ελληνικά- συγκροτήματα. 
-	Λίαν προσφάτως εξεπλάγην ευχάριστα μαθαίνοντας για την νέα τους κυκλοφορία υπό τον τίτλο Vertigo. Περιττό να σας πω ότι το έχω ήδη ακούσει αρκετές φορές και ότι η εντύπ- μισό λεπτό. Βιάζομαι χωρίς λόγο.
-	Λοιπόν, το άλμπουμ Vertigo των Psyanide διαρκεί 51 λεπτά και 13 δευτερόλεπτα. Η αλήθεια είναι ότι όσες φορές το άκουσα κατέληξα να ομολογώ «Τελείωσε κιόλας;». Ο δίσκος αποτελείται από δέκα κομμάτια. Ξεκινά με το τραγούδι Vertigo το οποίο δίνει και το όνομα στο άλμπουμ. Έξυπνο και ατμοσφαιρικό intro το οποίο αμέσως διαδέχεται ένα κύμα ενέργειας το οποίο σε ταρακουνάει για τα καλά. Σοφή επιλογή να ξεκινάει ο δίσκος με το συγκεκριμένο κομμάτι. Οι Θεσσαλονικείς από την αρχή δείχνουν πως έχουν μεγάλα κότσια. Οι μελωδίες, τα riffs, οι στίχοι και φυσικά τα φωνητικά σε ταξιδεύουν. Σε ταξιδεύουν σε ένα κόσμο με τα αστέρια από πάνω σου και να ονειρεύεσαι ότι ταξιδεύεις με ταχύτητα φωτός όπως λένε και οι στίχοι.
-	Ο δίσκος συνεχίζει να κινείται με το ίδιο σκληρό ανάλογο ύφος. Το κομμάτι Vertigo το διαδέχεται το εξίσου φαντασμαγορικό Empires Down το οποίο από την αρχή σε εκτοξεύει σε ακτίνα χιλιομέτρων. Το συγκεκριμένο κομμάτι καταφέρνει να περάσει το επαναστατικό του μήνυμα χωρίς όμως να φανεί ιδιαίτερα πολιτικό συνάμα αλλά έμμεσα και ποιητικά. Περιττό να σχολιάσουμε ότι στο τεχνικό κομμάτι παραμένουν τρομεροί
+          Κυκλοφορώντας μόλις πριν 2 περίπου, τον Γενάρη δηλαδή, στις διαδικτυακές πλατφόρμες και στα venues των Αθηνών το νέο τους άλμπουμ με όνομα Never looked so good οι Autumn Machinery δημιούργησαν ένα πολύ αξιότιμο άλμπουμ το οποίο είναι ό,τι πιο ιδανικό για όποι@ θέλει να πάει μια βόλτα με το αμάξι ένα Οκτωβριανό απόγευμα σε ένα ορεινό τοπίο με τα φύλλα των δέντρων σε γήινα χρώματα, που αναμένει τον ερχομό του σκληρού χειμώνα. Οι Αθηναίοι Autumn Machinery συμφωνούν με αυτή την άποψη έμμεσα, καθώς οι ίδιοι υποστηρίζουν ότι έχουν ως σκοπό, όπως έκαναν και με το πρώτο τους άλμπουμ το “The Lake Tahoe Incident” (Μάιος 2020) ότι το έργο τους αποτελεί ένα αμάλγαμα alternative με post rock!
 
           </p>
-          <a href="/Vertigo-archive" className="btn btn-primary">Read More</a>
+          <a href="/Autumn-Machinery-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
 
 
-
-
-
-
-
-
-
-
+    <div className="col-md-6">
+    <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={ShadowImg} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">
+          Το άδειο δοχείο του δόγματος - Shadows Dance - Lifeless of the Sins (single review+πληροφορίες)
+          </h4>
+          <p className="card-text lead">
+          Τυχαία τελείως βρέθηκα μπροστά σε ένα κομμάτι γεμάτο από σκοτεινή γοτθική αισθητική, συμφωνικά και μελωδικά στοιχεία αλλά και πολλή επιρροή από death στοιχεία. Οι Αθηναίοι Shadows Dance μετά από πολλά χρόνια αποχής επανεμφανίστηκαν με ένα single το οποίο θα τραντάξει με τον θετικότερο τρόπο όποιον/α θελήσει να το ακούσει! Μερικά λόγια για την μπάντα… Οι Shadows Dance σχηματίστηκαν στην Αθήνα το 1998 από τον Δημήτρη Θεοδωρόπουλο (Dimi), τον κιθαρίστα, ο οποίος συνέθετε σκοτεινά κομμάτια με οπερατικά/συμφωνικά στοιχεία ενώ αργότερα ήρθαν μαζί του ο Βασίλης Ζαννιάς ο μπασίστας και ο πρώτος τραγουδιστής, ο Sahmor Naar ο οποίος προσέθεσε ένα πιο γοτθικό ηχόχρωμα. Την περίοδο 2000 με 2002 ηχογράφησαν 3 demo (Last Kiss - 2000/ Lilith - 2001 και The Moor Reflected Heretic Innocence - 2002) βοηθώντας τους έτσι να αποκτήσουν την δυνατότητα να ηχογραφήσουν με την Ολλανδική δισκογραφική Ebony Tears το 2003 το πρώτο τους πλήρες άλμπουμ, το A Quatrain for the damned διάρκειας 37 λεπτών και 55 δευτερολέπτων! Όμως αυτή η άνοδος έπαψε απότομα καθώς λόγω της αποχώρησης του Sahmor και προσωπικών κωλυμάτων της μπάντας τα πάντα τέθηκαν στον πάγο, ώσπου 20 χρόνια αργότερα έγινε η έκπληξη και επανήλθαν δυναμικά με την προσθήκη του Μπάμπη Οικονομόπουλου στα φωνητικά, χάρη στον οποίο κατάφεραν οι Shadows Dance μέσω της βοήθειας της Zero Gravity Studios να ηχογραφήσουν το εν λόγω κομμάτι! 
+          </p>
+          <a href="/Shadows-dance-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
     <hr className="bg-white"></hr>
     <h3>Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
     <hr className="bg-white"></hr>

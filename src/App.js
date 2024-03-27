@@ -11,7 +11,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from './firebase'
 import LifeLover from './pages/articles/Chronicle-lifeLover';
 import Vertigo from './pages/articles/Vertigo-archive';
-
+import Primordial from './pages/articles/Primordial-black-interview';
+import AutumnMachinery from './pages/articles/AutumnMachinery';
+import ShadowsDance from './pages/articles/ShadowsDance';
 
 function App() {
   // Initialize Firebase
@@ -29,7 +31,13 @@ function App() {
       <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<ChronicleVOL2 />} />
       <Route path='/legends-2-archive' element={<LegendV0L2 />} />
       <Route path='/legends-4-archive' element={<LegendVOl3 />} />
-      <Route path='//Vertigo-archive' element={<Vertigo />} />
+      <Route path='/Vertigo-archive' element={<Vertigo />} />
+      <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery />} />
+      <Route path='/Shadows-dance-archive' element={<ShadowsDance />} />
+      <Route path='/Primordial-black-archive' element={<Primordial />} />
+
+
+
 
       <Route path='/article/:name' element={<DefaultArticle/>}/>
       
