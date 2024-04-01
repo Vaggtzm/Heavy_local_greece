@@ -4,8 +4,8 @@ import "./home.css";
 import Severoth from './../assets/Severoth.webp';
 import Khavar from './../assets/review_picture.webp';
 import ECR from './../assets/ECR_LIMF_album.jpg';
-import  AutumnMachineryImg from './../assets/AutumnMachinery.webp'
-import ShadowImg from './../assets/434074293_849333507205481_2363706038138989976_n.webp';
+import  Lloth from './../assets/Lloth.jpg'
+import ShadowImg from './../assets/Falooda_Demo_2024_artwork.jpg';
 import PrimoridalBand from './../assets/Primordial.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
@@ -54,17 +54,6 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container">
-        <div className="row">
-        <div className="col-md-6">
-        <h3>Primordial Black Interview on heavy local(ENG)</h3>
-        <img src={PrimoridalBand}  className="img-fluid shadow-lg rounded-2"/>
-        </div>
-<div className="col-md-6">
-  <p className="lead">
-  </p>
-  <a href="/Primordial-black-archive" className="btn btn-danger">Read More</a>
-</div>
-        </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
@@ -109,7 +98,7 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
     <h4>Heavy Local Reviews (GR)</h4>
     <div className="col-md-6">
     <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={AutumnMachineryImg} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Lloth} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Τιμώντας την Αθανασία: Μια προεπισκόπηση στο “Athanati” των Lloth</h4>
           <p className="card-text lead">
@@ -129,12 +118,11 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
         <img className="card-img-top shadow-lg img-fluid" src={ShadowImg} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">
-          Το άδειο δοχείο του δόγματος - Shadows Dance - Lifeless of the Sins (single review+πληροφορίες)
-          </h4>
+          Ηχητική Αλχημεία: Αποκωδικοποιώντας την Μουσική Εξέλιξη των Falooda          </h4>
           <p className="card-text lead">
-          Τυχαία τελείως βρέθηκα μπροστά σε ένα κομμάτι γεμάτο από σκοτεινή γοτθική αισθητική, συμφωνικά και μελωδικά στοιχεία αλλά και πολλή επιρροή από death στοιχεία. Οι Αθηναίοι Shadows Dance μετά από πολλά χρόνια αποχής επανεμφανίστηκαν με ένα single το οποίο θα τραντάξει με τον θετικότερο τρόπο όποιον/α θελήσει να το ακούσει! Μερικά λόγια για την μπάντα… Οι Shadows Dance σχηματίστηκαν στην Αθήνα το 1998 από τον Δημήτρη Θεοδωρόπουλο (Dimi), τον κιθαρίστα, ο οποίος συνέθετε σκοτεινά κομμάτια με οπερατικά/συμφωνικά στοιχεία ενώ αργότερα ήρθαν μαζί του ο Βασίλης Ζαννιάς ο μπασίστας και ο πρώτος τραγουδιστής, ο Sahmor Naar ο οποίος προσέθεσε ένα πιο γοτθικό ηχόχρωμα. Την περίοδο 2000 με 2002 ηχογράφησαν 3 demo (Last Kiss - 2000/ Lilith - 2001 και The Moor Reflected Heretic Innocence - 2002) βοηθώντας τους έτσι να αποκτήσουν την δυνατότητα να ηχογραφήσουν με την Ολλανδική δισκογραφική Ebony Tears το 2003 το πρώτο τους πλήρες άλμπουμ, το A Quatrain for the damned διάρκειας 37 λεπτών και 55 δευτερολέπτων! Όμως αυτή η άνοδος έπαψε απότομα καθώς λόγω της αποχώρησης του Sahmor και προσωπικών κωλυμάτων της μπάντας τα πάντα τέθηκαν στον πάγο, ώσπου 20 χρόνια αργότερα έγινε η έκπληξη και επανήλθαν δυναμικά με την προσθήκη του Μπάμπη Οικονομόπουλου στα φωνητικά, χάρη στον οποίο κατάφεραν οι Shadows Dance μέσω της βοήθειας της Zero Gravity Studios να ηχογραφήσουν το εν λόγω κομμάτι! 
+          Στο ευρύ φάσμα της σύγχρονης μουσικής, μερικοί περφόρμερ δεν αναδύονται απλώς ως καλλιτέχνες, αλλά ως αρχιτέκτονες της ηχητικής εξέλιξης. Μεταξύ αυτών των φωστήρων βρίσκονται και οι Falooda, μια μπάντα της οποίας το όνομα έχει γίνει συνώνυμο με τον γενναίο πειραματισμό και την πρωτοποριακή δημιουργικότητα. Καθώς προετοιμαζόμαστε να ταξιδέψουμε μέσω των λαβυρινθωδών διαδρόμων του μουσικού σύμπαντος, σας προσκαλούμε να βουτήξετε βαθιά στην γένεση, στην νοοτροπία και στις μελλοντικές βλέψεις αυτού του αινιγματικού σχήματος. Ελάτε μαζί μας ενώ προσεγγίζουμε μια μια τις διαστάσεις του μουσικού σύμπαντος των Falooda, αποκαλύπτοντας το πάθος, την έμπνευση και την αφοσίωση που τροφοδοτεί την τέχνη τους.
           </p>
-          <a href="/Shadows-dance-archive" className="btn btn-primary">Read More</a>
+          <a href="/Primordial-black-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
