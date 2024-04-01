@@ -97,11 +97,9 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={PrimoridalBand} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Philosophical Reverberations: ECR.LINF’s “Belluaires” Reviewed</h4>
+          <h4 className="card-title">Band Review: Primordial Black</h4>
           <p className="card-text lead">
-          Chaos and Melancholy Intertwined
-
-From the tumultuous depths of “Le Désespoir du Prophète” to the haunting corridors of “Tribunal de l’Âme”, ECR.LINF navigates a labyrinth of emotions with prowess. The French vocals, intense and vindictive, have an immense power of guiding the listeners through a journey that oscillates between chaos and melancholy, echoing the existential ponderings of philosophers past..
+          From the North African continent, four young talented musicians gathered under the roof of a communal passion for metal music and embarked on their musical journey. Let us delve deeper and explore this path together. Primordial Black is a Tunisian death metal band formed in 2022 by four talented musicians, united by a singular commitment: to give birth to the name 'Primordial Black,' drawing inspiration from HP Lovecraft, Celtic Frost, and John Dee's philosophy. Their aim is to deliver challenges that resonate with the fundamentals of metal music.Thus, Primordial has always embodied the essence of sensitive rhythms combined with cruel sounds, speaking the truth of their existence. They manifest their influences from various legendary artists they have delved into.Their debut album, “The Worm that Gnaws at Night”, has plunged my soul into the void, bringing forth questions essential to our existence as humans.I started digging into their entire discography; the guitar riffs and strong vocals in “Only Death is Real” have sunk my soul and brought me back to where I belong, amidst the darkness that entirely covers the sky. Crossing fingers for a while, healing for all the non-targeted paths. 
           </p>
           <a href="/article/Primordial-black" className="btn btn-primary">Read More</a>
         </div>
