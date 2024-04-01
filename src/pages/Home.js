@@ -61,9 +61,8 @@ const Home = () => {
         </div>
 <div className="col-md-6">
   <p className="lead">
-  From the shadows of Carthage, Tunisia emerges Primordial Black, a band that defies convention and embraces the depths of darkness within their music. Since their inception in 2022, this enigmatic ensemble has carved a path through the metal landscape, melding Black, Heavy, and Groove Metal into a haunting symphony that resonates with themes of death, history, literature, and eldritch horrors. As they continue to captivate audiences with their ominous melodies and profound lyricism, we delve into the abyss with Primordial Black to uncover the essence of their sound and the infernal forces that drive them forward.
   </p>
-  <a href="/Primordial-black-archive" className="btn btn-danger">Read More</a>
+  <a href="/Falooda-archive" className="btn btn-danger">Read More</a>
 </div>
         </div>
   <h4>Heavy Local Reviews(ENG)</h4>
@@ -186,13 +185,12 @@ From the tumultuous depths of “Le Désespoir du Prophète” to the haunting c
                 Σήμερα Στο Legends
               </h3>
               <p className="lead text-white">
-              "Ο Σκοτεινός Μύθος Που κρυβει το ονομα των NightStalker"</p>
+              Γιώργος Κόλλιας - Από τα “αλώνια” της Κορινθίας στην κορυφή της Extreme Metal
+                        </p>
               <p className="lead text-white">
-              Nightstalker, η εμβληματική μπάντα. Ποιος δεν έχει τύχει να τους ακούσει έστω και για μια φορά; Μια stoner μπάντα με αρκετά χρόνια στο ενεργητικό της και κλασικές συνθέσεις όπως το “Dead Rock Commandos” και το “Children of the Sun”, οι οποίες έχουν την τιμητική τους σε αρκετές Ελληνικές playlist.
-
-Παίρνοντας τα πράγματα από την αρχή, το όνομα Nightstalker προέκυψε από από τα Αμερικανικά ΜΜΕ ως παρατσούκλι για τον κατά συρροή δολοφόνο Ρίτσαρντ Ραμίρεζ (1960-2013) που καταδικάστηκε για 13 δολοφονίες, 5 απόπειρες και 11 βιασμούς.
+              Σήμερα στο Legends θα γίνει μια ιδιαίτερη μνεία για έναν drummer, έναν Έλληνα drummer που έχει φτάσει να ανήκει στο πάνθεον της μέταλ και δη της death, τον Γιώργο Κόλλια! Παρόλο που πρόκειται για έναν βετεράνο καλλιτέχνη και λίαν καταξιωμένο, πασίγνωστο σε όλη την υφήλιο στους χώρους της Extreme Metal 
               </p>
-                            <a href="/legends-4-archive" className="btn btn-primary">
+                            <a href="/legends-5-archive" className="btn btn-primary">
                 Read More
               </a>
             </div>
