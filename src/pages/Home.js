@@ -62,7 +62,7 @@ const Home = () => {
 <div className="col-md-6">
   <p className="lead">
   </p>
-  <a href="/Falooda-archive" className="btn btn-danger">Read More</a>
+  <a href="/Primordial-black-archive" className="btn btn-danger">Read More</a>
 </div>
         </div>
   <h4>Heavy Local Reviews(ENG)</h4>
@@ -85,21 +85,17 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg img-fluid" src={Khavar} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere</h4>
+          <h4 className="card-title">Band Review Khavar</h4>
           <p className="card-text lead">
-          Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere
-
-Terence Holler’s “Reborn” pulsates with an electrifying energy, a testament to his unyielding spirit and artistic resurgence. Under the esteemed banner of Scarlet Records, Holler’s journey through the realms of rock is accompanied by a vibrant visual narrative. The album cover, adorned with radiant hues and a cyberpunk allure, serves as a prelude to the sonic odyssey awaiting listeners.
-Unveiling a New Era
-
-Terence Holler, the enigmatic Brooklyn-born rock luminary, strides boldly into the limelight with his inaugural solo endeavor, “Reborn”. Departing from the labyrinthine soundscape of Eldritch, Holler charts a new course, drawing inspiration from the timeless allure of classic rock. This album marks not only a musical evolution but a deeply personal journey for Holler, whose raw emotion and unabashed influences are palpable throughout.            </p>
+          In the the tumultuous landscape of Heavy metal, where innovation is both revered and rare, KHAVAR emerges as a titan in the middle east death metal scene. Their journey, marked by relentless passion and musical prowess, has not only defined a genre but also paved the way for countless others to follow.This band's discography is not just a collection of albums but a sonic manifesto that reshaped the very foundations of extreme music. Their relentless passion for music reverberates through every riff, growl, and thunderous beat, cementing their status as trailblazers and masters of their craft.From their debut In Aabsence Of Light album, a raw and unbridled onslaught of ferocious guitar work and guttural vocals, to their sophomore release 'sun swallow Earth,' where they delved deeper into atmospheric nuances while maintaining their signature brutality, this band has consistently pushed boundaries and defied expectations.Tracks like 'SLAVERY IS STILL' showcase their technical prowess and ability to seamlessly blend intricate melodies with savage aggression. Their lyrics, steeped in themes of existential dread and societal decay, resonate with a raw authenticity that is both haunting and cathartic.
+           </p>
           <a href="/article/Khavar-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={ECR} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={PrimoridalBand} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Philosophical Reverberations: ECR.LINF’s “Belluaires” Reviewed</h4>
           <p className="card-text lead">
@@ -107,7 +103,7 @@ Terence Holler, the enigmatic Brooklyn-born rock luminary, strides boldly into t
 
 From the tumultuous depths of “Le Désespoir du Prophète” to the haunting corridors of “Tribunal de l’Âme”, ECR.LINF navigates a labyrinth of emotions with prowess. The French vocals, intense and vindictive, have an immense power of guiding the listeners through a journey that oscillates between chaos and melancholy, echoing the existential ponderings of philosophers past..
           </p>
-          <a href="/article/ECR-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Primordial-black" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
