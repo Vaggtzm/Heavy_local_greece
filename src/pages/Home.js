@@ -1,8 +1,8 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import SleapDealer from './../assets/SleepDealer.webp';
-import Holler from './../assets/Holler_Members.jpg';
+import Severoth from './../assets/Severoth.webp';
+import Khavar from './../assets/review_picture.webp';
 import ECR from './../assets/ECR_LIMF_album.jpg';
 import  AutumnMachineryImg from './../assets/AutumnMachinery.webp'
 import ShadowImg from './../assets/434074293_849333507205481_2363706038138989976_n.webp';
@@ -69,18 +69,21 @@ const Home = () => {
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={SleapDealer} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Severoth} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Band Review: Sleep Dealer </h4>
+          <h4 className="card-title">Ethereal Triumph: Reviewing Severoth’s “By the Way of Light </h4>
           <p className="card-text lead">
-          If I were asked about the best album or song that Sleep Dealer has produced, I definitely couldn’t provide an exact or proper answer that would suit the question.You can also choose your best song or best album, but I would certainly opt for the complete discography without skipping any albums. Eventually, you wouldn’t want to skip any songs from each album either.Every single note in each song has its own charming vibration. Sleep Dealer’s music speaks volumes, resonating deeply and offering solace during dark times.How is it possible for someone to fluently communicate in complex languages like JavaScript while simultaneously nurturing our immune system with assurance and self-love?          </p>
-          <a href="/article/Sleep-Dealer-review" className="btn btn-primary">Read More</a>
+          In the throes of turmoil and strife, Severoth, the enigmatic force behind the atmospheric black metal project with same name, emerges with his latest creation: “By the Way of Light”. Crafted amidst personal tribulations and the tumult of life’s trials, Severoth’s latest creation, emerges as a testament to resilience and inner strength. Recorded and mixed meticulously by Severoth at Nordlys Home Studio across 2021 and 2023, the album exemplifies fastidious craftsmanship. “By the Way of Light” goes beyond conventional music, plumbing the depths of human emotion with every expertly executed detail.
+Delving into Haunting Melodies
+Severoth’s “By the Way of Light” presents five mesmerizing tracks that delve into the depths of the mind. Each composition stands as a poignant reflection on life’s struggles and triumphs, resonating with haunting melodies and raw emotion. Each song is meticulously crafted to evoke a range of emotions, from sorrow to defiance, from despair to hope. The melodies resonate with a raw authenticity. Throughout the album, Severoth demonstrates a mastery of musical storytelling, using melodies as a vehicle to express the complexities of the human experience. Whether through somber, introspective passages or blistering bursts of sonic aggression, each melody serves as a window into the artist's soul, inviting listeners to share in his journey of self-discovery and emotional catharsis.
+          </p>
+          <a href="/article/Severoth-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Holler} alt="Zong"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={Khavar} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere</h4>
           <p className="card-text lead">
@@ -90,7 +93,7 @@ Terence Holler’s “Reborn” pulsates with an electrifying energy, a testamen
 Unveiling a New Era
 
 Terence Holler, the enigmatic Brooklyn-born rock luminary, strides boldly into the limelight with his inaugural solo endeavor, “Reborn”. Departing from the labyrinthine soundscape of Eldritch, Holler charts a new course, drawing inspiration from the timeless allure of classic rock. This album marks not only a musical evolution but a deeply personal journey for Holler, whose raw emotion and unabashed influences are palpable throughout.            </p>
-          <a href="/article/Holler-archive" className="btn btn-primary">Read More</a>
+          <a href="/article/Khavar-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
