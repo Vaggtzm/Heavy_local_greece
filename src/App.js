@@ -34,7 +34,7 @@ function App() {
       <Route path='/Vertigo-archive' element={<Vertigo />} />
       <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery />} />
       <Route path='/Shadows-dance-archive' element={<ShadowsDance />} />
-      <Route path='/Primordial-black-archive' element={<Primordial />} />
+      <Route path='/Falooda-interview-archive' element={<Primordial />} />
       <Route path='/legends-5-archive' element={<GeorgeKollias />} />
 
 

@@ -54,6 +54,23 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container">
+        <div className="row">
+        <h3>Interviews:</h3>
+          <div className="col-md-12">
+    <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={ShadowImg} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">
+          Ηχητική Αλχημεία: Αποκωδικοποιώντας την Μουσική Εξέλιξη των Falooda          </h4>
+          <p className="card-text lead">
+          Στο ευρύ φάσμα της σύγχρονης μουσικής, μερικοί περφόρμερ δεν αναδύονται απλώς ως καλλιτέχνες, αλλά ως αρχιτέκτονες της ηχητικής εξέλιξης. Μεταξύ αυτών των φωστήρων βρίσκονται και οι Falooda, μια μπάντα της οποίας το όνομα έχει γίνει συνώνυμο με τον γενναίο πειραματισμό και την πρωτοποριακή δημιουργικότητα. Καθώς προετοιμαζόμαστε να ταξιδέψουμε μέσω των λαβυρινθωδών διαδρόμων του μουσικού σύμπαντος, σας προσκαλούμε να βουτήξετε βαθιά στην γένεση, στην νοοτροπία και στις μελλοντικές βλέψεις αυτού του αινιγματικού σχήματος. Ελάτε μαζί μας ενώ προσεγγίζουμε μια μια τις διαστάσεις του μουσικού σύμπαντος των Falooda, αποκαλύπτοντας το πάθος, την έμπνευση και την αφοσίωση που τροφοδοτεί την τέχνη τους.
+          </p>
+          <a href="/Falooda-interview-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+
+          </div>
+        </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
     <div className="col-md-4 mb-4">
@@ -113,19 +130,6 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
     </div>
 
 
-    <div className="col-md-6">
-    <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={ShadowImg} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Ηχητική Αλχημεία: Αποκωδικοποιώντας την Μουσική Εξέλιξη των Falooda          </h4>
-          <p className="card-text lead">
-          Στο ευρύ φάσμα της σύγχρονης μουσικής, μερικοί περφόρμερ δεν αναδύονται απλώς ως καλλιτέχνες, αλλά ως αρχιτέκτονες της ηχητικής εξέλιξης. Μεταξύ αυτών των φωστήρων βρίσκονται και οι Falooda, μια μπάντα της οποίας το όνομα έχει γίνει συνώνυμο με τον γενναίο πειραματισμό και την πρωτοποριακή δημιουργικότητα. Καθώς προετοιμαζόμαστε να ταξιδέψουμε μέσω των λαβυρινθωδών διαδρόμων του μουσικού σύμπαντος, σας προσκαλούμε να βουτήξετε βαθιά στην γένεση, στην νοοτροπία και στις μελλοντικές βλέψεις αυτού του αινιγματικού σχήματος. Ελάτε μαζί μας ενώ προσεγγίζουμε μια μια τις διαστάσεις του μουσικού σύμπαντος των Falooda, αποκαλύπτοντας το πάθος, την έμπνευση και την αφοσίωση που τροφοδοτεί την τέχνη τους.
-          </p>
-          <a href="/Primordial-black-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
     <hr className="bg-white"></hr>
     <h3>Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
     <hr className="bg-white"></hr>
@@ -142,6 +146,9 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
   </div>
 </div>
       </header>
+      <section className="Youtube">
+        <h3>Latest Youtube Videos</h3>
+      </section>
       <section className="live-chornicles">
         <div className="container">
           <h4>Live Chronicles by Daria (ENG)</h4>
