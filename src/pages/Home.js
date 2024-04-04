@@ -3,9 +3,9 @@ import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
 import Severoth from './../assets/Severoth.webp';
 import Khavar from './../assets/review_picture.webp';
-import ECR from './../assets/ECR_LIMF_album.jpg';
+import Holler from './../assets/Holler_Members.jpg';
 import  Lloth from './../assets/Lloth.jpg'
-import ShadowImg from './../assets/Falooda_Demo_2024_artwork.jpg';
+import ShadowImg from './../assets/AcidMammothSecond.jpg';
 import PrimoridalBand from './../assets/Primordial.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
@@ -16,10 +16,12 @@ import Carousel from "./../compoments/carousel/carousel";
 import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
 import MetaTags from "../compoments/MetaTags/Meta";
 import Logo from "./../assets/HeavyLocalLogo.jpg";
+import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
 const Home = () => {
   return (
     <>
     <MetaTags title="Heavy Local Magazine" image={Logo} ></MetaTags>
+
       <Navigation />
       <header>
 
@@ -47,7 +49,14 @@ const Home = () => {
               </div>
             </div>
             <div className="col-md-12">
+              <SpotifyBanner />
+              <hr className="bg-dark" />
+            </div>
+            <div className="col-md-12">
               <Carousel />
+            </div>
+            <div className="col-md-12">
+              <h3></h3>
             </div>
           </div>
         </div>
@@ -56,20 +65,50 @@ const Home = () => {
         <div className="container">
         <div className="row">
         <h3>Interviews:</h3>
-          <div className="col-md-12">
-    <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={ShadowImg} alt="Disimulator"></img>
+         <div className="col-md-4">
+         <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid Η" src={ShadowImg} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">
-          Ηχητική Αλχημεία: Αποκωδικοποιώντας την Μουσική Εξέλιξη των Falooda          </h4>
+          Interview: Acid Mammoth</h4>
           <p className="card-text lead">
-          Στο ευρύ φάσμα της σύγχρονης μουσικής, μερικοί περφόρμερ δεν αναδύονται απλώς ως καλλιτέχνες, αλλά ως αρχιτέκτονες της ηχητικής εξέλιξης. Μεταξύ αυτών των φωστήρων βρίσκονται και οι Falooda, μια μπάντα της οποίας το όνομα έχει γίνει συνώνυμο με τον γενναίο πειραματισμό και την πρωτοποριακή δημιουργικότητα. Καθώς προετοιμαζόμαστε να ταξιδέψουμε μέσω των λαβυρινθωδών διαδρόμων του μουσικού σύμπαντος, σας προσκαλούμε να βουτήξετε βαθιά στην γένεση, στην νοοτροπία και στις μελλοντικές βλέψεις αυτού του αινιγματικού σχήματος. Ελάτε μαζί μας ενώ προσεγγίζουμε μια μια τις διαστάσεις του μουσικού σύμπαντος των Falooda, αποκαλύπτοντας το πάθος, την έμπνευση και την αφοσίωση που τροφοδοτεί την τέχνη τους.
+          Welcome to our web magazine! Today, we have the honor of speaking with one of the most rad Mediterranean doom bands, known for their huge influence and their pride in their Sabbathian ancestry, Acid Mammoth—a prominent figure in the world of stoner doom and Sabbath worshiping. Thank you for joining us!
+1. ACID MAMMOTH is more likely a family gathering and a strong musical bonds above all but we would love to know more of How did the band come together, Have there been any significant setbacks or obstacles you've faced as a band, and how did you overcome them?
+Hi, Rawya! Thank you for this interview! I and our bassist formed the band in 2015. We have been friends for more than fifteen years, we are pretty much brothers, and we have been playing music together long before Acid Mammoth were formed. We formed the band because of our love for slow, heavy riffs, which we loved jamming together. It wasn’t long before my dad joined the band on guitar duty, and shortly after that, our drummer Marios. We’ve been together ever since. The line-up being comprised by the same four people has helped the band a lot in the shaping of our sound and the overall consistency from album to album. As for setbacks and obstacles, every band has had to face some, as they are part of everyday life. Thankfully, so far we haven’t faced an obstacle or setback to which there wasn’t a solution. No matter what might come up, we always strive to overcome it, we work together and we continue going forward. If I had to pick one obstacle, the covid pandemic was definitely a huge thorn on our side, as it put us on ice when it came to playing shows for two years. Thankfully these dark days seem to be in the past, and we can enjoy playing shows and interacting with people, hanging out together and having fun.
           </p>
-          <a href="/Falooda-interview-archive" className="btn btn-primary">Read More</a>
+          <a href="/Acid-Mammoth-interview-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
-
           </div>
+          <div className="col-md-4">
+         <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Khavar} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">
+          Interview: Khavar          </h4>
+          <p className="card-text lead">
+          Welcome to our web magazine!  Today we have the pleasure of speaking with Khavar, a prominent figure in the world of death metal in Lebanon!  Thank you for joining us!
+
+1. How did the band come together, and what inspired you to create Death metal music?
+Hello, my name is Garo Gdanian, guitarist and founder of Khavar. Alongside my brothers, we were previously known as The Weeping Willow, the first Death Metal band in the Middle East with more than 40 songs and 5 albums climbing to the 6th in a few months.          </p>
+          <a href="/Khavar-interview-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+          </div>
+          <div className="col-md-4">
+         <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg img-fluid" src={Holler} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">
+          Harmonic Rebirth: Deciphering Holler’s Journey          </h4>
+          <p className="card-text lead">
+          Holler Band, the dynamic musical force born from the ashes of Eldritch, unveils their highly anticipated debut album, “Reborn”. With a fusion of classic rock nostalgia and modern sensibilities, Holler redefines the genre landscape, delivering an electrifying sonic experience that resonates with audiences worldwide. Led by the incomparable Terence Holler, the band’s genesis traces back to a pivotal moment of separation, igniting a journey of introspection and renewal. Following a storied career with Eldritch, Terence took a hiatus to refocus, eventually joining forces with Denis and Matteo Chimenti, laying the foundation for a new musical odyssey. Later on, Leonardo Peruzzi (bass) and Alex Gasperini (drums) joined the band, marking a significant evolution in their sound and dynamics. In 2023, their collective efforts culminated in a harmonious fusion of talent, propelling the band towards new heights of creativity and expression.
+                   </p>
+          <a href="/Holler-interview-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+          </div>
+
         </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
@@ -146,9 +185,6 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
   </div>
 </div>
       </header>
-      <section className="Youtube">
-        <h3>Latest Youtube Videos</h3>
-      </section>
       <section className="live-chornicles">
         <div className="container">
           <h4>Live Chronicles by Daria (ENG)</h4>

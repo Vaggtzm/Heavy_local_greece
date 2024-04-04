@@ -1,0 +1,11 @@
+    /* Custom styles */
+    .spotify-banner {
+        background-color: #1DB954;
+        color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .spotify-logo {
+        width: 100px;
+      }

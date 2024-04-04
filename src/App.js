@@ -14,7 +14,9 @@ import Primordial from './pages/articles/Primordial-black-interview';
 import GeorgeKollias from './pages/articles/GeorgeKollias';
 import AutumnMachinery from './pages/articles/AutumnMachinery';
 import ShadowsDance from './pages/articles/ShadowsDance';
-
+import HollerInterview from './pages/articles/Interviews/Holler';
+import KhavarInterview from './pages/articles/Interviews/Khavar';
+import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
 function App() {
   // Initialize Firebase
 
@@ -35,6 +37,10 @@ function App() {
       <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery />} />
       <Route path='/Shadows-dance-archive' element={<ShadowsDance />} />
       <Route path='/Falooda-interview-archive' element={<Primordial />} />
+      <Route path='/Holler-interview-archive' element={<HollerInterview />} />
+      <Route path='/Khavar-interview-archive' element={<KhavarInterview />} />
+      <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth />} />
+
       <Route path='/legends-5-archive' element={<GeorgeKollias />} />
 
 
