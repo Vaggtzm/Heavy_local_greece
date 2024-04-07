@@ -33,3 +33,25 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_HEAVYLOCAL_2257A }}"
           projectId: heavylocal-2257a
           channelId: live
+      
+      
+      
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_HEAVYLOCAL_2257A }}'
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+        with:
+          version: '>= 363.0.0'
+      - name: 'Use gcloud CLI'
+        run: 'gcloud info'
+      - name: 'Deploy to gen2 cloud function'
+        run:  |
+          gcloud functions deploy <cloud-function-name> \
+          --gen2 \
+          --region=us-east1 \
+          --runtime=python310 \
+          --source=<source-folder-in-repo> \
+          --entry-point=<function-in-main-file> \
+          --trigger-topic=<topic-if-pub-sub>
