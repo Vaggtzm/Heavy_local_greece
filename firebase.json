@@ -13,12 +13,11 @@
       },
       {
         "source": "**",
-        "function":"webApi"
+        "destination": "/index.html"
       }
     ]
   },
   "functions": {
-    "source": "functions" ,
-    "runtime": "nodejs18"
+    "source": "functions"
   }
 }

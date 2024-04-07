@@ -75,19 +75,22 @@ app.get('/article/:name', async(req ,res)=>{
     try{
         const response = await fetch('https://heavy-local.com/articles' + name + '.json');
         if (!response.ok) {
-            throw new Error('Failed to fetch data');
+            console.log("Error fetching the json");
+            throw new Error('Failed to fetch data '+JSON.stringify(response.headers)+' : https://heavy-local.com/articles/' + name + '.json');
         }
         const Article = await response.json();
 
 
         
-        let data = await fs.readFile(filepath ,"utf-8");
-        data= data 
-        .replace((/__TITLE__/g , Article.title))
-        .replace((/__THUMB__/g,Article.img01));
+        let data = fs.readFileSync(filepath ,"utf-8")
+        .replace(/__TITLE__/g, Article.title)
+        .replace(/__THUMB__/g, Article.img01);
+
+        res.send(data);
     }
     catch(error){
-        console.log("ERROR " , error);
+        res.send(error);
+        console.log(error);
     }
 });
 
