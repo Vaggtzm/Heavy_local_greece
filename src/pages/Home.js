@@ -17,7 +17,9 @@ import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
 import MetaTags from "../compoments/MetaTags/Meta";
 import Logo from "./../assets/HeavyLocalLogo.jpg";
 import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
+import Youtube from "../compoments/YoutubeAPI/Youtube";
 const Home = () => {
+  
   return (
     <>
     <MetaTags title="Heavy Local Magazine" image={Logo} ></MetaTags>
@@ -64,6 +66,11 @@ const Home = () => {
         <hr className="bg-dark" />
         <div className="container">
         <div className="row">
+        <hr className="bg-white" />
+        <Youtube />
+
+        <hr className="bg-white" />
+
         <h3>Interviews:</h3>
          <div className="col-md-4">
          <div className="card h-100 w-100">
