@@ -23,7 +23,6 @@ const Home = () => {
   
   return (
     <>
-    <MetaTags title="Heavy Local Magazine" image={Logo} ></MetaTags>
 
       <Navigation />
       <header>
