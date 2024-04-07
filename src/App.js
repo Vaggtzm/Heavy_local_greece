@@ -27,29 +27,23 @@ function App() {
   return (
     <>
         <Routes>
-      <Route path='/' element ={<Home/> }/>
-      <Route path='/articles-page' element={<Articles />} />
-      <Route path='/Art-Gallery-page' element={<Gallery />} />
-      <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<ChronicleVOL2 />} />
-      <Route path='/legends-2-archive' element={<LegendV0L2 />} />
-      <Route path='/legends-4-archive' element={<LegendVOl3 />} />
-      <Route path='/Vertigo-archive' element={<Vertigo />} />
-      <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery />} />
-      <Route path='/Shadows-dance-archive' element={<ShadowsDance />} />
-      <Route path='/Falooda-interview-archive' element={<Primordial />} />
-      <Route path='/Holler-interview-archive' element={<HollerInterview />} />
-      <Route path='/Khavar-interview-archive' element={<KhavarInterview />} />
-      <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth />} />
-
-      <Route path='/legends-5-archive' element={<GeorgeKollias />} />
-
-
-
-
-
-      <Route path='/article/:name' element={<DefaultArticle/>}/>
+          <Route path='/' element ={<Home/> }/>
+          <Route path='/articles-page' element={<Articles />} />
+          <Route path='/Art-Gallery-page' element={<Gallery />} />
+          <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<ChronicleVOL2 />} />
+          <Route path='/legends-2-archive' element={<LegendV0L2 />} />
+          <Route path='/legends-4-archive' element={<LegendVOl3 />} />
+          <Route path='/Vertigo-archive' element={<Vertigo />} />
+          <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery />} />
+          <Route path='/Shadows-dance-archive' element={<ShadowsDance />} />
+          <Route path='/Falooda-interview-archive' element={<Primordial />} />
+          <Route path='/Holler-interview-archive' element={<HollerInterview />} />
+          <Route path='/Khavar-interview-archive' element={<KhavarInterview />} />
+          <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth />} />
+          <Route path='/legends-5-archive' element={<GeorgeKollias />} />
+          <Route path='/article/:name' element={<DefaultArticle/>}/>
       
-    </Routes>
+        </Routes>
 
     </>
   );

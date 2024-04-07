@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
+import Logo from "../../assets/HeavyLocalLogo.jpg";
+import MetaTags from "../MetaTags/Meta";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -45,7 +47,8 @@ const DefaultArticle = () => {
 
     return (
         <>
-         <Navigation />
+            <MetaTags title={articles.title} image={Logo} ></MetaTags>
+            <Navigation />
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">
