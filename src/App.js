@@ -7,8 +7,6 @@ import LegendV0L2 from './pages/articles/Aleah';
 import LegendVOl3 from './pages/articles/Legends-4'
 import DefaultArticle from './compoments/GenericArticle/GenericArticle';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import firebase from './firebase'
-import LifeLover from './pages/articles/Chronicle-lifeLover';
 import Vertigo from './pages/articles/Vertigo-archive';
 import Primordial from './pages/articles/Primordial-black-interview';
 import GeorgeKollias from './pages/articles/GeorgeKollias';
@@ -17,13 +15,37 @@ import ShadowsDance from './pages/articles/ShadowsDance';
 import HollerInterview from './pages/articles/Interviews/Holler';
 import KhavarInterview from './pages/articles/Interviews/Khavar';
 import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
+import { messaging } from './firebase';
+import {useEffect} from "react";
+import { getToken } from "firebase/messaging";
 function App() {
-  // Initialize Firebase
+
+
+
+  async function requestPermission() {
+    //requesting permission using Notification API
+    const permission = await Notification.requestPermission();
+
+    if (permission === "granted") {
+      const token = await getToken(messaging, {
+        vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
+      });
+
+      //We can send token to server
+      console.log("Token generated : ", token);
+    } else if (permission === "denied") {
+      //notifications are blocked
+      alert("You denied for the notification");
+    }
+  }
+
+  useEffect(() => {
+    requestPermission();
+  }, []);
+
+
 
   {/**firestore */}
-
-   
-
   return (
     <>
         <Routes>
