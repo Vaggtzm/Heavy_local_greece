@@ -30,9 +30,15 @@ const installApp = () => {
  };
 
  return (
-  <button onClick={installApp}>
+  <>
+  <hr className='bg-white' />
+  <h4 className='m-2'>HEAVY LOCAL MOBILE APP HERE:</h4>
+  <hr className='bg-white' />
+  <button className='btn btn-danger m-2' onClick={installApp}>
     Install App
   </button>
+
+  </>
 );
 }
 
