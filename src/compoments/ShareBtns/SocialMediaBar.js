@@ -1,12 +1,15 @@
 import React from "react";
 import { FacebookShareButton } from "react-share";
-
+import './css.css'
 const SocialBar = ()=>{
     const CurrentPage = typeof window !== 'undefined' ? window.location.href : '';
     return(
-       <FacebookShareButton url={CurrentPage}>
+        <div className="social-bar">
+         <FacebookShareButton url={CurrentPage}>
         Share To Facebook
        </FacebookShareButton>
+
+        </div>
     );
 };
 

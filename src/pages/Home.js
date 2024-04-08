@@ -58,6 +58,7 @@ const Home = () => {
               <Carousel />
             </div>
             <div className="col-md-12">
+            <Facebook />
               <h3></h3>
             </div>
           </div>

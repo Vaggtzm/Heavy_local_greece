@@ -6,6 +6,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
+import SocialBar from "../ShareBtns/SocialMediaBar";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -65,6 +66,7 @@ const DefaultArticle = () => {
                     </div>
                     <div className="col-md-6">
                         <div dangerouslySetInnerHTML={{ __html: articles.content }}></div>
+                        <SocialBar />
                         <PageWithComments />
 
                     </div>
