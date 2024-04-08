@@ -1,0 +1,24 @@
+
+.InstallButton{
+    display: none;
+}
+.Install{
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .Install{
+        display: block;
+    }
+    
+    .InstallButton {
+        padding: 1rem;
+        margin: 1rem;
+        border-radius: 30px;
+        width: 200px;
+        background-color: firebrick;
+        border: 1px solid wheat;
+        display: block;
+
+        }
+}

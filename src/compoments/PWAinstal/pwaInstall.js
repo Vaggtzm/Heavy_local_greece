@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import './PWA.css'
+
 
 function InstallButton() {
 const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -32,9 +34,9 @@ const installApp = () => {
  return (
   <>
   <hr className='bg-white' />
-  <h4 className='m-2'>HEAVY LOCAL MOBILE APP HERE:</h4>
+  <h4 className='m-2 Install'>HEAVY LOCAL MOBILE APP HERE:</h4>
   <hr className='bg-white' />
-  <button className='btn btn-danger m-2' onClick={installApp}>
+  <button className='InstallButton' onClick={installApp}>
     Install App
   </button>
 
