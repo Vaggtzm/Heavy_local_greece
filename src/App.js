@@ -18,7 +18,7 @@ import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
 import { messaging } from './firebase';
 import {useEffect} from "react";
 import { getToken } from "firebase/messaging";
-import Message from "./compoments/messaging/Message";
+import NotificationToast from "./compoments/messaging/Message";
 function App() {
 
 
@@ -49,7 +49,7 @@ function App() {
   {/**firestore */}
   return (
     <>
-      <Message/>
+      <NotificationToast/>
         <Routes>
           <Route path='/' element ={<Home/> }/>
           <Route path='/articles-page' element={<Articles />} />
