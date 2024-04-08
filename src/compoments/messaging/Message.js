@@ -1,33 +1,21 @@
-//import React, { useState, useEffect } from "react";
-//import { requestPermission, onMessageListener } from "./../../firebase";
-//import { Toaster, toast } from "react-hot-toast";
+import toast,{Toaster} from "react-hot-toast";
+import {onMessage} from 'firebase/messaging';
+import {messaging} from "../../firebase";
+import {useEffect} from "react";
 
-//function Notification() {
-  //const [notification, setNotification] = useState({ title: "", body: "" });
+function Notification() {
+    useEffect(() => {
+        onMessage(messaging, (payload) => {
+            console.log("New message", payload);
+            toast(payload.notification);
+        });
+    }, []);
 
-  //useEffect(() => {
-    //requestPermission();
-    //const unsubscribe = onMessageListener().then((payload) => {
-      //setNotification({
-        //title: payload?.notification?.title,
-        //body: payload?.notification?.body,
-      //});
-      //toast.success(`${payload.notification?.title}: ${payload?.notification?.body}`, {
-        //duration: 6000,
-        //position: "top-right",
-      //});
-    //});
+  return (
+    <div>
+      <Toaster />
+    </div>
+  );
+}
 
-    //return () => {
-      //unsubscribe.catch((err) => console.log("failed :", err));
-    ///};
-  //}, //[]);
-
-  //return (
-    ///<div>
-     // <Toaster />
-   // </div>
-  //);
-//}
-
-//export default Notification;
+export default Notification;
