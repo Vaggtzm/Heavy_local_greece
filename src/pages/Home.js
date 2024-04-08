@@ -18,7 +18,7 @@ import MetaTags from "../compoments/MetaTags/Meta";
 import Logo from "./../assets/HeavyLocalLogo.jpg";
 import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
 import Youtube from "../compoments/YoutubeAPI/Youtube";
-import Facebook from "../compoments/Facebook /FacebookApi";
+import InstallButton from "../compoments/PWAinstal/PWA.JS";
 const Home = () => {
   
   return (
@@ -42,6 +42,7 @@ const Home = () => {
                   <hr className="bg-dark" />
                   <Contact />
                   <Socials />
+                  <InstallButton />
                   <SocialBar/>
                   <hr className="bg-dark" />
                   <h5>Help us to grow </h5>
@@ -58,7 +59,6 @@ const Home = () => {
               <Carousel />
             </div>
             <div className="col-md-12">
-            <Facebook />
               <h3></h3>
             </div>
           </div>

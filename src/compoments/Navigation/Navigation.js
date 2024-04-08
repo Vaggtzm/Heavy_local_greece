@@ -15,7 +15,6 @@ const Navigation = () => {
             <Nav.Link href="/" className='text-white link'>Home</Nav.Link>
             <Nav.Link href="/articles-page" className='text-white link'>Articles</Nav.Link>
             <Nav.Link href="/Art-Gallery-page" className='text-white link'>Art Gallery</Nav.Link>
-
           </Nav>
         </Navbar.Collapse>
       </Container>
