@@ -3,8 +3,12 @@ const axios = require('axios');
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express()
+const { exec } = require("child_process");
 
 const moment = require('moment');
+
+const path = require ('path');
+const fs = require('fs');
 
 
 // Function to read the contents of the JSON files
@@ -70,21 +74,26 @@ async function fetchArticlesList(url) {
         //});
 //}
 app.get('/article/:name', async(req ,res)=>{
-    const filepath = path.resolve(__dirname ,"./build" , "index.html")
+    const filepath = path.resolve(__dirname ,"index.html");
+
     const name = req.params.name;
     try{
-        const response = await fetch('https://heavy-local.com/articles' + name + '.json');
+        const response = await fetch('https://heavy-local.com/articles/' + name + '.json');
         if (!response.ok) {
             console.log("Error fetching the json");
             throw new Error('Failed to fetch data '+JSON.stringify(response.headers)+' : https://heavy-local.com/articles/' + name + '.json');
         }
+        console.log('https://heavy-local.com/articles/' + name + '.json');
         const Article = await response.json();
-
-
         
         let data = fs.readFileSync(filepath ,"utf-8")
-        .replace(/__TITLE__/g, Article.title)
-        .replace(/__THUMB__/g, Article.img01);
+        .replace(/_TITLE_/g, Article.title)
+        .replace(/_THUMB_/g, Article.img01)
+//        .replace("/static", "/heavy-local-12bc4/us-central1/webApi/static")
+//        .replace("/assets", "/heavy-local-12bc4/us-central1/webApi/static/assets")
+ //       .replace("/articles", "/heavy-local-12bc4/us-central1/webApi/articles")
+   //     .replace("/static", "/heavy-local-12bc4/us-central1/webApi/static")
+        ;
 
         res.send(data);
     }
@@ -93,6 +102,8 @@ app.get('/article/:name', async(req ,res)=>{
         console.log(error);
     }
 });
+
+app.use("/", express.static(path.join(__dirname, 'build')));
 
 
 // Define a route that simulates the incoming request to your Cloud Function
@@ -106,19 +117,13 @@ app.get('/article/:name', async(req ,res)=>{
 
 
 
-const path = require ('path');
-const fs = require('fs');
-
-
-
 
 app.get( async(req ,res)=>{
     const filepath = path.resolve(__dirname ,"./build" , "index.html")
     const name = req.params.name;
     try{
 
-        let data = await fs.readFile(filepath ,"utf-8");
-        data= data 
+        let data = await fs.readFile(filepath ,"utf-8")
         .replace((/__TITLE__/g ,"Heavy local magazine" ))
         .replace((/__THUMB__/g, "https://heavy-local.com/assets/HeavyLocalLogo.jpg"));
     }

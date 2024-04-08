@@ -12,12 +12,17 @@
         "function": "generateRSS"
       },
       {
+        "source": "/article/**",
+        "function":"webApi"
+      },
+      {
         "source": "**",
-        "destination": "/index.html"
+        "destination":"/index.html"
       }
     ]
   },
   "functions": {
-    "source": "functions"
+    "source": "functions" ,
+    "runtime": "nodejs20"
   }
 }
