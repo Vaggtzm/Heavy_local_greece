@@ -10,8 +10,8 @@ function NotificationToast() {
 
 
     onMessage(messaging, (payload) => {
-        console.log("New message", payload);
-        toast(payload.notification);
+        console.log("New message", payload.notification.body);
+        toast(payload.notification.title+"\n\n\n\n"+payload.notification.body);
     });
   return (
     <div>
