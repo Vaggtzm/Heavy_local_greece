@@ -122,7 +122,6 @@ app.get( async(req ,res)=>{
     const filepath = path.resolve(__dirname ,"./build" , "index.html")
     const name = req.params.name;
     try{
-
         let data = await fs.readFile(filepath ,"utf-8")
         .replace((/__TITLE__/g ,"Heavy local magazine" ))
         .replace((/__THUMB__/g, "https://heavy-local.com/assets/HeavyLocalLogo.jpg"));
@@ -133,4 +132,6 @@ app.get( async(req ,res)=>{
 });
 
 
-exports.webApi = functions.https.onRequest(app);
+exports.webApi = functions.runWith({
+    enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
+}).https.onRequest(app);
