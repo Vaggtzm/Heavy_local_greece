@@ -1,3 +1,5 @@
+//TODO: check why this isn't working
+
 importScripts("https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.10.0/firebase-messaging-compat.js");
 const firebaseConfig = {
@@ -18,6 +20,7 @@ messaging.onBackgroundMessage(function (payload) {
     const notificationTitle = payload.notification.title;
     const notificationOptions = {
         body: payload.notification.body,
+        icon: payload.notification.image,
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);
