@@ -1,9 +1,11 @@
-
+import {getAuth} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import {getFirestore} from 'firebase/firestore';
 import {getMessaging} from 'firebase/messaging';
-import {getAuth} from 'firebase/auth'
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import {getStorage} from 'firebase/storage';
+
 const firebaseConfig = {
   apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
   authDomain: "heavy-local-12bc4.firebaseapp.com",
@@ -15,8 +17,17 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6Ldnq7UpAAAAAEuWy7_n_jEoPkpWouLdWmv3eZoJ'),
+
+  // Optional argument. If true, the SDK automatically refreshes App Check
+  // tokens as needed.
+  isTokenAutoRefreshEnabled: true
+});
+
 export const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const messaging = getMessaging(app);
-
+export const storage = getStorage(app);
+export const auth = getAuth(app);

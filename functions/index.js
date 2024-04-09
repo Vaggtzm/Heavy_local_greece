@@ -11,6 +11,8 @@ admin.initializeApp();
 
 
 
+
+
 app.get('/article/:article', async (req, res) => {
     const filepath = path.resolve(__dirname, "index.html");
     const name = req.params.article;
@@ -28,7 +30,7 @@ app.get('/article/:article', async (req, res) => {
         // Download file contents
         const fileData = await fileRef.download();
         const jsonData = JSON.parse(fileData.toString());
-
+        //jsonData.img01 = await getFirebaseStorageUrl(jsonData.img01);
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
         htmlData = htmlData.replace(/_TITLE_/g, jsonData.title);

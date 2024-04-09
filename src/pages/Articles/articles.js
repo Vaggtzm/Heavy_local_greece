@@ -7,10 +7,10 @@ import DawnOfTheDarkAge from './../../assets/Dawn_of_a_Dark_Age_Album.jpg'
 import TheyCameFromVissions from './../../assets/They_Came_from_Visions_Album.jpg'
 import Venus from './../../assets/Venus.jpg';
 import Falooda from './../../assets/Falooda_Demo_2024_artwork.jpg';
-import InnerLoad from './../../assets/InnerLord.webp';
-import WickedWizard from './../../assets/IdiotsCorrected.webp';
-import Hexaban from './../../assets/Hexaban.webp';
-import Demande from './../../assets/Demande.webp';
+import InnerLoad from './../../assets/InnerLord.jpg';
+import WickedWizard from './../../assets/IdiotsCorrected.jpg';
+import Hexaban from './../../assets/Hexaban.jpg';
+import Demande from './../../assets/Demande.jpg';
 import "./../home.css"
 const Articles =()=>{
     return(
