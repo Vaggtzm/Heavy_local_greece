@@ -1,6 +1,6 @@
 
 .InstallButton{
-    display: none;
+    opacity: 0;
 }
 .Install{
     display: none;
@@ -12,13 +12,10 @@
     }
     
     .InstallButton {
-        padding: 1rem;
-        margin: 1rem;
-        border-radius: 30px;
-        width: 200px;
-        background-color: firebrick;
-        border: 1px solid wheat;
         display: block;
-
         }
+        .InstallButton:hover {
+             background-color: blue;
+             transition: 1s;
+            }
 }

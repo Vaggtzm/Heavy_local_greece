@@ -19,7 +19,7 @@ import {messaging} from './firebase';
 import {useEffect} from "react";
 import {getToken} from "firebase/messaging";
 import NotificationToast from "./compoments/messaging/Message";
-
+import SignUp from './pages/Users/SignUp';
 function App() {
 
 
@@ -65,6 +65,8 @@ function App() {
                 <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
                 <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
+                <Route path='/SignUp' element={<SignUp/>}/>
+
                 <Route path='/article/:name' element={<DefaultArticle/>}/>
 
             </Routes>

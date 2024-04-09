@@ -36,7 +36,7 @@ const installApp = () => {
   <hr className='bg-white' />
   <h4 className='m-2 Install'>HEAVY LOCAL MOBILE APP HERE:</h4>
   <hr className='bg-white' />
-  <button className='InstallButton' onClick={installApp}>
+  <button className='InstallButton btn btn-danger m-2 p-1' onClick={installApp}>
     Install App
   </button>
 
