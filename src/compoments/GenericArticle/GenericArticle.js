@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Navigation from "./../Navigation/Navigation";
 import ReadMore from "./../ReadMore/ReadMore";
-import { useParams } from 'react-router-dom';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from "../../firebase";
+import {useParams} from 'react-router-dom';
+import {addDoc, collection} from 'firebase/firestore';
+import {db, storage} from "../../firebase";
 import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
 import SocialBar from "../ShareBtns/SocialMediaBar";
-
-
-import {storage} from "../../firebase";
-import {ref, getDownloadURL } from "firebase/storage"
+import {getDownloadURL, ref} from "firebase/storage"
 
 
 const DefaultArticle = () => {
@@ -27,6 +24,15 @@ const DefaultArticle = () => {
         }
     };
 
+    const getFirebaseStorageUrl = async (imageUrl) => {
+        // Parse imageUrl to extract filename (assuming imageUrl is in the format "https://example.com/images/filename.jpg")
+        const fileName = imageUrl.split('/').pop(); // Extract filename from imageUrl
+        const storageRef = ref(storage, `images/${fileName}`); // Construct Firebase Storage reference
+
+        // Get download URL for the Firebase Storage object
+        return await getDownloadURL(storageRef);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,8 +44,9 @@ const DefaultArticle = () => {
                     throw new Error('Failed to fetch data');
                 }
                 const data = await response.json();
+
+                data.img01 = await getFirebaseStorageUrl(data.img01);
                 setArticles(data);
-                console.log(data);
                 saveArticleToFirestore(data); // Καλούμε τη συνάρτηση για να αποθηκεύσουμε το άρθρο στη βάση δεδομένων Firestore
             } catch (error) {
                 console.error('Error fetching data:', error.message);
