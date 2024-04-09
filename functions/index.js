@@ -1,105 +1,43 @@
-const RSS = require('rss');
-const axios = require('axios');
+
 const functions = require('firebase-functions');
 const express = require('express');
-const app = express()
-const { exec } = require("child_process");
-
-const moment = require('moment');
+const app = express();
+const admin = require('firebase-admin');
 
 const path = require ('path');
 const fs = require('fs');
 
+admin.initializeApp();
 
-// Function to read the contents of the JSON files
-async function readJSONFileFromURL(url) {
+
+
+app.get('/article/:article', async (req, res) => {
+    const filepath = path.resolve(__dirname, "index.html");
+    const name = req.params.article;
+    console.log("Hello, file requested is: "+JSON.stringify(req.params));
+
     try {
-        const response = await axios.get(url);
-        return response.data;
-    } catch (error) {
-        console.error(`Error reading file from URL ${url}:`, error.message);
-        return null;
-    }
-}
+        // Retrieve file from Firebase Storage
+        const fileRef = admin.storage().bucket().file(`articles/${name}.json`);
+        const [fileExists] = await fileRef.exists();
 
-// Function to fetch articles list from the URL
-async function fetchArticlesList(url) {
-    try {
-        const response = await axios.get(url);
-        return response.data.split('\n').filter(Boolean);
-    } catch (error) {
-        console.error('Error fetching articles list:', error.message);
-        return [];
-    }
-}
-
-//const  generateRSS = async (req, res) => {
-  //  const ARTICLES_URL = 'https://heavy-local.com/articles/articles.txt';
-    //fetchArticlesList(ARTICLES_URL)
-      //  .then(async articlesList => {
-        //    // Create a new RSS feed
-          //  const feed = new RSS({
-            //    title: 'Heavy Local Articles',
-              //  description: 'Latest articles from Heavy Local',
-                //feed_url: 'https://heavy-local.com/rss',
-                //site_url: 'https://heavy-local.com',
-               // pubDate: new Date(),
-            //});
-
-            // Process each article
-            //for (const article of articlesList) {
-              //  const articleData = await readJSONFileFromURL(`https://heavy-local.com/articles/${article}.json`);
-                //if (articleData) {
-                  //  const articleUrl = `https://heavy-local.com/article/${article}`;
-                    //feed.item({
-                      //  title: articleData.title,
-                        //description: articleData.content,
-                        //url: articleUrl,
-                       // date: moment(articleData.date, "DD/MM/YYYY").format("ddd, DD MMM YYYY HH:mm:ss ZZ"),
-                    //});
-                    //console.log(articleData)
-                //}
-            //}
-
-            // Generate the RSS feed XML
-            //const rssFeedXML = feed.xml({indent: true});
-
-            // Write the RSS feed XML to a file
-            //res.set('Content-Type', 'text/xml');
-            //res.status(200).send(rssFeedXML);
-            //console.log('RSS feed generated successfully!');
-        //})
-        //.catch(error => {
-          //  res.status(500).send('Error fetching articles list:', error.message);
-        //});
-//}
-app.get('/article/:name', async(req ,res)=>{
-    const filepath = path.resolve(__dirname ,"index.html");
-
-    const name = req.params.name;
-    try{
-        const response = await fetch('https://heavy-local.com/articles/' + name + '.json');
-        if (!response.ok) {
-            console.log("Error fetching the json");
-            throw new Error('Failed to fetch data '+JSON.stringify(response.headers)+' : https://heavy-local.com/articles/' + name + '.json');
+        if (!fileExists) {
+            throw new Error(`File not found: articles/${name}.json`);
         }
-        console.log('https://heavy-local.com/articles/' + name + '.json');
-        const Article = await response.json();
-        
-        let data = fs.readFileSync(filepath ,"utf-8")
-        .replace(/_TITLE_/g, Article.title)
-        .replace(/_THUMB_/g, Article.img01)
-//        .replace("/static", "/heavy-local-12bc4/us-central1/webApi/static")
-//        .replace("/assets", "/heavy-local-12bc4/us-central1/webApi/static/assets")
- //       .replace("/articles", "/heavy-local-12bc4/us-central1/webApi/articles")
-   //     .replace("/static", "/heavy-local-12bc4/us-central1/webApi/static")
-        ;
 
-        res.send(data);
-    }
-    catch(error){
-        res.send(error);
-        console.log(error);
+        // Download file contents
+        const fileData = await fileRef.download();
+        const jsonData = JSON.parse(fileData.toString());
+
+        // Read and replace placeholders in the HTML template
+        let htmlData = fs.readFileSync(filepath, "utf-8");
+        htmlData = htmlData.replace(/_TITLE_/g, jsonData.title);
+        htmlData = htmlData.replace(/_THUMB_/g, jsonData.img01);
+
+        res.send(htmlData);
+    } catch (error) {
+        console.error('Error fetching article:', error);
+        res.status(500).send('Error fetching article');
     }
 });
 

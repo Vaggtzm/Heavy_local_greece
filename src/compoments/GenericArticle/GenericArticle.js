@@ -7,6 +7,12 @@ import { db } from "../../firebase";
 import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
 import SocialBar from "../ShareBtns/SocialMediaBar";
+
+
+import {storage} from "../../firebase";
+import {ref, getDownloadURL } from "firebase/storage"
+
+
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -24,7 +30,10 @@ const DefaultArticle = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/articles/' + name + '.json');
+                // Fetch JSON file from Firebase Storage
+                const articleSnapshot = await getDownloadURL(ref(storage, `articles/${name}.json`));
+                console.log(articleSnapshot);
+                const response = await fetch(articleSnapshot);
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }

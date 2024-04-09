@@ -4,6 +4,7 @@ import { getAnalytics } from 'firebase/analytics';
 import {getFirestore} from 'firebase/firestore';
 import {getMessaging} from 'firebase/messaging';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import {ref, getStorage} from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
@@ -30,3 +31,4 @@ export const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 export const messaging = getMessaging(app);
 
+export const storage = getStorage(app);
