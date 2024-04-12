@@ -3,11 +3,58 @@ const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const admin = require('firebase-admin');
+const RSS = require('rss');
 
 const path = require ('path');
 const fs = require('fs');
 
 admin.initializeApp();
+
+app.get('/feed', async (req, res) => {
+    const feed = new RSS({
+        title: 'Heavy Local Greece',
+        description: 'An active news website for underground metal bands',
+        feed_url: 'https://heavy-local.com/json',
+        site_url: 'https://heavy-local.com',
+        image_url: 'https://heavy-local.com/favicon.png',
+        managingEditor: 'editor@example.com',
+        webMaster: 'webmaster@example.com',
+        pubDate: new Date().toUTCString()
+    });
+
+    try {
+        const [files] = await admin.storage().bucket().getFiles({ prefix: 'articles/' });
+
+        for (const file of files) {
+            const [metadata] = await file.getMetadata();
+
+            if (!metadata.contentType.startsWith('application/json')) {
+                continue; // Skip non-JSON files
+            }
+
+            const articleData = await file.download();
+            const article = JSON.parse(articleData.toString());
+
+            const item = {
+                title: article.title,
+                description: article.content,
+                url: `https://heavy-local.com/article/${file.name.split('/').pop().replace('.json', '')}`,
+                author: article.sub,
+                date: new Date(article.date).toUTCString(),
+                enclosure: { url: article.img01 }
+            };
+
+            feed.item(item);
+        }
+
+        const xml = feed.xml({ indent: true });
+        res.set('Content-Type', 'application/rss+xml');
+        res.send(xml);
+    } catch (error) {
+        console.error('Error generating RSS feed:', error);
+        res.status(500).send('Error generating RSS feed');
+    }
+});
 
 
 
