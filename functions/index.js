@@ -17,35 +17,54 @@ app.get('/feed', async (req, res) => {
         feed_url: 'https://heavy-local.com/json',
         site_url: 'https://heavy-local.com',
         image_url: 'https://heavy-local.com/favicon.png',
-        managingEditor: 'editor@example.com',
-        webMaster: 'webmaster@example.com',
+        managingEditor: 'Heavy Local (<heavylocalgreece@gmail.com>)',
+        webMaster: 'Heavy Local (<heavylocalgreece@gmail.com>)',
         pubDate: new Date().toUTCString()
     });
 
-    try {
-        const [files] = await admin.storage().bucket().getFiles({ prefix: 'articles/' });
+    const bucket = admin.storage().bucket();
 
-        for (const file of files) {
+    try {
+        let files = [];
+        let nextPageToken = undefined;
+
+        do {
+            const [result] = await bucket.getFiles({
+                prefix: 'articles/',
+                maxResults: 1000,
+                pageToken: nextPageToken
+            });
+
+            files = files.concat(result);
+
+            nextPageToken = result.nextPageToken;
+        } while (nextPageToken);
+
+        const promises = files.map(async file => {
             const [metadata] = await file.getMetadata();
 
             if (!metadata.contentType.startsWith('application/json')) {
-                continue; // Skip non-JSON files
+                return; // Skip non-JSON files
             }
 
             const articleData = await file.download();
             const article = JSON.parse(articleData.toString());
 
+            let parts_of_date = article.date.split("/");
+
             const item = {
                 title: article.title,
-                description: article.content,
+                description: article.content.replace("/assets","https://heavy-local.com/assets"),
                 url: `https://heavy-local.com/article/${file.name.split('/').pop().replace('.json', '')}`,
                 author: article.sub,
-                date: new Date(article.date).toUTCString(),
+                date: new Date(+parts_of_date[2], parts_of_date[1] - 1, +parts_of_date[0]),
                 enclosure: { url: article.img01 }
             };
 
             feed.item(item);
-        }
+        });
+
+        await Promise.all(promises);
 
         const xml = feed.xml({ indent: true });
         res.set('Content-Type', 'application/rss+xml');
