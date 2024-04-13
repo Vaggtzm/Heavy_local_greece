@@ -14,11 +14,11 @@ app.get('/feed', async (req, res) => {
     const feed = new RSS({
         title: 'Heavy Local Greece',
         description: 'An active news website for underground metal bands',
-        feed_url: 'https://heavy-local.com/json',
+        feed_url: 'https://heavy-local.com/feed',
         site_url: 'https://heavy-local.com',
         image_url: 'https://heavy-local.com/favicon.png',
-        managingEditor: 'Heavy Local (<heavylocalgreece@gmail.com>)',
-        webMaster: 'Heavy Local (<heavylocalgreece@gmail.com>)',
+        managingEditor: 'heavylocalgreece@gmail.com (Heavy Local Greece)',
+        webMaster: 'heavylocalgreece@gmail.com (Heavy Local Greece)',
         pubDate: new Date().toUTCString()
     });
 
@@ -110,16 +110,6 @@ app.get('/article/:article', async (req, res) => {
 });
 
 app.use("/", express.static(path.join(__dirname, 'build')));
-
-
-// Define a route that simulates the incoming request to your Cloud Function
-//app.get('/rss-feed', generateRSS);
-//const PORT = process.env.PORT || 3000;
-//app.listen(PORT, () => {
- // console.log(`Server is running on port ${PORT}`);
-//});
-
-//exports.generateRSS = functions.https.onRequest(generateRSS);
 
 
 
