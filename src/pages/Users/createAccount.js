@@ -1,27 +1,34 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { NavLink, useNavigate } from 'react-router-dom';
+import Navigation from "../../compoments/Navigation/Navigation";
 import { auth } from "../../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import Navigation from "./../../compoments/Navigation/Navigation";
 
-const SignUp = () => {
+const CreateAccount = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword , setShowPassword] = useState(false);
 
   const onsubmit = async (e) => {
     e.preventDefault();
+    if (password.length < 8){
+      alert("Password should be at least 8 characters")
+      return;
+    }
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       console.log(user);
-      navigate("/");
+      navigate("/User");
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
     }
   };
+  const TogglePasswordVisibility = ()=> {
+    setShowPassword(prevState => !prevState);  }
 
   return (
     <>
@@ -43,13 +50,22 @@ const SignUp = () => {
           <div>
             <label className="form-label">Set Password</label>
             <input
-              type='password'
+              type={showPassword ? 'text' : 'password'}
               className='form-control m-2'
               placeholder='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <button 
+            type="button"
+            className="btn btn-outline-secondary m-2"
+            onClick={TogglePasswordVisibility}
+            
+            >
+            {showPassword ? "Hide Password" : "Show Password"}
+            </button>
+
           </div>
           <button
             type='submit'
@@ -68,4 +84,4 @@ const SignUp = () => {
   );
 }
 
-export default SignUp;
+export default CreateAccount;

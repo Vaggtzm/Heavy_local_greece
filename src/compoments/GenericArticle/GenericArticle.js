@@ -2,27 +2,18 @@ import React, {useEffect, useState} from "react";
 import Navigation from "./../Navigation/Navigation";
 import ReadMore from "./../ReadMore/ReadMore";
 import {useParams} from 'react-router-dom';
-import {addDoc, collection} from 'firebase/firestore';
-import {db, storage} from "../../firebase";
+import { storage} from "../../firebase";
 import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import {getDownloadURL, ref} from "firebase/storage"
-
-
+import SaveBTN from "../../pages/Users/SaveBTN/Save";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
 
+
     // Συνάρτηση για αποθήκευση του άρθρου στο Firestore
-    const saveArticleToFirestore = async (articleData) => {
-        try {
-            const docRef = await addDoc(collection(db, "Articles"), articleData);
-            console.log("Document written with ID: ", docRef.id);
-        } catch (error) {
-            console.error("Error adding document: ", error);
-        }
-    };
 
     const getFirebaseStorageUrl = async (imageUrl) => {
         // Parse imageUrl to extract filename (assuming imageUrl is in the format "https://example.com/images/filename.jpg")
@@ -47,7 +38,7 @@ const DefaultArticle = () => {
 
                 data.img01 = await getFirebaseStorageUrl(data.img01);
                 setArticles(data);
-                saveArticleToFirestore(data); // Καλούμε τη συνάρτηση για να αποθηκεύσουμε το άρθρο στη βάση δεδομένων Firestore
+                 // Καλούμε τη συνάρτηση για να αποθηκεύσουμε το άρθρο στη βάση δεδομένων Firestore
             } catch (error) {
                 console.error('Error fetching data:', error.message);
             }
@@ -84,7 +75,7 @@ const DefaultArticle = () => {
                         <div dangerouslySetInnerHTML={{ __html: articles.content }}></div>
                         <SocialBar />
                         <PageWithComments />
-
+                        <SaveBTN />
                     </div>
                     <ReadMore />
                 </div>
