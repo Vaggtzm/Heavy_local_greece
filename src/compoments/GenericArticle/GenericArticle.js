@@ -7,7 +7,6 @@ import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import {getDownloadURL, ref} from "firebase/storage"
-import SaveBTN from "../../pages/Users/SaveBTN/Save";
 const DefaultArticle = () => {
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
@@ -75,7 +74,6 @@ const DefaultArticle = () => {
                         <div dangerouslySetInnerHTML={{ __html: articles.content }}></div>
                         <SocialBar />
                         <PageWithComments />
-                        <SaveBTN />
                     </div>
                     <ReadMore />
                 </div>

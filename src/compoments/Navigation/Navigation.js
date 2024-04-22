@@ -15,10 +15,6 @@ const Navigation = () => {
             <Nav.Link href="/" className='text-white link'>Home</Nav.Link>
             <Nav.Link href="/articles-page" className='text-white link'>Articles</Nav.Link>
             <Nav.Link href="/Art-Gallery-page" className='text-white link'>Art Gallery</Nav.Link>
-            <a href="/Create" className='btn btn-outline-danger text-white link'>Create Account</a>
-            <a href="/" className='btn btn-outline-danger text-white link'>Sign Up</a>
-
-
           </Nav>
         </Navbar.Collapse>
       </Container>

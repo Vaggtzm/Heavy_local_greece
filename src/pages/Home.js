@@ -1,10 +1,12 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Severoth from './../assets/Severoth.webp';
+import Severoth from './../assets/Hydra.jpg';
 import Khavar from './../assets/review_picture.webp';
+import Civeroud from './../assets/Civerous.webp'
 import Holler from './../assets/Holler_Members.jpg';
-import  Lloth from './../assets/Lloth.jpg'
+import  Lloth from './../assets/Acyl.webp';
+import Birds from './../assets/Birds.webp';
 import ShadowImg from './../assets/AcidMammothSecond.jpg';
 import PrimoridalBand from './../assets/Primordial.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
@@ -42,7 +44,7 @@ const Home = () => {
                   <hr className="bg-dark" />
                   <Contact />
                   <Socials />
-                    <InstallButton/>
+                  <InstallButton/>
                   <SocialBar/>
                   <hr className="bg-dark" />
                   <h5>Help us to grow </h5>
@@ -118,41 +120,29 @@ Hello, my name is Garo Gdanian, guitarist and founder of Khavar. Alongside my br
         </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Severoth} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg h-100" src={Severoth} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Ethereal Triumph: Reviewing Severoth’s “By the Way of Light </h4>
+          <h4 className="card-title">Veins of Obsidian: Luctus' Hydra's Menacing Ode to Black Metal </h4>
           <p className="card-text lead">
-          In the throes of turmoil and strife, Severoth, the enigmatic force behind the atmospheric black metal project with same name, emerges with his latest creation: “By the Way of Light”. Crafted amidst personal tribulations and the tumult of life’s trials, Severoth’s latest creation, emerges as a testament to resilience and inner strength. Recorded and mixed meticulously by Severoth at Nordlys Home Studio across 2021 and 2023, the album exemplifies fastidious craftsmanship. “By the Way of Light” goes beyond conventional music, plumbing the depths of human emotion with every expertly executed detail.
-Delving into Haunting Melodies
-Severoth’s “By the Way of Light” presents five mesmerizing tracks that delve into the depths of the mind. Each composition stands as a poignant reflection on life’s struggles and triumphs, resonating with haunting melodies and raw emotion. Each song is meticulously crafted to evoke a range of emotions, from sorrow to defiance, from despair to hope. The melodies resonate with a raw authenticity. Throughout the album, Severoth demonstrates a mastery of musical storytelling, using melodies as a vehicle to express the complexities of the human experience. Whether through somber, introspective passages or blistering bursts of sonic aggression, each melody serves as a window into the artist's soul, inviting listeners to share in his journey of self-discovery and emotional catharsis.
-          </p>
-          <a href="/article/Severoth-archive" className="btn btn-primary">Read More</a>
+          Hellish hymns echoing through the void, powerful lyrics, unlimited passion - these are some of the things one needs to remember after listening to this band. From the depths of despair to the pinnacle of blasphemy, the discography of Luctus’ Hydra serves as a resolute embodiment of black metal’s enduring spirit. With albums such as “Screams and Laments from the Deepest of the Soul” and “Brutal Black”, the band has consistently pushed the boundaries of sonic extremity, delivering a relentless onslaught of aggression and despair. 
+The lyrics of Luctus’ Hydra delve into themes of disdain for organized religion, societal hypocrisy, and internal struggles with misanthropy and mental anguish. In “I Hate Your Faith”, the band expresses contempt for blind faith and the institutions that propagate it, condemning the idea of an afterlife and denouncing the hypocrisy of those who claim moral superiority. This sentiment is echoed in “My Damn Misanthropy”, where the protagonist grapples with his own disdain for humanity and the overwhelming sense of isolation it brings. Additionally, “Once Again I Have Changed” delves into the inner turmoil of personal transformation, portraying a struggle with insecurity, violence, and the haunting presence of inner demons. Throughout these lyrical journeys, Luctus’ Hydra confronts the darkness within and without, painting a visceral portrait of existential conflict and societal disillusionment          </p>
+          <a href="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Khavar} alt="Zong"></img>
+        <img className="card-img-top shadow-lg h-100" src={Civeroud} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Band Review Khavar</h4>
+          <h4 className="card-title">Band Review: Civerous</h4>
           <p className="card-text lead">
-          In the the tumultuous landscape of Heavy metal, where innovation is both revered and rare, KHAVAR emerges as a titan in the middle east death metal scene. Their journey, marked by relentless passion and musical prowess, has not only defined a genre but also paved the way for countless others to follow.This band's discography is not just a collection of albums but a sonic manifesto that reshaped the very foundations of extreme music. Their relentless passion for music reverberates through every riff, growl, and thunderous beat, cementing their status as trailblazers and masters of their craft.From their debut In Aabsence Of Light album, a raw and unbridled onslaught of ferocious guitar work and guttural vocals, to their sophomore release 'sun swallow Earth,' where they delved deeper into atmospheric nuances while maintaining their signature brutality, this band has consistently pushed boundaries and defied expectations.Tracks like 'SLAVERY IS STILL' showcase their technical prowess and ability to seamlessly blend intricate melodies with savage aggression. Their lyrics, steeped in themes of existential dread and societal decay, resonate with a raw authenticity that is both haunting and cathartic.
+          Maze Envy: A very unique, different album by the rapidly ascending Death Doom band Civerous, which puts us inside a twisted labyrinth coated in a bright, pale, otherworldly violet light that creates an off-putting, intriguing sense. The US-based Civerous made their debut in 2019 with their EPs "Raw Demo 1" and "Demo Mmxix" and continued the next year with a split together with Stygian Obsession (Heralds of Affliction). Keeping up with their annual streak, they presented us with their first full-length album titled "Decrepit Flesh Relic" in 2021.
+Following a three-year break, they made their powerful return with Maze Envy, the album that will be unfolded in front of your eyes (and ears) in the article you're now reading.
+It's hard to miss it amongst others in a pile, due to its intense violet, almost ultraviolet purple color that dominates the cover, combined with the dreadful maze that spreads widely in the frame, drawing all the looks to it. That's how I discovered it too, in a list of new releases featured on Bandcamp, and clicked on without hesitation. At this point, I must express that Juanjo Castellano, the artist of this cover and many more, has done exceptional work for the band, without a doubt.
            </p>
-          <a href="/article/Khavar-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={PrimoridalBand} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">Band Review: Primordial Black</h4>
-          <p className="card-text lead">
-          From the North African continent, four young talented musicians gathered under the roof of a communal passion for metal music and embarked on their musical journey. Let us delve deeper and explore this path together. Primordial Black is a Tunisian death metal band formed in 2022 by four talented musicians, united by a singular commitment: to give birth to the name 'Primordial Black,' drawing inspiration from HP Lovecraft, Celtic Frost, and John Dee's philosophy. Their aim is to deliver challenges that resonate with the fundamentals of metal music.Thus, Primordial has always embodied the essence of sensitive rhythms combined with cruel sounds, speaking the truth of their existence. They manifest their influences from various legendary artists they have delved into.Their debut album, “The Worm that Gnaws at Night”, has plunged my soul into the void, bringing forth questions essential to our existence as humans.I started digging into their entire discography; the guitar riffs and strong vocals in “Only Death is Real” have sunk my soul and brought me back to where I belong, amidst the darkness that entirely covers the sky. Crossing fingers for a while, healing for all the non-targeted paths. 
-          </p>
-          <a href="/article/Primordial-black" className="btn btn-primary">Read More</a>
+          <a href="/article/Civerous-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
@@ -160,19 +150,32 @@ Severoth’s “By the Way of Light” presents five mesmerizing tracks that del
     <h4>Heavy Local Reviews (GR)</h4>
     <div className="col-md-6">
     <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Lloth} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid h-100" src={Lloth} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Τιμώντας την Αθανασία: Μια προεπισκόπηση στο “Athanati” των Lloth</h4>
+          <h4 className="card-title">"Η Αύρα της Ερήμου - Acyl (band review)</h4>
           <p className="card-text lead">
-          Στους μελαγχολικούς ήχους της τραγωδίας και στο ανθεκτικό πνεύμα της ανάμνησης, το άλμπουμ των Lloth εν ονόματι “Athanati” (Αθάνατη) αναδύεται ως ένας σπαραχτικός φόρος τιμής στην τεράστια επιρροή της Μαρίας “Tristessa” Κολοκούρη. Σχηματισμένοι από την ίδια οι Lloth, υπό την “ηγεσία” πλέον του συζύγου της Νικόλα Μάη, παραδίδουν μια μελωδική black/death σύνθεση η οποία υπερβαίνει έναν απλό φόρο τιμής∙ ενσαρκώνει ένα εμβριθές αφιέρωμα στο ανυποδούλωτο πνεύμα της Μαρίας.
-
-Διαφοροποιώντας το Σκότος: Μια Μελωδική Οδύσσεια
-Καθένα από τα κομμάτια αυτής της σύνθεσης λειτουργεί ως ένας καμβάς για την καλλιτεχνική ευελιξία του συγκροτήματος, συνδυάζοντας το ωμό συναίσθημα με την μουσική λεπτότητα. Ιδιαιτέρως οι αναπλασμένες ερμηνείες παλαιότερων τραγουδιών όπως ο αυτοανακηρυγμένος ως ύμνος και το “I (Dead Inside)” αντηχούν με μια ενισχυμένη ισχύ, υπογραμμίζοντας την ανάπτυξη του άλμπουμ και την ηχητική του ωριμότητα.
-          </p>
-          <a href="/article/Lloth-archive" className="btn btn-primary">Read More</a>
+          Τα λόγια περιττεύουν για αυτή την μπάντα! Όποτε ακούω τους Acyl το αίσθημα του ενθουσιασμού με κατακλύζει για τον μουσικό και στιχουργικό τους πλουραλισμό και πιστεύω πως διαβάζοντας μερικά δικά μου λόγια για τους ίδιους και το έργο τους αλλά και ακούγοντας τους με τα δικά σας αυτιά θα τους λατρέψετε από το πρώτο γρατζούνισμα της κιθάρας! Ιδιαιτέρως όσοι ψάχνετε για νέες άγνωστες μπάντες με εξωτικούς αντισυμβατικούς ήχους! Πάμε να δούμε λοιπόν ποιοι είναι συνοπτικά οι Acyl! Οι Acyl είναι ένα πενταμελές σχήμα το οποίο δημιουργήθηκε το 2007 στο Παρίσι! Πιο συγκεκριμένα τα μέλης είναι τα εξής: 1) Salah (μπάσο, δεύτερη φωνή, Bendir και Karkabou), 2) Mickey (ντραμς, δεύτερη φωνή), 3) Reda (κιθάρες, δεύτερη φωνή και Karkabou), 4) Amine (Φωνητικά, κιθάρες, Oud, Bendir, Derbouka και Karkabou) και 5) Abder (κιθάρες). Μουσικά βρίσκονται στα πεδία της progressive metal με πολλά experimental ethnic στοιχεία, αναμειγνύοντας την παραδοσιακή μουσική του Μαγκρέμπ (Βόρεια Αφρική) με την Αραβική/Μεσο Ανατολίτικη και το metal στοιχείο! Έχουν τρομερά ηχοτοπία καθώς στις συγχορδίες αναμειγνύονται το παραδοσιακό με το σύγχρονο και πλάθουν έναν χάρμα ιδέσθαι ήχο ακόμη και για το επιλεκτικό και αυστηρό αυτί! Όργανα όπως το Oud, το Bendir, το Karkabou και το Derbouka έχουν την τιμητική τους και είναι αναπόσπαστα από την ενορχήστρωση, η οποία, μην ξεχαστώ, συνολικά είναι σχολαστικά δουλεμένη και πολυσύνθετη, όπως αρμόζει σε ένα σωστό progressive σχήμα! Οι Acyl είναι από την Αλγερία, ομογενείς όλοι στην Γαλλία, και το όνομα τους στα Αραβικά σημαίνει ο “Αυθεντικός”. Πράγματι είναι αυθεντικοί στον ήχο τους και στον στίχο τους στις κυκλοφορίες τους! Καθώς οι Acyl λειτουργούν ως ένας σύγχρονος και πραγματικός φορέας της Αλγερινής ιστορίας και παράδοσης ενώ στα φωνητικά τους είναι ισχυρή επίσης η παρουσία έκαστος των clean με τον harsh vocals ενώ πέραν του Αγγλικού στίχου στα κομμάτια τους εμφανίζονται και τα Αραβικά!          </p>
+          <a href="/article/Acyl-archinve" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
+
+    <div className="col-md-6">
+    <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg h-100" src={Birds} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">Υπερηχητικές πτήσεις ανά τη Γη - Birds of Nazca (band review)</h4>
+          <p className="card-text lead">
+          Πριν κάτι μήνες έπεσα πάνω σε ένα instrumental ντουέτο από την Γαλλία το οποίο με κέρδισε απευθείας! Αγαπώ την stoner και ως ένα ανήσυχο και εξερευνητικό πνεύμα αποφάσισα να βουτήξω απευθείας όταν μου εμφανίστηκε η ευκαιρία να το ακούσω και τους λάτρεψα απευθείας όχι μόνο για τις συγχορδίες τους αλλά και για την ιδιαίτερη και πρωτότυπη θεματολογία τους! Για αυτό και σήμερα θα μιλήσουμε για τους Birds of Nazca!Ποιοι είναι οι Birds of Nazca;Οι Birds of Nazca είναι λοιπόν όπως προανέφερα ένα διμελές σχήμα το οποίο δημιουργήθηκε το 2019 στην Ναντ της Γαλλίας, την πρωτεύουσα της rock'n'roll σκηνής της χώρας αυτής. Μέλη αυτού του σχήματος είναι ο Romauld (ντραμς) και ο Guillaume (κιθάρα)! Το αξιοπρόσεκτο και διακριτό χαρακτηριστικό τους είναι η απουσία του μπασίστα, καθώς το μπάσο σαν όργανο σε αυτό το είδος κατέχει μια εξέχουσα θέση στην μουσική σύνθεση! Ωστόσο δεν χάνουν σε τίποτα από την δυναμική των άλλων stoner και ψυχεδελικών συγκροτημάτων στην σύνθεση!Η μουσική που παίζουν βρίσκεται μεταξύ της stoner, της ψυχεδελικής και της doom, οπότε καταλαβαίνετε ότι πρόκειται για ένα σχήμα που έχει έναν βαρύ και fuzzy ήχο με μια κιθάρα μέσα στα distortions, ενώ τα φωνητικά απουσιάζουν! Είναι εξαιρετικοί πάντως, με καθηλωτικά solo στην κιθάρα μην ξεχάσω να αναφέρω, με τον Guillaume να καλύπτει αρκετά καλά την έλλειψη μπάσου! Οποιοσδήποτε αγαπάει τον stoner ήχο θα τους λατρέψει άμεσα από έναν σαγηνευτικό και αιθέριο ήχο που θα τον ταξιδέψει με μεγάλη βεβαιότητα! Μερικές επιρροές έχουν από τους King Buffalo και τους Queens of the Stone Age.Επιρροές και θεματολογίαΟι Birds of Nazca αντλούν το όνομά τους από την περίφημη Περουβιανή πόλη Nazca με τις διάσημες περίπλοκες και τεραστίων διαστάσεων γραμμές! Η Nazca σαν πόλη άκμασε από το 100 ως το 800 μ.Χ. στην προκολομβιανή αυτοκρατορία των Ίνκας και πέραν των προαναφερθεισών περίφημων γραμμών ήταν και από τις πιο εξελιγμένες, αφού οι ανασκαφές έδειξαν πως χρησιμοποιούσαν υπόγεια τροφοδοτούμενα από άνεμο υδραγωγεία! Πάμε να δούμε και μερικές επιρροές τους! 1) Πρώτο τους στοιχείο είναι τα πτηνά! Στο album τους το Bird of Nazca (2020) διάρκειας 40 λεπτών και 26 δευτερολέπτων και 8 κομματιών. Εστιάζουν κυρίως γύρω από τις πτήσεις των πτηνών και τους αιθέρες. Για παράδειγμα ένα κομμάτι, το Vulture Gryfus (6:02) μιλά για τον Κόνδορα των Άνδεων, ο οποίος αποτελεί εθνικό σύμβουλος για πολλούς λαούς της Λατινικής Αμερικής, ενώ ένα άλλο, το Almucantar, πραγματεύεται μια από τις παραλλήλους του υψόμετρου! Επίσης στο στο EP του 2023 H​é​liolite (19:46) κάνουν και σε ένα track το Spheniscus (4:52) την εμφάνισή τους οι μαυροπόδαροι πιγκουίνοι (Genus Spheniscus). Παράλληλα στις αρχές του Symposium από το album Birds of Nazca παρεμπιπτόντως παρουσιάζονται folk φωνητικά στην γλώσσα Quechua! Ιαπωνία - Περίοδος Έντο/Tokugawa (Kanagawa - single - 2019)2) Παρότι χρησιμοποίησαν την Nazca και τους Ίνκας κατ’επέκταση ως το όνομα της μπάντας ο Guillaume με τον Romauld στο πρώτο τους single το 2019, το Kanagawa
+          </p>
+          <a href="/article/Birds_of_nazca-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+
+
+
+
 
 
     <hr className="bg-white"></hr>

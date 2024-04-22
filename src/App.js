@@ -8,8 +8,6 @@ import { messaging } from './firebase';
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
-import UserHome from './pages/Users/UserHome/userHomepage';
-import CreateAccount from './pages/Users/createAccount';
 import LegendV0L2 from './pages/articles/Aleah';
 import AutumnMachinery from './pages/articles/AutumnMachinery';
 import GeorgeKollias from './pages/articles/GeorgeKollias';
@@ -67,10 +65,6 @@ function App() {
                 <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
                 
-                {/**users  */}
-                <Route path='/Create' element={<CreateAccount/>}/>
-                <Route path='/User' element={<UserHome/>}/>
-
 
                 <Route path='/article/:name' element={<DefaultArticle/>}/>
 
