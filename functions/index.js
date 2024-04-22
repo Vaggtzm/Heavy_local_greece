@@ -110,8 +110,8 @@ app.get('/article/:article', async (req, res) => {
 });
 
 app.get('/assets/*', async (req, res) => {
-    const filePath = req.path.replace('/assets/', '');
-
+    const imagePath = req.params[0];
+    const filePath = "images/" + imagePath;
     try {
     const file = await bucket.file(filePath).download();
     const [metadata] = await bucket.file(filePath).getMetadata();

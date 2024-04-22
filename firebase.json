@@ -16,6 +16,10 @@
         "function":"webApi"
       },
       {
+        "source": "/assets/**",
+        "function":"webApi"
+      },
+      {
         "source": "**",
         "destination":"/index.html"
       }
