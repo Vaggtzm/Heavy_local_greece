@@ -10,6 +10,8 @@ const fs = require('fs');
 
 admin.initializeApp();
 
+const bucket = admin.storage().bucket();
+
 app.get('/feed', async (req, res) => {
     const feed = new RSS({
         title: 'Heavy Local Greece',
@@ -21,8 +23,6 @@ app.get('/feed', async (req, res) => {
         webMaster: 'heavylocalgreece@gmail.com (Heavy Local Greece)',
         pubDate: new Date().toUTCString()
     });
-
-    const bucket = admin.storage().bucket();
 
     try {
         let files = [];
@@ -109,24 +109,25 @@ app.get('/article/:article', async (req, res) => {
     }
 });
 
-app.use("/", express.static(path.join(__dirname, 'build')));
+app.get('/assets/*', async (req, res) => {
+    const filePath = req.path.replace('/assets/', '');
 
+    try {
+    const file = await bucket.file(filePath).download();
+    const [metadata] = await bucket.file(filePath).getMetadata();
 
-
-
-app.get( async(req ,res)=>{
-    const filepath = path.resolve(__dirname ,"./build" , "index.html")
-    const name = req.params.name;
-    try{
-        let data = await fs.readFile(filepath ,"utf-8")
-        .replace((/__TITLE__/g ,"Heavy local magazine" ))
-        .replace((/__THUMB__/g, "https://heavy-local.com/assets/HeavyLocalLogo.jpg"));
+    if (metadata && metadata.contentType) {
+        res.contentType(metadata.contentType); // Set content type based on file's contentType
+    } else {
+        res.contentType('application/octet-stream'); // Fallback content type for unknown file types
     }
-    catch(error){
-        console.log("ERROR ");
+
+    res.send(file[0]);
+    } catch (error) {
+        console.error('Error fetching file:', error);
+        res.status(404).send('File not found');
     }
 });
-
 
 exports.webApi = functions.runWith({
     enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
