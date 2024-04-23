@@ -22,6 +22,27 @@ import ChronicleVOL2 from './pages/articles/chronicle-02';
 function App() {
 
 
+    const saveDeviceToken = async (token) => {
+        try {
+            const response = await fetch('/save_token/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message); // Log success message from Firebase Function
+            } else {
+                console.error('Failed to save device token');
+            }
+        } catch (error) {
+            console.error('Error saving device token:', error);
+        }
+    };
+
     async function requestPermission() {
         //requesting permission using Notification API
         const permission = await Notification.requestPermission();
@@ -33,6 +54,9 @@ function App() {
 
             //We can send token to server
             console.log("Token generated : ", token);
+
+            await saveDeviceToken(token);
+
         } else if (permission === "denied") {
             //notifications are blocked
             alert("You denied for the notification");

@@ -1,6 +1,7 @@
 {
   "projects": {
-    "production": "heavy-local-12bc4"
+    "production": "heavy-local-12bc4",
+    "default": "heavy-local-12bc4"
   },
   "targets": {},
   "etags": {}

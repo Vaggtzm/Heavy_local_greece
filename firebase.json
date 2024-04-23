@@ -12,27 +12,54 @@
         "function": "webApi"
       },
       {
+        "source": "/save_token/",
+        "function": "saveDeviceToken"
+      },
+      {
         "source": "/article/**",
-        "function":"webApi"
+        "function": "webApi"
       },
       {
         "source": "/assets/**",
-        "function":"webApi"
+        "function": "webApi"
       },
       {
         "source": "**",
-        "destination":"/index.html"
+        "destination": "/index.html"
       }
     ]
   },
   "functions": {
-    "source": "functions" ,
+    "source": "functions",
     "runtime": "nodejs20"
   },
   "emulators": {
     "functions": {
       "host": "localhost",
       "port": "8443"
+    },
+    "database": {
+      "port": 9000
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "storage": {
+      "port": 9199,
+      "rules": "firestore.rules"
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true,
+    "firestore": {
+      "port": 8080
     }
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }
