@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import {getDatabase} from 'firebase/database';
 import {getMessaging} from 'firebase/messaging';
-//import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
 
 const firebaseConfig = {
@@ -19,13 +19,13 @@ const firebaseConfig = {
 
   export const app = initializeApp(firebaseConfig);
 
-//const appCheck = initializeAppCheck(app, {
-  //provider: new ReCaptchaV3Provider('6Ldnq7UpAAAAAEuWy7_n_jEoPkpWouLdWmv3eZoJ'),
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
 
   // Optional argument. If true, the SDK automatically refreshes App Check
   // tokens as needed.
-  //isTokenAutoRefreshEnabled: true
-//});
+  isTokenAutoRefreshEnabled: true
+});
 
 export const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);
