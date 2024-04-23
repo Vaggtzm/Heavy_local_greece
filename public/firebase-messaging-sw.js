@@ -1,5 +1,21 @@
 //TODO: check why this isn't working
 
+self.addEventListener('notificationclick', function(event) {
+    console.log('Notification clicked:', event);
+
+    event.notification.close();
+
+    const clickAction = event.notification.data.url;
+    console.log('Click action URL:', clickAction);
+
+    if (clickAction) {
+        clients.openWindow(clickAction);
+    } else {
+        clients.openWindow("https://heavy-local.com");
+    }
+});
+
+
 importScripts("https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js");
 importScripts("https://www.gstatic.com/firebasejs/10.10.0/firebase-messaging-compat.js");
 const firebaseConfig = {
@@ -21,6 +37,7 @@ messaging.onBackgroundMessage(function (payload) {
     const notificationOptions = {
         body: payload.notification.body,
         icon: payload.notification.image,
+        data: { url: payload.data.url}
     };
 
     self.registration.showNotification(notificationTitle, notificationOptions);

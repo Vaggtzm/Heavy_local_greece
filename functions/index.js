@@ -168,18 +168,16 @@ exports.sendNotification = functions.storage.object().onFinalize(async (object) 
         // Extract the articleId from the file path
         const articleId = filePath.split('/')[1];
 
-        // Fetch the article data from Firestore based on articleId
-        
-
         // Prepare the notification payload with a link
         const payload = {
             notification: {
                 title: 'New Article Uploaded!',
-                body: "Go to Heavy Local to read our new article", // Assuming 'title' field exists in the article document
+                body: 'Go to Heavy Local to read our new article',
+                image: 'https://heavy-local.com/favicon.png'
             },
             data: {
                 articleId: articleId,
-                url: `https://heavy-local.com/article/${articleId}`, // URL to open when notification is clicked
+                url: `https://heavy-local.com/article/${articleId.replace(/\.json$/, '')}`,
             },
         };
 
@@ -187,18 +185,25 @@ exports.sendNotification = functions.storage.object().onFinalize(async (object) 
         const tokens = await getDeviceTokens(); // Implement this function to fetch tokens
 
         // Send FCM notification to each device token
-        const responses = [];
+        const deleteTokensPromises = [];
         for (const token of tokens) {
             const message = {
                 token: token,
                 notification: payload.notification,
                 data: payload.data,
             };
-            responses.push(admin.messaging().send(message));
+            try {
+                await admin.messaging().send(message);
+            } catch (error) {
+                console.error('Error sending notification to token:', token, error);
+                // If sending fails due to an error, delete the token from Realtime Database
+                const tokenRef = database.ref(`deviceTokens/${token}`);
+                deleteTokensPromises.push(tokenRef.remove());
+            }
         }
 
-        // Wait for all messages to be sent
-        await Promise.all(responses);
+        // Wait for all delete operations to complete
+        await Promise.all(deleteTokensPromises);
 
         console.log('Notifications sent successfully');
     } catch (error) {
