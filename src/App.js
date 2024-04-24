@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { getToken } from "firebase/messaging";
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 import { Route, Routes } from 'react-router-dom';
 import DefaultArticle from './compoments/GenericArticle/GenericArticle';
 import NotificationToast from "./compoments/messaging/Message";
@@ -19,8 +19,9 @@ import Primordial from './pages/articles/Primordial-black-interview';
 import ShadowsDance from './pages/articles/ShadowsDance';
 import Vertigo from './pages/articles/Vertigo-archive';
 import ChronicleVOL2 from './pages/articles/chronicle-02';
+import Loader from './compoments/PreLoader/PreLoader';
 function App() {
-
+    const [loading, setLoading] = useState(true);
 
     const saveDeviceToken = async (token) => {
         try {
@@ -56,6 +57,7 @@ function App() {
             console.log("Token generated : ", token);
 
             await saveDeviceToken(token);
+            setLoading(false);
 
         } else if (permission === "denied") {
             //notifications are blocked

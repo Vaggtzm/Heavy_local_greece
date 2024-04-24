@@ -1,77 +1,102 @@
 
 /* home.css */
+
+/* Υφασματόστρωμα για την γραμματοσειρά */
 @font-face {
-    font-family: Font-1;
-    src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
+  font-family: Font-1;
+  src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
 }
+
 /* Στυλ για το header */
 header {
-    background-color: #343a40; /* Χρώμα φόντου */
-    color: white; /* Χρώμα κειμένου */
-    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-  }
-  
-  /* Στυλ για τα κεντρικά στοιχεία του header */
-  .jumbotron {
-    background-color: transparent; /* Διαφάνεια στο background του jumbotron */
-  }
-  
-  .jumbotron h1, .jumbotron p {
-    margin-bottom: 20px; /* Απόσταση κάτω */
-  }
-  
-  /* Στυλ για τον τίτλο */
-  .font-1 {
-    color: #0a0701; /* Χρώμα γραμματοσειράς */
-    font-family: Font-1;
+  color: white; /* Χρώμα κειμένου */
+  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+  background-image: url(./../assets/MainBackground.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 
+.main{
+  background: rgba(0, 0, 0, 0.62);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7px);
+-webkit-backdrop-filter: blur(7px);
+border: 1px solid rgba(0, 0, 0, 0.84);
+}
+
+/* Στυλ για τα κεντρικά στοιχεία του header */
+
+/* Στυλ για τον τίτλο */
+.font-1 {
+  color: whitesmoke; /* Χρώμα γραμματοσειράς */
+  font-family: Font-1;
+}
+
+/* Στυλ για την ενότητα με τα reviews */
+.reviews-section {
+  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+}
+
+.card {
+  padding: 10px; /* Απόσταση κάτω */
+  margin-inline:  1rem;
+}
+
+.card-img-top {
+  height: 200px; /* Ύψος εικόνας */
+  object-fit: cover; /* Κάλυψη του πλάτους και του ύψους του περιεχομένου */
+}
+
+.card-title {
+  font-size: 20px; /* Μέγεθος γραμματοσειράς του τίτλου */
+}
+
+.card-text {
+  font-size: 16px; /* Μέγεθος γραμματοσειράς του κειμένου */
+}
+
+/* Στυλ για την ενότητα με τις live chronicles */
+.live-chornicles {
+  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+}
+
+.live-chornicles h4 {
+  margin-bottom: 30px; /* Απόσταση κάτω */
+}
+
+.live-chornicles img {
+  max-width: 100%; /* Μέγιστο πλάτος εικόνας */
+  height: auto; /* Αυτόματο ύψος */
+}
+
+/* Στυλ για την ενότητα με τους Metal Legends */
+.MetalLegends {
+  background-color: #343a40; /* Χρώμα φόντου */
+  color: white; /* Χρώμα κειμένου */
+  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+}
+
+.MetalLegends h3, .MetalLegends p {
+  margin-bottom: 20px; /* Απόσταση κάτω */
+}
+
+/* Media query για κινητές συσκευές */
+@media (max-width: 768px) {
+  header {
+      padding: 20px 0; /* Ανάστροφα περιθώρια (20px πάνω, 0 κάτω) */
   }
-  
-  /* Στυλ για την ενότητα με τα reviews */
-  .reviews-section {
-    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-  }
-  
-  .card {
-    margin-bottom: 20px; /* Απόσταση κάτω */
-  }
-  
+
   .card-img-top {
-    height: 200px; /* Ύψος εικόνας */
-    object-fit: cover; /* Κάλυψη του πλάτους και του ύψους του περιεχομένου */
+      height: 150px; /* Μικρότερο ύψος εικόνας για μικρές οθόνες */
   }
-  
+
   .card-title {
-    font-size: 20px; /* Μέγεθος γραμματοσειράς του τίτλου */
+      font-size: 18px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
   }
-  
+
   .card-text {
-    font-size: 16px; /* Μέγεθος γραμματοσειράς του κειμένου */
+      font-size: 14px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
   }
-  
-  /* Στυλ για την ενότητα με τις live chronicles */
-  .live-chornicles {
-    background-color: #f8f9fa; /* Χρώμα φόντου */
-    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-  }
-  
-  .live-chornicles h4 {
-    margin-bottom: 30px; /* Απόσταση κάτω */
-  }
-  
-  .live-chornicles img {
-    max-width: 100%; /* Μέγιστο πλάτος εικόνας */
-    height: auto; /* Αυτόματο ύψος */
-  }
-  
-  /* Στυλ για την ενότητα με τους Metal Legends */
-  .MetalLegends {
-    background-color: #343a40; /* Χρώμα φόντου */
-    color: white; /* Χρώμα κειμένου */
-    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-  }
-  
-  .MetalLegends h3, .MetalLegends p {
-    margin-bottom: 20px; /* Απόσταση κάτω */
-  }
-  
+}

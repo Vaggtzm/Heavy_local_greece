@@ -2,11 +2,11 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import GalleryItem01 from './../../pages/Gallery/GalleryItems/Goth01.png';
-import GalleryItem02 from './../../pages/Gallery/GalleryItems/gallery-item06.jpg';
-import GalleryItem03 from './../../pages/Gallery/GalleryItems/art-item.jpg';
-import './carousel.css'
-const SecondaryCarousel = () => {
+import CarouselItem02 from './../../Concerts/DSC_0016.JPG';
+import CarouselItem03 from './../../Concerts/DSC_0058.JPG';
+import CarouselItem04 from './../../Concerts/DSC_0028.JPG';
+import './Carousel.css'
+const PrimaryCarousel = () => {
   const settings = {
     dots: false,
     infinite: true,
@@ -41,17 +41,17 @@ const SecondaryCarousel = () => {
     <Slider {...settings} >
 
       <div className='bg-dark carousel-item'>
-        <img src={GalleryItem01}   alt="slide2" />
+        <img src={CarouselItem02}   alt="slide2" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={GalleryItem02}  alt="slide3" />
+        <img src={CarouselItem03}  alt="slide3" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={GalleryItem03}  alt="slide4" />
+        <img src={CarouselItem04}  alt="slide4" />
       </div>
       
     </Slider>
   );
 };
 
-export default SecondaryCarousel;
+export default PrimaryCarousel;

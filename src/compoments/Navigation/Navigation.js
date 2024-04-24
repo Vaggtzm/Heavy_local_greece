@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from './../../assets/HeavyLocalLogo.jpg';
+import InstallButton from '../PWAinstal/pwaInstall';
 import './nav.css';
 
 const Navigation = () => {
@@ -15,6 +16,7 @@ const Navigation = () => {
             <Nav.Link href="/" className='text-white link'>Home</Nav.Link>
             <Nav.Link href="/articles-page" className='text-white link'>Articles</Nav.Link>
             <Nav.Link href="/Art-Gallery-page" className='text-white link'>Art Gallery</Nav.Link>
+            <Nav.Link className='text-white link'><InstallButton /></Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
