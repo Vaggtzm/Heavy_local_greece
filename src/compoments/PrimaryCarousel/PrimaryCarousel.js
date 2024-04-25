@@ -2,9 +2,6 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import CarouselItem02 from './../../Concerts/DSC_0016.JPG';
-import CarouselItem03 from './../../Concerts/DSC_0058.JPG';
-import CarouselItem04 from './../../Concerts/DSC_0028.JPG';
 import './Carousel.css'
 const PrimaryCarousel = () => {
   const settings = {
@@ -41,13 +38,14 @@ const PrimaryCarousel = () => {
     <Slider {...settings} >
 
       <div className='bg-dark carousel-item'>
-        <img src={CarouselItem02}   alt="slide2" />
+
+        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0016.JPG"}   alt="slide2" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={CarouselItem03}  alt="slide3" />
+        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0058.JPG"}  alt="slide3" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={CarouselItem04}  alt="slide4" />
+        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0028.JPG"}  alt="slide4" />
       </div>
       
     </Slider>

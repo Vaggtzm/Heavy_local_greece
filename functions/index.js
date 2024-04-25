@@ -232,7 +232,9 @@ async function getDeviceTokens() {
     }
 }
 
-exports.saveDeviceToken = functions.https.onRequest(async (req, res) => {
+exports.saveDeviceToken = functions.runWith({
+    enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
+}).https.onRequest(async (req, res) => {
     const { token } = req.body;
 
     if (!token) {

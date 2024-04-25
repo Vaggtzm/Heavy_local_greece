@@ -9,18 +9,13 @@ import  Lloth from './../assets/korrection.webp';
 import Birds from './../assets/Degenerate.jpg';
 import Herc from './../assets/Herc.jpg';
 import ShadowImg from './../assets/AcidMammothSecond.jpg';
-import PrimoridalBand from './../assets/Primordial.webp';
 import Astronomica from './../assets/Astronomica_response.jpg';
 import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
-import Contact from "../compoments/ContactForm/contact";
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
-import MetaTags from "../compoments/MetaTags/Meta";
-import Logo from "./../assets/HeavyLocalLogo.jpg";
 import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
 import Youtube from "../compoments/YoutubeAPI/Youtube";
-import InstallButton from "../compoments/PWAinstal/pwaInstall";
 import PrimaryCarousel from "../compoments/PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "../compoments/carousel/carousel";
 const Home = () => {
