@@ -1,7 +1,5 @@
 import React from "react";
-import SleapDealer from "./../../assets/SleepDealer.webp";
-import Holler from "./../../assets/Holler_Members.jpg";
-import ECR from "./../../assets/ECR_LIMF_album.jpg";
+
 const ReadMore = ()=>{
     return(
         <>
@@ -10,7 +8,7 @@ const ReadMore = ()=>{
   <div className="row mt-4 text-center">
   <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={SleapDealer} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"/assets/SleepDealer.webp"} alt="Dreariness"></img>
         <div className="card-body">
           <h4 className="card-title">Band Review: Sleep Dealer </h4>
           <p className="card-text lead">
@@ -21,7 +19,7 @@ const ReadMore = ()=>{
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Holler} alt="Zong"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"/assets/Holler_Members.jpg"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Bright Rejuvenation: Terence Holler’s “Reborn” Soars into the Rock Stratosphere</h4>
           <p className="card-text lead">
@@ -37,7 +35,7 @@ Terence Holler, the enigmatic Brooklyn-born rock luminary, strides boldly into t
     </div>
     <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={ECR} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"/assets/ECR_LIMF_album.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Philosophical Reverberations: ECR.LINF’s “Belluaires” Reviewed</h4>
           <p className="card-text lead">

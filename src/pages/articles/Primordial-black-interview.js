@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
-import './articles.css'
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../assets/Falooda_Demo_2024_artwork.jpg'
+import './articles.css';
 import PageWithComments from "../../compoments/Comments/comment";
 
 const Primordial = ()=>{
@@ -19,7 +17,7 @@ const Primordial = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/Falooda_Demo_2024_artwork.jpg"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://web.facebook.com/faloodasound?_rdc=1&_rdr"><i className="bi bi-facebook"></i></a> <a href="https://www.instagram.com/faloodasound/"><i className="bi bi-instagram"></i></a>  <a href="https://www.youtube.com/watch?v=dFX5CGVBF_Q"><i className="bi bi-youtube"></i></a></p>  
                 </div>
 

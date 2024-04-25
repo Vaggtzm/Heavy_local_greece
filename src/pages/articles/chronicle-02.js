@@ -1,8 +1,6 @@
 import React  from "react";
 import Navigation from "./../../compoments/Navigation/Navigation";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
-import pic01 from './../../assets/chronicles/chronicle-02/Yothiria01.jpg';
-import pic02 from './../../assets/chronicles/chronicle-02/yothiria-02.jpg';
 import PageWithComments from "../../compoments/Comments/comment";
 
 const chronicle02 = ()=>{
@@ -42,9 +40,9 @@ Yoth Iria performed for the first time in Romania. The next concert will be in P
 
                 </div>    
                 <div className="col-md-6 border-right-1">
-                    <img src={pic01} className="img-fluid w-75 h-25 m-4" />
+                    <img src={"/assets/chronicles/chronicle-02/Yothiria01.jpg"} className="img-fluid w-75 h-25 m-4" />
                     <hr className="bg-dark"></hr>
-                    <img src={pic02} className="img-fluid w-75 h-25 m-4" />
+                    <img src={"/assets/chronicles/chronicle-02/yothiria-02.jpg"} className="img-fluid w-75 h-25 m-4" />
                     <hr className="bg-dark"></hr>
 
                 </div>               

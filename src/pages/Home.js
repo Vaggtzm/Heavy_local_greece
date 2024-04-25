@@ -1,16 +1,6 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
-import Severoth from './../assets/Hydra.jpg';
-import Khavar from './../assets/review_picture.webp';
-import Civeroud from './../assets/Civerous.webp'
-import Holler from './../assets/Holler_Members.jpg';
-import  Lloth from './../assets/korrection.webp';
-import Birds from './../assets/Degenerate.jpg';
-import Herc from './../assets/Herc.jpg';
-import ShadowImg from './../assets/AcidMammothSecond.jpg';
-import Astronomica from './../assets/Astronomica_response.jpg';
-import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
@@ -72,7 +62,7 @@ const Home = () => {
         <h3>Interviews:</h3>
          <div className="col-md-4">
          <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid Η" src={ShadowImg} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid Η" src={"/assets/AcidMammothSecond.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">
           Interview: Acid Mammoth</h4>
@@ -82,7 +72,7 @@ const Home = () => {
           </div>
           <div className="col-md-4">
          <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Khavar} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"/assets/review_picture.webp"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Interview: Khavar</h4>
           <a href="/Khavar-interview-archive" className="btn btn-primary">Read More</a>
@@ -91,7 +81,7 @@ const Home = () => {
           </div>
           <div className="col-md-4">
          <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={Holler} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"/assets/Holler_Members.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">
           Harmonic Rebirth: Deciphering Holler’s Journey          </h4>
@@ -106,7 +96,7 @@ const Home = () => {
   <div className="row mt-4 text-center">
     <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={Severoth} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg h-100" src={"/assets/Hydra.jpg"} alt="Dreariness"></img>
         <div className="card-body">
           <h4 className="card-title">Veins of Obsidian: Luctus' Hydra's Menacing Ode to Black Metal </h4>
           <a href="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</a>
@@ -115,7 +105,7 @@ const Home = () => {
     </div>
     <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={Civeroud} alt="Zong"></img>
+        <img className="card-img-top shadow-lg h-100" src={"/assets/Civerous.webp"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Band Review: Civerous</h4>
           <a href="/article/Civerous-archive" className="btn btn-primary">Read More</a>
@@ -126,7 +116,7 @@ const Home = () => {
     <h4>Heavy Local Reviews (GR)</h4>
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg h-100" src={Lloth} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg h-100" src={"/assets/korrection.webp"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Παλαιάς κοπής ανταρσία - KorrectioN - Having Fun (single review + info)</h4>
           <a href="/article/korrection-archive" className="btn btn-primary">Read More</a>
@@ -136,7 +126,7 @@ const Home = () => {
 
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg h-100" src={Birds} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg h-100" src={'/assets/Degenerate.jpg'} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Μια αμφίρροπη μάχη - Degenerate Mind - Nothing Left (single review)</h4>
           <a href="/article/degenerate-mind-archive" className="btn btn-primary">Read More</a>
@@ -148,7 +138,7 @@ const Home = () => {
 
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg  h-100" src={Herc} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg  h-100" src={"/assets/Herc.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Βουτιά στην περιπέτεια του Silmarillion- Herc - “Of Light and Darkness” (album review)</h4>
           <a href="/article/Silmarillion-archive" className="btn btn-primary">Read More</a>
@@ -161,7 +151,7 @@ const Home = () => {
     <h3 className="m-2 p-3">Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
     <hr className="bg-white"></hr>
       <div className='col-md-6'>
-<img src={Astronomica} className="img-fluid"></img>
+<img src={"/assets/Astronomica_response.jpg"} className="img-fluid"></img>
       </div>
 
       <div className='col-md-6'>
@@ -178,7 +168,7 @@ const Home = () => {
           <h4>Live Chronicles by Daria (ENG)</h4>
           <div className="row text-center mt-4">
             <div className="col-md-6">
-              <img src={Yothiria} className="img-fluid" />
+              <img src={"/assets/chronicles/chronicle-02/yothiria-02.jpg"} className="img-fluid" />
             </div>
             <div className="col-md-6">
               <h3>

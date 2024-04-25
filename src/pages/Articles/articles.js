@@ -1,17 +1,8 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
-import Kawir  from "./../../assets/adrastia1.jpg"
-import InAutumn from './../../assets/automn.jpeg'
-import xoth  from './../../assets/Exogalactic.jpg'
-import DawnOfTheDarkAge from './../../assets/Dawn_of_a_Dark_Age_Album.jpg'
-import TheyCameFromVissions from './../../assets/They_Came_from_Visions_Album.jpg'
-import Venus from './../../assets/Venus.jpg';
-import Falooda from './../../assets/Falooda_Demo_2024_artwork.jpg';
-import InnerLoad from './../../assets/InnerLord.jpg';
-import WickedWizard from './../../assets/IdiotsCorrected.jpg';
-import Hexaban from './../../assets/Hexaban.jpg';
-import Demande from './../../assets/Demande.jpg';
 import "./../home.css"
+
+
 const Articles =()=>{
     return(
         <>
@@ -25,7 +16,7 @@ const Articles =()=>{
             <p className="lead">13.03.24</p>
             <div className="col-md-6">
             <h4>Spellbinding Soundscapes: “As the Night Approaches”Album Review(ΕNG)</h4>
-                <img src={Demande} className="w-100 h-75"></img>
+                <img src={"/assets/Demande.jpg"} className="w-100 h-75"></img>
             </div>
             <div className="col-md-6">
             <h3>By Daria</h3>
@@ -37,7 +28,7 @@ const Articles =()=>{
             </div>
             <div className="col-md-6">
             <h4>Spellbinding Soundscapes: “As the Night Approaches”Album Review(ΕNG)</h4>
-                <img src={Hexaban} className="w-100 h-75"></img>
+                <img src={"/assets/Hexaban.jpg"} className="w-100 h-75"></img>
             </div>
             <div className="col-md-6">
             <h3>By Daria</h3>
@@ -51,7 +42,7 @@ const Articles =()=>{
             
             <div className="col-md-6">
             <h4>Wicked Wizzard - Warlords of the Dark Realm (Album Review)</h4>
-                <img src={WickedWizard} className="w-100 h-75"></img>
+                <img src={"/assets/IdiotsCorrected.jpg"} className="w-100 h-75"></img>
             </div>
             
             <div className="col-md-6">
@@ -64,7 +55,7 @@ const Articles =()=>{
             <p className="lead">11.03.24</p>
               <div className="col-md-6">
               <h4>Venus:Obscured Until Observed-Album Review</h4>
-                <img src={Venus} className="img-fluid"></img>
+                <img src={"/assets/Venus.jpg"} className="img-fluid"></img>
               </div>
               <div className="col-md-6">
                 <h3>Απο τον Μιχαλη</h3>
@@ -77,7 +68,7 @@ const Articles =()=>{
 
               <div className="col-md-6">
               <h4>Falooda:Demo-Review</h4>  
-              <img src={Falooda} className="img-fluid"></img>
+              <img src={"/assets/Falooda_Demo_2024_artwork.jpg"} className="img-fluid"></img>
 
               </div>
               <div className="col-md-6">
@@ -93,7 +84,7 @@ Falooda’s debut demo is a sonic odyssey into the realm of the avant-garde. Wit
 
               <div className="col-md-6">
               <h3>Inner Load: Album-review</h3>
-              <img src={InnerLoad} className="img-fluid"></img>
+              <img src={"/assets/InnerLord.jpg"} className="img-fluid"></img>
               </div>
               <div className="col-md-6">
                 <h3>by Daria</h3>
@@ -112,7 +103,7 @@ Anticipation builds for the titular track, promising a descent into the macabre.
             <p className="lead">6.03.24</p>
             <div className="col-md-6">
                     <h3>Xoth:Exogalactic-Review</h3>
-                    <img src={xoth} className="img-fluid rounded-2 shadow-lg w-100"></img>
+                    <img src={"/assets/Exogalactic.jpg"} className="img-fluid rounded-2 shadow-lg w-100"></img>
                 </div>
                 <div className="col-md-6">
                 <h3>By Rin </h3>
@@ -126,7 +117,7 @@ Upon pushing the play button on the very first song 'Reptilian Bloodsport', I wa
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6">
                     <h3>They Came From Vissions:The Twilight Robes- Album Review</h3>
-                    <img src={TheyCameFromVissions} className="img-fluid w-100 rounded-2 shadow-lg"></img>
+                    <img src={"/assets/They_Came_from_Visions_Album.jpg"} className="img-fluid w-100 rounded-2 shadow-lg"></img>
                 </div>
                 <div className="col-md-6">
                 <h3>Βy Daria</h3>
@@ -141,7 +132,7 @@ From the brooding depths of “Equinox Ablaze” to the haunting echoes of “Tw
 
                 <div className="col-md-6">
                     <h3>Dawn Of The Dark Age:  Transumanza- Album Review</h3>
-                    <img src={DawnOfTheDarkAge} className="img-fluid w-100 rounded-2 shadow-lg"></img>
+                    <img src={"/assets/Dawn_of_a_Dark_Age_Album.jpg"} className="img-fluid w-100 rounded-2 shadow-lg"></img>
                 </div>
                 <div className="col-md-6">
                 <h3>Βy Daria</h3>
@@ -156,7 +147,7 @@ Into the Unknown: Exploring “Transumanza”
             <p className="lead">1.03.24</p>
                 <div className="col-md-6">
                     <h3>Kawir:Αδραστεια-Review</h3>
-                    <img src={Kawir} className="img-fluid rounded-2 shadow-lg"></img>
+                    <img src={"/assets/adrastia1.jpg"} className="img-fluid rounded-2 shadow-lg"></img>
                 </div>
                 <div className="col-md-6">
                 <h3>απο την Daria</h3>
@@ -171,7 +162,7 @@ Into the Unknown: Exploring “Transumanza”
 
                 <div className="col-md-6">
                     <h3>In Autumn:“What's Done is Done”-Review</h3>
-                    <img src={InAutumn} className="img-fluid w-100 rounded-2 shadow-lg"></img>
+                    <img src={"/assets/automn.jpeg"} className="img-fluid w-100 rounded-2 shadow-lg"></img>
                 </div>
                 <div className="col-md-6">
                 <h3>Βy Daria</h3>

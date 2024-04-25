@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
 import './articles.css'
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import VertigoImg from './../../assets/Vertigo.jpg'
 import PageWithComments from "../../compoments/Comments/comment";
 
 const Vertigo = ()=>{
@@ -19,7 +17,7 @@ const Vertigo = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={VertigoImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/Vertigo.jpg"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.facebook.com/PsyanideOfficialBand/&ved=2ahUKEwju3M2ljZCFAxXRBNsEHfWGAd4QFnoECBgQAQ&usg=AOvVaw2oXY98z7DkW2NxF8Youjsf"><i className="bi bi-facebbok"></i></a> <a href="https://www.instagram.com/psyanide_official/"><i className="bi bi-instagram"></i></a> <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://open.spotify.com/artist/1yf9vFWTSHq4jZjNJykZ4f&ved=2ahUKEwju3M2ljZCFAxXRBNsEHfWGAd4QFnoECCIQAQ&usg=AOvVaw05BmjK3PlBOpTNtp9GRnjr"><i className="bi bi-spotify"></i></a> <a href="https://www.youtube.com/@psyanideofficial"><i className="bi bi-youtube"></i></a></p>  
                 </div>
 

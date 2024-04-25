@@ -1,9 +1,6 @@
 import React  from "react";
 import Navigation from "./../../compoments/Navigation/Navigation";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
-import pic01 from './../../assets/chronicles/chronicle-01/01.jpg';
-import pic02 from './../../assets/chronicles/chronicle-01/02.JPEG';
-import pic03 from './../../assets/chronicles/chronicle-01/03.JPEG';
 import PageWithComments from "../../compoments/Comments/comment";
 const chronicle01 = ()=>{
     return(
@@ -62,11 +59,11 @@ Infernal Storm's style of black metal pays homage to the 90s era while incorpora
 
                 </div>    
                 <div className="col-md-6 border-right-1">
-                    <img src={pic01} className="img-fluid w-75 h-25 m-4" />
+                    <img src={"/assets/chronicles/chronicle-01/01.jpg"} className="img-fluid w-75 h-25 m-4" />
                     <hr className="bg-dark"></hr>
-                    <img src={pic02} className="img-fluid w-75 h-25 m-4" />
+                    <img src={"/assets/chronicles/chronicle-01/02.JPEG"} className="img-fluid w-75 h-25 m-4" />
                     <hr className="bg-dark"></hr>
-                    <img src={pic03} className="img-fluid w-75 h-25 m-4" />
+                    <img src={"/assets/chronicles/chronicle-01/03.JPEG"} className="img-fluid w-75 h-25 m-4" />
 
                 </div>
 

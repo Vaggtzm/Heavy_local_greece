@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "./../../../compoments/Navigation/Navigation";
 import './../articles.css'
-import ReadMore from "./../../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../../assets/review_picture.webp';
 import PageWithComments from "./../../../compoments/Comments/comment";
 
 const KhavarInterview = ()=>{
@@ -19,7 +17,7 @@ const KhavarInterview = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/review_picture.webp"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://web.facebook.com/Khavarband/?show_switched_toast=0&show_invite_to_follow=0&show_switched_tooltip=0&show_podcast_settings=0&show_community_review_changes=0&show_community_rollback=0&show_follower_visibility_disclosure=0"><i className="bi bi-facebook"></i></a> <a href="https://www.instagram.com/khavarband"><i className="bi bi-instagram"></i></a>  <a href="https://open.spotify.com/artist/76MFD0uvmSIc6I4U2F9uG5?si=RFSivU_YQ7S7Dt1Om8Wc_g&nd=1&dlsi=8b6898faa227400c"><i className="bi bi-spotify"></i></a></p>  
                 </div>
 

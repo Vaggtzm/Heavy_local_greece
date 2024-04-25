@@ -39,13 +39,13 @@ const PrimaryCarousel = () => {
 
       <div className='bg-dark carousel-item'>
 
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0016.JPG"}   alt="slide2" />
+        <img src={"/assets/Concerts/workInProgress/DSC_0016.JPG"}   alt="slide2" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0058.JPG"}  alt="slide3" />
+        <img src={"/assets/Concerts/workInProgress/DSC_0058.JPG"}  alt="slide3" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0028.JPG"}  alt="slide4" />
+        <img src={"/assets/Concerts/workInProgress/DSC_0028.JPG"}  alt="slide4" />
       </div>
       
     </Slider>

@@ -1,10 +1,6 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
 import './articles.css'
-import Beast01 from './../../assets/aleah.jpg';
-import Contact from "../../compoments/ContactForm/contact";
-import Donate from "../../compoments/donate/donate";
-import Footer from "../../compoments/footer/footer";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
 import PageWithComments from "../../compoments/Comments/comment";
 
@@ -23,7 +19,7 @@ const Aleah = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={Beast01} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/aleah.jpg"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                     <h4>Πηγες</h4>
                     <p className="lead d-flex justify-content-evenly"> 
                           <a href="https://en.wikipedia.org/wiki/Aleah_Stanbridge">Bικιπαιδεια</a>

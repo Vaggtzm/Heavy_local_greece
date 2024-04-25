@@ -2,30 +2,19 @@ import React from "react";
 import Navigation from "./../../compoments/Navigation/Navigation";
 import Socials from "../../compoments/SocialMedia/socials";
 import './gallery.css';
-import GalleryItem01 from './GalleryItems/art-item.jpg';
-import GalleryItem02 from './GalleryItems/art-item02.jpg';
-import GalleryItem03 from './GalleryItems/art-item-03.jpg';
-import GalleryItem04 from './GalleryItems/art-item-04.jpg';
-import GalleryItem05 from './GalleryItems/gallery-item05.jpg';
-import GalleryItem06 from './GalleryItems/gallery-item06.jpg';
-import gothLady01 from './GalleryItems/Goth01.png';
-import gothLady02 from './GalleryItems/goth02.png';
-import gothLady03 from './GalleryItems/goth03.png';
-import gothLady04 from './GalleryItems/goth04.png';
-
 
 const ArtGallery = () => {
   const galleryItems = [
-    { image: GalleryItem01, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: αφηρημένο σκίτσο ανάποδη πεντάλφα, του Ριν", descriptionEng:"Description: abstract sketch of an inverted pentagram" },
-    { image: GalleryItem02,  title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: τοπίο εμπνευσμένο από τα album cover του His Majesty at the Swamp των Varathron και του Non Serviam των Rotting Christ", descriptionEng:"Description: landscape sketch inspired by the album covers of His Majesty at the Swamp - Varathron and Non Serviam - Rotting Christ."  },
-    { image: GalleryItem03,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: monster concept art, του Ριν", descriptionEng:"Description: monster concept art, by Rin" },
-    { image: GalleryItem04, title: "Απο την βαρβαρα " , descriptionGrekk:"Περιγραφή: Artwork για το sigle του συγκροτηματος scent of thorns ", descriptionEng:"Description: Artwork cover for 'devour the will ' by scent of thorns " },
-    { image: GalleryItem05,title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: γρήγορο σκίτσο φωτογραφίας του Euronymous (Mayhem) με μολύβι, του Ριν", descriptionEng:"Description: quick sketch of a photo depicting Euronymous (Mayhem), done with pencil by Rin"  },
-    { image: GalleryItem06, title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: σκίτσο του δαίμονα Buer για αυτοκόλλητα, του Ριν", descriptionEng:"Description: Illustration of the demon Buer as a sticker design, by Rin" },
-    { image: gothLady01, title: " Απο την Goth lady (by goth Lady  )" },
-    { image: gothLady02, title: "Απο την Goth lady  Απο την Goth lady (by goth Lady )"  },
-    { image: gothLady03, title: " Απο την Goth lady (by goth Lady )"  },
-    { image: gothLady04, title: " Απο την Goth lady (by goth Lady )"  }
+    { image: "/assets/gallery/art-item.jpg", title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: αφηρημένο σκίτσο ανάποδη πεντάλφα, του Ριν", descriptionEng:"Description: abstract sketch of an inverted pentagram" },
+    { image: "'/assets/gallery/art-item02.jpg'",  title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: τοπίο εμπνευσμένο από τα album cover του His Majesty at the Swamp των Varathron και του Non Serviam των Rotting Christ", descriptionEng:"Description: landscape sketch inspired by the album covers of His Majesty at the Swamp - Varathron and Non Serviam - Rotting Christ."  },
+    { image: "/assets/gallery/art-item-03.jpg",title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: monster concept art, του Ριν", descriptionEng:"Description: monster concept art, by Rin" },
+    { image: '/assets/gallery/art-item-04.jpg', title: "Απο την βαρβαρα " , descriptionGrekk:"Περιγραφή: Artwork για το sigle του συγκροτηματος scent of thorns ", descriptionEng:"Description: Artwork cover for 'devour the will ' by scent of thorns " },
+    { image: '/assets/gallery/gallery-item05.jpg',title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: γρήγορο σκίτσο φωτογραφίας του Euronymous (Mayhem) με μολύβι, του Ριν", descriptionEng:"Description: quick sketch of a photo depicting Euronymous (Mayhem), done with pencil by Rin"  },
+    { image: '/assets/gallery/gallery-item06.jpg', title: "Απο τον ριν (by rin )" , descriptionGrekk:"Περιγραφή: σκίτσο του δαίμονα Buer για αυτοκόλλητα, του Ριν", descriptionEng:"Description: Illustration of the demon Buer as a sticker design, by Rin" },
+    { image: '/assets/gallery/Goth01.png', title: " Απο την Goth lady (by goth Lady  )" },
+    { image: '/assets/gallery/goth02.png', title: "Απο την Goth lady  Απο την Goth lady (by goth Lady )"  },
+    { image: '/assets/gallery/goth03.png', title: " Απο την Goth lady (by goth Lady )"  },
+    { image: '/assets/gallery/goth04.png', title: " Απο την Goth lady (by goth Lady )"  }
 
   ];
 

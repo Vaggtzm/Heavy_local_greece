@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
 import './articles.css'
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../assets/434074293_849333507205481_2363706038138989976_n.webp';
 import PageWithComments from "../../compoments/Comments/comment";
 
 const ShadowsDance = ()=>{
@@ -19,7 +17,7 @@ const ShadowsDance = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/434074293_849333507205481_2363706038138989976_n.webp"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href=" https://www.facebook.com/shadowsdanceband/ "><i className="bi bi-facebook"></i></a> <a href="https://open.spotify.com/user/31tnm3sg2kgi4k3anj2hupoz5jt4?si=6e418479b6bf404f "><i className="bi bi-spotify"></i></a><a href="https://www.youtube.com/@ShadowsDance-fg2rl "><i className="bi bi-youtube"></i></a></p>
                  <p>
                  <br></br>

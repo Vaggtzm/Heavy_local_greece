@@ -1,7 +1,6 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Logo from './../../assets/HeavyLocalLogo.jpg';
 import InstallButton from '../PWAinstal/pwaInstall';
 import './nav.css';
 
@@ -9,7 +8,7 @@ const Navigation = () => {
   return (
     <Navbar  expand="lg" className="bg-dark navbar">
       <Container className='navbar'>
-        <Navbar.Brand className='navbar-brand brand  text-white' href="#home"><img src={Logo} className='img-fluid rounded-circle' /></Navbar.Brand>
+        <Navbar.Brand className='navbar-brand brand  text-white' href="#home"><img src={"/assets/HeavyLocalLogo.jpg"} className='img-fluid rounded-circle' /></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white' />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

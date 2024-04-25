@@ -1,11 +1,6 @@
 import React from "react";
 import Navigation from "./../../compoments/Navigation/Navigation";
 import ReadMore from "../../compoments/ReadMore/ReadMore";
-import pic01 from './../../assets/tortuga.jpg';
-import pic02 from './../../assets/tortuga02.jpg';
-import pic03 from './../../assets/tortugal-03.jpg';
-import pic04 from './../../assets/tortugal04.jpg';
-import pic05 from './../../assets/torutal05.jpg';
 import PageWithComments from "../../compoments/Comments/comment";
 
 const Interview = () => {
@@ -27,7 +22,7 @@ const Interview = () => {
             <p className="lead m-1 p-1">
             As the thunderous drums and shredding guitars of Tortugal Sacrifice echo through the underground metal scene, the world braces for a sonic assault unlike any other. Hailing from the vibrant city of Guelph, Ontario, Canada, Tortugal Sacrifice has emerged as a formidable force in the realm of Death Metal. Led by the enigmatic vocalist and instrumentalist, Alex Shellington, the band’s raw energy and unbridled passion have captivated audiences worldwide. Tortugal Sacrifice means Alex Shellington (vocals), Tanner Ravazzolo (guitars, lead), Cole Williamson (drums), Conner Williamson (bass) and Evan Wiggins (guitars, rhythm).
             </p>
-            <img src={pic04} className="img-fluid w-75  m-4" />
+            <img src={"/assets/tortugal04.jpg"} className="img-fluid w-75  m-4" />
 
             <hr className="bg-dark"></hr>
 
@@ -48,7 +43,7 @@ const Interview = () => {
 
             <p className="lead">
             Tortugal Sacrifice (Alex Shellington): I started the band in June of 2022. It was my solo project and I met Tanner, our lead guitarist, in high school, and then I met Luke, our original rhythm guitarist, and then Conner and Cole (who are with us now) and since the original rhythm guitarist parted ways with us we got Evan whom we met through the music scene. So… yeah, that’s pretty much all about how we started the project.
-            <img src={pic01} className="img-fluid w-75 h-25 m-4" />
+            <img src={"/assets/tortuga.jpg"} className="img-fluid w-75 h-25 m-4" />
 
             <hr className="bg-dark"></hr>
             Heavy Local Greece (Daria Aeonia): What inspired each of you to pursue Death Metal as your main genre?
@@ -73,7 +68,7 @@ Heavy Local Greece (Daria Aeonia): Your debut album, “The Many Faces of Death�
             </p>
             <p className="lead">
             Tortugal Sacrifice (Alex Shellington): I really just recorded the whole thing in my bedroom. It was my first attempt to make any music. A lot of the lyrics are –as you guys wrote already in your article-, about imagining how death feels like and of course, about people having different experiences with it. That’s what I really wanted to focus on, just like… well, for the first album ever I didn’t want to go too far outside of the Death Metal lyrical and style. As I got more comfortable with it, like recording “Arrogance the King” and “Knucklecrusher”, I have started to experiment with different lyrical styles. Yeah, the inspiration –like the lot of it- comes from the past. I don’t wanna say “trauma”, but “past happenings of my life”, I guess.
-            <img src={pic03} className="img-fluid w-75 h-25 m-4" />
+            <img src={"/assets/tortugal-03.jpg"} className="img-fluid w-75 h-25 m-4" />
 
             <hr className="bg-dark"></hr>
             Heavy Local Greece (Daria Aeonia): “Arrogance the King” and “Knucklecrusher” are powerful singles that showcase your distinctive sound. Can you walk us through the creative process behind these tracks, speak a bit about what were the major changes you did?
@@ -87,7 +82,7 @@ Heavy Local Greece (Daria Aeonia): Your debut album, “The Many Faces of Death�
             Heavy Local Greece (Daria Aeonia): Are there any emerging artists or trends that excite you within the metal community?
             <hr className="bg-dark"></hr>
             </p>
-            <img src={pic02} className="img-fluid w-75  m-4" />
+            <img src={"/assets/tortuga02.jpg"} className="img-fluid w-75  m-4" />
 
             <p className="lead">
             Tortugal Sacrifice (Alex Shellington): There are, as Tanner said, a lot of great and noble bands. Some of them are our age, which is great. I can mention Aftershock Overdrive, Iron Cross, and Divine Curse. Yeah, there are a lot of good bands in the local scene. In Ontario, specifically, the movement is very strong. But even going to the East, the Quebec scene is also very strong and it has been like this for many, many years. A lot of very good Death Metal bands are coming from there. All in all, I think it’s a good scene to be a part of. I am excited to see the progress of this thing, to analyze its changes over the years, which bands rise to the top, and which bands remain in the shadows.
@@ -115,7 +110,7 @@ Tortugal Sacrifice (Conner Williamson): I was… Actually, we were playing our l
 Tortugal Sacrifice (Alex Shellington): Yeah, so he was having an allergic reaction because he has hazelnut allergy and we drove him to… well, we were about droving him to the hospital, but because he spit it out, instead of swallowing it, it wasn’t that bad so we just drove him to the nearest pharmacy, he got a Benadryl and got well, but fuck! That was… great. That was our fun hour. 
 
 <hr className="bg-dark"></hr>
-<img src={pic05} className="img-fluid w-75  m-4" />
+<img src={"/assets/torutal05.jpg"} className="img-fluid w-75  m-4" />
             </p>
             <p className="lead">
             Heavy Local Greece (Daria Aeonia): Beyond the studio and stage, what are some individual hobbies that contribute to the unique personalities within the band?

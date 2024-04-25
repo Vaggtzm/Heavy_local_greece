@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "./../../../compoments/Navigation/Navigation";
 import './../articles.css'
-import ReadMore from "./../../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../../assets/Holler_Members.jpg'
 import PageWithComments from "./../../../compoments/Comments/comment";
 
 const HollerInterview = ()=>{
@@ -19,7 +17,7 @@ const HollerInterview = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/Holler_Members.jpg"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://web.facebook.com/profile.php?id=61553825592623"><i className="bi bi-facebook"></i></a></p>  
                 </div>
 

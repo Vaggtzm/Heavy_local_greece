@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "./../../../compoments/Navigation/Navigation";
 import './../articles.css'
-import ReadMore from "./../../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../../assets/AcidMammoth_main.jpg';
 import PageWithComments from "./../../../compoments/Comments/comment";
 
 const AcidMamoth = ()=>{
@@ -19,7 +17,7 @@ const AcidMamoth = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className=" w-100  ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/AcidMammoth_main.jpg"} className=" w-100  ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://web.facebook.com/acidmammoth/?_rdc=1&_rdr"><i className="bi bi-facebook"></i></a> <a href="https://www.instagram.com/acidmammoth/?hl=el"><i className="bi bi-instagram"></i></a>  <a href="https://open.spotify.com/artist/6VM0lR9Yr3VeXe4ZYB5f7T"><i className="bi bi-spotify"></i></a></p>  
                 </div>
 

@@ -1,8 +1,6 @@
 import React from "react";
 import Navigation from "../../compoments/Navigation/Navigation";
 import './articles.css'
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import AutumnMachineryImg from './../../assets/AutumnMachinery.webp'
 import PageWithComments from "../../compoments/Comments/comment";
 
 const AutumnMachinery = ()=>{
@@ -19,7 +17,7 @@ const AutumnMachinery = ()=>{
                 </div>
                 <hr className="bg-dark"></hr>
                 <div className="col-md-6 credits-box">
-                    <img src={AutumnMachineryImg} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
+                    <img src={"/assets/AutumnMachinery.webp"} className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                  <p> <a href="https://www.facebook.com/autumnmacmusic"><i className="bi bi-facebbok"></i></a> <a href="https://www.instagram.com/autumnmacmusic/ "><i className="bi bi-instagram"></i></a><a href="https://www.youtube.com/@autumnmachinery6415 "><i className="bi bi-youtube"></i></a></p>  
                  <p>
                  <br></br>
