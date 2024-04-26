@@ -90,9 +90,11 @@ function App() {
                 <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
                 <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
-                
 
-                <Route path='/article/:name' element={<DefaultArticle/>}/>
+
+                {/*Είναι 2 φορές. Μία για τα κανονικά και μία για τα early access*/}
+                <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
+                <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
 
             </Routes>
 

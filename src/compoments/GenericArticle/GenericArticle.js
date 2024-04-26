@@ -7,7 +7,9 @@ import PageWithComments from "../Comments/comment";
 import MetaTags from "../MetaTags/Meta";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import {getDownloadURL, ref} from "firebase/storage"
-const DefaultArticle = () => {
+const DefaultArticle = (props) => {
+
+    const [isEarlyAccess] = useState(props.earlyAccess);
     const { name } = useParams();
     const [articles, setArticles] = useState([]);
 
@@ -27,7 +29,13 @@ const DefaultArticle = () => {
         const fetchData = async () => {
             try {
                 // Fetch JSON file from Firebase Storage
-                const articleSnapshot = await getDownloadURL(ref(storage, `articles/${name}.json`));
+                let articleSnapshot;
+                if(isEarlyAccess) {
+                    articleSnapshot = await getDownloadURL(ref(storage, `early_releases/${name}.json`));
+
+                }else{
+                    articleSnapshot = await getDownloadURL(ref(storage, `articles/${name}.json`));
+                }
                 console.log(articleSnapshot);
                 const response = await fetch(articleSnapshot);
                 if (!response.ok) {
