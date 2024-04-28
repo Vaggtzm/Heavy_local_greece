@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "default",
+    "site": "heavy-local-12bc4",
     "public": "build",
     "ignore": [
       "firebase.json",
