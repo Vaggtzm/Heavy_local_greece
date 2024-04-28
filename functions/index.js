@@ -93,9 +93,6 @@ app.get('/feed', async (req, res) => {
 });
 
 
-
-
-
 app.get('/article/:article', async (req, res) => {
     const filepath = path.resolve(__dirname, "index.html");
     const name = req.params.article;

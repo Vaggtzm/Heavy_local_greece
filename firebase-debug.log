@@ -1,0 +1,120 @@
+[debug] [2024-04-28T08:45:37.088Z] ----------------------------------------------------------------------
+[debug] [2024-04-28T08:45:37.091Z] Command:       /usr/bin/node /usr/local/bin/firebase deploy
+[debug] [2024-04-28T08:45:37.092Z] CLI Version:   13.7.2
+[debug] [2024-04-28T08:45:37.093Z] Platform:      linux
+[debug] [2024-04-28T08:45:37.093Z] Node Version:  v18.13.0
+[debug] [2024-04-28T08:45:37.093Z] Time:          Sun Apr 28 2024 11:45:37 GMT+0300 (Eastern European Summer Time)
+[debug] [2024-04-28T08:45:37.093Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-04-28T08:45:37.205Z] Field ".emulators.functions.port" in "firebase.json" is possibly invalid: should be number
+[debug] [2024-04-28T08:45:37.216Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-04-28T08:45:37.217Z] > authorizing via signed-in user (pavlos@orfanidis.net.gr)
+[debug] [2024-04-28T08:45:37.217Z] [iam] checking project heavy-local-12bc4 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2024-04-28T08:45:37.225Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/heavy-local-12bc4:testIamPermissions [none]
+[debug] [2024-04-28T08:45:37.226Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/heavy-local-12bc4:testIamPermissions x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:37.227Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/heavy-local-12bc4:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2024-04-28T08:45:38.430Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/heavy-local-12bc4:testIamPermissions 200
+[debug] [2024-04-28T08:45:38.431Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/heavy-local-12bc4:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2024-04-28T08:45:38.432Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/heavy-local-12bc4/serviceAccounts/heavy-local-12bc4@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-04-28T08:45:38.432Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/heavy-local-12bc4/serviceAccounts/heavy-local-12bc4@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-04-28T08:45:39.567Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/heavy-local-12bc4/serviceAccounts/heavy-local-12bc4@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2024-04-28T08:45:39.575Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/heavy-local-12bc4/serviceAccounts/heavy-local-12bc4@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2024-04-28T08:45:39.580Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 [none]
+[debug] [2024-04-28T08:45:39.999Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 200
+[debug] [2024-04-28T08:45:40.002Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 {"projectId":"heavy-local-12bc4","projectNumber":"1095342862820","displayName":"Heavy Local","name":"projects/heavy-local-12bc4","resources":{"hostingSite":"heavy-local-12bc4","realtimeDatabaseInstance":"heavy-local-12bc4-default-rtdb","storageBucket":"heavy-local-12bc4.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_75e1b399-7d9e-417d-9f60-5d9b36b1d13b"}
+[debug] [2024-04-28T08:45:40.004Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 [none]
+[debug] [2024-04-28T08:45:40.568Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 200
+[debug] [2024-04-28T08:45:40.568Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 {"projectId":"heavy-local-12bc4","projectNumber":"1095342862820","displayName":"Heavy Local","name":"projects/heavy-local-12bc4","resources":{"hostingSite":"heavy-local-12bc4","realtimeDatabaseInstance":"heavy-local-12bc4-default-rtdb","storageBucket":"heavy-local-12bc4.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_75e1b399-7d9e-417d-9f60-5d9b36b1d13b"}
+[info] 
+[info] === Deploying to 'heavy-local-12bc4'...
+[info] 
+[info] i  deploying database, storage, functions, hosting 
+[info] i  database: checking rules syntax... 
+[debug] [2024-04-28T08:45:40.583Z] >>> [apiv2][query] GET https://firebasedatabase.googleapis.com/v1beta/projects/heavy-local-12bc4/locations/-/instances/heavy-local-12bc4-default-rtdb [none]
+[debug] [2024-04-28T08:45:41.642Z] <<< [apiv2][status] GET https://firebasedatabase.googleapis.com/v1beta/projects/heavy-local-12bc4/locations/-/instances/heavy-local-12bc4-default-rtdb 200
+[debug] [2024-04-28T08:45:41.642Z] <<< [apiv2][body] GET https://firebasedatabase.googleapis.com/v1beta/projects/heavy-local-12bc4/locations/-/instances/heavy-local-12bc4-default-rtdb {"name":"projects/1095342862820/locations/us-central1/instances/heavy-local-12bc4-default-rtdb","project":"projects/1095342862820","databaseUrl":"https://heavy-local-12bc4-default-rtdb.firebaseio.com","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[debug] [2024-04-28T08:45:41.646Z] >>> [apiv2][query] PUT https://heavy-local-12bc4-default-rtdb.firebaseio.com/.settings/rules.json dryRun=true
+[debug] [2024-04-28T08:45:41.646Z] >>> [apiv2][body] PUT https://heavy-local-12bc4-default-rtdb.firebaseio.com/.settings/rules.json "{\n  \"rules\": {\n    \".read\": \"auth != null\",\n    \".write\": \"auth != null\"\n  }\n}"
+[debug] [2024-04-28T08:45:42.789Z] <<< [apiv2][status] PUT https://heavy-local-12bc4-default-rtdb.firebaseio.com/.settings/rules.json 200
+[debug] [2024-04-28T08:45:42.789Z] <<< [apiv2][body] PUT https://heavy-local-12bc4-default-rtdb.firebaseio.com/.settings/rules.json {"status":"ok"}
+[info] ✔  database: rules syntax for database heavy-local-12bc4-default-rtdb is valid 
+[info] i  storage: ensuring required API firebasestorage.googleapis.com is enabled... 
+[debug] [2024-04-28T08:45:42.794Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/firebasestorage.googleapis.com [none]
+[debug] [2024-04-28T08:45:42.794Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/firebasestorage.googleapis.com x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:44.493Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/firebasestorage.googleapis.com 200
+[debug] [2024-04-28T08:45:44.493Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/firebasestorage.googleapis.com [omitted]
+[info] ✔  storage: required API firebasestorage.googleapis.com is enabled 
+[debug] [2024-04-28T08:45:44.494Z] >>> [apiv2][query] GET https://firebasestorage.googleapis.com/v1alpha/projects/heavy-local-12bc4/defaultBucket [none]
+[debug] [2024-04-28T08:45:45.149Z] <<< [apiv2][status] GET https://firebasestorage.googleapis.com/v1alpha/projects/heavy-local-12bc4/defaultBucket 200
+[debug] [2024-04-28T08:45:45.150Z] <<< [apiv2][body] GET https://firebasestorage.googleapis.com/v1alpha/projects/heavy-local-12bc4/defaultBucket {"name":"projects/heavy-local-12bc4/defaultBucket","location":"EU","bucket":{"name":"projects/heavy-local-12bc4/buckets/heavy-local-12bc4.appspot.com"}}
+[info] i  firebase.storage: checking storage.rules for compilation errors... 
+[debug] [2024-04-28T08:45:45.153Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/heavy-local-12bc4:test [none]
+[debug] [2024-04-28T08:45:45.153Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/heavy-local-12bc4:test [omitted]
+[debug] [2024-04-28T08:45:46.316Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/heavy-local-12bc4:test 200
+[debug] [2024-04-28T08:45:46.317Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/heavy-local-12bc4:test {}
+[info] ✔  firebase.storage: rules file storage.rules compiled successfully 
+[debug] [2024-04-28T08:45:46.320Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 [none]
+[debug] [2024-04-28T08:45:46.739Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 200
+[debug] [2024-04-28T08:45:46.740Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4 {"projectId":"heavy-local-12bc4","projectNumber":"1095342862820","displayName":"Heavy Local","name":"projects/heavy-local-12bc4","resources":{"hostingSite":"heavy-local-12bc4","realtimeDatabaseInstance":"heavy-local-12bc4-default-rtdb","storageBucket":"heavy-local-12bc4.appspot.com","locationId":"europe-west"},"state":"ACTIVE","etag":"1_75e1b399-7d9e-417d-9f60-5d9b36b1d13b"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2024-04-28T08:45:46.745Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudfunctions.googleapis.com [none]
+[debug] [2024-04-28T08:45:46.745Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:46.752Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/runtimeconfig.googleapis.com [none]
+[debug] [2024-04-28T08:45:46.752Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:46.756Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudbuild.googleapis.com [none]
+[debug] [2024-04-28T08:45:46.756Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudbuild.googleapis.com x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:46.762Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/artifactregistry.googleapis.com [none]
+[debug] [2024-04-28T08:45:46.762Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/artifactregistry.googleapis.com x-goog-quota-user=projects/heavy-local-12bc4
+[debug] [2024-04-28T08:45:48.192Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudbuild.googleapis.com 200
+[debug] [2024-04-28T08:45:48.193Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2024-04-28T08:45:48.209Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/artifactregistry.googleapis.com 200
+[debug] [2024-04-28T08:45:48.210Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2024-04-28T08:45:48.288Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudfunctions.googleapis.com 200
+[debug] [2024-04-28T08:45:48.288Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2024-04-28T08:45:48.592Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/runtimeconfig.googleapis.com 200
+[debug] [2024-04-28T08:45:48.593Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/heavy-local-12bc4/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2024-04-28T08:45:48.594Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4/adminSdkConfig [none]
+[debug] [2024-04-28T08:45:49.405Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4/adminSdkConfig 200
+[debug] [2024-04-28T08:45:49.406Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/heavy-local-12bc4/adminSdkConfig {"projectId":"heavy-local-12bc4","databaseURL":"https://heavy-local-12bc4-default-rtdb.firebaseio.com","storageBucket":"heavy-local-12bc4.appspot.com","locationId":"europe-west"}
+[debug] [2024-04-28T08:45:49.409Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/heavy-local-12bc4/configs [none]
+[debug] [2024-04-28T08:45:49.782Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/heavy-local-12bc4/configs 200
+[debug] [2024-04-28T08:45:49.782Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/heavy-local-12bc4/configs {}
+[debug] [2024-04-28T08:45:49.784Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2024-04-28T08:45:51.564Z] > [functions] package.json contents: {
+  "engines": {
+    "node": "18"
+  },
+  "name": "functions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "express": "^4.19.2",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^4.7.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.30.1",
+    "rss": "^1.2.2"
+  }
+}
+[debug] [2024-04-28T08:45:51.565Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2024-04-28T08:45:51.570Z] Could not find functions.yaml. Must use http discovery
+[debug] [2024-04-28T08:45:51.594Z] Found firebase-functions binary at '/home/porfanid/programming/Heavy_local_greece/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8996
+
+[debug] [2024-04-28T08:45:53.717Z] Got response from /__/functions.yaml {"endpoints":{"webApi":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"webApi"},"sendNotification":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"eventTrigger":{"eventType":"google.storage.object.finalize","eventFilters":{"resource":"projects/_/buckets/heavy-local-12bc4.appspot.com"},"retry":false},"labels":{},"entryPoint":"sendNotification"},"saveDeviceToken":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"saveDeviceToken"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] i  functions: preparing functions directory for uploading... 

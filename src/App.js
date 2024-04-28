@@ -20,6 +20,10 @@ import ShadowsDance from './pages/articles/ShadowsDance';
 import Vertigo from './pages/articles/Vertigo-archive';
 import ChronicleVOL2 from './pages/articles/chronicle-02';
 import Loader from './compoments/PreLoader/PreLoader';
+import ArticleUpload from "./compoments/UploadSystem/UploadSystem";
+import Login from "./compoments/UploadSystem/Login/Login";
+import Register from "./compoments/UploadSystem/Register/Register";
+import FirebaseFileList from "./compoments/UploadSystem/VerificationSystem/VerificationSystem";
 function App() {
     const [loading, setLoading] = useState(true);
 
@@ -96,6 +100,11 @@ function App() {
                 <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
                 <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
 
+                <Route path='/upload' element={<ArticleUpload/>}/>
+                <Route path='/upload/register' element={<Register/>}/>
+                <Route path='/upload/admin' element={<FirebaseFileList/>}/>
+                <Route path='/upload/login' element={<Login admin={false}/>}/>
+                <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
             </Routes>
 
         </>
