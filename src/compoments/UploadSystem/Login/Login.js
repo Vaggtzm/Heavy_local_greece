@@ -123,6 +123,11 @@ const Login = (props) => {
                             }}>Forgot Password?</Button>
                         </Form.Group>
 
+
+                            <Button variant={"secondary"} type={"button"} onClick={()=>{
+                                navigate("/upload/register")
+                            }}>Register</Button>
+
                         <Button variant="primary" type="submit" className="w-100 mt-3">
                             Login
                         </Button>

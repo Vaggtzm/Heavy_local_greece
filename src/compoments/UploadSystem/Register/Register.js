@@ -3,6 +3,7 @@ import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { auth } from '../../../firebase';
 import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
 import Container from 'react-bootstrap/Container';
+import {useNavigate} from "react-router-dom";
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -10,6 +11,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -70,6 +72,12 @@ const Register = () => {
                                 required={true}
                             />
                         </Form.Group>
+
+                        <Button className={"m-3"} variant="secondary" type="button" onClick={()=>{
+                            navigate("/upload/login")
+                        }}>
+                            Login
+                        </Button>
 
                         <Button variant="primary" type="submit">
                             Register
