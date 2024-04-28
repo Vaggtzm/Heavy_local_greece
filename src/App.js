@@ -87,13 +87,20 @@ function App() {
                 <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
                 <Route path='/legends-4-archive' element={<LegendVOl3/>}/>
                 <Route path='/Vertigo-archive' element={<Vertigo/>}/>
-                <Route path='/Autumn-Machinery-archive' element={<AutumnMachinery/>}/>
-                <Route path='/Shadows-dance-archive' element={<ShadowsDance/>}/>
                 <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
                 <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
                 <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
                 <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
+<<<<<<< Updated upstream
+=======
+                
+                <Route path='/upload' element={<ArticleUpload/>}/>
+                <Route path='/upload/register' element={<Register/>}/>
+                <Route path='/upload/admin' element={<FirebaseFileList/>}/>
+                <Route path='/upload/login' element={<Login admin={false}/>}/>
+                <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+>>>>>>> Stashed changes
 
 
                 {/*Είναι 2 φορές. Μία για τα κανονικά και μία για τα early access*/}

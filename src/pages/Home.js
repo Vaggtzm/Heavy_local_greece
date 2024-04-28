@@ -1,6 +1,23 @@
 import React from "react";
 import Navigation from "../compoments/Navigation/Navigation";
 import "./home.css";
+<<<<<<< Updated upstream
+=======
+import Severoth from './../assets/AcidMammothSecond.jpg';
+import Khavar from './../assets/review_picture.webp';
+import Civeroud from './../assets/Lethargy.webp';
+import Tum from './../assets/marwen.webp';
+import Holler from './../assets/Holler_Members.jpg';
+import  Lloth from './../assets/korrection.webp';
+import Birds from './../assets/Degenerate.jpg';
+import Herc from './../assets/Herc.jpg';
+import ShadowImg from './../assets/AcidMammothSecond.jpg';
+import Anorimoi from './../assets/ANORMOI01.jpg';
+import PrimoridalBand from './../assets/Primordial.webp';
+import Astronomica from './../assets/Masses.jpg';
+import Yothiria from "./../assets/chronicles/chronicle-02/yothiria-02.jpg";
+import Contact from "../compoments/ContactForm/contact";
+>>>>>>> Stashed changes
 import Footer from "../compoments/footer/footer";
 import Socials from "../compoments/SocialMedia/socials";
 import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
@@ -94,25 +111,34 @@ const Home = () => {
         </div>
   <h4>Heavy Local Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
-    <div className="col-md-6 mb-4">
+    <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg h-100" src={"/assets/Hydra.jpg"} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Veins of Obsidian: Luctus' Hydra's Menacing Ode to Black Metal </h4>
-          <a href="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Acid Mammoth:Review </h4>
+          <a href="/article/Acid-mammoth_supersonic-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    <div className="col-md-6 mb-4">
+    <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg h-100" src={"/assets/Civerous.webp"} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Band Review: Civerous</h4>
-          <a href="/article/Civerous-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Unleashing Eastern Metal Fury: Lethargy’s “Our Life Belongs to Us”</h4>
+          <a href="/article/Lethargy-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 w-100">
+        <img className="card-img-top shadow-lg h-100" src={Tum} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">TumulTum Project Review</h4>
+          <a href="/article/tumultum-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+
     <h4>Heavy Local Reviews (GR)</h4>
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
@@ -148,16 +174,35 @@ const Home = () => {
 
 
 
-    <h3 className="m-2 p-3">Ανταποκριση Astronomica x Dark Parrot x Sense of Fear live στα Ιωαννινα </h3>
+    <h3 className="m-2 p-3">Into the Darkness: A Chronicle of Underground for the Masses </h3>
     <hr className="bg-white"></hr>
       <div className='col-md-6'>
+<<<<<<< Updated upstream
 <img src={"/assets/Astronomica_response.jpg"} className="img-fluid"></img>
+=======
+<img src={Astronomica} className="img-fluid m-3"></img>
+>>>>>>> Stashed changes
       </div>
 
       <div className='col-md-6'>
         <p className="lead">
-        Οι openers Dark Parrot, Γιαννιώτες, φρέσκο αίμα στον χώρο του μέταλ, είναι τέσσερις νεαροί με μπόλικο μεράκι και ταλέντο να μοιράσουν. Ο Φίλιππος (φωνή), ο Νότης (κιθάρα και δεύτερη φωνή), ο Νίο (μπάσο) και ο Δημήτρης (ντραμς) έχουν έρθει υποσχόμενοι να ταρακουνήσουν, να ξεσηκώσουν και να κρατήσουν αναμμένη την φλόγα στη μέταλ σκηνή των Ιωαννίνων και της Ελλάδας ευρύτερα. Με χιούμορ και καλή διάθεση, ο Φίλιππος μας καλωσόρισε στο event, αναγνωρίζοντας πρώτη από όλους τη μητέρα του στο κοινό, πράγμα υπέροχο να βλέπει κανείς τους γονείς να στηρίζουν τα παιδιά τους στο μουσικό ταξίδι τους. Συνεχίζοντας, ερμήνευσαν κομμάτια alt / punk rock / nu metal ρεπερτορίου, συμπεριλαμβανομένων και δύο δικών τους κομματιών, δίνοντας μας μια γεύση για τις επόμενες κυκλοφορίες τους. Το κλίμα ήταν θερμό, με την ενέργεια των παιδιών στη σκηνή αλλά και με το εύθυμο χιούμορ και τα πειράγματα των μελών της μπάντας, ιδιαίτερα του Φιλίππου και του Νότη ενδιάμεσα από κάθε τραγούδι. Τα παιδιά έκλεισαν με ένα δικό τους αντιπολεμικό κομμάτι, όπως είπαν 'in the making', αντιμετωπίζοντας την επικαιρότητα. Στη συνέχεια, αφού μας χάρισαν μια υπέροχη εισαγωγή, παρέδωσαν τη σκυτάλη στους…        </p>
-        <a className="btn btn-danger" href="/article/astronomica-response-archive">Read More</a>
+        In the depths of Quantic Pub, on the 5th and 6th of April 2024, the inaugural edition of the festival dedicated to Black Metal unfolded its wings: “Underground for the Masses”. Over the course of two nights, thirteen diverse bands from across Europe and beyond took to the stage, bringing with them a spectrum of Black Metal styles, from Classic to Suicidal, Atmospheric to Melodic, and Black Death Metal, among others. The air was thick with anticipation as the clock struck 18:00, marking the commencement of an auditory journey into the abyss.
+        </p>
+        <a className="btn btn-danger" href="/article/Undeground-for-the-masses_archive">Read More</a>
+      </div>
+    <hr className="bg-white"/>
+    <h3 className="m-2 p-3">Anormoi X EN STIGMA</h3>
+    <hr className="bg-white"></hr>
+      <div className='col-md-6'>
+<img src={Anorimoi} className="img-fluid m-3"></img>
+      </div>
+
+      <div className='col-md-6'>
+        <p className="lead">
+        Γενικώς για τη συγκεκριμένη βραδιά ένα έχω να πω: ενώ πίστευα πως είχα προετοιμαστεί σχετικά καλά για το τι θα παιζόταν, και πάλι αιφνιδιάστηκα.
+
+Τη συναυλία άνοιξαν οι En-Stigma, μία folk progressive metal μπάντα με έδρα τα Ιωάννινα, που μας εντυπωσίασαν με τα ηλεκτρικά μπουζούκια τους και τα φωνητικά της Αίγλης.        </p>
+        <a className="btn btn-danger" href="/article/Anorimoi-response-archive">Read More</a>
       </div>
 
   </div>
