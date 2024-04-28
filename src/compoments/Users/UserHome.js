@@ -1,19 +1,18 @@
 import React from "react";
-import Navigation from "../compoments/Navigation/Navigation";
-import "./home.css";
-import Footer from "../compoments/footer/footer";
-import Socials from "../compoments/SocialMedia/socials";
-import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
-import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
-import Youtube from "../compoments/YoutubeAPI/Youtube";
-import PrimaryCarousel from "../compoments/PrimaryCarousel/PrimaryCarousel";
-import SecondaryCarousel from "../compoments/carousel/carousel";
-const Home = () => {
+import UserNav from "./UserNav";
+import Footer from "./../footer/footer";
+import Socials from "./../SocialMedia/socials";
+import SocialBar from "./../../compoments/SocialMedia/socials";
+import SpotifyBanner from "./../../compoments/SpotifyBanner/SpotifyBanner";
+import Youtube from "./../../compoments/YoutubeAPI/Youtube";
+import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
+import SecondaryCarousel from "./../carousel/carousel";
+const UserHome = () => {
   
   return (
     <>
 
-      <Navigation />
+      <UserNav />
       <header>
 
         <div className="container mt-4 main ">
@@ -32,7 +31,6 @@ const Home = () => {
                   <hr className="bg-dark" />
                   <Socials />
                   
-                  <SocialBar/>
                   <hr className="bg-dark" />
                   <h5>Help us to grow </h5>
                    <a href="https://www.buymeacoffee.com/tzimasvagg7" className="btn btn-primary w-50">Donate</a>
@@ -233,4 +231,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserHome;

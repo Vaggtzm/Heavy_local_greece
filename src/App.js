@@ -9,21 +9,20 @@ import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
-import AutumnMachinery from './pages/articles/AutumnMachinery';
 import GeorgeKollias from './pages/articles/GeorgeKollias';
 import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
 import HollerInterview from './pages/articles/Interviews/Holler';
 import KhavarInterview from './pages/articles/Interviews/Khavar';
-import LegendVOl3 from './pages/articles/Legends-4';
 import Primordial from './pages/articles/Primordial-black-interview';
-import ShadowsDance from './pages/articles/ShadowsDance';
-import Vertigo from './pages/articles/Vertigo-archive';
-import ChronicleVOL2 from './pages/articles/chronicle-02';
-import Loader from './compoments/PreLoader/PreLoader';
 import ArticleUpload from "./compoments/UploadSystem/UploadSystem";
 import Login from "./compoments/UploadSystem/Login/Login";
 import Register from "./compoments/UploadSystem/Register/Register";
 import FirebaseFileList from "./compoments/UploadSystem/VerificationSystem/VerificationSystem";
+
+import UserLog from './compoments/Users/AUTH/userLog';
+import UserRegister from './compoments/Users/AUTH/UserRegister';
+import UserHome from './compoments/Users/UserHome';
+
 function App() {
     const [loading, setLoading] = useState(true);
 
@@ -83,24 +82,12 @@ function App() {
                 <Route path='/' element={<Home/>}/>
                 <Route path='/articles-page' element={<Articles/>}/>
                 <Route path='/Art-Gallery-page' element={<Gallery/>}/>
-                <Route path='/Chronicles_of_the_underworld_vol-2_archive' element={<ChronicleVOL2/>}/>
                 <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
-                <Route path='/legends-4-archive' element={<LegendVOl3/>}/>
-                <Route path='/Vertigo-archive' element={<Vertigo/>}/>
                 <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
                 <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
                 <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
                 <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
-<<<<<<< Updated upstream
-=======
-                
-                <Route path='/upload' element={<ArticleUpload/>}/>
-                <Route path='/upload/register' element={<Register/>}/>
-                <Route path='/upload/admin' element={<FirebaseFileList/>}/>
-                <Route path='/upload/login' element={<Login admin={false}/>}/>
-                <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
->>>>>>> Stashed changes
 
 
                 {/*Είναι 2 φορές. Μία για τα κανονικά και μία για τα early access*/}
@@ -112,6 +99,12 @@ function App() {
                 <Route path='/upload/admin' element={<FirebaseFileList/>}/>
                 <Route path='/upload/login' element={<Login admin={false}/>}/>
                 <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+
+                {/**user routings */}
+                <Route path='/User/login' element={<UserLog />}/>
+                <Route path='/User/register' element={<UserRegister />}/>
+                <Route path='/User/home' element={<UserHome />}/>
+
             </Routes>
 
         </>

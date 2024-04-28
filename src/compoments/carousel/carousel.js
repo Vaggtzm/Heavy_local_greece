@@ -38,13 +38,13 @@ const SecondaryCarousel = () => {
     <Slider {...settings} >
 
       <div className='bg-dark carousel-item'>
-        <img src={"/assets/gallery/Goth01.png"}   alt="slide2" />
+        <img src={"https://heavy-local.com/assets/gallery/Goth01.png"}   alt="slide2" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={'/assets/gallery/gallery-item06.jpg'}  alt="slide3" />
+        <img src={'https://heavy-local.com/assets/gallery/gallery-item06.jpg'}  alt="slide3" />
       </div>
       <div className='bg-dark carousel-item'>
-        <img src={'/assets/gallery/art-item.jpg'}  alt="slide4" />
+        <img src={'https://heavy-local.com/assets/gallery/art-item.jpg'}  alt="slide4" />
       </div>
       
     </Slider>
