@@ -118,8 +118,13 @@ const Login = (props) => {
                                     setError("Password reset email has been sent to your email.");
                                     setEmailVerification(false)
                                 }catch(error){
-                                    setError(error);
+                                    if(error.code==="auth/missing-email"){
+                                        setError("Please enter your email first.");
+                                    }else{
+                                        setError(error.message);
+                                    }
                                 }
+                                return false;
                             }}>Forgot Password?</Button>
                         </Form.Group>
 

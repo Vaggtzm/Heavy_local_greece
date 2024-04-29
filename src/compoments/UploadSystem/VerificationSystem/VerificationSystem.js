@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, ListGroup, Alert } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, Form, ListGroup, Modal} from 'react-bootstrap';
 import {auth, storage} from '../../../firebase';
-import { listAll, getDownloadURL, getMetadata, ref, uploadString, deleteObject } from 'firebase/storage';
+import {deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString} from 'firebase/storage';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Navigation from '../../Navigation/Navigation';
-import {useNavigate} from "react-router-dom";
+import {useNavigate} from 'react-router-dom';
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
+    const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
+    const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null); // State to hold current user
-    const navigate = useNavigate()
+    const [currentUser, setCurrentUser] = useState(null);
+    const navigate = useNavigate();
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -26,10 +28,10 @@ const FirebaseFileList = () => {
 
     const fetchFiles = async () => {
         try {
-            const listRef = ref(storage, 'upload_from_authors');
-            const { items } = await listAll(listRef);
+            let listRef = ref(storage, 'upload_from_authors');
+            let { items } = await listAll(listRef);
 
-            const fileData = await Promise.all(
+            let filesData = await Promise.all(
                 items.map(async (item) => {
                     const downloadUrl = await getDownloadURL(item);
                     const metadata = await getMetadata(item);
@@ -38,37 +40,57 @@ const FirebaseFileList = () => {
                     return { name: item.name, downloadUrl, metadata, fileContent };
                 })
             );
+            setFiles(filesData);
 
-            setFiles(fileData);
-        } catch (error) {
+
+
+            listRef = ref(storage, 'articles');
+            items = (await listAll(listRef)).items;
+
+            filesData = await Promise.all(
+                items.map(async (item) => {
+                    const downloadUrl = await getDownloadURL(item);
+                    const metadata = await getMetadata(item);
+                    const fileContent = await fetch(downloadUrl).then((res) => {
+                        try {
+                            return res.json()
+                        }catch (error){
+                            console.log(error);
+                        }
+                    });
+
+                    return { name: item.name, downloadUrl, metadata, fileContent };
+                })
+            );
+            setAlreadyPublishedArticles(filesData);
+        }catch (error) {
             setError('Error fetching files: ' + error.message);
+            console.log(error);
         }
     };
 
 
     useEffect(() => {
-
-        auth.onAuthStateChanged((user) => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in
-                if(user.email!=="tzimasvaggelis02@gmail.com"){
-                    navigate("/upload");
-                }
                 setCurrentUser(user);
             } else {
-                // No user is signed in
                 setCurrentUser(null);
                 navigate('/upload/admin/login');
             }
         });
-        fetchFiles();
-    }, []);
 
-    const handleEdit = (file) => {
+        fetchFiles();
+
+        return () => unsubscribe();
+    }, [navigate]);
+
+    const handleEdit = (file, isAlreadyPub) => {
         setSelectedFile(file);
         setFileData({
             ...file.fileContent,
         });
+        setIsAlreadyPublished(isAlreadyPub);
         setShowModal(true);
     };
 
@@ -76,25 +98,30 @@ const FirebaseFileList = () => {
         if (!selectedFile || !fileData) return;
 
         try {
-            // Save updated file data to Firebase
-            const fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
+            let fileRef;
+            if (isAlreadyPublished) {
+                fileRef = ref(storage, `articles/${selectedFile.name}`);
+            } else {
+                fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
+            }
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
             await uploadString(fileRef, JSON.stringify(fileData));
-            // Update the file data locally
+
+            // Update local files state
             const updatedFiles = files.map((file) =>
                 file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
             );
             setFiles(updatedFiles);
 
-            // Close modal
             setShowModal(false);
+            fetchFiles();
         } catch (error) {
             setError('Error saving file data: ' + error.message);
         }
     };
 
     const handleChange = (e, field) => {
-        const value = e.target.value;
+        const { value } = e.target;
         setFileData((prevData) => ({
             ...prevData,
             [field]: value,
@@ -102,38 +129,39 @@ const FirebaseFileList = () => {
     };
 
     const handleContentChange = (value) => {
-        setFileData((prevData) => ({
-            ...prevData,
-            content: value,
-        }));
+        if(isAlreadyPublished){
+            setAlreadyPublishedArticles((prevData) => ({
+                ...prevData,
+                content: value,
+            }))
+        } else {
+            setFileData((prevData) => ({
+                ...prevData,
+                content: value,
+            }));
+        }
     };
 
     const handlePublish = async () => {
         if (!selectedFile) return;
 
         try {
-            // Get download URL for the selected file
             const fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             const downloadUrl = await getDownloadURL(fileRef);
 
-            // Fetch file content
             const fileContent = await fetch(downloadUrl).then((res) => res.text());
 
-            // Upload the file content to the 'early_release' folder
             const earlyReleaseRef = ref(storage, `early_releases/${selectedFile.name}`);
             await uploadString(earlyReleaseRef, fileContent);
 
-            // Delete the original file from 'upload_from_authors'
             await deleteObject(fileRef);
 
-            // Display success message
             alert('File published successfully to early_release folder!');
             fetchFiles();
         } catch (error) {
             setError('Error publishing file: ' + error.message);
         }
     };
-
 
     return (
         <>
@@ -147,7 +175,20 @@ const FirebaseFileList = () => {
                     {files.map((file, index) => (
                         <ListGroup.Item key={index}>
                             {file.name}
-                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file)}>
+                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false)}>
+                                Edit
+                            </Button>
+                        </ListGroup.Item>
+                    ))}
+                </ListGroup>
+
+                <h3>Already Published</h3>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <ListGroup>
+                    {alreadyPublishedArticles.map((file, index) => (
+                        <ListGroup.Item key={index}>
+                            {file.name}
+                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true)}>
                                 Edit
                             </Button>
                         </ListGroup.Item>
@@ -220,10 +261,11 @@ const FirebaseFileList = () => {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {/* Publish button */}
-                        <Button variant="success" onClick={handlePublish} className="mt-3">
-                            Publish
-                        </Button>
+                        {isAlreadyPublished && (
+                            <Button variant="success" onClick={handlePublish} className="mt-3">
+                                Publish
+                            </Button>
+                        )}
                         <Button variant="secondary" onClick={() => setShowModal(false)}>
                             Close
                         </Button>
