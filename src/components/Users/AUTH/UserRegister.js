@@ -1,7 +1,7 @@
 import React , {useState} from 'react'
 import { useNavigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth';
-import {auth} from './../../../firebase';
+import {auth} from '../../../firebase';
 import UserNav from '../UserNav';
 
 const UserRegister = ()=> {
@@ -17,8 +17,7 @@ const UserRegister = ()=> {
             const user = userCredential.user;
             sendEmailVerification(user);
             console.log(user);
-            navigate("/log_in")
-
+            navigate("/User/login");
         }).catch((error)=>{
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -49,7 +48,7 @@ const UserRegister = ()=> {
                   value={password}
                   onChange={(e) => SetPassword(e.target.value)}
                   required
-                  ></input>
+                  />
             </div>
               <button
                   className='btn btn-danger m-2'

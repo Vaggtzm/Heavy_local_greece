@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
+import {signInWithEmailAndPassword, sendEmailVerification, signOut, sendPasswordResetEmail} from "firebase/auth";
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import './auth.css'
@@ -28,7 +28,6 @@ const UserLog = () => {
       setEmailVerification(false);
     }catch(error){
       setError(error);
-
     }
   }
 
@@ -100,6 +99,15 @@ const UserLog = () => {
               <p className="text-danger">Password must be at least 8 characters long.</p>
             )}
           </div>
+        {/*TODO: make this nicer. Both messages are in error mode, while the first should be success*/}
+        <Button onClick={async ()=>{
+          try {
+            await sendPasswordResetEmail(auth, email);
+            setError("Password reset mail was sent successfully. Please check your email")
+          }catch(error){
+            setError("Please enter your email first");
+          }
+        }} variant={"link"}>forgot password</Button>
           <button
             className="btn btn-danger m-2"
             onClick={onLogin}
