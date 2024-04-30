@@ -1,7 +1,7 @@
 import React  from "react";
-import Navigation from "./../../compoments/Navigation/Navigation";
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import PageWithComments from "../../compoments/Comments/comment";
+import Navigation from "../../components/Navigation/Navigation";
+import ReadMore from "../../components/ReadMore/ReadMore";
+import PageWithComments from "../../components/Comments/comment";
 const chronicle01 = ()=>{
     return(
         <>

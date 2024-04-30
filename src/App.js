@@ -2,8 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { getToken } from "firebase/messaging";
 import { useEffect , useState } from "react";
 import { Route, Routes } from 'react-router-dom';
-import DefaultArticle from './compoments/GenericArticle/GenericArticle';
-import NotificationToast from "./compoments/messaging/Message";
+import DefaultArticle from './components/GenericArticle/GenericArticle';
+import NotificationToast from "./components/messaging/Message";
 import { messaging } from './firebase';
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
@@ -14,14 +14,14 @@ import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
 import HollerInterview from './pages/articles/Interviews/Holler';
 import KhavarInterview from './pages/articles/Interviews/Khavar';
 import Primordial from './pages/articles/Primordial-black-interview';
-import ArticleUpload from "./compoments/UploadSystem/UploadSystem";
-import Login from "./compoments/UploadSystem/Login/Login";
-import Register from "./compoments/UploadSystem/Register/Register";
-import FirebaseFileList from "./compoments/UploadSystem/VerificationSystem/VerificationSystem";
+import ArticleUpload from "./components/UploadSystem/UploadSystem";
+import Login from "./components/UploadSystem/Login/Login";
+import Register from "./components/UploadSystem/Register/Register";
+import FirebaseFileList from "./components/UploadSystem/VerificationSystem/VerificationSystem";
 
-import UserLog from './compoments/Users/AUTH/userLog';
-import UserRegister from './compoments/Users/AUTH/UserRegister';
-import UserHome from './compoments/Users/UserHome';
+import UserLog from './components/Users/AUTH/userLog';
+import UserRegister from './components/Users/AUTH/UserRegister';
+import UserHome from './components/Users/UserHome';
 
 function App() {
     const [loading, setLoading] = useState(true);

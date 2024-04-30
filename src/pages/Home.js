@@ -1,13 +1,13 @@
 import React from "react";
-import Navigation from "../compoments/Navigation/Navigation";
+import Navigation from "../components/Navigation/Navigation";
 import "./home.css";
-import Footer from "../compoments/footer/footer";
-import Socials from "../compoments/SocialMedia/socials";
-import SocialBar from "../compoments/ShareBtns/SocialMediaBar";
-import SpotifyBanner from "../compoments/SpotifyBanner/SpotifyBanner";
-import Youtube from "../compoments/YoutubeAPI/Youtube";
-import PrimaryCarousel from "../compoments/PrimaryCarousel/PrimaryCarousel";
-import SecondaryCarousel from "../compoments/carousel/carousel";
+import Footer from "../components/footer/footer";
+import Socials from "../components/SocialMedia/socials";
+import SocialBar from "../components/ShareBtns/SocialMediaBar";
+import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
+import Youtube from "../components/YoutubeAPI/Youtube";
+import PrimaryCarousel from "../components/PrimaryCarousel/PrimaryCarousel";
+import SecondaryCarousel from "../components/carousel/carousel";
 const Home = () => {
   
   return (

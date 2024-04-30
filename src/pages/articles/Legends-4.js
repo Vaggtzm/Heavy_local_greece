@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "../../compoments/Navigation/Navigation";
+import Navigation from "../../components/Navigation/Navigation";
 import './articles.css';
-import ReadMore from "../../compoments/ReadMore/ReadMore";
-import PageWithComments from "../../compoments/Comments/comment";
+import ReadMore from "../../components/ReadMore/ReadMore";
+import PageWithComments from "../../components/Comments/comment";
 
 const NightStalker = ()=>{
     return(

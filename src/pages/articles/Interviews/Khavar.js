@@ -1,7 +1,7 @@
 import React from "react";
-import Navigation from "./../../../compoments/Navigation/Navigation";
+import Navigation from "../../../components/Navigation/Navigation";
 import './../articles.css'
-import PageWithComments from "./../../../compoments/Comments/comment";
+import PageWithComments from "../../../components/Comments/comment";
 
 const KhavarInterview = ()=>{
     return(

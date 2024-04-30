@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./../../../firebase";
-import { NavLink, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword, sendEmailVerification, signOut } from "firebase/auth";
+import { auth } from "../../../firebase";
+import { useNavigate } from "react-router-dom";
 import './auth.css'
 import UserNav from "../UserNav";
+import {Alert, Button} from "react-bootstrap";
 
 const UserLog = () => {
   const navigate = useNavigate();
@@ -12,9 +13,24 @@ const UserLog = () => {
   const [passwordLengthError, setPasswordLengthError] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const [error, setError] = useState("");
+  const [emailVerification, setEmailVerification] = useState(false);
+  const [user, setUser] = useState(auth.currentUser);
+
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
+  const sendVerification= async () => {
+    try {
+      await sendEmailVerification(user);
+      setError("Email verification has been sent. Please check your inbox");
+      setEmailVerification(false);
+    }catch(error){
+      setError(error);
+
+    }
+  }
 
   const onLogin = (e) => {
     e.preventDefault();
@@ -23,15 +39,24 @@ const UserLog = () => {
       return;
     }
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
-        navigate("/User");
-        console.log(user);
+        if (user.emailVerified) {
+          navigate("/User");
+          console.log(user);
+        } else {
+          setError("Please verify your email before signing in");
+          setEmailVerification(false);
+          setUser(user);
+          await signOut(auth);
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        //TODO: Change it to display th message properly
+        setError(errorMessage);
       });
   };
 
@@ -41,8 +66,8 @@ const UserLog = () => {
       <div className="container">
         <h4 className="display-4 m-3 p-1">Login</h4>
         <hr className="bg-dark"></hr>
-        <form>
           <div>
+            {error && <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification && <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email Verification</Button>}</Alert>}
             <label className="form-label">Email address</label>
             <input
               type="email"
@@ -76,14 +101,12 @@ const UserLog = () => {
             )}
           </div>
           <button
-            type="submit"
             className="btn btn-danger m-2"
             onClick={onLogin}
           >
             Submit
           </button>
-        </form>
-      </div>
+        </div>
     </>
   );
 };

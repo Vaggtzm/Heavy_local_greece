@@ -1,6 +1,6 @@
 import React from "react";
-import Navigation from "./../../compoments/Navigation/Navigation";
-import Socials from "../../compoments/SocialMedia/socials";
+import Navigation from "../../components/Navigation/Navigation";
+import Socials from "../../components/SocialMedia/socials";
 import './gallery.css';
 
 const ArtGallery = () => {

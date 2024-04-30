@@ -2,9 +2,9 @@ import React from "react";
 import UserNav from "./UserNav";
 import Footer from "./../footer/footer";
 import Socials from "./../SocialMedia/socials";
-import SocialBar from "./../../compoments/SocialMedia/socials";
-import SpotifyBanner from "./../../compoments/SpotifyBanner/SpotifyBanner";
-import Youtube from "./../../compoments/YoutubeAPI/Youtube";
+import SocialBar from "../SocialMedia/socials";
+import SpotifyBanner from "../SpotifyBanner/SpotifyBanner";
+import Youtube from "../YoutubeAPI/Youtube";
 import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "./../carousel/carousel";
 const UserHome = () => {

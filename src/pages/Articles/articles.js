@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../../compoments/Navigation/Navigation";
+import Navigation from "../../components/Navigation/Navigation";
 import "./../home.css"
 
 
