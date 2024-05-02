@@ -6,8 +6,8 @@ import { ref as databaseRef, push, remove, onValue } from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
-import Navigation from "../Navigation/Navigation";
 import {Button} from "react-bootstrap";
+import AppNav from './../AppNav/AppNav'
 
 const DefaultArticle = (props) => {
     const [isEarlyAccess] = useState(props.earlyAccess);
@@ -97,7 +97,7 @@ const DefaultArticle = (props) => {
     return (
         <>
             {/* Meta tags component */}
-            <Navigation />
+            <AppNav />
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">
@@ -115,8 +115,10 @@ const DefaultArticle = (props) => {
                             <span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>
                         </p>
                         {/*TODO: fix styling*/}
+                        <hr className="bg-dark" />
                         {enableSaving && (
-                            <span onClick={toggleSaveArticle} style={{ cursor: 'pointer' }}>
+                            <span className="btn btn-danger w-25  rounded-4" onClick={toggleSaveArticle} style={{ cursor: 'pointer'}}>
+                            save 
                                 {isSaved ? (
                                     <i className="fas fa-heart" style={{ color: 'red' }}></i>
                                 ) : (
@@ -124,6 +126,7 @@ const DefaultArticle = (props) => {
                                 )}
                             </span>
                         )}
+                        <a href="https://buymeacoffee.com/tzimasvagg7"  className="btn btn-danger 25 m-2  rounded-4" >Say Thanks</a>
                     </div>
                     <div className="col-md-6">
                         <div dangerouslySetInnerHTML={{__html: articles.content}}></div>

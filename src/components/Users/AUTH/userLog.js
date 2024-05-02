@@ -3,9 +3,8 @@ import {signInWithEmailAndPassword, sendEmailVerification, signOut, sendPassword
 import { auth } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import './auth.css'
-import UserNav from "../UserNav";
 import {Alert, Button} from "react-bootstrap";
-
+import AppNav from "../../AppNav/AppNav";
 const UserLog = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -41,7 +40,7 @@ const UserLog = () => {
       .then(async (userCredential) => {
         const user = userCredential.user;
         if (user.emailVerified) {
-          navigate("/User");
+          navigate("/User/home");
           console.log(user);
         } else {
           setError("Please verify your email before signing in");
@@ -61,7 +60,7 @@ const UserLog = () => {
 
   return (
     <>
-      <UserNav />
+      <AppNav />
       <div className="container">
         <h4 className="display-4 m-3 p-1">Login</h4>
         <hr className="bg-dark"></hr>

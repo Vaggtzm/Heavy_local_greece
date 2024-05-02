@@ -2,8 +2,7 @@ import React , {useState} from 'react'
 import { useNavigate} from 'react-router-dom';
 import {createUserWithEmailAndPassword, sendEmailVerification} from 'firebase/auth';
 import {auth} from '../../../firebase';
-import UserNav from '../UserNav';
-
+import AppNav from '../../AppNav/AppNav';
 const UserRegister = ()=> {
     const navigate = useNavigate();
 
@@ -17,7 +16,7 @@ const UserRegister = ()=> {
             const user = userCredential.user;
             sendEmailVerification(user);
             console.log(user);
-            navigate("/User/login");
+            navigate("/User/home");
         }).catch((error)=>{
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -26,7 +25,7 @@ const UserRegister = ()=> {
     }
     return(
         <>
-        <UserNav />
+        <AppNav />
         <div className='container'>
         <h4 className='display-4 m-3 p-1'>Create Account</h4>
             <div>

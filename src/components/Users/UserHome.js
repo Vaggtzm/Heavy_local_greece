@@ -1,8 +1,8 @@
 import React from "react";
-import UserNav from "./UserNav";
 import Footer from "./../footer/footer";
 import Socials from "./../SocialMedia/socials";
 import SocialBar from "../SocialMedia/socials";
+import AppNav from "../AppNav/AppNav";
 import SpotifyBanner from "../SpotifyBanner/SpotifyBanner";
 import Youtube from "../YoutubeAPI/Youtube";
 import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
@@ -11,8 +11,7 @@ const UserHome = () => {
   
   return (
     <>
-
-      <UserNav />
+     <AppNav />
       <header>
 
         <div className="container mt-4 main ">
