@@ -17,7 +17,7 @@ const DefaultArticle = (props) => {
     const [isSaved, setIsSaved] = useState(false); // State to track if the article is saved by the user
 
     useEffect(() => {
-        fetchData(); // Fetch article data when component mounts
+        fetchData().then(); // Fetch article data when component mounts
 
         // Check if user is authenticated
         auth.onAuthStateChanged((user) => {
