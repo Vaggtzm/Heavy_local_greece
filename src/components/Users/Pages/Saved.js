@@ -8,26 +8,29 @@ import { useParams } from "react-router-dom";
 const SavedArtciles = () => {
   const [data, setData] = useState(null);
   const { name } = useParams();
+  const [ currentUser,setCurrentUser] = useState();
+
+  
+  const fetchData = auth.onAuthStateChanged( async (user) =>{
+    if (user) {
+      setCurrentUser(user)
+      console.log(user , "User logged in ");
+        const dataRef = ref(database, `users/${currentUser.uid}/savedArticles/${name}`);
+        onValue(dataRef, (snapshot) => {
+            const fetchedData = snapshot.val();
+            setData(fetchedData);
+        });
+    } else {
+        console.log("Ο χρήστης δεν είναι συνδεδεμένος");
+    }
+});
+fetchData();
+
 
   useEffect(() => {
-      const fetchData = async () => {
-          const currentUser = auth.currentUser;
-          if (currentUser) {
-              const dataRef = ref(database, `users/${currentUser.uid}/savedArticles/${name}`);
-              onValue(dataRef, (snapshot) => {
-                  const fetchedData = snapshot.val();
-                  setData(fetchedData);
-              });
-          } else {
-              console.log("Ο χρήστης δεν είναι συνδεδεμένος");
-          }
-      };
-      fetchData();
-
       return () => {
-          // Εδώ μπορείτε να προσθέσετε κάποιον κώδικα για καθαρισμό (προαιρετικό)
       };
-  }, [name]);
+  }, [name , auth ]);
     return(
         <>
         <AppNavigation />
