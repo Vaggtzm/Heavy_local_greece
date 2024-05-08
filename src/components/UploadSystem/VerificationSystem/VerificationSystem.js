@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, Button, Form, ListGroup, Modal} from 'react-bootstrap';
-import {auth, storage} from '../../../firebase';
-import {deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString} from 'firebase/storage';
+import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, Form, ListGroup, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import Navigation from '../../Navigation/Navigation';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { auth, storage } from '../../../firebase';
+import Navigation from '../../AppNav/Navigation';
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);

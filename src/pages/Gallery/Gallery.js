@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
+import AppNavigation from "../../components/AppNav/AppNav";
 import Socials from "../../components/SocialMedia/socials";
 import './gallery.css';
 
@@ -20,7 +20,7 @@ const ArtGallery = () => {
 
   return (
     <>
-      <Navigation />
+      <AppNavigation />
       <div className="container">
         <div className="row">
           <div className="col-md-12">

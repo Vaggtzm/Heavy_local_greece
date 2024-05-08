@@ -1,5 +1,5 @@
 import React from "react";
-import AppNav from "../components/AppNav/AppNav";
+import AppNavigation from "../components/AppNav/AppNav";
 import "./home.css";
 import Footer from "../components/footer/footer";
 import Socials from "../components/SocialMedia/socials";
@@ -12,7 +12,7 @@ const Home = () => {
   
   return (
     <>
-      <AppNav />
+      <AppNavigation />
       <header>
 
         <div className="container mt-4 main ">

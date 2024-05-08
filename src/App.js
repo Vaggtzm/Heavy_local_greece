@@ -22,6 +22,7 @@ import FirebaseFileList from "./components/UploadSystem/VerificationSystem/Verif
 import UserLog from './components/Users/AUTH/userLog';
 import UserRegister from './components/Users/AUTH/UserRegister';
 import UserHome from './components/Users/UserHome';
+import SavedArtciles from './components/Users/Pages/Saved';
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -104,6 +105,7 @@ function App() {
                 <Route path='/User/login' element={<UserLog />}/>
                 <Route path='/User/register' element={<UserRegister />}/>
                 <Route path='/User/home' element={<UserHome />}/>
+                <Route path='/User/Saved' element={<SavedArtciles />}/>
 
             </Routes>
 

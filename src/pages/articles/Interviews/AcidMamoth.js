@@ -1,7 +1,7 @@
 import React from "react";
-import Navigation from "../../../components/Navigation/Navigation";
-import './../articles.css'
+import Navigation from "../../../components/AppNav/Navigation";
 import PageWithComments from "../../../components/Comments/comment";
+import './../articles.css';
 
 const AcidMamoth = ()=>{
     return(

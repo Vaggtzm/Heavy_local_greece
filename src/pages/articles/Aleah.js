@@ -1,8 +1,8 @@
 import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
-import './articles.css'
-import ReadMore from "../../components/ReadMore/ReadMore";
+import Navigation from "../../components/AppNav/Navigation";
 import PageWithComments from "../../components/Comments/comment";
+import ReadMore from "../../components/ReadMore/ReadMore";
+import './articles.css';
 
 const Aleah = ()=>{
     return(

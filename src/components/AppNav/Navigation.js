@@ -1,13 +1,13 @@
+import { signOut } from 'firebase/auth';
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 import InstallButton from '../PWAinstal/pwaInstall';
 import './nav.css';
-import {Button} from "react-bootstrap";
-import {useEffect, useState} from "react";
-import {auth} from "../../firebase";
-import {signOut} from 'firebase/auth';
-import {useNavigate} from "react-router-dom";
 
 const Navigation = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -26,7 +26,7 @@ const Navigation = () => {
   return (
     <Navbar  expand="lg" className="bg-dark navbar">
       <Container className='navbar'>
-        <Navbar.Brand className='navbar-brand brand  text-white' href="#home"><img src={"https://heavy-local.com/assets/HeavyLocalLogo.jpg"} className='img-fluid rounded-circle' /></Navbar.Brand>
+        <Navbar.Brand className='navbar-brand brand  text-white' href="#home">{<img src={"https://heavy-local.com/assets/HeavyLocalLogo.jpg"} className='img-fluid rounded-circle' /> } </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white' />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

@@ -1,12 +1,12 @@
 import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
+import AppNavigation from "../../components/AppNav/AppNav";
 import "./../home.css"
 
 
 const Articles =()=>{
     return(
         <>
-        <Navigation />
+        <AppNavigation />
         <div className="container">
             <h5 className="display-4">
                 Reviews
