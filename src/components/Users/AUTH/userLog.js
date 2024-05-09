@@ -26,7 +26,7 @@ const UserLog = () => {
       setError("Email verification has been sent. Please check your inbox");
       setEmailVerification(false);
     }catch(error){
-      setError(error);
+      setError(error.message);
     }
   }
 
@@ -44,7 +44,7 @@ const UserLog = () => {
           console.log(user);
         } else {
           setError("Please verify your email before signing in");
-          setEmailVerification(false);
+          setEmailVerification(true);
           setUser(user);
           await signOut(auth);
         }
@@ -65,7 +65,7 @@ const UserLog = () => {
         <h4 className="display-4 m-3 p-1">Login</h4>
         <hr className="bg-dark"></hr>
           <div>
-            {error && <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification && <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email Verification</Button>}</Alert>}
+            {error && <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification && <Button onClick={sendVerification} className={"btn-danger"}>Send Email Verification</Button>}</Alert>}
             <label className="form-label">Email address</label>
             <input
               type="email"

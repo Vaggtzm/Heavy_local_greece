@@ -106,7 +106,6 @@ function App() {
                 <Route path='/User/register' element={<UserRegister />}/>
                 <Route path='/User/home' element={<UserHome />}/>
                 <Route path='/User/Saved' element={<SavedArtciles />}/>
-
             </Routes>
 
         </>

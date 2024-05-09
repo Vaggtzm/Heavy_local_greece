@@ -7,30 +7,24 @@ import { useParams } from "react-router-dom";
 
 const SavedArtciles = () => {
   const [data, setData] = useState(null);
-  const { name } = useParams();
   const [ currentUser,setCurrentUser] = useState();
 
   
-  const fetchData = auth.onAuthStateChanged( async (user) =>{
+  auth.onAuthStateChanged( async (user) =>{
     if (user) {
       setCurrentUser(user)
       console.log(user , "User logged in ");
-        const dataRef = ref(database, `users/${currentUser.uid}/savedArticles/${name}`);
+        const dataRef = ref(database, `users/${user.uid}/savedArticles/`);
         onValue(dataRef, (snapshot) => {
             const fetchedData = snapshot.val();
+            console.log(fetchedData , "Fetched data");
             setData(fetchedData);
+
         });
     } else {
         console.log("Ο χρήστης δεν είναι συνδεδεμένος");
     }
 });
-fetchData();
-
-
-  useEffect(() => {
-      return () => {
-      };
-  }, [name , auth ]);
     return(
         <>
         <AppNavigation />
