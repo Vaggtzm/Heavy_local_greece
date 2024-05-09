@@ -85,32 +85,24 @@ const DefaultArticle = (props) => {
     return await getDownloadURL(storageRef);
   };
 
-  const toggleSaveArticle = (title, img01, url) => {
+  const toggleSaveArticle = () => {
     const currentUser = auth.currentUser;
     if (currentUser) {
-      const savedArticlesRef = databaseRef(
-        database,
-        `users/${currentUser.uid}/savedArticles/${name}`
-      );
-      if (isSaved) {
-        remove(savedArticlesRef); // Remove article from user's saved list
-        setIsSaved(false);
-      } else {
-        // Check if title, img01, and url are not empty
-        if (title && img01 && url) {
-          push(savedArticlesRef, {
-            title,
-            img01,
-            url,
-          }); // Add article to user's saved list
-          setIsSaved(true);
+        const savedArticlesRef = databaseRef(database, `users/${currentUser.uid}/savedArticles/${name}`);
+        if (isSaved) {
+            remove(savedArticlesRef); // Remove article from user's saved list
+            setIsSaved(false);
         } else {
-          console.log("Title, image URL, or article URL is missing");
+            push(savedArticlesRef, true); // Add article to user's saved list
+            setIsSaved(true);
         }
-      }
     }
-  };
-  if (!articles || Object.keys(articles).length === 0) {
+};
+
+if (!articles || Object.keys(articles).length === 0) {
+    return <p>Loading...</p>;
+}
+if (!articles || Object.keys(articles).length === 0) {
     return <p>Loading...</p>;
   }
 
