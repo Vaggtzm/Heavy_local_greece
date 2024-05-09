@@ -29,43 +29,54 @@ const FirebaseFileList = () => {
     const fetchFiles = async () => {
         try {
             let listRef = ref(storage, 'upload_from_authors');
-            let { items } = await listAll(listRef);
+            let {items} = await listAll(listRef);
 
             let filesData = await Promise.all(
-                items.map(async (item) => {
-                    const downloadUrl = await getDownloadURL(item);
-                    const metadata = await getMetadata(item);
-                    const fileContent = await fetch(downloadUrl).then((res) => res.json());
-
-                    return { name: item.name, downloadUrl, metadata, fileContent };
-                })
-            );
-            setFiles(filesData);
-
-
-
-            listRef = ref(storage, 'articles');
-            items = (await listAll(listRef)).items;
-
-            filesData = await Promise.all(
                 items.map(async (item) => {
                     const downloadUrl = await getDownloadURL(item);
                     const metadata = await getMetadata(item);
                     const fileContent = await fetch(downloadUrl).then((res) => {
                         try {
                             return res.json()
-                        }catch (error){
-                            console.log(error);
+                        } catch (e) {
+                            setError(error + " " + e.message);
                         }
                     });
 
-                    return { name: item.name, downloadUrl, metadata, fileContent };
+                    return {name: item.name, downloadUrl, metadata, fileContent};
                 })
             );
-            setAlreadyPublishedArticles(filesData);
-        }catch (error) {
-            setError('Error fetching files: ' + error.message);
-            console.log(error);
+            setFiles(filesData);
+
+
+            try {
+                let publishedListRef = ref(storage, 'articles');
+                let {items: publishedItems} = await listAll(publishedListRef);
+
+                let publishedFilesData = await Promise.all(
+                    publishedItems.map(async (item) => {
+                        const downloadUrl = await getDownloadURL(item);
+                        const metadata = await getMetadata(item);
+                        let fileContent = await fetch(downloadUrl)
+
+                        try {
+                            fileContent = await fileContent.json();
+                        } catch (e) {
+                            setError(error + " " + e.message);
+                            console.log(e);
+                        }
+
+                        return {name: item.name, downloadUrl, metadata, fileContent};
+                    })
+                );
+
+                setAlreadyPublishedArticles(publishedFilesData); // Ensure filesData is always an array
+            } catch (error) {
+                setError('Error fetching files: ' + error.message);
+                console.log(error);
+            }
+        }catch (e) {
+            console.log(e);
         }
     };
 
@@ -129,17 +140,10 @@ const FirebaseFileList = () => {
     };
 
     const handleContentChange = (value) => {
-        if(isAlreadyPublished){
-            setAlreadyPublishedArticles((prevData) => ({
-                ...prevData,
-                content: value,
-            }))
-        } else {
-            setFileData((prevData) => ({
-                ...prevData,
-                content: value,
-            }));
-        }
+        setFileData((prevData) => ({
+            ...prevData,
+            content: value,
+        }))
     };
 
     const handlePublish = async () => {
