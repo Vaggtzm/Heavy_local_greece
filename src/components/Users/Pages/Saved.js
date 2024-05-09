@@ -1,11 +1,10 @@
 import React , {useState , useEffect} from "react";
 import { database , storage } from "../../../firebase";
-import { ref,onValue } from "firebase/database";
+import {ref as databaseRef,onValue } from "firebase/database";
+import { ref, getDownloadURL } from "firebase/storage";
 import AppNavigation from "../../AppNav/AppNav";
 import { auth } from "../../../firebase";
 import SavedArticleData from "../SavedArticleData";
-import { useParams } from "react-router-dom";
-import { getDownloadURL} from "firebase/storage";
 
 
 
@@ -18,7 +17,7 @@ const SavedArtciles = () => {
     if (user) {
       setCurrentUser(user)
       console.log(user , "User logged in ");
-        const dataRef = ref(database, `users/${user.uid}/savedArticles/`);
+        const dataRef = databaseRef(database, `users/${user.uid}/savedArticles/`);
         onValue(dataRef, (snapshot) => {
             const fetchedData = snapshot.val();
             console.log(fetchedData , "Fetched data");
