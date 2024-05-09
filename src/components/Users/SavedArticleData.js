@@ -50,14 +50,21 @@ const SavedArticleData = (props) =>{
     return(
         <>
             {props.isSaved ? (
+            <div className="card h-100 w-100">
+            <img className=" img-fluid" src={data.img01} />
             <div className="card-body">
-                  <h5 className="card-title">{data.title}</h5>
+            <h5 className="card-title">{data.title}</h5>
               <p className="card-text">This article is saved</p>
+              <a className="btn btn-danger" href={`/article/${props.article}`}>Read More</a>
+            </div>
+
             </div>
           ) : (
             <div className="card-body">
               <h5 className="card-title">{props.article}</h5>
               <p className="card-text">This article is not saved</p>
+              <a className="btn btn-danger" href={`/article/${props.article}`}>Read More</a>
+
             </div>
           )}
         </>

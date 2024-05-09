@@ -40,9 +40,7 @@ const SavedArtciles = () => {
         {data ? (
             Object.entries(data).map(([articleKey, articleData]) => (
                 <div className="col-md-4 mb-4" key={articleKey}>
-                    <div className="card">
                         <SavedArticleData article={articleKey} isSaved={articleData}/>
-                    </div>
                 </div>
             ))
 
