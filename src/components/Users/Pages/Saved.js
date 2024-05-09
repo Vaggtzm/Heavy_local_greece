@@ -1,64 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React , {useState , useEffect} from "react";
 import { database } from "../../../firebase";
-import { ref, onValue } from "firebase/database";
+import { ref,onValue } from "firebase/database";
 import AppNavigation from "../../AppNav/AppNav";
 import { auth } from "../../../firebase";
 import { useParams } from "react-router-dom";
 
-const SavedArticles = () => {
+const SavedArtciles = () => {
   const [data, setData] = useState(null);
-  const [currentUser, setCurrentUser] = useState();
+  const [ currentUser,setCurrentUser] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      auth.onAuthStateChanged(async (user) => {
-        if (user) {
-          setCurrentUser(user);
-          const dataRef = ref(database, `users/${user.uid}/savedArticles/`);
-          onValue(dataRef, (snapshot) => {
+  
+  auth.onAuthStateChanged( async (user) =>{
+    if (user) {
+      setCurrentUser(user)
+      console.log(user , "User logged in ");
+        const dataRef = ref(database, `users/${user.uid}/savedArticles/`);
+        onValue(dataRef, (snapshot) => {
             const fetchedData = snapshot.val();
+            console.log(fetchedData , "Fetched data");
             setData(fetchedData);
-            console.log(fetchedData ,"data")
-          });
-        }
-      });
-    };
-    fetchData();
-  }, []);
 
-  return (
-    <>
-   <AppNavigation />
-    <div className="container">
-      <h1>Saved Articles</h1>
-      <hr className="bg-dark" />
-      <div className="row">
-        {data ? (
-          Object.entries(data).map(([key, isSaved]) => (
-            <div className="col-md-4 mb-4" key={key}>
-              <div className="card">
-                {isSaved ? (
-                  
+        });
+    } else {
+        console.log("Ο χρήστης δεν είναι συνδεδεμένος");
+    }
+});
+    return(
+        <>
+        <AppNavigation />
+        <div className="container">
+        <div className="row">
+          {data ? (
+            Object.keys(data).map((key) => (
+              <div className="col-md-4" key={key}>
+                <div className="card mb-3">
                   <div className="card-body">
-                    <h5 className="card-title">{key}</h5>
-                    <p className="card-text">This article is saved</p>
+                    <h5 className="card-title">{data[key].title}</h5>
+                    <p className="card-text">{data[key].description}</p>
                   </div>
-                ) : (
-                  <div className="card-body">
-                    <h5 className="card-title">{key}</h5>
-                    <p className="card-text">This article is not saved</p>
-                  </div>
-                )}
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
+        </div>
       </div>
-    </div>
-    </>
-  );
-};
 
-export default SavedArticles;
+        </>
+    )
+}
+export default SavedArtciles;
