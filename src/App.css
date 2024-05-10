@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000; /* Χρώμα φόντου για ολόκληρη την οθόνη */
+  }
+  
+  .loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center; /* Τοποθέτηση στο κέντρο οριζόντια */
+    align-items: center; /* Τοποθέτηση στο κέντρο κατακόρυφα */
+    background-color: rgba(0, 0, 0, 0.5); /* Χρώμα φόντου με διαφάνεια */
+    z-index: 9999;
+    transition: opacity 0.5s ease; /* Προσθήκη μετάβασης για την opacity */
+  }
+  
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loader-container.hidden {
+    opacity: 0; /* Κρύψε το preloader */
+  }
+  
+
+  @font-face {
+    font-family: oldEnglish;
+    src: url(./assets/Font/old-english-five/OldEnglishFive.ttf);
+  }
+
+  .oldEnglish{
+    font-family: oldEnglish;
+  }

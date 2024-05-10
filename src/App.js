@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
 import { messaging } from './firebase';
+import CircleLoader from "react-spinners/CircleLoader";
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
@@ -23,9 +24,16 @@ import UserLog from './components/Users/AUTH/userLog';
 import UserRegister from './components/Users/AUTH/UserRegister';
 import UserHome from './components/Users/UserHome';
 import SavedArtciles from './components/Users/Pages/Saved';
-
+import './App.css'
 function App() {
     const [loading, setLoading] = useState(true);
+
+    useEffect(()=>{
+        setLoading(true)
+        setTimeout(()=>{
+           setLoading(false)
+        }, 1000)
+    })
 
     const saveDeviceToken = async (token) => {
         try {
@@ -76,40 +84,56 @@ function App() {
 
     {/**firestore */
     }
-    return (
+return (
         <>
-            <NotificationToast/>
-            <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/articles-page' element={<Articles/>}/>
-                <Route path='/Art-Gallery-page' element={<Gallery/>}/>
-                <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
-                <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
-                <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
-                <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
-                <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
-                <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
+            {loading ? (
+                <div className='container-fluid loader-container'>
+                <div className='row '>
+                    <div className='col-md-12'>
+                    <CircleLoader className='m-2 ' 
+                    size={400}
+                    color={'#123abc'}
+                    loading={loading}
+                />
 
+                    </div>
 
-                {/*Είναι 2 φορές. Μία για τα κανονικά και μία για τα early access*/}
-                <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
-                <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+                </div>
 
-                <Route path='/upload' element={<ArticleUpload/>}/>
-                <Route path='/upload/register' element={<Register/>}/>
-                <Route path='/upload/admin' element={<FirebaseFileList/>}/>
-                <Route path='/upload/login' element={<Login admin={false}/>}/>
-                <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+                </div>
+            ) : (
+                <>
+                    <NotificationToast/>
+                    <Routes>
+                        <Route path='/' element={<Home/>}/>
+                        <Route path='/articles-page' element={<Articles/>}/>
+                        <Route path='/Art-Gallery-page' element={<Gallery/>}/>
+                        <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
+                        <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
+                        <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
+                        <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
+                        <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
+                        <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
 
-                {/**user routings */}
-                <Route path='/User/login' element={<UserLog />}/>
-                <Route path='/User/register' element={<UserRegister />}/>
-                <Route path='/User/home' element={<UserHome />}/>
-                <Route path='/User/Saved' element={<SavedArtciles />}/>
-            </Routes>
+                        <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
+                        <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
 
+                        <Route path='/upload' element={<ArticleUpload/>}/>
+                        <Route path='/upload/register' element={<Register/>}/>
+                        <Route path='/upload/admin' element={<FirebaseFileList/>}/>
+                        <Route path='/upload/login' element={<Login admin={false}/>}/>
+                        <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+
+                        <Route path='/User/login' element={<UserLog />}/>
+                        <Route path='/User/register' element={<UserRegister />}/>
+                        <Route path='/User/home' element={<UserHome />}/>
+                        <Route path='/User/Saved' element={<SavedArtciles />}/>
+                    </Routes>
+                </>
+            )}
         </>
     );
 }
+
 
 export default App;

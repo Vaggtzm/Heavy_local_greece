@@ -11,8 +11,8 @@ import SecondaryCarousel from "../components/carousel/carousel";
 const Home = () => {
   
   return (
-    <>
-      <AppNavigation />
+    <>   
+   <AppNavigation />
       <header>
 
         <div className="container mt-4 main ">
