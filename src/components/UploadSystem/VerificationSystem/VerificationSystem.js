@@ -265,7 +265,7 @@ const FirebaseFileList = () => {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {isAlreadyPublished && (
+                        {(!isAlreadyPublished) && (
                             <Button variant="success" onClick={handlePublish} className="mt-3">
                                 Publish
                             </Button>

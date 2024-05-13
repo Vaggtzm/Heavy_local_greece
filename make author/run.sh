@@ -1,3 +1,1 @@
-source venv/bin/activate
-python check_author.py
-deactivate
+venv/bin/python check_author.py "$1"

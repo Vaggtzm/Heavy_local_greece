@@ -1,14 +1,12 @@
+import sys
 import firebase_admin
 from firebase_admin import auth, credentials
 
-def main():
+def main(uid_to_make_admin):
     try:
         # Initialize Firebase Admin SDK with service account credentials
         cred = credentials.Certificate('./heavy-local-admin.json')  # Path to your service account JSON file
         firebase_admin.initialize_app(cred)
-
-        # UID of the user to make admin
-        uid_to_make_admin = "Hq10s3St0AY8qU81uZ1f93uNeZ43"
 
         # Set custom user claims to make the user an admin
         auth.set_custom_user_claims(uid_to_make_admin, {'admin': True})
@@ -27,5 +25,5 @@ def main():
 
 # Run the main function
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1])
 
