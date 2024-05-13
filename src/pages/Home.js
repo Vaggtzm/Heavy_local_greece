@@ -21,7 +21,7 @@ const Home = () => {
               <div className="jumbotron jumbotron-fluid">
                 <div className="container-fluid">
                   <h1 className="display-4">
-                    Welcome to <span className="font-1">Heavy Local</span>{" "}
+                    Welcome to <span className="font-1">Pulse Of The Underground</span>{" "}
                   </h1>
                   <PrimaryCarousel />
                   <p className="lead">
