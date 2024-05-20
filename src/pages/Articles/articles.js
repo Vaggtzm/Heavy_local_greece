@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ref, listAll, getDownloadURL } from 'firebase/storage';
 import { storage } from "../../firebase";
-import FetchedArticles from './ FetchedArticles';
+import FetchedArticles from './FetchedArticles';
 import AppNavigation from "../../components/AppNav/AppNav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../home.css";
@@ -36,15 +36,13 @@ const Articles = () => {
       <h1>Saved Articles</h1>
       <div className="row">
         {articles ? (
-            articles.map((article) => {
+            articles.map((article) => (
                 <div className="col-md-4 mb-4" key={article.name}>
-                        <FetchedArticles article={article} />
+                  <FetchedArticles article={article} />
                 </div>
-
-        })
-
+            ))
         ) : (
-          <p>Loading...</p>
+            <p>Loading...</p>
         )}
       </div>
     </div>

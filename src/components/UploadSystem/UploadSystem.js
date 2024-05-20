@@ -75,7 +75,7 @@ const ArticleUpload = () => {
                 content: articleContent.replaceAll("<p>", "<p class='lead'>"),
                 title,
                 details,
-                socials: formatSocialsAsString(),
+                Socials: formatSocialsAsString(),
                 img01: `https://heavy-local.com/assets/${image.name}`,
                 sub: "From "+currentUser.displayName,
                 date: new Date().toLocaleDateString('en-GB', options)
