@@ -7,6 +7,7 @@ import SpotifyBanner from "../SpotifyBanner/SpotifyBanner";
 import Youtube from "../YoutubeAPI/Youtube";
 import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "./../carousel/carousel";
+import CasterFmPlayer from "./CasterFmPlayer";
 const UserHome = () => {
   
   return (
@@ -31,18 +32,53 @@ const UserHome = () => {
                   <Socials />
                   
                   <hr className="bg-dark" />
-                  <h5>Help us to grow </h5>
-                   <a href="https://www.buymeacoffee.com/tzimasvagg7" className="btn btn-primary w-50">Donate</a>
+                  <div className="col-md-12">
+            <h3>Our Radio Station:</h3>
+              <CasterFmPlayer />
+              <hr className="bg-dark" />
+            </div>
                   <hr className="bg-dark" />
                 </div>
               </div>
             </div>
-            <div className="col-md-12">
-            <h3>Top realeases</h3>
-              <SpotifyBanner />
-              <hr className="bg-dark" />
-            </div>
+            <div className="container">
+              <div className="row">
+                <div className="col-md-12">
+                  <h3>Early Bird realeses</h3>
+                </div>
+                <div className="col-md-4">
+                <div className="card h-100 w-100 review-card">
+        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/SuperHorror.webp"} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">R’n’R απ’το μνήμα - Superhorror - Church of I.D.G.A.F. (single review)</h4>
+          <a href="/article/RNR-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
 
+                </div>
+                <div className="col-md-4">
+                <div className="card h-100 w-100 review-card">
+        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/NightPleasure.webp"} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">Single Review: Night Pleasure Hotel Reveals Heartfelt “Niko”</h4>
+          <a href="/article/Night-pleasure-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+
+                </div>
+                <div className="col-md-4">
+                <div className="card h-100 w-100 review-card">
+        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/kokkinia2.jpg"} alt="Disimulator"></img>
+        <div className="card-body">
+          <h4 className="card-title">Το Μιαρό Δέντρο - Kokkinià - Arboreal (single review+band info)</h4>
+          <a href="/article/KOKKINIA-archive" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+
+                </div>
+
+              </div>
+            </div>
             <h3>Artworks Gallery</h3>
             <SecondaryCarousel />
           </div>
@@ -51,54 +87,20 @@ const UserHome = () => {
         <hr className="bg-dark" />
         <div className="container materialcontainer shadow-lg  p-5 rounded-4">
         <div className="row">
-        <hr className="bg-white" />
-        <Youtube />
-        <hr className="bg-white" />
-        <h3>Interviews:</h3>
-         <div className="col-md-4">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Interview: Acid Mammoth</h4>
-          <a href="/Acid-Mammoth-interview-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-          </div>
-          <div className="col-md-4">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/review_picture.webp"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">Interview: Khavar</h4>
-          <a href="/Khavar-interview-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-          </div>
-          <div className="col-md-4">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Holler_Members.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Harmonic Rebirth: Deciphering Holler’s Journey          </h4>
-         
-          <a href="/Holler-interview-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-          </div>
 
         </div>
-  <h4>Heavy Local Reviews(ENG)</h4>
+  <h4>Regular Stream</h4>
   <div className="row mt-4 text-center">
-    <div className="col-md-4 mb-4">
+  <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Hydra.jpg"} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Acid Mammoth:Review </h4>
-          <a href="/article/Acid-mammoth_supersonic-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Veins of Obsidian: Luctus' Hydra's Menacing Ode to Black Metal </h4>
+          <a href="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Civerous.webp"} alt="Zong"></img>
         <div className="card-body">
@@ -107,17 +109,6 @@ const UserHome = () => {
         </div>
       </div>
     </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100"  alt="Zong"></img>
-        <div className="card-body">
-          <h4 className="card-title">TumulTum Project Review</h4>
-          <a href="/article/tumultum-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-
-    <h4>Heavy Local Reviews (GR)</h4>
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/korrection.webp"} alt="Disimulator"></img>
@@ -149,35 +140,6 @@ const UserHome = () => {
         </div>
       </div>
     </div>
-
-
-
-    <h3 className="m-2 p-3">Into the Darkness: A Chronicle of Underground for the Masses </h3>
-    <hr className="bg-white"></hr>
-      <div className='col-md-6'>
-<img src={"https://heavy-local.com/assets/Astronomica_response.jpg"} className="img-fluid"></img>
-      </div>
-
-      <div className='col-md-6'>
-        <p className="lead">
-        In the depths of Quantic Pub, on the 5th and 6th of April 2024, the inaugural edition of the festival dedicated to Black Metal unfolded its wings: “Underground for the Masses”. Over the course of two nights, thirteen diverse bands from across Europe and beyond took to the stage, bringing with them a spectrum of Black Metal styles, from Classic to Suicidal, Atmospheric to Melodic, and Black Death Metal, among others. The air was thick with anticipation as the clock struck 18:00, marking the commencement of an auditory journey into the abyss.
-        </p>
-        <a className="btn btn-danger" href="/article/Undeground-for-the-masses_archive">Read More</a>
-      </div>
-    <hr className="bg-white"/>
-    <h3 className="m-2 p-3">Anormoi X EN STIGMA</h3>
-    <hr className="bg-white"></hr>
-      <div className='col-md-6'>
-      <img src={"https://heavy-local.com/assets/ANORMOI01.jpg"} className="img-fluid" />
-      </div>
-
-      <div className='col-md-6'>
-        <p className="lead">
-        Γενικώς για τη συγκεκριμένη βραδιά ένα έχω να πω: ενώ πίστευα πως είχα προετοιμαστεί σχετικά καλά για το τι θα παιζόταν, και πάλι αιφνιδιάστηκα.
-
-Τη συναυλία άνοιξαν οι En-Stigma, μία folk progressive metal μπάντα με έδρα τα Ιωάννινα, που μας εντυπωσίασαν με τα ηλεκτρικά μπουζούκια τους και τα φωνητικά της Αίγλης.        </p>
-        <a className="btn btn-danger" href="/article/Anorimoi-response-archive">Read More</a>
-      </div>
 
   </div>
 </div>

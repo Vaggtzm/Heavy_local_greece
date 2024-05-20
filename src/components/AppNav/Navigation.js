@@ -26,7 +26,7 @@ const Navigation = () => {
   return (
     <Navbar  expand="lg" className="bg-dark navbar">
       <Container className='navbar'>
-        <Navbar.Brand className='navbar-brand brand  text-white' href="#home">{<img src={"https://heavy-local.com/assets/HeavyLocalLogo.jpg"} className='img-fluid rounded-circle' /> } </Navbar.Brand>
+        <Navbar.Brand className='navbar-brand brand  text-white' href="#home">{<img src={"https://heavy-local.com/assets/PulseOfTheUnderground.jpg"} className='img-fluid rounded-circle' /> } </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white' />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

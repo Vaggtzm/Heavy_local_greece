@@ -111,7 +111,7 @@ if (!articles || Object.keys(articles).length === 0) {
       {/* Meta tags component */}
       <AppNav />
       <div className="container">
-        <div className="row">
+        <div className="row text-white">
           <div className="col-md-12 d-flex justify-content-evenly">
             <h3>{articles.title}</h3>
             <hr className="bg-dark" />

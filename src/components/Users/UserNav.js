@@ -29,10 +29,8 @@ const UserNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white' />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/" className='text-white link'>Home</Nav.Link>
+            <Nav.Link href="/User/home" className='text-white link'>Home</Nav.Link>
             <Nav.Link href="/User/Saved" className='text-white link'>Saved Articles</Nav.Link>
-            <Nav.Link href="/EarlyAccess" className='text-white link'>Early Acces</Nav.Link>
-            <Nav.Link href="/Art-Gallery-page" className='text-white link'>Art Gallery</Nav.Link>
             {(loggedIn)&&<Nav.Link onClick={()=>{signOut(auth).then(()=>{navigate("/")})}} className='text-white link'><Button variant={"outline-danger"}>Sign Out</Button></Nav.Link>}
 
           </Nav>

@@ -57,69 +57,49 @@ const Home = () => {
         <Youtube />
         <hr className="bg-white" />
         <h3>Interviews:</h3>
-         <div className="col-md-4">
+         <div className="col-md-6">
          <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Dymna_Lotva.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">
-          Interview: Acid Mammoth</h4>
-          <a href="/Acid-Mammoth-interview-archive" className="btn btn-primary">Read More</a>
+          Into the Melancholic Symphony: An Interview with Dymna Lotva</h4>
+          <a href="/article/Dymna-lotva-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
          <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/review_picture.webp"} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/servan.webp"} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Interview: Khavar</h4>
-          <a href="/Khavar-interview-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-          </div>
-          <div className="col-md-4">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Holler_Members.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Harmonic Rebirth: Deciphering Holler’s Journey          </h4>
-         
-          <a href="/Holler-interview-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">A Journey Through Myth and Melody: Unveiling the Enchanting World of Servan</h4>
+          <a href="/article/servan-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
           </div>
 
         </div>
-  <h4>Heavy Local Reviews(ENG)</h4>
+  <h4> Reviews(ENG)</h4>
   <div className="row mt-4 text-center">
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Hydra.jpg"} alt="Dreariness"></img>
+        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Dreariness"></img>
         <div className="card-body">
-          <h4 className="card-title">Acid Mammoth:Review </h4>
-          <a href="/article/Acid-mammoth_supersonic-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Acid  Mammoth "Supersonic Megafauna Collision" Review </h4>
+          <a href="/article/Supersonic-megafauna" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
-    <div className="col-md-4 mb-4">
+    <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Civerous.webp"} alt="Zong"></img>
+        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Unleashing Eastern Metal Fury: Lethargy’s “Our Life Belongs to Us”</h4>
-          <a href="/article/Lethargy-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-4 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100"  alt="Zong"></img>
-        <div className="card-body">
-          <h4 className="card-title">TumulTum Project Review</h4>
-          <a href="/article/tumultum-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Review:Ghost Of Agony</h4>
+          <a href="/article/GOA-archive" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
 
-    <h4>Heavy Local Reviews (GR)</h4>
+    <h4>Reviews (GR)</h4>
     <div className="col-md-4">
     <div className="card h-100 w-100 review-card">
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/korrection.webp"} alt="Disimulator"></img>

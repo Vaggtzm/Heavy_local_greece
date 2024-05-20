@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
 import { messaging } from './firebase';
-import CircleLoader from "react-spinners/CircleLoader";
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
@@ -28,12 +27,6 @@ import './App.css'
 function App() {
     const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
-        setLoading(true)
-        setTimeout(()=>{
-           setLoading(false)
-        }, 1000)
-    })
 
     const saveDeviceToken = async (token) => {
         try {
@@ -86,22 +79,6 @@ function App() {
     }
 return (
         <>
-            {loading ? (
-                <div className='container-fluid loader-container'>
-                <div className='row '>
-                    <div className='col-md-12'>
-                    <CircleLoader className='m-2 ' 
-                    size={400}
-                    color={'#123abc'}
-                    loading={loading}
-                />
-
-                    </div>
-
-                </div>
-
-                </div>
-            ) : (
                 <>
                     <NotificationToast/>
                     <Routes>
@@ -130,7 +107,6 @@ return (
                         <Route path='/User/Saved' element={<SavedArtciles />}/>
                     </Routes>
                 </>
-            )}
         </>
     );
 }
