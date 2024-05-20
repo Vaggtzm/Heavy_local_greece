@@ -271,7 +271,7 @@ const FirebaseFileList = () => {
                                 <Form.Label>Social Media Links</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={fileData.socials}
+                                    value={fileData.Socials}
                                     onChange={(e) => handleChange(e, 'socials')}
                                 />
                             </Form.Group>
