@@ -116,7 +116,11 @@ const ArticleUpload = () => {
                         <ReactQuill
                             theme="snow"
                             value={articleContent}
-                            onChange={(value) => setArticleContent(value)}
+                            onChange={(value) => {
+                                const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
+                                    setArticleContent(sanitizedValue)
+                                }
+                            }
                         />
                     </Form.Group>
 
