@@ -23,7 +23,7 @@ const FirebaseFileList = () => {
         content: '',
         title: '',
         details: '',
-        socials: '',
+        Socials: '',
         img01: '',
         sub: '',
         date: ''
@@ -54,6 +54,7 @@ const FirebaseFileList = () => {
                             setError('Error fetching files: ' + error.message);
                         }
                         console.log(e);
+                        console.log(item);
                     }
 
                     return {name: item.name, downloadUrl, metadata, fileContent};
@@ -123,7 +124,6 @@ const FirebaseFileList = () => {
 
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
-
         try {
             let fileRef;
             if (isAlreadyPublished) {
@@ -148,7 +148,6 @@ const FirebaseFileList = () => {
             setError('Error saving file data: ' + error.message);
         }
     };
-
     const handleChange = (e, field) => {
         const { value } = e.target;
         setFileData((prevData) => ({
@@ -156,14 +155,13 @@ const FirebaseFileList = () => {
             [field]: value,
         }));
     };
-
     const handleContentChange = (value) => {
+        const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
         setFileData((prevData) => ({
             ...prevData,
-            content: value,
+            content: sanitizedValue,
         }))
     };
-
     const handlePublish = async () => {
         if (!selectedFile) return;
 
@@ -272,7 +270,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.Socials}
-                                    onChange={(e) => handleChange(e, 'socials')}
+                                    onChange={(e) => handleChange(e, 'Socials')}
                                 />
                             </Form.Group>
                             <Form.Group controlId="img01">
