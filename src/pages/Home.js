@@ -61,6 +61,9 @@ const Home = () => {
               <h1 className="display-1">Sponsored By Angels PR </h1>
               <hr className="bg-white"/>
             </div>
+            <h2>ENG:</h2>
+            <hr className="bg-white"/>
+
             <div className="col-md-4 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
@@ -103,7 +106,7 @@ const Home = () => {
             </div>
 
 
-            <div className="col-md-4 p-3">
+            <div className="col-md-6 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
                      src={"https://heavy-local.com/assets/COVER FINAL.jpg"} alt="Disimulator"></img>
@@ -117,7 +120,7 @@ const Home = () => {
             </div>
 
 
-            <div className="col-md-4 p-3">
+            <div className="col-md-6 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
                      src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"} alt="Disimulator"></img>
@@ -130,6 +133,77 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            <hr className="bg-white"/>
+
+            <h2>GREEK:</h2>
+            <hr className="bg-white"/>
+
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://heavy-local.com/assets/COVER FINAL.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                  Πανικός Χάος  Πόλεμος - Medusa’s Wrath - Pavor Exilium Mors (album review - GREEK VERSION)</h4>
+                  <NavLink to="/article/Πανικός-Χάος--Πόλεμος---Medusa’s-Wrath---Pavor-Exilium-Mors-(album-review)"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                  Meden Agan – My name is Katherine: Η ιστορία μιας αθώας ψυχής που κοίταξε στα μάτια τους δαίμονες του παρελθόντος της(GREEK VERSION)</h4>
+                  <NavLink to="/article/Meden-Agan-–-My-name-is-Katherine -Η-ιστορία-μιας-αθώας-ψυχής-που-κοίταξε-στα-μάτια-τους-δαίμονες-του-παρελθόντος-της"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://heavy-local.com/assets/a1146581693_10.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Gather Round Everyone, and Step Inside Pete Rafael’s “Elysian Citadel”(GREEK VERSION)</h4>
+                  <NavLink to="/article/Gather-Round-Everyone,-and-Step-Inside-Pete-Rafael’s-“Elysian-Citadel”-Greek"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid"
+                     src={"https://heavy-local.com/assets/A Lil Louder EP3000.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Aaron Kusterer’s “A Little Louder”: Where Guitar Magic Happens(GREEK VERSION)</h4>
+                  <NavLink to="/article/Aaron-Kusterer’s-“A-Little-Louder”:-Where-Guitar-Magic-Happens-Greek"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid"
+                     src={"https://heavy-local.com/assets/8f7067ea-e3cf-491b-b15e-c81460440c04.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Resilience in Sound: Dark Sky’s Latest Artistic Statement “Signs of the Time” Unveiled(GREEK
+                    VERSION)</h4>
+                  <NavLink
+                      to="/article/Resilience-in-Sound:-Dark-Sky’s-Latest-Artistic-Statement-“Signs-of-the-Time”-Unveiled(GREEK-VERSION)"
+                      className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+
 
 
             <hr className="bg-white"/>
@@ -176,7 +250,7 @@ const Home = () => {
             </div>
             <div className="col-md-6 mb-4">
               <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
+D        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Review:Ghost Of Agony</h4>
           <a href="/article/GOA-archive" className="btn btn-primary">Read More</a>
