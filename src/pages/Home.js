@@ -9,6 +9,7 @@ import Youtube from "../components/YoutubeAPI/Youtube";
 import PrimaryCarousel from "../components/PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "../components/carousel/carousel";
 import CasterFmPlayer from "../components/Users/CasterFmPlayer";
+import {NavLink} from "react-router-dom";
 const Home = () => {
   
   return (
@@ -53,97 +54,128 @@ const Home = () => {
         {/**reviews */}
         <hr className="bg-dark" />
         <div className="container materialcontainer shadow-lg  p-5 rounded-4">
-        <div className="row">
-        <hr className="bg-white" />
-        <Youtube />
-        <div className="jumbotron">
-          <h1 className="display-1">Sponsored By Angels PR </h1>
-          <hr className="bg-white"/>
-        </div>
-        <div className="col-md-4 p-3">
-        <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid w-100" src={"https://heavy-local.com/assets/a1146581693_10.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Gather Round Everyone, and Step Inside Pete Rafael’s “Elysian Citadel”(ENG VERSION)</h4>
-          <a href="/article/Gather-Round-Everyone,-and-Step-Inside-Pete-Rafael’s-“Elysian-Citadel”" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-      </div>
-        <div className="col-md-4 p-3">
-        <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/A Lil Louder EP3000.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Aaron Kusterer’s “A Little Louder”: Where Guitar Magic Happens(ENG VERSION)</h4>
-          <a href="/article/Aaron-Kusterer’s-“A-Little-Louder”:-Where-Guitar-Magic-Happens" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-        </div>
+          <div className="row">
+            <hr className="bg-white"/>
+            <Youtube/>
+            <div className="jumbotron">
+              <h1 className="display-1">Sponsored By Angels PR </h1>
+              <hr className="bg-white"/>
+            </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://heavy-local.com/assets/a1146581693_10.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Gather Round Everyone, and Step Inside Pete Rafael’s “Elysian Citadel”(ENG VERSION)</h4>
+                  <NavLink to="/article/Gather-Round-Everyone,-and-Step-Inside-Pete-Rafael’s-“Elysian-Citadel”"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid"
+                     src={"https://heavy-local.com/assets/A Lil Louder EP3000.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Aaron Kusterer’s “A Little Louder”: Where Guitar Magic Happens(ENG VERSION)</h4>
+                  <NavLink to="/article/Aaron-Kusterer’s-“A-Little-Louder”:-Where-Guitar-Magic-Happens"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
 
-        <div className="col-md-4 p-3">
-        <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/8f7067ea-e3cf-491b-b15e-c81460440c04.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Resilience in Sound: Dark Sky’s Latest Artistic Statement “Signs of the Time” Unveiled(ENG VERSION)</h4>
-          <a href="/article/Resilience-in-Sound:-Dark-Sky’s-Latest-Artistic-Statement-“Signs-of-the-Time”-Unveiled" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-        </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid"
+                     src={"https://heavy-local.com/assets/8f7067ea-e3cf-491b-b15e-c81460440c04.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Resilience in Sound: Dark Sky’s Latest Artistic Statement “Signs of the Time” Unveiled(ENG
+                    VERSION)</h4>
+                  <NavLink
+                      to="/article/Resilience-in-Sound:-Dark-Sky’s-Latest-Artistic-Statement-“Signs-of-the-Time”-Unveiled"
+                      className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
 
 
-        <div className="col-md-4 p-3">
-        <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid w-100" src={"https://heavy-local.com/assets/COVER FINAL.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Panic Chaos  War - Medusa’s Wrath - Pavor Exilium Mors (album review - ENG VERSION)</h4>
-          <a href="/article/Panic-Chaos--War---Medusa’s-Wrath---Pavor-Exilium-Mors-(album-review)" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-      </div>
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://heavy-local.com/assets/COVER FINAL.jpg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Panic Chaos War - Medusa’s Wrath - Pavor Exilium Mors (album review - ENG VERSION)</h4>
+                  <NavLink to="/article/Panic-Chaos--War---Medusa’s-Wrath---Pavor-Exilium-Mors-(album-review)"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
 
-        <hr className="bg-white"/>
-        <div className="jumbotron">
-          <h1 className="display-3">Pulse Of The Undeground:Web Radio <span><CasterFmPlayer /></span> </h1>
-        </div>
-        <hr className="bg-white" />
-        <h3>Interviews:</h3>
-         <div className="col-md-6">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Dymna_Lotva.jpg"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">
-          Into the Melancholic Symphony: An Interview with Dymna Lotva</h4>
-          <a href="/article/Dymna-lotva-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
+
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid w-100"
+                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Meden Agan - My name is Katherine(ENG VERSION)
+                  </h4>
+                  <NavLink to="/article/Meden-Agan"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+
+
+            <hr className="bg-white"/>
+            <div className="jumbotron">
+              <h1 className="display-3">Pulse Of The Undeground:Web Radio <span><CasterFmPlayer/></span></h1>
+            </div>
+            <hr className="bg-white"/>
+            <h3>Interviews:</h3>
+            <div className="col-md-6">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Dymna_Lotva.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Into the Melancholic Symphony: An Interview with Dymna Lotva</h4>
+                  <a href="/article/Dymna-lotva-archive" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/servan.webp"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">A Journey Through Myth and Melody: Unveiling the Enchanting World of
+                    Servan</h4>
+                  <a href="/article/servan-archive" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div className="col-md-6">
-         <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/servan.webp"} alt="Disimulator"></img>
-        <div className="card-body">
-          <h4 className="card-title">A Journey Through Myth and Melody: Unveiling the Enchanting World of Servan</h4>
-          <a href="/article/servan-archive" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-          </div>
-
-        </div>
-  <h4> Reviews(ENG)</h4>
-  <div className="row mt-4 text-center">
-    <div className="col-md-6 mb-4">
-      <div className="card h-100 w-100">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Dreariness"></img>
-        <div className="card-body">
-          <h4 className="card-title">Acid  Mammoth "Supersonic Megafauna Collision" Review </h4>
-          <a href="/article/Supersonic-megafauna" className="btn btn-primary">Read More</a>
-        </div>
-      </div>
-    </div>
-    <div className="col-md-6 mb-4">
-      <div className="card h-100 w-100">
+          <h4> Reviews(ENG)</h4>
+          <div className="row mt-4 text-center">
+            <div className="col-md-6 mb-4">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg h-100"
+                     src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Dreariness"></img>
+                <div className="card-body">
+                  <h4 className="card-title">Acid Mammoth "Supersonic Megafauna Collision" Review </h4>
+                  <a href="/article/Supersonic-megafauna" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-6 mb-4">
+              <div className="card h-100 w-100">
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Review:Ghost Of Agony</h4>
