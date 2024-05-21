@@ -44,6 +44,7 @@ const TranslationSystem = () => {
         sub: '',
         date: '',
         translations: {},
+        lang: '',
     });
     const [translationData, setTranslationData] = useState({
         content: '',
@@ -118,16 +119,6 @@ const TranslationSystem = () => {
 
         return () => unsubscribe();
     }, [navigate]);
-
-    const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
-        setSelectedFile(file);
-        setFileData({
-            ...file.fileContent,
-        });
-        setIsAlreadyPublished(isAlreadyPub);
-        setIsEarlyReleasedArticles(isEarlyReleased);
-        setShowModal(true);
-    };
 
     const handleSave = async () => {
         let originalFolder, translationFolder;
@@ -234,12 +225,21 @@ const TranslationSystem = () => {
 
 
     const handleTranslate = (file, isAlreadyPub, isEarlyReleased) => {
-        handleEdit(file, isAlreadyPub, isEarlyReleased);
+
+        setSelectedFile(file);
+        setFileData({
+            ...file.fileContent,
+        });
+        setIsAlreadyPublished(isAlreadyPub);
+        setIsEarlyReleasedArticles(isEarlyReleased);
+        setShowModal(true);
+
         setSelectedFile(file);
         setTranslationData({
             ...file.fileContent,
         });
         setIsTranslating(true);
+        setOriginalLanguage(file.fileContent.lang);
     };
 
     const handleTranslationChange = (e, field) => {
@@ -310,6 +310,19 @@ const TranslationSystem = () => {
                             sub: '',
                             date: '',
                             translations: {},
+                            lang: '',
+                        });
+
+                        setFileData({
+                            content: '',
+                            title: '',
+                            details: '',
+                            Socials: '',
+                            img01: '',
+                            sub: '',
+                            date: '',
+                            translations: {},
+                            lang: '',
                         });
                     }
 
@@ -353,6 +366,7 @@ const TranslationSystem = () => {
                                                 type="text"
                                                 value={originalLanguage}
                                                 onChange={(e) => setOriginalLanguage(e.target.value)}
+                                                readOnly={!!fileData.lang}
                                             />
                                             <Form.Text className="text-muted">
                                                 Enter the original language code (e.g., 'en' for English, 'gr' for Greek).

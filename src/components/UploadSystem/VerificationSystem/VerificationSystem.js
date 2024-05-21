@@ -180,9 +180,9 @@ const FirebaseFileList = () => {
 
             uploadString(earlyReleaseRef, fileContent).then(()=>{
                 alert('File published successfully to early_release folder!');
-            });
-            deleteObject(fileRef).then(()=>{
-                fetchFiles();
+                deleteObject(fileRef).then(()=>{
+                    fetchFiles();
+                });
             });
         } catch (error) {
             setError('Error publishing file: ' + error.message);
