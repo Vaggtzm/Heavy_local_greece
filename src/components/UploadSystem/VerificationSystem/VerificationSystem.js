@@ -1,3 +1,4 @@
+
 import {deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString} from 'firebase/storage';
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Form, ListGroup, Modal} from 'react-bootstrap';
@@ -8,7 +9,7 @@ import {auth, storage} from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import {signOut} from "firebase/auth";
 
-const TranslationSystem = () => {
+const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
@@ -19,12 +20,6 @@ const TranslationSystem = () => {
     const [showModal, setShowModal] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
-    const [error, setError] = useState('');
-    const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
-    const [earlyReleasesError, setEarlyReleasesError] = useState('');
-    const [isTranslating, setIsTranslating] = useState(false);
-
-
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -32,20 +27,11 @@ const TranslationSystem = () => {
         Socials: '',
         img01: '',
         sub: '',
-        date: '',
-        translations: {}
+        date: ''
     });
-
-    const [translationData, setTranslationData] = useState({
-        content: '',
-        title: '',
-        details: '',
-        Socials: '',
-        img01: '',
-        sub: '',
-        date: '',
-        translations: {}
-    });
+    const [error, setError] = useState('');
+    const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
+    const [earlyReleasesError, setEarlyReleasesError] = useState('');
 
     const fetchArticlesCategory=async (folder) => {
         try {
@@ -80,7 +66,7 @@ const TranslationSystem = () => {
                 setEarlyReleasesError('Error fetching files: file: '+error);
             } else if(isAlreadyPublished){
                 setAlreadyPublishedError('Error fetching files: file: '+error);
-                
+
             }else {
                 setError('Error fetching files: file: '+error);
             }
@@ -137,48 +123,19 @@ const TranslationSystem = () => {
         setShowModal(true);
     };
 
-
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
         try {
             let fileRef;
-            let newFileName = selectedFile.name;
-            let translationFileRef;
-            let translationFileName;
-
-            if (isTranslating) {
-                // Check if the title has changed
-                if (translationData.title) {
-                    newFileName = `${translationData.title.replace(/\s+/g, '_')}.json`;
-                } else {
-                    newFileName = `${selectedFile.name.replace('.json', '')}-eng.json`;
-                }
-                fileRef = ref(storage, `articles/${newFileName}`);
-                translationFileRef = ref(storage, `articles/${selectedFile.name}`);
-
-                // Set translations for both files
-                translationData.translations = { ...translationData.translations, eng: newFileName };
-                fileData.translations = { ...fileData.translations, eng: newFileName };
-
-            } else {
-                if (isAlreadyPublished) {
-                    fileRef = ref(storage, `articles/${selectedFile.name}`);
-                } else if (isEarlyReleasedArticles) {
-                    fileRef = ref(storage, `early_releases/${selectedFile.name}`);
-                } else {
-                    fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
-                }
+            if (isAlreadyPublished) {
+                fileRef = ref(storage, `articles/${selectedFile.name}`);
+            } else if(isEarlyReleasedArticles) {
+                fileRef = ref(storage, `early_releases/${selectedFile.name}`);
+            }else{
+                fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             }
-
-            const contentToSave = isTranslating ? translationData : fileData;
-            contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>");
-
-            await uploadString(fileRef, JSON.stringify(contentToSave));
-
-            // Save the translation file if translating
-            if (isTranslating) {
-                await uploadString(translationFileRef, JSON.stringify(fileData));
-            }
+            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
+            await uploadString(fileRef, JSON.stringify(fileData));
 
             // Update local files state
             const updatedFiles = files.map((file) =>
@@ -192,25 +149,45 @@ const TranslationSystem = () => {
             setError('Error saving file data: ' + error.message);
         }
     };
-
-
-    const handleTranslate = (file) => {
-        setSelectedFile(file);
-        setTranslationData({
-            ...file.fileContent,
-        });
-        setIsTranslating(true);
-        setShowModal(true);
-    };
-
-    const handleTranslationChange = (e, field) => {
+    const handleChange = (e, field) => {
         const { value } = e.target;
-        setTranslationData((prevData) => ({
+        setFileData((prevData) => ({
             ...prevData,
             [field]: value,
         }));
     };
+    const handleContentChange = (value) => {
+        const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
+        setFileData((prevData) => ({
+            ...prevData,
+            content: sanitizedValue,
+        }))
+    };
+    const handlePublish = async () => {
+        if (!selectedFile) return;
 
+        try {
+            let fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
+            let earlyReleaseRef = ref(storage, `early_releases/${selectedFile.name}`);
+
+            if(isEarlyReleasedArticles) {
+                fileRef = ref(storage, `early_releases/${selectedFile.name}`);
+                earlyReleaseRef = ref(storage, `articles/${selectedFile.name}`);
+            }
+
+            const downloadUrl = await getDownloadURL(fileRef);
+            const fileContent = await fetch(downloadUrl).then((res) => res.text());
+
+            uploadString(earlyReleaseRef, fileContent).then(()=>{
+                alert('File published successfully to early_release folder!');
+            });
+            deleteObject(fileRef).then(()=>{
+                fetchFiles();
+            });
+        } catch (error) {
+            setError('Error publishing file: ' + error.message);
+        }
+    };
 
     return (
         <>
@@ -261,45 +238,79 @@ const TranslationSystem = () => {
                 {/* Modal for editing file data */}
                 <Modal show={showModal} onHide={() => setShowModal(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{isTranslating ? "Translate File" : "Edit File Data"}</Modal.Title>
+                        <Modal.Title>Edit File Data</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>
-                            {/* Original Content */}
-                            <Form.Group controlId="originalContent">
-                                <Form.Label>Original Content</Form.Label>
+                            <Form.Group controlId="content">
+                                <Form.Label>Content</Form.Label>
                                 <ReactQuill
                                     theme="snow"
                                     value={fileData.content}
-                                    readOnly={true}
+                                    onChange={handleContentChange}
                                 />
                             </Form.Group>
-
-                            {/* Translated Content */}
-                            <Form.Group controlId="translatedContent">
-                                <Form.Label>Translated Content</Form.Label>
-                                <ReactQuill
-                                    theme="snow"
-                                    value={translationData.content}
-                                    onChange={(value) => handleTranslationChange({ target: { value } }, 'content')}
-                                />
-                            </Form.Group>
-
-                            {/* Other fields like title, details, etc. */}
-                            {/* Repeat for both original and translated fields */}
-
-                            {/* Translations Field */}
-                            <Form.Group controlId="translations">
-                                <Form.Label>Translations</Form.Label>
+                            <Form.Group controlId="title">
+                                <Form.Label>Title</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={JSON.stringify(fileData.translations)}
-                                    readOnly={true}
+                                    value={fileData.title}
+                                    onChange={(e) => handleChange(e, 'title')}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="details">
+                                <Form.Label>Details</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.details}
+                                    onChange={(e) => handleChange(e, 'details')}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="socials">
+                                <Form.Label>Social Media Links</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.Socials}
+                                    onChange={(e) => handleChange(e, 'Socials')}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="img01">
+                                <Form.Label>Image URL</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.img01}
+                                    onChange={(e) => handleChange(e, 'img01')}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="sub">
+                                <Form.Label>Subtitle</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.sub}
+                                    onChange={(e) => handleChange(e, 'sub')}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="date">
+                                <Form.Label>Date</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.date}
+                                    onChange={(e) => handleChange(e, 'date')}
                                 />
                             </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
+                        {(!isAlreadyPublished&&!isEarlyReleasedArticles) && (
+                            <Button variant="success" onClick={handlePublish} className="mt-3">
+                                Publish
+                            </Button>
+                        )}
+                        {(!isAlreadyPublished&&isEarlyReleasedArticles) && (
+                            <Button variant="success" onClick={handlePublish} className="mt-3">
+                                Publish Normally
+                            </Button>
+                        )}
                         <Button variant="secondary" onClick={() => setShowModal(false)}>
                             Close
                         </Button>
@@ -313,4 +324,4 @@ const TranslationSystem = () => {
     );
 };
 
-export default TranslationSystem;
+export default FirebaseFileList;

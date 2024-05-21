@@ -18,6 +18,7 @@ import ArticleUpload from "./components/UploadSystem/UploadSystem";
 import Login from "./components/UploadSystem/Login/Login";
 import Register from "./components/UploadSystem/Register/Register";
 import FirebaseFileList from "./components/UploadSystem/VerificationSystem/VerificationSystem";
+import TranlationSystem from "./components/UploadSystem/TranslationSystem/TranlationSystem";
 
 import UserLog from './components/Users/AUTH/userLog';
 import UserRegister from './components/Users/AUTH/UserRegister';
@@ -100,7 +101,7 @@ return (
                         <Route path='/upload/admin' element={<FirebaseFileList/>}/>
                         <Route path='/upload/login' element={<Login admin={false}/>}/>
                         <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
-
+                        <Route path='/upload/translation' element={<TranlationSystem/>}/>
                         <Route path='/User/login' element={<UserLog />}/>
                         <Route path='/User/register' element={<UserRegister />}/>
                         <Route path='/User/home' element={<UserHome />}/>

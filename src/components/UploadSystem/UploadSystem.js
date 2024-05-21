@@ -76,7 +76,7 @@ const ArticleUpload = () => {
                 title,
                 details,
                 Socials: formatSocialsAsString(),
-                img01: `https://heavy-local.com/assets/${image.name}`,
+                img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
                 sub: "From "+currentUser.displayName,
                 date: new Date().toLocaleDateString('en-GB', options)
             };
