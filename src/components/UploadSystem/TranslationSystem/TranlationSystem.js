@@ -363,11 +363,14 @@ const TranslationSystem = () => {
                                         <Form.Group controlId="originalLanguage">
                                             <Form.Label>Original Language</Form.Label>
                                             <Form.Control
-                                                type="text"
+                                                as="select"
                                                 value={originalLanguage}
                                                 onChange={(e) => setOriginalLanguage(e.target.value)}
-                                                readOnly={!!fileData.lang}
-                                            />
+                                                disabled={!!fileData.lang}
+                                            >
+                                                <option value="en">English</option>
+                                                <option value="el">Greek</option>
+                                            </Form.Control>
                                             <Form.Text className="text-muted">
                                                 Enter the original language code (e.g., 'en' for English, 'gr' for Greek).
                                             </Form.Text>
@@ -407,6 +410,7 @@ const TranslationSystem = () => {
                                             type="text"
                                             value={translationData.img01}
                                             onChange={(e) => handleTranslationChange(e, 'img01')}
+                                            readOnly={true}
                                         />
                                     </Form.Group>
                                     <Form.Group controlId="translatedSub">
@@ -430,10 +434,13 @@ const TranslationSystem = () => {
                                             <Form.Group controlId="translatedLanguage">
                                                 <Form.Label>Language</Form.Label>
                                                 <Form.Control
-                                                    type="text"
+                                                    as="select"
                                                     value={newLanguage}
                                                     onChange={(e) => setNewLanguage(e.target.value)}
-                                                />
+                                                >
+                                                    <option value="en">English</option>
+                                                    <option value="el">Greek</option>
+                                                </Form.Control>
                                             </Form.Group>
                                             <Form.Text className="text-muted">
                                                 Enter the language code (e.g., 'en' for English, 'gr' for Greek).
