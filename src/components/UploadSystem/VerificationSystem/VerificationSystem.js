@@ -149,8 +149,11 @@ const FirebaseFileList = () => {
             setError('Error saving file data: ' + error.message);
         }
     };
-    const handleChange = (e, field) => {
-        const { value } = e.target;
+    const handleChange = (e, field, isObject) => {
+        let { value } = e.target;
+        if(isObject){
+            value = JSON.parse(value);
+        }
         setFileData((prevData) => ({
             ...prevData,
             [field]: value,
@@ -255,7 +258,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.title}
-                                    onChange={(e) => handleChange(e, 'title')}
+                                    onChange={(e) => handleChange(e, 'title', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="details">
@@ -263,7 +266,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.details}
-                                    onChange={(e) => handleChange(e, 'details')}
+                                    onChange={(e) => handleChange(e, 'details', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="socials">
@@ -271,7 +274,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.Socials}
-                                    onChange={(e) => handleChange(e, 'Socials')}
+                                    onChange={(e) => handleChange(e, 'Socials', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="img01">
@@ -279,7 +282,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.img01}
-                                    onChange={(e) => handleChange(e, 'img01')}
+                                    onChange={(e) => handleChange(e, 'img01', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
@@ -287,7 +290,7 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.sub}
-                                    onChange={(e) => handleChange(e, 'sub')}
+                                    onChange={(e) => handleChange(e, 'sub', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="date">
@@ -295,7 +298,15 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.date}
-                                    onChange={(e) => handleChange(e, 'date')}
+                                    onChange={(e) => handleChange(e, 'date', false)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="translations">
+                                <Form.Label>Translations</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={JSON.stringify(fileData.translations)}
+                                    onChange={(e) => handleChange(e, 'translations', true)}
                                 />
                             </Form.Group>
                         </Form>
