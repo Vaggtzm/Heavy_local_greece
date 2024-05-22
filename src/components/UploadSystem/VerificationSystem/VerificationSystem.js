@@ -122,7 +122,6 @@ const FirebaseFileList = () => {
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
     };
-
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
         try {
@@ -166,32 +165,51 @@ const FirebaseFileList = () => {
             content: sanitizedValue,
         }))
     };
+
+    const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
+        try {
+            let fileRef;
+            if (isAlreadyPub) {
+                fileRef = ref(storage, `articles/${file.name}`);
+            } else if (isEarlyReleased) {
+                fileRef = ref(storage, `early_releases/${file.name}`);
+            } else {
+                fileRef = ref(storage, `upload_from_authors/${file.name}`);
+            }
+
+            await deleteObject(fileRef);
+            fetchFiles();
+        } catch (error) {
+            setError('Error deleting file: ' + error.message);
+        }
+    };
+
     const handlePublish = async () => {
         if (!selectedFile) return;
 
         try {
-            let fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
-            let earlyReleaseRef = ref(storage, `early_releases/${selectedFile.name}`);
+            let originalFileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
+            let destinationFileRef = ref(storage, `early_releases/${selectedFile.name}`);
 
-            if(isEarlyReleasedArticles) {
-                fileRef = ref(storage, `early_releases/${selectedFile.name}`);
-                earlyReleaseRef = ref(storage, `articles/${selectedFile.name}`);
+            if (isEarlyReleasedArticles) {
+                originalFileRef = ref(storage, `early_releases/${selectedFile.name}`);
+                destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
             }
 
-            const downloadUrl = await getDownloadURL(fileRef);
-            const fileContent = await fetch(downloadUrl).then((res) => res.text());
+            const downloadUrl = await getDownloadURL(originalFileRef);
+            const fileContent = await fetch(downloadUrl).then(res => res.text());
 
-            uploadString(earlyReleaseRef, fileContent).then(()=>{
-                alert('File published successfully to early_release folder!');
-                deleteObject(fileRef).then(()=>{
-                    fetchFiles();
-                });
-            });
+            await uploadString(destinationFileRef, fileContent);
+
+            alert('File published successfully to the destination folder!');
+
+            await deleteObject(originalFileRef);
+            fetchFiles();
+
         } catch (error) {
             setError('Error publishing file: ' + error.message);
         }
     };
-
     return (
         <>
             <Navigation />
@@ -207,11 +225,12 @@ const FirebaseFileList = () => {
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
+                            <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, false, false)}>
+                                Delete
+                            </Button>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
-
                 <h3>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
@@ -221,10 +240,12 @@ const FirebaseFileList = () => {
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
                             </Button>
+                            <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, false, true)}>
+                                Delete
+                            </Button>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
                 <h3>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
@@ -234,10 +255,12 @@ const FirebaseFileList = () => {
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
                             </Button>
+                            <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, true, false)}>
+                                Delete
+                            </Button>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-
                 {/* Modal for editing file data */}
                 <Modal show={showModal} onHide={() => setShowModal(false)}>
                     <Modal.Header closeButton>
@@ -334,5 +357,4 @@ const FirebaseFileList = () => {
         </>
     );
 };
-
 export default FirebaseFileList;
