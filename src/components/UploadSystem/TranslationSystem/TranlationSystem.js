@@ -162,13 +162,14 @@ const TranslationSystem = () => {
             fileRef = ref(storage, `${translationFolder}/${newFileName}`);
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);
 
-            if (!translationData.translations) {
-                translationData.translations = {};
-            }
-            translationData.translations[newLanguage] = newFileName;
+
+
             fileData.translations[newLanguage] = newFileName;
             fileData.translations[originalLanguage] = selectedFile.name;
             fileData.lang = originalLanguage;
+
+            translationData.translations = fileData.translations;
+
             translationData.lang = newLanguage;
 
             // Add the original file name to the translations object in the new translation data
