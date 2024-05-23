@@ -6,6 +6,8 @@ import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from "react-router-dom";
 import { auth, storage } from '../../firebase'; // Import Firebase auth
 import Navigation from '../AppNav/Navigation';
+import {getIdTokenResult, signOut} from "firebase/auth";
+import UserNav from "../Users/UserNav";
 
 const ArticleUpload = () => {
     const [articleContent, setArticleContent] = useState('');
@@ -30,6 +32,17 @@ const ArticleUpload = () => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in
+                getIdTokenResult(user).then((idTokenResult)=>{
+                    if (idTokenResult.claims && idTokenResult.claims.admin) {
+                        console.log("the user is an admin");
+                    }else{
+                        signOut(auth).then(()=>{
+                            console.log("Trying to login again")
+                            navigate('/upload/login');
+                        });
+                    }
+                })
+
                 setCurrentUser(user);
             } else {
                 // No user is signed in
@@ -106,7 +119,7 @@ const ArticleUpload = () => {
 
     return (
         <>
-            <Navigation />
+            <UserNav />
             <div className="container mt-4">
                 <h3>Author Upload System</h3>
                 <hr className="bg-dark" />

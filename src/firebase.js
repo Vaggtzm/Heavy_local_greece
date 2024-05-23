@@ -5,6 +5,9 @@ import {getDatabase} from 'firebase/database';
 import {getMessaging} from 'firebase/messaging';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
+import { getRemoteConfig } from "firebase/remote-config";
+import { fetchAndActivate } from "firebase/remote-config";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
@@ -26,6 +29,9 @@ const appCheck = initializeAppCheck(app, {
   // tokens as needed.
   isTokenAutoRefreshEnabled: true
 });
+
+export const config = getRemoteConfig(app);
+
 
 export const analytics = getAnalytics(app);
 export const messaging = getMessaging(app);

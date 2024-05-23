@@ -1,20 +1,21 @@
-
-import {deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString} from 'firebase/storage';
-import React, {useEffect, useState} from 'react';
-import {Alert, Button, Form, ListGroup, Modal} from 'react-bootstrap';
+import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, Form, ListGroup, Modal } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {useNavigate} from 'react-router-dom';
-import {auth, storage} from '../../../firebase';
+import { useNavigate } from 'react-router-dom';
+import { auth, config, storage } from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
-import {signOut} from "firebase/auth";
+import { signOut } from "firebase/auth";
+import { fetchAndActivate, getValue } from "firebase/remote-config";
+import UserNav from "../../Users/UserNav";
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
 
-    const [isEarlyReleasedArticles, setIsEarlyReleasedArticles] = useState([]);
+    const [isEarlyReleasedArticles, setIsEarlyReleasedArticles] = useState(false);
     const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -27,16 +28,17 @@ const FirebaseFileList = () => {
         Socials: '',
         img01: '',
         sub: '',
-        date: ''
+        date: '',
+        translations: {},
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
 
-    const fetchArticlesCategory=async (folder) => {
+    const fetchArticlesCategory = async (folder) => {
         try {
             let publishedListRef = ref(storage, folder);
-            let {items: publishedItems} = await listAll(publishedListRef);
+            let { items: publishedItems } = await listAll(publishedListRef);
 
             return await Promise.all(
                 publishedItems.map(async (item) => {
@@ -47,37 +49,35 @@ const FirebaseFileList = () => {
                     try {
                         fileContent = await fileContent.json();
                     } catch (e) {
-                        if(isEarlyReleasedArticles){
-                            setEarlyReleasesError('Error fetching files: file: '+item.name+" : "+error);
-                        } else if(isAlreadyPublished){
-                            setAlreadyPublishedError('Error fetching files: file: '+item.name+" : "+error);
-                        }else {
+                        if (isEarlyReleasedArticles) {
+                            setEarlyReleasesError('Error fetching files: file: ' + item.name + " : " + error);
+                        } else if (isAlreadyPublished) {
+                            setAlreadyPublishedError('Error fetching files: file: ' + item.name + " : " + error);
+                        } else {
                             setError('Error fetching files: ' + error.message);
                         }
                         console.log(e);
                         console.log(item);
                     }
 
-                    return {name: item.name, downloadUrl, metadata, fileContent};
+                    return { name: item.name, downloadUrl, metadata, fileContent };
                 })
-            ); // Ensure filesData is always an array
+            );
         } catch (error) {
-            if(isEarlyReleasedArticles){
-                setEarlyReleasesError('Error fetching files: file: '+error);
-            } else if(isAlreadyPublished){
-                setAlreadyPublishedError('Error fetching files: file: '+error);
+            if (isEarlyReleasedArticles) {
+                setEarlyReleasesError('Error fetching files: file: ' + error);
+            } else if (isAlreadyPublished) {
+                setAlreadyPublishedError('Error fetching files: file: ' + error);
 
-            }else {
-                setError('Error fetching files: file: '+error);
+            } else {
+                setError('Error fetching files: file: ' + error);
             }
             console.log(error);
         }
-    }
+    };
 
     const fetchFiles = async () => {
         try {
-
-
             fetchArticlesCategory('upload_from_authors').then((publishedFilesData) => {
                 setFiles(publishedFilesData);
             });
@@ -90,27 +90,35 @@ const FirebaseFileList = () => {
                 setEarlyReleasedArticles(publishedFilesData);
             });
 
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     };
 
-
     useEffect(() => {
-        const userList=['pavlos@orfanidis.net.gr','heavylocalgreece@gmail.com', 'tzimasvaggelis02@gmail.com'];
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user && userList.includes(user.email)){
-                setCurrentUser(user);
-            } else {
-                setCurrentUser(null);
-                navigate('/upload/admin/login');
-                signOut(auth).then();
+        const initializeConfigAndAuth = async () => {
+            try {
+                await fetchAndActivate(config);
+            } catch (err) {
+                console.log(err);
             }
-        });
 
-        fetchFiles();
+            const userList = JSON.parse(getValue(config, "admin").asString());
+            console.log(userList);
+            auth.onAuthStateChanged((user) => {
+                if (user && userList.includes(user.email)) {
+                    setCurrentUser(user);
+                } else {
+                    setCurrentUser(null);
+                    navigate('/uploads');
+                    signOut(auth).then();
+                }
+            });
 
-        return () => unsubscribe();
+            fetchFiles();
+        };
+
+        initializeConfigAndAuth();
     }, [navigate]);
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
@@ -122,21 +130,21 @@ const FirebaseFileList = () => {
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
     };
+
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
         try {
             let fileRef;
             if (isAlreadyPublished) {
                 fileRef = ref(storage, `articles/${selectedFile.name}`);
-            } else if(isEarlyReleasedArticles) {
+            } else if (isEarlyReleasedArticles) {
                 fileRef = ref(storage, `early_releases/${selectedFile.name}`);
-            }else{
+            } else {
                 fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             }
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
             await uploadString(fileRef, JSON.stringify(fileData));
 
-            // Update local files state
             const updatedFiles = files.map((file) =>
                 file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
             );
@@ -148,9 +156,10 @@ const FirebaseFileList = () => {
             setError('Error saving file data: ' + error.message);
         }
     };
+
     const handleChange = (e, field, isObject) => {
         let { value } = e.target;
-        if(isObject){
+        if (isObject) {
             value = JSON.parse(value);
         }
         setFileData((prevData) => ({
@@ -158,12 +167,13 @@ const FirebaseFileList = () => {
             [field]: value,
         }));
     };
+
     const handleContentChange = (value) => {
         const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
         setFileData((prevData) => ({
             ...prevData,
             content: sanitizedValue,
-        }))
+        }));
     };
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
@@ -200,9 +210,7 @@ const FirebaseFileList = () => {
             const fileContent = await fetch(downloadUrl).then(res => res.text());
 
             await uploadString(destinationFileRef, fileContent);
-
             alert('File published successfully to the destination folder!');
-
             await deleteObject(originalFileRef);
             fetchFiles();
 
@@ -210,12 +218,13 @@ const FirebaseFileList = () => {
             setError('Error publishing file: ' + error.message);
         }
     };
+
     return (
         <>
-            <Navigation />
+            <UserNav />
             <div className="container mt-4">
                 <h3>Admin Publish System</h3>
-                <hr className="bg-dark"/>
+                <hr className="bg-dark" />
                 <h3>Uploaded Files</h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
@@ -261,8 +270,7 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                {/* Modal for editing file data */}
-                <Modal show={showModal} onHide={() => setShowModal(false)}>
+                <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => setFileData({})}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit File Data</Modal.Title>
                     </Modal.Header>
@@ -272,6 +280,7 @@ const FirebaseFileList = () => {
                                 <Form.Label>Content</Form.Label>
                                 <ReactQuill
                                     theme="snow"
+                                    key={selectedFile ? selectedFile.name : ''}
                                     value={fileData.content}
                                     onChange={handleContentChange}
                                 />
@@ -335,12 +344,12 @@ const FirebaseFileList = () => {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {(!isAlreadyPublished&&!isEarlyReleasedArticles) && (
+                        {(!isAlreadyPublished && !isEarlyReleasedArticles) && (
                             <Button variant="success" onClick={handlePublish} className="mt-3">
                                 Publish
                             </Button>
                         )}
-                        {(!isAlreadyPublished&&isEarlyReleasedArticles) && (
+                        {(!isAlreadyPublished && isEarlyReleasedArticles) && (
                             <Button variant="success" onClick={handlePublish} className="mt-3">
                                 Publish Normally
                             </Button>
@@ -357,4 +366,5 @@ const FirebaseFileList = () => {
         </>
     );
 };
+
 export default FirebaseFileList;

@@ -25,6 +25,7 @@ import UserRegister from './components/Users/AUTH/UserRegister';
 import UserHome from './components/Users/UserHome';
 import SavedArtciles from './components/Users/Pages/Saved';
 import './App.css'
+import UserProfile from "./components/UploadSystem/Profile/UserProfile";
 function App() {
     const [loading, setLoading] = useState(false);
 
@@ -98,6 +99,7 @@ return (
 
                         <Route path='/upload' element={<ArticleUpload/>}/>
                         <Route path='/upload/register' element={<Register/>}/>
+                        <Route path='/upload/profile' element={<UserProfile/>}/>
                         <Route path='/upload/admin' element={<FirebaseFileList/>}/>
                         <Route path='/upload/login' element={<Login admin={false}/>}/>
                         <Route path='/upload/admin/login' element={<Login admin={true}/>}/>

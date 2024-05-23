@@ -20,7 +20,7 @@ const Login = (props) => {
                     await signOut(auth);
                 } else {
                     // User is signed in and email is verified
-                    const idTokenResult = getIdTokenResult(user);
+                    const idTokenResult = await getIdTokenResult(user);
                     if (idTokenResult.claims && idTokenResult.claims.admin) {
                         console.log("the user is an admin");
                         navigate('/upload');

@@ -17,9 +17,11 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
-import { auth, storage } from '../../../firebase';
+import { auth, config, storage } from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import { signOut } from 'firebase/auth';
+import { fetchAndActivate, getValue } from "firebase/remote-config";
+import UserNav from "../../Users/UserNav";
 
 const TranslationSystem = () => {
     const [files, setFiles] = useState([]);
@@ -104,20 +106,31 @@ const TranslationSystem = () => {
     };
 
     useEffect(() => {
-        const userList = ['pavlos@orfanidis.net.gr', 'heavylocalgreece@gmail.com', 'tzimasvaggelis02@gmail.com', 'daniela.palaiochorinou@gmail.com'];
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user && userList.includes(user.email)) {
-                setCurrentUser(user);
-            } else {
-                setCurrentUser(null);
-                navigate('/upload/admin/login');
-                signOut(auth).then();
+        const initialize = async () => {
+            try {
+                await fetchAndActivate(config);
+            } catch (err) {
+                console.log(err);
             }
-        });
 
-        fetchFiles();
+            const userList = JSON.parse(getValue(config, "translationSystem").asString());
+            console.log(userList);
+            const unsubscribe = auth.onAuthStateChanged((user) => {
+                if (user && userList.includes(user.email)) {
+                    setCurrentUser(user);
+                } else {
+                    setCurrentUser(null);
+                    navigate('/upload');
+                    signOut(auth).then();
+                }
+            });
 
-        return () => unsubscribe();
+            await fetchFiles();
+
+            return () => unsubscribe();
+        };
+
+        initialize();
     }, [navigate]);
 
     const handleSave = async () => {
@@ -168,7 +181,7 @@ const TranslationSystem = () => {
             await Promise.all(
                 Object.keys(relatedTranslations).map(async (lang) => {
                     const relatedFileName = relatedTranslations[lang];
-                    if(relatedFileName=== newFileName) return;
+                    if (relatedFileName === newFileName) return;
                     const relatedFileRef = ref(storage, `${originalFolder}/${relatedFileName}`);
 
                     // Fetch existing content to update it
@@ -220,12 +233,7 @@ const TranslationSystem = () => {
         });
     };
 
-
-
-
-
     const handleTranslate = (file, isAlreadyPub, isEarlyReleased) => {
-
         setSelectedFile(file);
         setFileData({
             ...file.fileContent,
@@ -252,7 +260,7 @@ const TranslationSystem = () => {
 
     return (
         <>
-            <Navigation />
+            <UserNav />
             <div className="container mt-4">
                 <h3>Admin Publish System</h3>
                 <hr className="bg-dark" />
@@ -300,7 +308,7 @@ const TranslationSystem = () => {
                     className={'d-flex justify-content-center'}
                     show={showModal}
                     onHide={() => {
-                        setShowModal(false)
+                        setShowModal(false);
                         setTranslationData({
                             content: '',
                             title: '',
@@ -324,9 +332,7 @@ const TranslationSystem = () => {
                             translations: {},
                             lang: '',
                         });
-                    }
-
-                }
+                    }}
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>{isTranslating ? 'Translate File' : 'Edit File Data'}</Modal.Title>
@@ -338,7 +344,7 @@ const TranslationSystem = () => {
                                     <h5>Original</h5>
                                     <Form.Group controlId="originalContent">
                                         <Form.Label>Content</Form.Label>
-                                        <ReactQuill theme="snow" value={fileData.content} readOnly={true} />
+                                        <ReactQuill key={`original-${selectedFile?.name}`} theme="snow" value={fileData.content} readOnly={true} />
                                     </Form.Group>
                                     <Form.Group controlId="originalTitle">
                                         <Form.Label>Title</Form.Label>
@@ -360,27 +366,28 @@ const TranslationSystem = () => {
                                         <Form.Label>Date</Form.Label>
                                         <Form.Control type="text" value={fileData.date} readOnly={true} />
                                     </Form.Group>
-                                        <Form.Group controlId="originalLanguage">
-                                            <Form.Label>Original Language</Form.Label>
-                                            <Form.Control
-                                                as="select"
-                                                value={originalLanguage}
-                                                onChange={(e) => setOriginalLanguage(e.target.value)}
-                                                disabled={!!fileData.lang}
-                                            >
-                                                <option value="en">English</option>
-                                                <option value="el">Greek</option>
-                                            </Form.Control>
-                                            <Form.Text className="text-muted">
-                                                Enter the original language code (e.g., 'en' for English, 'gr' for Greek).
-                                            </Form.Text>
-                                        </Form.Group>
+                                    <Form.Group controlId="originalLanguage">
+                                        <Form.Label>Original Language</Form.Label>
+                                        <Form.Control
+                                            as="select"
+                                            value={originalLanguage}
+                                            onChange={(e) => setOriginalLanguage(e.target.value)}
+                                            disabled={!!fileData.lang}
+                                        >
+                                            <option value="en">English</option>
+                                            <option value="el">Greek</option>
+                                        </Form.Control>
+                                        <Form.Text className="text-muted">
+                                            Enter the original language code (e.g., 'en' for English, 'gr' for Greek).
+                                        </Form.Text>
+                                    </Form.Group>
                                 </div>
                                 <div className="col-md-6">
                                     <h5>Translation</h5>
                                     <Form.Group controlId="translatedContent">
                                         <Form.Label>Content</Form.Label>
                                         <ReactQuill
+                                            key={`translation-${selectedFile?.name}`}
                                             theme="snow"
                                             value={translationData.content}
                                             onChange={(value) =>
