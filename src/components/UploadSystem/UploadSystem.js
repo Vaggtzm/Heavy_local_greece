@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import './quill-custom.css'
 import { useNavigate } from "react-router-dom";
 import { auth, storage } from '../../firebase'; // Import Firebase auth
-import Navigation from '../AppNav/Navigation';
 import {getIdTokenResult, signOut} from "firebase/auth";
 import UserNav from "../Users/UserNav";
 
@@ -118,16 +118,17 @@ const ArticleUpload = () => {
     };
 
     return (
-        <>
+        <div>
             <UserNav />
             <div className="container mt-4">
-                <h3>Author Upload System</h3>
+                <h2 className={"h2 text-white"}>Author Upload System</h2>
                 <hr className="bg-dark" />
-                <Form onSubmit={handleArticleSubmit}>
+                <Form className={"card bg-dark"} style={{width:"150vh"}} onSubmit={handleArticleSubmit}>
                     <Form.Group controlId="articleContent">
-                        <Form.Label>Paste Article Content (use class 'lead' for paragraphs)</Form.Label>
+                        <Form.Label className={"text-light"}>Paste Article Content from the document that you have written</Form.Label>
                         <ReactQuill
                             theme="snow"
+                            className={"text-light"}
                             value={articleContent}
                             onChange={(value) => {
                                 const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
@@ -140,7 +141,7 @@ const ArticleUpload = () => {
                     <Row>
                         <Col>
                             <Form.Group controlId="title">
-                                <Form.Label>Title</Form.Label>
+                                <Form.Label className={"text-light"}>Title</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={title}
@@ -150,7 +151,7 @@ const ArticleUpload = () => {
                         </Col>
                         <Col>
                             <Form.Group controlId="details">
-                                <Form.Label>Details <span className={"small"}>(Some details about the band to appear under the main picture on the right.)</span></Form.Label>
+                                <Form.Label className={"text-light"}>Details <span className={"small"}>(Some details about the band to appear under the main picture on the right.)</span></Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={details}
@@ -161,7 +162,7 @@ const ArticleUpload = () => {
                     </Row>
 
                     <Form.Group controlId="socials">
-                        <Form.Label>Social Media Links <span className={"small"}>(enter only those available)</span></Form.Label>
+                        <Form.Label className={"text-light"}>Social Media Links <span className={"small"}>(enter only those available)</span></Form.Label>
                         <Row>
                             <Col>
                                 <Form.Control
@@ -201,7 +202,7 @@ const ArticleUpload = () => {
                     </Form.Group>
 
                     <Form.Group controlId="image">
-                        <Form.Label>Upload Image</Form.Label>
+                        <Form.Label className={"text-light"}>Upload Image</Form.Label>
                         <Form.Control type="file" onChange={(e) => setImage(e.target.files[0])} />
                     </Form.Group>
 
@@ -222,7 +223,7 @@ const ArticleUpload = () => {
                     )}
                 </Form>
             </div>
-        </>
+        </div>
     );
 };
 

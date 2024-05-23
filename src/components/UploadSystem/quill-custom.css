@@ -1,0 +1,32 @@
+/* quill-custom.css */
+
+.ql-editor {
+    background-color: #333;
+    color: #fff;
+}
+
+.ql-toolbar {
+    background-color: #444;
+    border: none;
+}
+
+.ql-toolbar .ql-picker {
+    color: #fff;
+}
+
+.ql-toolbar .ql-stroke {
+    stroke: #fff;
+}
+
+.ql-toolbar .ql-fill {
+    fill: #fff;
+}
+
+.ql-toolbar .ql-picker-options {
+    background-color: #444;
+    border: none;
+}
+
+.ql-toolbar .ql-picker-label {
+    color: #fff;
+}

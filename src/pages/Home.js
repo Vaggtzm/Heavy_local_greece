@@ -123,7 +123,8 @@ const Home = () => {
             <div className="col-md-6 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
-                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"} alt="Disimulator"></img>
+                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"}
+                     alt="Disimulator"></img>
                 <div className="card-body">
                   <h4 className="card-title">
                     Meden Agan - My name is Katherine(ENG VERSION)
@@ -144,7 +145,7 @@ const Home = () => {
                      src={"https://heavy-local.com/assets/COVER FINAL.jpg"} alt="Disimulator"></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                  Πανικός Χάος  Πόλεμος - Medusa’s Wrath - Pavor Exilium Mors (album review - GREEK VERSION)</h4>
+                    Πανικός Χάος Πόλεμος - Medusa’s Wrath - Pavor Exilium Mors (album review - GREEK VERSION)</h4>
                   <NavLink to="/article/Πανικός-Χάος--Πόλεμος---Medusa’s-Wrath---Pavor-Exilium-Mors-(album-review)"
                            className="btn btn-primary">Read More</NavLink>
                 </div>
@@ -153,12 +154,15 @@ const Home = () => {
             <div className="col-md-4 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
-                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"} alt="Disimulator"></img>
+                     src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fimg_3_1716221383584.webp?alt=media&token=ee0160a5-01fc-4dac-86ab-f96e929a2de9"}
+                     alt="Disimulator"></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                  Meden Agan – My name is Katherine: Η ιστορία μιας αθώας ψυχής που κοίταξε στα μάτια τους δαίμονες του παρελθόντος της(GREEK VERSION)</h4>
-                  <NavLink to="/article/Meden-Agan-–-My-name-is-Katherine -Η-ιστορία-μιας-αθώας-ψυχής-που-κοίταξε-στα-μάτια-τους-δαίμονες-του-παρελθόντος-της"
-                           className="btn btn-primary">Read More</NavLink>
+                    Meden Agan – My name is Katherine: Η ιστορία μιας αθώας ψυχής που κοίταξε στα μάτια τους δαίμονες
+                    του παρελθόντος της(GREEK VERSION)</h4>
+                  <NavLink
+                      to="/article/Meden-Agan-–-My-name-is-Katherine -Η-ιστορία-μιας-αθώας-ψυχής-που-κοίταξε-στα-μάτια-τους-δαίμονες-του-παρελθόντος-της"
+                      className="btn btn-primary">Read More</NavLink>
                 </div>
               </div>
             </div>
@@ -205,6 +209,21 @@ const Home = () => {
             </div>
 
 
+            <div className="col-md-4 p-3">
+              <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg img-fluid"
+                     src={"https://pulse-of-the-underground.com/assets/SOCIAL.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                    Μια φουτουριστική άγρια γη - Project Renegade - Ultra Terra (album review)</h4>
+                  <NavLink
+                      to="https://pulse-of-the-underground.com/article/%CE%9C%CE%B9%CE%B1-%CF%86%CE%BF%CF%85%CF%84%CE%BF%CF%85%CF%81%CE%B9%CF%83%CF%84%CE%B9%CE%BA%CE%AE-%CE%AC%CE%B3%CF%81%CE%B9%CE%B1-%CE%B3%CE%B7---Project-Renegade---Ultra-Terra-(album-review)"
+                      className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
+            </div>
+
 
             <hr className="bg-white"/>
             <div className="jumbotron">
@@ -250,7 +269,7 @@ const Home = () => {
             </div>
             <div className="col-md-6 mb-4">
               <div className="card h-100 w-100">
-D        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
+                D <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Review:Ghost Of Agony</h4>
           <a href="/article/GOA-archive" className="btn btn-primary">Read More</a>

@@ -262,13 +262,13 @@ const TranslationSystem = () => {
         <>
             <UserNav />
             <div className="container mt-4">
-                <h3>Admin Publish System</h3>
-                <hr className="bg-dark" />
-                <h3>Uploaded Files</h3>
+                <h2 className={"text-white"}>Translation System</h2>
+                <hr className="bg-white" />
+                <h3 className={"text-white"}>Uploaded Files</h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
                     {files.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
                             <Button variant="warning" onClick={() => handleTranslate(file, false, false)}>
                                 Translate
@@ -277,11 +277,11 @@ const TranslationSystem = () => {
                     ))}
                 </ListGroup>
 
-                <h3>Early Releases</h3>
+                <h3 className={"text-white"}>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
                             <Button variant="warning" onClick={() => handleTranslate(file, false, true)}>
                                 Translate
@@ -290,11 +290,11 @@ const TranslationSystem = () => {
                     ))}
                 </ListGroup>
 
-                <h3>Already Published</h3>
+                <h3 className={"text-white"}>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
                             <Button variant="warning" onClick={() => handleTranslate(file, true, false)}>
                                 Translate

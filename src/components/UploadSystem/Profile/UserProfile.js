@@ -96,7 +96,6 @@ const UserProfile = () => {
         <>
             <UserNav />
             <div className="container mt-4">
-                <h3>Admin Publish System</h3>
                 <div style={{ color: '#fff' }}>
                     <h2>User Profile</h2>
                     {error && <Alert variant="danger">{error}</Alert>}

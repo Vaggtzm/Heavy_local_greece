@@ -223,13 +223,13 @@ const FirebaseFileList = () => {
         <>
             <UserNav />
             <div className="container mt-4">
-                <h3>Admin Publish System</h3>
+                <h2 className={"text-light"}>Admin Publish System</h2>
                 <hr className="bg-dark" />
-                <h3>Uploaded Files</h3>
+                <h3 className={"text-light"}>Uploaded Files</h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
                     {files.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.name}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
@@ -240,11 +240,11 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3>Early Releases</h3>
+                <h3 className={"text-light"}>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.name}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
@@ -255,11 +255,11 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3>Already Published</h3>
+                <h3 className={"text-light"}>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
-                        <ListGroup.Item key={index}>
+                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.name}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
