@@ -58,7 +58,7 @@ const TranslationSystem = () => {
         date: '',
         translations: {},
     });
-    const [newLanguage, setNewLanguage] = useState('');
+    const [newLanguage, setNewLanguage] = useState('en');
     const [originalLanguage, setOriginalLanguage] = useState('');
 
     const fetchArticlesCategory = async (folder) => {
@@ -153,7 +153,6 @@ const TranslationSystem = () => {
 
         if (!fileData.translations) {
             fileData.translations = {};
-            fileData.translations.originalLanguage = originalLanguage; // Set the original language
         }
 
         if (isTranslating) {
@@ -171,6 +170,9 @@ const TranslationSystem = () => {
             fileData.translations[originalLanguage] = selectedFile.name;
             fileData.lang = originalLanguage;
             translationData.lang = newLanguage;
+
+            // Add the original file name to the translations object in the new translation data
+            translationData.translations[originalLanguage] = selectedFile.name;
 
             // Upload the new translation file
             await uploadString(fileRef, JSON.stringify(translationData));
@@ -232,6 +234,7 @@ const TranslationSystem = () => {
             translations: {},
         });
     };
+
 
     const handleTranslate = (file, isAlreadyPub, isEarlyReleased) => {
         setSelectedFile(file);
