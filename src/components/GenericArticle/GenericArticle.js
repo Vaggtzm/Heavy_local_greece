@@ -15,6 +15,7 @@ const DefaultArticle = (props) => {
   const [articles, setArticles] = useState({});
   const [enableSaving, setEnableSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false); // State to track if the article is saved by the user
+  const [translations] = useState({});
 
   useEffect(() => {
     fetchData().then(); // Fetch article data when component mounts
@@ -73,6 +74,12 @@ const DefaultArticle = (props) => {
       }
       const data = await response.json();
       data.img01 = await getFirebaseStorageUrl(data.img01);
+      Object.keys(data.translations).forEach((translation)=>{
+        const translationExists = checkIfTranslationExists(data.translations[translation]);
+        if(translationExists){
+          translations[translation]=data.translations[translation];
+        }
+      })
       setArticles(data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -98,6 +105,22 @@ const DefaultArticle = (props) => {
         }
     }
 };
+
+  const checkIfTranslationExists = async (translationFile)=>{
+    let folder = "articles";
+    if (isEarlyAccess) {
+      folder = `early_releases`;
+    }
+    const filePath = `${folder}/${translationFile}`;
+    const fileRef = ref(storage, filePath);
+
+    try {
+      await getDownloadURL(fileRef);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
 if (!articles || Object.keys(articles).length === 0) {
     return <p>Loading...</p>;
@@ -135,11 +158,12 @@ if (!articles || Object.keys(articles).length === 0) {
               ></span>
             </p>
             {/*TODO: fix styling*/}
-            <hr className="bg-dark"/>
-            {articles.translations&&<><h5>Translations</h5>
-            {
-              Object.keys(articles.translations).map((translation)=>{
-                return <NavLink className={"btn btn-dark"} to={"/article/"+articles.translations[translation].replace(".json","")}>{translation}</NavLink>
+
+            {translations&&<><hr className="bg-dark"/>
+              <h5>Translations</h5>
+              {
+                Object.keys(translations).map((translation)=>{
+                  return <NavLink className={"btn btn-dark"} to={"/article/"+translations[translation].replace(".json","")}>{translation}</NavLink>
               })
             }</>}
 
