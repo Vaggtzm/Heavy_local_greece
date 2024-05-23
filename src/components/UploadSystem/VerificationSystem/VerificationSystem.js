@@ -178,6 +178,8 @@ const FirebaseFileList = () => {
     };
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
+        const isConfirmed = window.confirm(`Are you sure you want to delete the file "${file.name}"?`);
+        if(!isConfirmed) return;
         try {
             let fileRef;
             if (isAlreadyPub) {

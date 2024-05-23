@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import { auth, storage, database } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 import { ref as databaseRef, push, remove, onValue } from "firebase/database";
@@ -120,45 +120,53 @@ if (!articles || Object.keys(articles).length === 0) {
           <hr className="bg-dark" />
           <div className="col-md-6 credits-box">
             <img
-              className="img-fluid w-100"
-              src={articles.img01}
-              alt={articles.title}
+                className="img-fluid w-100"
+                src={articles.img01}
+                alt={articles.title}
             />
             <p className="lead">
               <span
-                dangerouslySetInnerHTML={{ __html: articles.details }}
+                  dangerouslySetInnerHTML={{__html: articles.details}}
               ></span>
             </p>
             <p className="lead">
               <span
-                dangerouslySetInnerHTML={{ __html: articles.Socials }}
+                  dangerouslySetInnerHTML={{__html: articles.Socials}}
               ></span>
             </p>
             {/*TODO: fix styling*/}
-            <hr className="bg-dark" />
+            <hr className="bg-dark"/>
+            {articles.translations&&<><h5>Translations</h5>
+            {
+              Object.keys(articles.translations).map((translation)=>{
+                return <NavLink className={"btn btn-dark"} to={"/article/"+articles.translations[translation].replace(".json","")}>{translation}</NavLink>
+              })
+            }</>}
+
+            <hr className="bg-dark"/>
             {enableSaving && (
-              <span
-                className="btn btn-danger w-25 rounded-4"
-                onClick={() =>
-                  toggleSaveArticle(
-                    articles.title,
-                    articles.img01,
-                    articles.url
-                  )
-                }
-                style={{ cursor: "pointer" }}
-              >
+                <span
+                    className="btn btn-danger w-25 rounded-4"
+                    onClick={() =>
+                        toggleSaveArticle(
+                            articles.title,
+                            articles.img01,
+                            articles.url
+                        )
+                    }
+                    style={{cursor: "pointer"}}
+                >
                 save
-                {isSaved ? (
-                  <i className="fas fa-heart" style={{ color: "red" }}></i>
-                ) : (
-                  <i className="far fa-heart"></i>
-                )}
+                  {isSaved ? (
+                      <i className="fas fa-heart" style={{color: "red"}}></i>
+                  ) : (
+                      <i className="far fa-heart"></i>
+                  )}
               </span>
             )}{" "}
             <a
-              href="https://buymeacoffee.com/tzimasvagg7"
-              className="btn btn-danger 25 m-2  rounded-4"
+                href="https://buymeacoffee.com/tzimasvagg7"
+                className="btn btn-danger 25 m-2  rounded-4"
             >
               Say Thanks
             </a>
