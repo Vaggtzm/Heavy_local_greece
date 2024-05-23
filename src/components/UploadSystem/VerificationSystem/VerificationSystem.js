@@ -29,6 +29,7 @@ const FirebaseFileList = () => {
         img01: '',
         sub: '',
         date: '',
+        lang:'',
         translations: {},
     });
     const [error, setError] = useState('');
@@ -331,6 +332,14 @@ const FirebaseFileList = () => {
                                     type="text"
                                     value={fileData.date}
                                     onChange={(e) => handleChange(e, 'date', false)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="lang">
+                                <Form.Label>Language</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.lang}
+                                    onChange={(e) => handleChange(e, 'lang', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="translations">

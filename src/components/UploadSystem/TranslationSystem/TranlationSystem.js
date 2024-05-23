@@ -157,7 +157,7 @@ const TranslationSystem = () => {
 
         if (isTranslating) {
             // Ensure the new translation file name is based on the translation data title
-            newFileName = `${translationData.title.replace(/\s+/g, '_')}.json`;
+            newFileName = `${translationData.title.replace(/\s+/g, '_')}-${newLanguage}.json`;
 
             fileRef = ref(storage, `${translationFolder}/${newFileName}`);
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);
@@ -274,6 +274,16 @@ const TranslationSystem = () => {
                     {files.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
+
+                            {
+                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                                    Object.keys(file.fileContent.translations).map((lang) => {
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                    })
+                                ) : (
+                                    <p>No translations available</p>
+                                )
+                            }
                             <Button variant="warning" onClick={() => handleTranslate(file, false, false)}>
                                 Translate
                             </Button>
@@ -287,6 +297,15 @@ const TranslationSystem = () => {
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
+                            {
+                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                                    Object.keys(file.fileContent.translations).map((lang) => {
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                    })
+                                ) : (
+                                    <p>No translations available</p>
+                                )
+                            }
                             <Button variant="warning" onClick={() => handleTranslate(file, false, true)}>
                                 Translate
                             </Button>
@@ -300,6 +319,15 @@ const TranslationSystem = () => {
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.name}
+                            {
+                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                                    Object.keys(file.fileContent.translations).map((lang) => {
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                    })
+                                ) : (
+                                    <p>No translations available</p>
+                                )
+                            }
                             <Button variant="warning" onClick={() => handleTranslate(file, true, false)}>
                                 Translate
                             </Button>
@@ -378,6 +406,7 @@ const TranslationSystem = () => {
                                             onChange={(e) => setOriginalLanguage(e.target.value)}
                                             disabled={!!fileData.lang}
                                         >
+                                            <option value="">Select Language</option> {/* Placeholder option */}
                                             <option value="en">English</option>
                                             <option value="el">Greek</option>
                                         </Form.Control>
@@ -449,14 +478,16 @@ const TranslationSystem = () => {
                                                     value={newLanguage}
                                                     onChange={(e) => setNewLanguage(e.target.value)}
                                                 >
+                                                    <option value="">Select Language</option> {/* Placeholder option */}
                                                     <option value="en">English</option>
                                                     <option value="el">Greek</option>
                                                 </Form.Control>
+                                                <Form.Text className="text-muted">
+                                                    Enter the language code (e.g., 'en' for English, 'el' for Greek).
+                                                </Form.Text>
                                             </Form.Group>
-                                            <Form.Text className="text-muted">
-                                                Enter the language code (e.g., 'en' for English, 'gr' for Greek).
-                                            </Form.Text>
                                         </>
+
                                     )}
                                 </div>
                             </div>
