@@ -481,12 +481,9 @@ const TranslationSystem = () => {
                                                 >
                                                     <option value="">Select Language</option> {/* Placeholder option */}
                                                     {Object.keys(availableLanguages).map((langCode)=> {
-                                                        return(<option value="{langCode}">{availableLanguages[langCode]}</option>)
+                                                        return(<option value={langCode}>{availableLanguages[langCode]}</option>)
                                                     })}
                                                 </Form.Control>
-                                                <Form.Text className="text-muted">
-                                                    Enter the language code (e.g., 'en' for English, 'el' for Greek).
-                                                </Form.Text>
                                             </Form.Group>
                                         </>
 
