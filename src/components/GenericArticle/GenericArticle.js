@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {NavLink, useParams} from "react-router-dom";
-import { auth, storage, database } from "../../firebase";
+import {auth, storage, database, config} from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
 import { ref as databaseRef, push, remove, onValue } from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
@@ -8,6 +8,7 @@ import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
 import { Button } from "react-bootstrap";
 import AppNav from "./../AppNav/AppNav";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 const DefaultArticle = (props) => {
   const [isEarlyAccess] = useState(props.earlyAccess);
@@ -15,9 +16,17 @@ const DefaultArticle = (props) => {
   const [articles, setArticles] = useState({});
   const [enableSaving, setEnableSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false); // State to track if the article is saved by the user
-  const [translations] = useState({});
+  const [translations, setTranslations] = useState({});
+  const [availableLanguages, setAvailableLanguages] = useState({});
 
   useEffect(() => {
+
+
+    fetchAndActivate(config).then(()=>{
+      const serverLanguages = getValue(config, "languages").asString();
+      setAvailableLanguages(JSON.parse(serverLanguages));
+    });
+
     fetchData().then(); // Fetch article data when component mounts
 
     // Check if user is authenticated
@@ -74,12 +83,16 @@ const DefaultArticle = (props) => {
       }
       const data = await response.json();
       data.img01 = await getFirebaseStorageUrl(data.img01);
-      Object.keys(data.translations).forEach((translation)=>{
-        const translationExists = checkIfTranslationExists(data.translations[translation]);
-        if(translationExists){
-          translations[translation]=data.translations[translation];
-        }
-      })
+      if(data.translations!==undefined&&Object.keys(data.translations).length>0) {
+        Object.keys(data.translations).forEach((translation) => {
+          const translationExists = checkIfTranslationExists(data.translations[translation]);
+          if (translationExists) {
+            translations[translation] = data.translations[translation];
+          }
+        })
+      }else{
+        setTranslations(undefined);
+      }
       setArticles(data);
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -157,13 +170,12 @@ if (!articles || Object.keys(articles).length === 0) {
                   dangerouslySetInnerHTML={{__html: articles.Socials}}
               ></span>
             </p>
-            {/*TODO: fix styling*/}
 
             {translations&&<><hr className="bg-dark"/>
               <h5>Translations</h5>
               {
                 Object.keys(translations).map((translation)=>{
-                  return <NavLink className={"btn btn-dark"} to={"/article/"+translations[translation].replace(".json","")}>{translation}</NavLink>
+                  return <NavLink className={"btn btn-dark"} to={"/article/"+translations[translation].replace(".json","")}>{availableLanguages[translation]}</NavLink>
               })
             }</>}
 

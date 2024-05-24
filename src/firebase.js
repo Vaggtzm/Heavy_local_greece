@@ -31,6 +31,9 @@ const appCheck = initializeAppCheck(app, {
 });
 
 export const config = getRemoteConfig(app);
+config.settings = {
+  minimumFetchIntervalMillis: 3600000, // 1 hour
+};
 
 
 export const analytics = getAnalytics(app);

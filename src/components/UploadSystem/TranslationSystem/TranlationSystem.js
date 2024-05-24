@@ -61,6 +61,8 @@ const TranslationSystem = () => {
     const [newLanguage, setNewLanguage] = useState('en');
     const [originalLanguage, setOriginalLanguage] = useState('');
 
+    const [availableLanguages, setAvailableLanguages] = useState({});
+
     const fetchArticlesCategory = async (folder) => {
         try {
             let publishedListRef = ref(storage, folder);
@@ -112,7 +114,8 @@ const TranslationSystem = () => {
             } catch (err) {
                 console.log(err);
             }
-
+            const serverLanguages = getValue(config, "languages").asString()
+            setAvailableLanguages(JSON.parse(serverLanguages))
             const userList = JSON.parse(getValue(config, "translationSystem").asString());
             console.log(userList);
             const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -278,7 +281,7 @@ const TranslationSystem = () => {
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -300,7 +303,7 @@ const TranslationSystem = () => {
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -322,7 +325,7 @@ const TranslationSystem = () => {
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{lang}</p>);
+                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -407,12 +410,10 @@ const TranslationSystem = () => {
                                             disabled={!!fileData.lang}
                                         >
                                             <option value="">Select Language</option> {/* Placeholder option */}
-                                            <option value="en">English</option>
-                                            <option value="el">Greek</option>
+                                            {Object.keys(availableLanguages).map((langCode)=> {
+                                                return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                            })}
                                         </Form.Control>
-                                        <Form.Text className="text-muted">
-                                            Enter the original language code (e.g., 'en' for English, 'gr' for Greek).
-                                        </Form.Text>
                                     </Form.Group>
                                 </div>
                                 <div className="col-md-6">
@@ -479,8 +480,9 @@ const TranslationSystem = () => {
                                                     onChange={(e) => setNewLanguage(e.target.value)}
                                                 >
                                                     <option value="">Select Language</option> {/* Placeholder option */}
-                                                    <option value="en">English</option>
-                                                    <option value="el">Greek</option>
+                                                    {Object.keys(availableLanguages).map((langCode)=> {
+                                                        return(<option value="{langCode}">{availableLanguages[langCode]}</option>)
+                                                    })}
                                                 </Form.Control>
                                                 <Form.Text className="text-muted">
                                                     Enter the language code (e.g., 'en' for English, 'el' for Greek).
