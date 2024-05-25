@@ -14,6 +14,7 @@ const UserNav = () => {
   const [isAuthor, setIsAuthor] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isTranslator, setIsTranslator] = useState(false);
+  const [isLeader, setIsLeader] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +27,8 @@ const UserNav = () => {
             }
             const userList = JSON.parse(getValue(config, "translationSystem").asString());
             setIsTranslator(userList.includes(user.email));
-
+            const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
+            setIsLeader(leaderList.includes(user.email));
             const adminList = JSON.parse(getValue(config, "admin").asString());
             setIsAdmin(adminList.includes(user.email));
 
@@ -62,7 +64,7 @@ const UserNav = () => {
                   </>
               )}
 
-              {isAdmin&&
+              {(isAdmin||isLeader)&&
                   <NavLink to="/upload/admin" className='nav-link text-white link'>
                       Admin Dashboard
                   </NavLink>

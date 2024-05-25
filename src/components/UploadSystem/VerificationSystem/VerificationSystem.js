@@ -36,6 +36,8 @@ const FirebaseFileList = () => {
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
 
+    const [leader, setIsLeader] = useState(true);
+
     const fetchArticlesCategory = async (folder) => {
         try {
             let publishedListRef = ref(storage, folder);
@@ -105,13 +107,16 @@ const FirebaseFileList = () => {
             }
 
             const userList = JSON.parse(getValue(config, "admin").asString());
+            const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
             console.log(userList);
+            console.log(leaderList);
             auth.onAuthStateChanged((user) => {
-                if (user && userList.includes(user.email)) {
+                if (user && (userList.includes(user.email) || leaderList.includes(user.email))){
                     setCurrentUser(user);
+                    setIsLeader(leaderList.includes(user.email));
                 } else {
                     setCurrentUser(null);
-                    navigate('/uploads');
+                    navigate('/upload');
                     signOut(auth).then();
                 }
             });
@@ -355,12 +360,12 @@ const FirebaseFileList = () => {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {(!isAlreadyPublished && !isEarlyReleasedArticles) && (
+                        {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
                             <Button variant="success" onClick={handlePublish} className="mt-3">
                                 Publish
                             </Button>
                         )}
-                        {(!isAlreadyPublished && isEarlyReleasedArticles) && (
+                        {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
                             <Button variant="success" onClick={handlePublish} className="mt-3">
                                 Publish Normally
                             </Button>
