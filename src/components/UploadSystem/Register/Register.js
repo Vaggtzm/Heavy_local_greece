@@ -4,6 +4,7 @@ import { auth } from '../../../firebase';
 import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
 import Container from 'react-bootstrap/Container';
 import {useNavigate} from "react-router-dom";
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -12,6 +13,8 @@ const Register = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
+    const functions = getFunctions();
+    const updateUserInAuthors = httpsCallable(functions, 'updateUserInAuthors')
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -21,6 +24,11 @@ const Register = () => {
 
             // Update user profile with name
             await updateProfile(user, { displayName: name });
+            await updateUserInAuthors({
+                email: email,
+                displayName: name,
+                photoURL: user.photoURL || ''
+            });
 
             // Send email verification
             await sendEmailVerification(user);

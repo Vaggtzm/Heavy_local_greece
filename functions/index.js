@@ -256,3 +256,47 @@ exports.saveDeviceToken = functions.runWith({
         return res.status(500).json({ error: 'Failed to save device token.' });
     }
 });
+
+
+/**User Handling */
+
+
+exports.syncUserToAuthors = functions.auth.user().onCreate((user) => {
+    const userId = user.uid;
+    const email = user.email;
+    const displayName = user.displayName || '';
+    const photoURL = user.photoURL || '';
+
+    const authorData = {
+        email: email,
+        displayName: displayName,
+        photoURL: photoURL
+    };
+
+    return admin.database().ref(`/authors/${userId}`).set(authorData);
+});
+
+exports.updateUserInAuthors = functions.https.onCall((data, context) => {
+    if (!context.auth) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
+    }
+
+    const userId = context.auth.uid;
+    const email = data.email;
+    const displayName = data.displayName;
+    const photoURL = data.photoURL;
+
+    const authorData = {
+        email: email,
+        displayName: displayName,
+        photoURL: photoURL
+    };
+
+    return admin.database().ref(`/authors/${userId}`).update(authorData);
+});
+
+exports.deleteUserFromAuthors = functions.auth.user().onDelete((user) => {
+    const userId = user.uid;
+
+    return admin.database().ref(`/authors/${userId}`).remove();
+});

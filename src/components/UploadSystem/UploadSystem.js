@@ -5,9 +5,10 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css'
 import { useNavigate } from "react-router-dom";
-import { auth, storage } from '../../firebase'; // Import Firebase auth
+import {auth, config, storage} from '../../firebase'; // Import Firebase auth
 import {getIdTokenResult, signOut} from "firebase/auth";
 import UserNav from "../Users/UserNav";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 const ArticleUpload = () => {
     const [articleContent, setArticleContent] = useState('');
@@ -17,6 +18,8 @@ const ArticleUpload = () => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null); // State to hold current user
+    const[language, setLanguage] = useState('');
+    const [availableLanguages, setAvailableLanguages] = useState({});
 
     const [socials, setSocials] = useState({
         facebook: '',
@@ -28,6 +31,16 @@ const ArticleUpload = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        try {
+            fetchAndActivate(config).then(()=>{
+                const serverLanguages = getValue(config, "languages").asString()
+                setAvailableLanguages(JSON.parse(serverLanguages))
+            });
+        } catch (err) {
+            console.log(err);
+        }
+
         // Set up Firebase authentication listener
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -77,6 +90,7 @@ const ArticleUpload = () => {
         try {
             const imageRef = ref(storage, `images/${image.name}`);
             await uploadBytes(imageRef, image);
+            const newFileName = `${title.replaceAll(" ","-")}.json`;
 
             const options = {
                 day: '2-digit',
@@ -91,10 +105,14 @@ const ArticleUpload = () => {
                 Socials: formatSocialsAsString(),
                 img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
                 sub: "From "+currentUser.displayName,
-                date: new Date().toLocaleDateString('en-GB', options)
+                date: new Date().toLocaleDateString('en-GB', options),
+                lang: language,
+                translations:{}
             };
 
-            const articleDataRef = ref(storage, `upload_from_authors/${title.replaceAll(" ","-")}.json`);
+            articleData.translations[language]=newFileName;
+
+            const articleDataRef = ref(storage, `upload_from_authors/${newFileName}`);
             await uploadString(articleDataRef, JSON.stringify(articleData));
 
             setArticleContent('');
@@ -199,6 +217,19 @@ const ArticleUpload = () => {
                                 />
                             </Col>
                         </Row>
+                    </Form.Group>
+                    <Form.Group controlId="originalLanguage">
+                        <Form.Label>Original Language</Form.Label>
+                        <Form.Control
+                            as="select"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                        >
+                            <option value="">Select Language</option> {/* Placeholder option */}
+                            {Object.keys(availableLanguages).map((langCode)=> {
+                                return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                            })}
+                        </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="image">
