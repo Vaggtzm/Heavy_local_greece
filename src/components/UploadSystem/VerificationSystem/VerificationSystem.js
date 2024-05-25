@@ -254,12 +254,15 @@ const FirebaseFileList = () => {
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.name}
+                            {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
                             </Button>
                             <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, false, true)}>
                                 Delete
                             </Button>
+                            </>
+                            }
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
@@ -269,12 +272,14 @@ const FirebaseFileList = () => {
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.name}
+                            {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
                             </Button>
                             <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, true, false)}>
                                 Delete
                             </Button>
+                            </>}
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
