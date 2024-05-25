@@ -107,11 +107,19 @@ const FirebaseFileList = () => {
             }
 
             const userList = JSON.parse(getValue(config, "admin").asString());
-            const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
+            let leaderList = [];
+
+            try {
+                leaderList = JSON.parse(getValue(config, "authorLeader").asString());
+            } catch (e) {
+                console.log(e);
+            }
+
             console.log(userList);
             console.log(leaderList);
+
             auth.onAuthStateChanged((user) => {
-                if (user && (userList.includes(user.email) || leaderList.includes(user.email))){
+                if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
                     setCurrentUser(user);
                     setIsLeader(leaderList.includes(user.email));
                 } else {
@@ -126,6 +134,7 @@ const FirebaseFileList = () => {
 
         initializeConfigAndAuth();
     }, [navigate]);
+
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
         setSelectedFile(file);

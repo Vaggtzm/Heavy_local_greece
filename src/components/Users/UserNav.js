@@ -11,35 +11,70 @@ import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 const UserNav = () => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isAuthor, setIsAuthor] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isTranslator, setIsTranslator] = useState(false);
   const [isLeader, setIsLeader] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            try {
-                await fetchAndActivate(config);
-            } catch (err) {
-                console.log(err);
-            }
-            const userList = JSON.parse(getValue(config, "translationSystem").asString());
-            setIsTranslator(userList.includes(user.email));
-            const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
-            setIsLeader(leaderList.includes(user.email));
-            const adminList = JSON.parse(getValue(config, "admin").asString());
-            setIsAdmin(adminList.includes(user.email));
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                console.log("User has been authenticated:", user);
+                try {
+                    await fetchAndActivate(config);
+                    console.log("Remote config activated");
+                } catch (err) {
+                    console.error("Error activating remote config:", err);
+                    return;
+                }
 
-            setLoggedIn(true);
-            const idTokenResult = await getIdTokenResult(user);
-            setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
-        } else {
-            setLoggedIn(false);
-        }
-    });
-  });
+                try {
+                    const userList = JSON.parse(getValue(config, "translationSystem").asString());
+                    setIsTranslator(userList.includes(user.email));
+                    console.log("User is translator:", userList.includes(user.email));
+                } catch (e) {
+                    console.error("Error getting translator list:", e);
+                }
+
+                try {
+                    const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
+                    setIsLeader(leaderList.includes(user.email));
+                    console.log("User is leader:", leaderList.includes(user.email));
+                } catch (e) {
+                    console.error("Error getting leader list:", e);
+                }
+
+                try {
+                    const adminList = JSON.parse(getValue(config, "admin").asString());
+                    setIsAdmin(adminList.includes(user.email));
+                    console.log("User is admin:", adminList.includes(user.email));
+                } catch (e) {
+                    console.error("Error getting admin list:", e);
+                }
+
+                setLoggedIn(true);
+
+                try {
+                    const idTokenResult = await getIdTokenResult(user);
+                    setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
+                    console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
+                } catch (e) {
+                    console.error("Error getting ID token result:", e);
+                }
+            } else {
+                console.log("User is null");
+                setLoggedIn(false);
+                setIsTranslator(false);
+                setIsLeader(false);
+                setIsAdmin(false);
+                setIsAuthor(false);
+            }
+        });
+
+        // Clean up the subscription on unmount
+        return () => unsubscribe();
+    }, []);
 
   return (
     <Navbar  expand="lg" className="bg-dark navbar">
