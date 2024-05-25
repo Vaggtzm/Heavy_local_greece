@@ -251,9 +251,9 @@ const FirebaseFileList = () => {
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
-                            <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, false, false)}>
+                            {(!leader) &&<Button variant="danger" className="ms-2" onClick={() => handleDelete(file, false, false)}>
                                 Delete
-                            </Button>
+                            </Button>}
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
