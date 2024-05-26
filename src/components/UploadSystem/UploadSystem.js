@@ -60,7 +60,6 @@ const ArticleUpload = () => {
             } else {
                 // No user is signed in
                 setCurrentUser(null);
-                alert("No user has been detected");
                 navigate('/upload/login');
             }
         });

@@ -1,6 +1,6 @@
 import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Form, ListGroup, Modal } from 'react-bootstrap';
+import {Alert, Button, Col, Form, ListGroup, Modal, Row} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
@@ -31,6 +31,8 @@ const FirebaseFileList = () => {
         date: '',
         lang:'',
         translations: {},
+        isReady: false
+
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
@@ -159,7 +161,6 @@ const FirebaseFileList = () => {
             }
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
             await uploadString(fileRef, JSON.stringify(fileData));
-
             const updatedFiles = files.map((file) =>
                 file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
             );
@@ -247,7 +248,7 @@ const FirebaseFileList = () => {
                 <ListGroup>
                     {files.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
+                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.name}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
@@ -371,30 +372,67 @@ const FirebaseFileList = () => {
                                     onChange={(e) => handleChange(e, 'translations', true)}
                                 />
                             </Form.Group>
+                            <Form.Group controlId="isReady" className={"d-flex justify-content-center"}>
+
+                            </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
-                            <Button variant="success" onClick={handlePublish} className="mt-3">
-                                Publish
-                            </Button>
-                        )}
-                        {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
-                            <Button variant="success" onClick={handlePublish} className="mt-3">
-                                Publish Normally
-                            </Button>
-                        )}
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleSave}>
-                            Save Changes
-                        </Button>
+                        <Row className={"d-flex justify-content-center"}>
+                            <Col className={"col-12 d-flex justify-content-center"}>
+                        <Form.Check
+                            type="switch"
+                            id="custom-switch"
+                            label="The article is ready to be published"
+                            checked={fileData.isReady}
+                            className={"bg-warning-subtle rounded-3 justify-content-center"}
+                            onChange={(e)=>{
+                                if(!fileData.isReady){
+                                    handleChange({target: {value: true}}, 'isReady', false)
+                                }else{
+                                    handleChange({target: {value: false}}, 'isReady', false)
+                                }
+
+                            }}
+                            style={{
+                                fontSize: '1.25rem',
+                                transition: 'background-color 0.3s ease'
+                            }}
+                        />
+                            </Col>
+                        </Row>
+                        <Row>
+
+                            {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
+                                <Col className={"col-4"}>
+                                    <Button variant="success" onClick={handlePublish} className="">
+                                        Publish Normally
+                                    </Button>
+                                </Col>
+                            )}
+
+                            {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
+                                <Col className={"col-4"}>
+                                    <Button variant="success" onClick={handlePublish} className={"m-3 justify-content-center"}>
+                                        Publish
+                                    </Button>
+                                </Col>
+                            )}
+                            <Col className={"col-2 d-flex justify-content-center"}>
+                                <Button variant="secondary" className={"m-3"} onClick={() => setShowModal(false)}>
+                                    Close
+                                </Button>
+                            </Col>
+                            <Col className={"col-6 d-flex justify-content-center"}>
+                                <Button variant="primary" className={"m-3"} onClick={handleSave}>
+                                    Save Changes
+                                </Button>
+                            </Col>
+                        </Row>
                     </Modal.Footer>
                 </Modal>
             </div>
         </>
     );
 };
-
 export default FirebaseFileList;
