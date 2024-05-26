@@ -231,51 +231,84 @@ const Home = () => {
             </div>
             <hr className="bg-white"/>
             <h3>Interviews:</h3>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="card h-100 w-100">
-                <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/Dymna_Lotva.jpg"}
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Animamortua Band Photo.jpg"}
                      alt="Disimulator"></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                    Into the Melancholic Symphony: An Interview with Dymna Lotva</h4>
-                  <a href="/article/Dymna-lotva-archive" className="btn btn-primary">Read More</a>
+                  Animamortua:Interview</h4>
+                  <a href="/article/Animamortua" className="btn btn-primary">Read More</a>
                 </div>
               </div>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <div className="card h-100 w-100">
-                <img className="card-img-top shadow-lg img-fluid" src={"https://heavy-local.com/assets/servan.webp"}
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/hemplifier.jpg"}
                      alt="Disimulator"></img>
                 <div className="card-body">
-                  <h4 className="card-title">A Journey Through Myth and Melody: Unveiling the Enchanting World of
-                    Servan</h4>
-                  <a href="/article/servan-archive" className="btn btn-primary">Read More</a>
+                  <h4 className="card-title">INTERVIEW: A Discussion with Hemplifier</h4>
+                  <a href="/article/INTERVIEW:-A-Discussion-with-Hemplifier" className="btn btn-primary">Read More</a>
                 </div>
               </div>
             </div>
 
-          </div>
-          <h4> Reviews(ENG)</h4>
-          <div className="row mt-4 text-center">
-            <div className="col-md-6 mb-4">
+            <div className="col-md-4">
               <div className="card h-100 w-100">
-                <img className="card-img-top shadow-lg h-100"
-                     src={"https://heavy-local.com/assets/AcidMammothSecond.jpg"} alt="Dreariness"></img>
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/435569225_813204937499166_5120930457689830732_n.jpg"}
+                     alt="Disimulator"></img>
                 <div className="card-body">
-                  <h4 className="card-title">Acid Mammoth "Supersonic Megafauna Collision" Review </h4>
-                  <a href="/article/Supersonic-megafauna" className="btn btn-primary">Read More</a>
+                  <h4 className="card-title">Exclusive Interview with Lethargy UA: Harmonizing Resilience and Melodic Might</h4>
+                  <a href="/article/Exclusive Interview with Lethargy UA: Harmonizing Resilience and Melodic Might" className="btn btn-primary">Read More</a>
                 </div>
               </div>
             </div>
-            <div className="col-md-6 mb-4">
+
+            <div className="col-md-12 p-3">
               <div className="card h-100 w-100">
-                D <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/GhostOfAgony.webp"} alt="Zong"></img>
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/images.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">INTERVIEW: Get to Know Thy Legion</h4>
+                  <a href="/article/INTERVIEW -Get-to-Know-Thy-Legion" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <h4> Reviews(ENG)</h4>
+          <div className="row mt-4 text-center">
+            <div className="col-md-4 mb-4">
+              <div className="card h-100 w-100">
+                <img className="card-img-top  h-100"
+                     src={"https://pulse-of-the-underground.com/assets/Crest_of_Darkess.png"} alt="Dreariness"></img>
+                <div className="card-body">
+                  <h4 className="card-title">Crest of Darkness Unveils New Single “Call of the Moon” </h4>
+                  <a href="/article/Crest-of-Darkness-Unveils-New-Single-“Call-of-the-Moon”" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-4">
+              <div className="card h-100 w-100">
+                 <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Slicer_Stalking_the_Night.jpg"} alt="Zong"></img>
         <div className="card-body">
-          <h4 className="card-title">Review:Ghost Of Agony</h4>
-          <a href="/article/GOA-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Midnight Carnage: Examining Slicer’s Album “Stalking the Night” </h4>
+          <a href="/article/Midnight-Carnage:-Examining-Slicer’s-Album-“Stalking-the-Night”-" className="btn btn-primary">Read More</a>
         </div>
       </div>
     </div>
+
+    <div className="col-md-4 mb-4">
+              <div className="card h-100 w-100">
+                 <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Forever_Falling_Second_Album.png"} alt="Zong"></img>
+        <div className="card-body">
+          <h4 className="card-title">Doomed Reverie: Forever Falling’s Album “The Determinism of Essence in Matter” Spotlighted </h4>
+          <a href="/article/Doomed-Reverie:-Forever-Falling’s-Album-“The-Determinism-of-Essence-in-Matter”-Spotlighted" className="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+
 
     <h4>Reviews (GR)</h4>
     <div className="col-md-4">
