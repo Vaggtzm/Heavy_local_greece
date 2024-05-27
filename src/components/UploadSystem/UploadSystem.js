@@ -88,7 +88,7 @@ const ArticleUpload = () => {
         // Regular expression to match any character that is not alphanumeric or a dash
         const regex = /[^a-zA-Z0-9-]/g;
         // Replace matched characters with dashes
-        return text.replace(regex, '-');
+        return text.replace(regex, '');
     }
 
     const handleArticleSubmit = async (e) => {

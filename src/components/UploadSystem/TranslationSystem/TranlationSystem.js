@@ -166,7 +166,7 @@ const TranslationSystem = () => {
 
         if (isTranslating) {
             // Ensure the new translation file name is based on the translation data title
-            newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, '-'))}-${newLanguage}.json`;
+            newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, ''))}-${newLanguage}.json`;
 
             fileRef = ref(storage, `${translationFolder}/${newFileName}`);
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);
