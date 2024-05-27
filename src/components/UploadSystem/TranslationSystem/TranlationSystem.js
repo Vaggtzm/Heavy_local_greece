@@ -37,6 +37,7 @@ const TranslationSystem = () => {
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
     const [isTranslating, setIsTranslating] = useState(false);
+    const [sortByDate, setSortByDate] = useState(false);
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -275,14 +276,32 @@ const TranslationSystem = () => {
         <>
             <UserNav />
             <div className="container mt-4">
-                <h2 className={"text-white"}>Translation System</h2>
+                <h2 className={"row d-flex text-white"}>
+                    <p className={"col-3"}>
+                        Translation System
+                    </p>
+
+                    <Form className={"col-9 d-flex justify-content-end"}>
+                        <Form.Check
+                            type="switch"
+                            id="sort-by-date-switch"
+                            label="Sort by Date"
+                            checked={sortByDate}
+                            onChange={() => setSortByDate(!sortByDate)}
+                        />
+                    </Form>
+                </h2>
                 <hr className="bg-white" />
                 <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span></h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
-                    {files.map((file, index) => (
+                    {(sortByDate?files.toSorted((a, b) => {
+                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                        return dateA - dateB;
+                    }):files).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.fileContent.title}
+                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}<p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
 
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
@@ -303,11 +322,15 @@ const TranslationSystem = () => {
                 <h3 className={"text-white"}>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
-                    {earlyReleasedArticles.map((file, index) => (
+                    {(sortByDate?earlyReleasedArticles.toSorted((a, b) => {
+                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                        return dateA - dateB;
+                    }):earlyReleasedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.fileContent.title}
-                            {
-                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                            <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                                {
+                                    (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
                                         return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
@@ -325,9 +348,13 @@ const TranslationSystem = () => {
                 <h3 className={"text-white"}>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
-                    {alreadyPublishedArticles.map((file, index) => (
+                    {(sortByDate?alreadyPublishedArticles.toSorted((a, b) => {
+                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                        return dateA - dateB;
+                    }):alreadyPublishedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.fileContent.title}
+                            <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
