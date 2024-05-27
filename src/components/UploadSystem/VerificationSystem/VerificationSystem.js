@@ -48,15 +48,14 @@ const FirebaseFileList = () => {
             return await Promise.all(
                 publishedItems.map(async (item) => {
                     const downloadUrl = await getDownloadURL(item);
-                    const metadata = await getMetadata(item);
                     let fileContent = await fetch(downloadUrl);
 
                     try {
                         fileContent = await fileContent.json();
-                    } catch (e) {
-                        if (isEarlyReleasedArticles) {
+                    }catch (e) {
+                        if (folder==='early_releases') {
                             setEarlyReleasesError('Error fetching files: file: ' + item.name + " : " + error);
-                        } else if (isAlreadyPublished) {
+                        } else if (folder==='articles') {
                             setAlreadyPublishedError('Error fetching files: file: ' + item.name + " : " + error);
                         } else {
                             setError('Error fetching files: ' + error.message);
@@ -65,13 +64,13 @@ const FirebaseFileList = () => {
                         console.log(item);
                     }
 
-                    return { name: item.name, downloadUrl, metadata, fileContent };
+                    return { name: item.name, downloadUrl, fileContent };
                 })
             );
         } catch (error) {
-            if (isEarlyReleasedArticles) {
+            if (folder==='early_releases') {
                 setEarlyReleasesError('Error fetching files: file: ' + error);
-            } else if (isAlreadyPublished) {
+            } else if (folder==='articles') {
                 setAlreadyPublishedError('Error fetching files: file: ' + error);
 
             } else {
@@ -243,12 +242,14 @@ const FirebaseFileList = () => {
             <div className="container mt-4">
                 <h2 className={"text-light"}>Admin Publish System</h2>
                 <hr className="bg-dark" />
-                <h3 className={"text-light"}>Uploaded Files</h3>
+                <h3 className={"text-light"}>
+                    Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
+                </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
                     {files.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.name}
+                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.fileContent.title}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
@@ -263,7 +264,7 @@ const FirebaseFileList = () => {
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
+                            {file.fileContent.title}
                             {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
@@ -281,7 +282,7 @@ const FirebaseFileList = () => {
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
+                            {file.fileContent.title}
                             {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
@@ -387,6 +388,7 @@ const FirebaseFileList = () => {
                             checked={fileData.isReady}
                             className={"bg-warning-subtle rounded-3 justify-content-center"}
                             onChange={(e)=>{
+                                console.log(fileData.isReady)
                                 if(!fileData.isReady){
                                     handleChange({target: {value: true}}, 'isReady', false)
                                 }else{
