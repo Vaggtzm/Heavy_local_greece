@@ -273,7 +273,7 @@ const FirebaseFileList = () => {
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <a
-                                className="link-info link-underline-opacity-0 link-underline-opacity-100-hover"
+                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
                                 style={{
                                     cursor:"pointer"
                                 }}
@@ -294,13 +294,14 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3 className={"text-light"}>Already Published</h3>
+                <h3 className={"text-light"}>Already Published <small className={"small text-info"}>Click on an article
+                    to copy the link</small></h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <a
-                                className="link-info link-underline-opacity-0 link-underline-opacity-100-hover"
+                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
                                 style={{
                                     cursor:"pointer"
                                 }}
