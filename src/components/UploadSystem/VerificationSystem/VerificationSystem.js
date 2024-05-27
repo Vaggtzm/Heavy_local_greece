@@ -1,9 +1,9 @@
 import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Form, ListGroup, Modal } from 'react-bootstrap';
+import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import { auth, config, storage } from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import { signOut } from "firebase/auth";
@@ -31,12 +31,16 @@ const FirebaseFileList = () => {
         date: '',
         lang:'',
         translations: {},
+        isReady: false
+
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
 
     const [leader, setIsLeader] = useState(true);
+
+    const [showToast, setShowToast] = useState(false);
 
     const fetchArticlesCategory = async (folder) => {
         try {
@@ -46,15 +50,14 @@ const FirebaseFileList = () => {
             return await Promise.all(
                 publishedItems.map(async (item) => {
                     const downloadUrl = await getDownloadURL(item);
-                    const metadata = await getMetadata(item);
                     let fileContent = await fetch(downloadUrl);
 
                     try {
                         fileContent = await fileContent.json();
-                    } catch (e) {
-                        if (isEarlyReleasedArticles) {
+                    }catch (e) {
+                        if (folder==='early_releases') {
                             setEarlyReleasesError('Error fetching files: file: ' + item.name + " : " + error);
-                        } else if (isAlreadyPublished) {
+                        } else if (folder==='articles') {
                             setAlreadyPublishedError('Error fetching files: file: ' + item.name + " : " + error);
                         } else {
                             setError('Error fetching files: ' + error.message);
@@ -63,13 +66,13 @@ const FirebaseFileList = () => {
                         console.log(item);
                     }
 
-                    return { name: item.name, downloadUrl, metadata, fileContent };
+                    return { name: item.name, downloadUrl, fileContent };
                 })
             );
         } catch (error) {
-            if (isEarlyReleasedArticles) {
+            if (folder==='early_releases') {
                 setEarlyReleasesError('Error fetching files: file: ' + error);
-            } else if (isAlreadyPublished) {
+            } else if (folder==='articles') {
                 setAlreadyPublishedError('Error fetching files: file: ' + error);
 
             } else {
@@ -159,7 +162,6 @@ const FirebaseFileList = () => {
             }
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
             await uploadString(fileRef, JSON.stringify(fileData));
-
             const updatedFiles = files.map((file) =>
                 file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
             );
@@ -236,18 +238,26 @@ const FirebaseFileList = () => {
         }
     };
 
+    const copyLinkToClipboard = (link) => {
+        const articleLink = "https://pulse-of-the-underground.com" + link;
+        navigator.clipboard.writeText(articleLink);
+        setShowToast(true);
+    };
+
     return (
         <>
             <UserNav />
             <div className="container mt-4">
                 <h2 className={"text-light"}>Admin Publish System</h2>
                 <hr className="bg-dark" />
-                <h3 className={"text-light"}>Uploaded Files</h3>
+                <h3 className={"text-light"}>
+                    Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
+                </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
                     {files.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
+                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.fileContent.title}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
@@ -257,12 +267,21 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3 className={"text-light"}>Early Releases</h3>
+                <h3 className={"text-light"}>Early Releases <small className={"small text-info"}>Click on an article to copy the link</small></h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
+                            <a
+                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                                style={{
+                                    cursor:"pointer"
+                                }}
+                                href={'/article/early/' + file.name.replace('.json', '')}
+                                onClick={(e)=>{e.preventDefault();copyLinkToClipboard('/article/early/' + file.name.replace('.json', '')); return false;}}
+                            >
+                                {file.fileContent.title}
+                            </a>
                             {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
@@ -275,14 +294,24 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3 className={"text-light"}>Already Published</h3>
+                <h3 className={"text-light"}>Already Published <small className={"small text-info"}>Click on an article
+                    to copy the link</small></h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.name}
-                            {(!leader) &&<>
-                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
+                            <a
+                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                                style={{
+                                    cursor:"pointer"
+                                }}
+                                href={'/article/' + file.name.replace('.json', '')}
+                                onClick={(e)=>{e.preventDefault();copyLinkToClipboard('/article/' + file.name.replace('.json', '')); return false;}}
+                            >
+                                {file.fileContent.title}
+                            </a>
+                                {(!leader) && <>
+                                <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
                             </Button>
                             <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, true, false)}>
@@ -292,6 +321,25 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
+
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={3000}
+                    autohide
+                    style={{
+                        position: 'fixed',
+                        bottom: 20,
+                        right: 20,
+                        zIndex: 30000,
+                    }}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Link Copied!</strong>
+                    </Toast.Header>
+                    <Toast.Body>The article link has been copied to the clipboard.</Toast.Body>
+                </Toast>
+
                 <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => setFileData({})}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit File Data</Modal.Title>
@@ -371,30 +419,68 @@ const FirebaseFileList = () => {
                                     onChange={(e) => handleChange(e, 'translations', true)}
                                 />
                             </Form.Group>
+                            <Form.Group controlId="isReady" className={"d-flex justify-content-center"}>
+
+                            </Form.Group>
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
-                            <Button variant="success" onClick={handlePublish} className="mt-3">
-                                Publish
-                            </Button>
-                        )}
-                        {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
-                            <Button variant="success" onClick={handlePublish} className="mt-3">
-                                Publish Normally
-                            </Button>
-                        )}
-                        <Button variant="secondary" onClick={() => setShowModal(false)}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleSave}>
-                            Save Changes
-                        </Button>
+                        <Row className={"d-flex justify-content-center"}>
+                            <Col className={"col-12 d-flex justify-content-center"}>
+                        <Form.Check
+                            type="switch"
+                            id="custom-switch"
+                            label="The article is ready to be published"
+                            checked={fileData.isReady}
+                            className={"bg-warning-subtle rounded-3 justify-content-center"}
+                            onChange={(e)=>{
+                                console.log(fileData.isReady)
+                                if(!fileData.isReady){
+                                    handleChange({target: {value: true}}, 'isReady', false)
+                                }else{
+                                    handleChange({target: {value: false}}, 'isReady', false)
+                                }
+
+                            }}
+                            style={{
+                                fontSize: '1.25rem',
+                                transition: 'background-color 0.3s ease'
+                            }}
+                        />
+                            </Col>
+                        </Row>
+                        <Row>
+
+                            {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
+                                <Col className={"col-4"}>
+                                    <Button variant="success" onClick={handlePublish} className="">
+                                        Publish Normally
+                                    </Button>
+                                </Col>
+                            )}
+
+                            {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
+                                <Col className={"col-4"}>
+                                    <Button variant="success" onClick={handlePublish} className={"m-3 justify-content-center"}>
+                                        Publish
+                                    </Button>
+                                </Col>
+                            )}
+                            <Col className={"col-2 d-flex justify-content-center"}>
+                                <Button variant="secondary" className={"m-3"} onClick={() => setShowModal(false)}>
+                                    Close
+                                </Button>
+                            </Col>
+                            <Col className={"col-6 d-flex justify-content-center"}>
+                                <Button variant="primary" className={"m-3"} onClick={handleSave}>
+                                    Save Changes
+                                </Button>
+                            </Col>
+                        </Row>
                     </Modal.Footer>
                 </Modal>
             </div>
         </>
     );
 };
-
 export default FirebaseFileList;

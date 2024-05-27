@@ -6,7 +6,6 @@ import { ref as databaseRef, push, remove, onValue } from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
-import { Button } from "react-bootstrap";
 import AppNav from "./../AppNav/AppNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 

@@ -92,19 +92,18 @@ app.get('/feed', async (req, res) => {
     }
 });
 
-
-app.get('/article/:article', async (req, res) => {
+const getArticle = async (req, res, folder) => {
     const filepath = path.resolve(__dirname, "index.html");
     const name = req.params.article;
     console.log("Hello, file requested is: "+JSON.stringify(req.params));
 
     try {
         // Retrieve file from Firebase Storage
-        const fileRef = bucket.file(`articles/${name}.json`);
+        const fileRef = bucket.file(`${folder}/${name}.json`);
         const [fileExists] = await fileRef.exists();
 
         if (!fileExists) {
-            throw new Error(`File not found: articles/${name}.json`);
+            throw new Error(`File not found: ${folder}/${name}.json`);
         }
 
         // Download file contents
@@ -121,7 +120,13 @@ app.get('/article/:article', async (req, res) => {
         console.error('Error fetching article:', error);
         res.status(500).send('Error fetching article');
     }
-});
+};
+
+
+
+app.get('/article/:article', (req, res, folder)=>{getArticle(req, res, "articles").then()});
+
+app.get('/article/early/:article', (req, res, folder)=>{getArticle(req, res, "early_releases").then()});
 
 app.get('/assets/*', async (req, res) => {
     const imagePath = req.params[0];

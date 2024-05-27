@@ -72,7 +72,6 @@ const TranslationSystem = () => {
                 publishedItems.map(async (item) => {
                     try {
                         const downloadUrl = await getDownloadURL(item);
-                        const metadata = await getMetadata(item);
                         let fileContent = await fetch(downloadUrl);
 
                         try {
@@ -81,7 +80,7 @@ const TranslationSystem = () => {
                             console.error(e);
                         }
 
-                        return { name: item.name, downloadUrl, metadata, fileContent };
+                        return { name: item.name, downloadUrl, fileContent };
                     } catch (error) {
                         console.error(error);
                     }
@@ -136,6 +135,13 @@ const TranslationSystem = () => {
         initialize();
     }, [navigate]);
 
+    function replaceSpecialCharsWithDashes(text) {
+        // Regular expression to match any character that is not alphanumeric or a dash
+        const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
+        // Replace matched characters with dashes
+        return text.replace(regex, '-');
+    }
+
     const handleSave = async () => {
         let originalFolder, translationFolder;
         if (isAlreadyPublished) {
@@ -160,7 +166,7 @@ const TranslationSystem = () => {
 
         if (isTranslating) {
             // Ensure the new translation file name is based on the translation data title
-            newFileName = `${translationData.title.replace(/\s+/g, '_')}-${newLanguage}.json`;
+            newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, ''))}-${newLanguage}.json`;
 
             fileRef = ref(storage, `${translationFolder}/${newFileName}`);
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);
@@ -271,12 +277,12 @@ const TranslationSystem = () => {
             <div className="container mt-4">
                 <h2 className={"text-white"}>Translation System</h2>
                 <hr className="bg-white" />
-                <h3 className={"text-white"}>Uploaded Files</h3>
+                <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span></h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
                     {files.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.name}
+                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}{file.fileContent.title}
 
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
@@ -299,7 +305,7 @@ const TranslationSystem = () => {
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.name}
+                            {file.fileContent.title}
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
@@ -321,7 +327,7 @@ const TranslationSystem = () => {
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.name}
+                            {file.fileContent.title}
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
