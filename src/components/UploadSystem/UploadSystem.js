@@ -86,7 +86,7 @@ const ArticleUpload = () => {
 
     function replaceSpecialCharsWithDashes(text) {
         // Regular expression to match any character that is not alphanumeric or a dash
-        const regex = /[^a-zA-Z0-9-]/g;
+        const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
         // Replace matched characters with dashes
         return text.replace(regex, '');
     }
