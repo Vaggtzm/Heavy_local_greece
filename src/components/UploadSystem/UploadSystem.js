@@ -84,13 +84,20 @@ const ArticleUpload = () => {
         return `<p class='lead'>${socialLinks.join(' ')}</p>`;
     };
 
+    function replaceSpecialCharsWithDashes(text) {
+        // Regular expression to match any character that is not alphanumeric or a dash
+        const regex = /[^a-zA-Z0-9-]/g;
+        // Replace matched characters with dashes
+        return text.replace(regex, '-');
+    }
+
     const handleArticleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const imageRef = ref(storage, `images/${image.name}`);
             await uploadBytes(imageRef, image);
-            const newFileName = `${title.replaceAll(" ","-")}.json`;
+            const newFileName = `${replaceSpecialCharsWithDashes(title.replaceAll(" ","-"))}.json`;
 
             const options = {
                 day: '2-digit',

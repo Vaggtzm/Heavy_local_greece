@@ -135,6 +135,13 @@ const TranslationSystem = () => {
         initialize();
     }, [navigate]);
 
+    function replaceSpecialCharsWithDashes(text) {
+        // Regular expression to match any character that is not alphanumeric or a dash
+        const regex = /[^a-zA-Z0-9-]/g;
+        // Replace matched characters with dashes
+        return text.replace(regex, '-');
+    }
+
     const handleSave = async () => {
         let originalFolder, translationFolder;
         if (isAlreadyPublished) {
@@ -159,7 +166,7 @@ const TranslationSystem = () => {
 
         if (isTranslating) {
             // Ensure the new translation file name is based on the translation data title
-            newFileName = `${translationData.title.replace(/\s+/g, '_')}-${newLanguage}.json`;
+            newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, '-'))}-${newLanguage}.json`;
 
             fileRef = ref(storage, `${translationFolder}/${newFileName}`);
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);

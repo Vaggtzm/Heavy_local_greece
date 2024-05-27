@@ -1,9 +1,9 @@
 import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
 import React, { useEffect, useState } from 'react';
-import {Alert, Button, Col, Form, ListGroup, Modal, Row} from 'react-bootstrap';
+import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import { auth, config, storage } from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import { signOut } from "firebase/auth";
@@ -39,6 +39,8 @@ const FirebaseFileList = () => {
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
 
     const [leader, setIsLeader] = useState(true);
+
+    const [showToast, setShowToast] = useState(false);
 
     const fetchArticlesCategory = async (folder) => {
         try {
@@ -236,6 +238,12 @@ const FirebaseFileList = () => {
         }
     };
 
+    const copyLinkToClipboard = (link) => {
+        const articleLink = "https://pulse-of-the-underground.com" + link;
+        navigator.clipboard.writeText(articleLink);
+        setShowToast(true);
+    };
+
     return (
         <>
             <UserNav />
@@ -259,12 +267,21 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
-                <h3 className={"text-light"}>Early Releases</h3>
+                <h3 className={"text-light"}>Early Releases <small className={"small text-info"}>Click on an article to copy the link</small></h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
                     {earlyReleasedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.fileContent.title}
+                            <a
+                                className="link-info link-underline-opacity-0 link-underline-opacity-100-hover"
+                                style={{
+                                    cursor:"pointer"
+                                }}
+                                href={'/article/early/' + file.name.replace('.json', '')}
+                                onClick={(e)=>{e.preventDefault();copyLinkToClipboard('/article/early/' + file.name.replace('.json', '')); return false;}}
+                            >
+                                {file.fileContent.title}
+                            </a>
                             {(!leader) &&<>
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
                                 Edit
@@ -282,9 +299,18 @@ const FirebaseFileList = () => {
                 <ListGroup>
                     {alreadyPublishedArticles.map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.fileContent.title}
-                            {(!leader) &&<>
-                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
+                            <a
+                                className="link-info link-underline-opacity-0 link-underline-opacity-100-hover"
+                                style={{
+                                    cursor:"pointer"
+                                }}
+                                href={'/article/' + file.name.replace('.json', '')}
+                                onClick={(e)=>{e.preventDefault();copyLinkToClipboard('/article/' + file.name.replace('.json', '')); return false;}}
+                            >
+                                {file.fileContent.title}
+                            </a>
+                                {(!leader) && <>
+                                <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
                                 Edit
                             </Button>
                             <Button variant="danger" className="ms-2" onClick={() => handleDelete(file, true, false)}>
@@ -294,6 +320,25 @@ const FirebaseFileList = () => {
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
+
+                <Toast
+                    onClose={() => setShowToast(false)}
+                    show={showToast}
+                    delay={3000}
+                    autohide
+                    style={{
+                        position: 'fixed',
+                        bottom: 20,
+                        right: 20,
+                        zIndex: 30000,
+                    }}
+                >
+                    <Toast.Header>
+                        <strong className="me-auto">Link Copied!</strong>
+                    </Toast.Header>
+                    <Toast.Body>The article link has been copied to the clipboard.</Toast.Body>
+                </Toast>
+
                 <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => setFileData({})}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit File Data</Modal.Title>
