@@ -138,7 +138,19 @@ const Home = () => {
 
             <h2>GREEK:</h2>
             <hr className="bg-white"/>
+             <div className="col-md-12 pb-3">
+             <div className="card h-100 w-100">
+                <img className=" shadow-lg img-fluid w-100 h-100 card-img-top"
+                     src={"https://pulse-of-the-underground.com/assets/a2116733161_65.jpeg"} alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                  JEHOVAH ON DEATH - Goya's Witches (EP review) - Μια Βουτιά σε Σκοτεινές Εποχές </h4>
+                  <NavLink to="/article/JEHOVAH-ON-DEATH---Goyas-Witches-EP-review--------"
+                           className="btn btn-primary">Read More</NavLink>
+                </div>
+              </div>
 
+             </div>
             <div className="col-md-4 p-3">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg img-fluid w-100"
@@ -231,6 +243,33 @@ const Home = () => {
             </div>
             <hr className="bg-white"/>
             <h3>Interviews:</h3>
+            <div className="col-md-6 pb-3">
+            <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Capture d'écran 2024-05-23 135957.png"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                  INTERVIEW: Unmasking the Shadows with Ayyur
+                  </h4>
+                  <a href="/article/Unmasking-the-Shadows" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="col-md-6 pb-3">
+            <div className="card h-100 w-100">
+                <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/DALP - logo.jpg"}
+                     alt="Disimulator"></img>
+                <div className="card-body">
+                  <h4 className="card-title">
+                  INTERVIEW: Demande à la Poussière on Shaping Art from Chaos</h4>
+                  <a href="/article/Demande-à-la-Poussière’s-Journey:-An-In-Depth-Conversation-on-Evolution,-Inspiration,-and-“Kintsugi”" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+
+
+            </div>
             <div className="col-md-4">
               <div className="card h-100 w-100">
                 <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Animamortua Band Photo.jpg"}
@@ -279,6 +318,29 @@ const Home = () => {
           </div>
           <h4> Reviews(ENG)</h4>
           <div className="row mt-4 text-center">
+          <div className="col-md-6 pb-3 ">
+          <div className="card h-100 w-100">
+                <img className="card-img-top  h-100"
+                     src={"https://pulse-of-the-underground.com/assets/a2181404431_65.jpeg"} alt="Dreariness"></img>
+                <div className="card-body">
+                  <h4 className="card-title">Nimbifer: Reviving the Raw Style - band review </h4>
+                  <a href="/article/Nimbifer:-Reviving-the-Raw-Style---band-review" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+
+          </div>
+          <div className="col-md-6 pb-3 ">
+          <div className="card h-100 w-100">
+                <img className="card-img-top  h-100"
+                     src={"https://pulse-of-the-underground.com/assets/Thomas_Libero.jpg"} alt="Dreariness"></img>
+                <div className="card-body">
+                  <h4 className="card-title">Thomas Libero’s Uplifting New Single “Questa Storia La Scrivo Io” Out Now </h4>
+                  <a href="/article/Thomas-Libero’s-Uplifting-New-Single-“Questa-Storia-La-Scrivo-Io”-Out-Now" className="btn btn-primary">Read More</a>
+                </div>
+              </div>
+
+          </div>
+
             <div className="col-md-4 mb-4">
               <div className="card h-100 w-100">
                 <img className="card-img-top  h-100"
@@ -337,7 +399,7 @@ const Home = () => {
     <div className="card h-100 w-100 review-card">
         <img className="card-img-top shadow-lg  h-100" src={"https://pulse-of-the-underground.com/assets/images.png"} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Βουτιά στην περιπέτεια του Silmarillion- Herc - “Of Light and Darkness” (album review)</h4>
+          <h4 className="card-title">Hard’n’ heavy Blues - Rattlesquad - 1233 (album review + band info)</h4>
           <a href="/article/Hard’n’-heavy--Blues---Rattlesquad---1233-(album-review-+-band-info)" className="btn btn-primary">Read More</a>
         </div>
       </div>
