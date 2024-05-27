@@ -250,11 +250,11 @@ const FirebaseFileList = () => {
             <UserNav />
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
-                    <p className={"col-3"}>
+                    <p className={"col-4"}>
                         Admin Publish System
                     </p>
 
-                    <Form className={"col-9 d-flex justify-content-end"}>
+                    <Form className={"col-8 d-flex justify-content-end"}>
                         <Form.Check
                             type="switch"
                             id="sort-by-date-switch"
