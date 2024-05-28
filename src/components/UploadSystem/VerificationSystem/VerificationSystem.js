@@ -431,7 +431,7 @@ const FirebaseFileList = () => {
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
-                                <Form.Label>Subtitle</Form.Label>
+                                <Form.Label>Author code</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={fileData.sub}

@@ -111,7 +111,7 @@ const ArticleUpload = () => {
                 details,
                 Socials: formatSocialsAsString(),
                 img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
-                sub: "From "+currentUser.displayName,
+                sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: language,
                 translations:{}

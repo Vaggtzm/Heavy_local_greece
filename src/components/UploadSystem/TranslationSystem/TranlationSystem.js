@@ -427,7 +427,7 @@ const TranslationSystem = () => {
                                         <Form.Control type="text" value={fileData.img01} readOnly={true} />
                                     </Form.Group>
                                     <Form.Group controlId="originalSub">
-                                        <Form.Label>Subtitle</Form.Label>
+                                        <Form.Label>Author Code</Form.Label>
                                         <Form.Control type="text" value={fileData.sub} readOnly={true} />
                                     </Form.Group>
                                     <Form.Group controlId="originalDate">
@@ -488,11 +488,12 @@ const TranslationSystem = () => {
                                         />
                                     </Form.Group>
                                     <Form.Group controlId="translatedSub">
-                                        <Form.Label>Subtitle</Form.Label>
+                                        <Form.Label>AuthorCode</Form.Label>
                                         <Form.Control
                                             type="text"
                                             value={translationData.sub}
                                             onChange={(e) => handleTranslationChange(e, 'sub')}
+                                            readOnly={true}
                                         />
                                     </Form.Group>
                                     <Form.Group controlId="translatedDate">

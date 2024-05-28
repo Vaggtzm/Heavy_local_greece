@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { auth, storage, database, config } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
+import {ref as dbRef} from "firebase/database";
 import { ref as databaseRef, push, remove, onValue } from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
@@ -18,6 +19,8 @@ const DefaultArticle = (props) => {
   const [translations, setTranslations] = useState({});
   const [availableLanguages, setAvailableLanguages] = useState({});
   const [loading, setLoading] = useState(true);
+
+  const [author, setAuthor] = useState({});
 
   useEffect(() => {
     const fetchRemoteConfig = async () => {
@@ -83,6 +86,20 @@ const DefaultArticle = (props) => {
         throw new Error("Failed to fetch data");
       }
       const data = await response.json();
+
+      const usersRef = dbRef(database, `authors/${data.sub}`);
+      if(usersRef)
+      onValue(usersRef, (snapshot) => {
+        if(snapshot.exists()) {
+          const usersData = snapshot.val();
+          console.log(usersData);
+          setAuthor(usersData);
+        }else{
+          setAuthor({
+            displayName: data.sub
+          })
+        }
+      });
       data.img01 = await getFirebaseStorageUrl(data.img01);
 
       if (data.translations && Object.keys(data.translations).length > 0) {
@@ -146,10 +163,21 @@ const DefaultArticle = (props) => {
           <div className="row text-white">
             <div className="col-md-12 d-flex justify-content-evenly">
               <h3>{articles.title}</h3>
-              <hr className="bg-dark" />
+              <hr className="bg-dark"/>
             </div>
-            <p className="lead">{articles.sub}</p>
-            <hr className="bg-dark" />
+            <div className={"col-4"}>
+            <div className="w-100 d-flex align-items-center">
+              {(author.wantToShow&&author.photoURL)&& (<div className="image-container" style={{width:"80px", height: "80px"}}>
+                <img
+                    src={author.photoURL}
+                    alt={author.displayName}
+                />
+              </div>)}
+              {/* Add margin to the left of the text */}
+              <p className="lead ms-4 text-white text-center">{author.displayName}</p>
+            </div>
+            </div>
+            <hr className="bg-dark"/>
             <div className="col-md-6 credits-box">
               <img
                   className="img-fluid w-100"
@@ -157,15 +185,15 @@ const DefaultArticle = (props) => {
                   alt={articles.title}
               />
               <p className="lead">
-                <span dangerouslySetInnerHTML={{ __html: articles.details }}></span>
+              <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
               </p>
               <p className="lead">
-                <span dangerouslySetInnerHTML={{ __html: articles.Socials }}></span>
+                <span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>
               </p>
 
               {translations && Object.keys(translations).length > 0 && (
                   <>
-                    <hr className="bg-dark" />
+                    <hr className="bg-dark"/>
                     <h5>Translations</h5>
                     {Object.keys(translations).map((translation) => (
                         <NavLink
@@ -179,15 +207,15 @@ const DefaultArticle = (props) => {
                   </>
               )}
 
-              <hr className="bg-dark" />
+              <hr className="bg-dark"/>
               {enableSaving && (
                   <span
                       className="btn btn-danger w-25 rounded-4"
                       onClick={toggleSaveArticle}
-                      style={{ cursor: "pointer" }}
+                      style={{cursor: "pointer"}}
                   >
                 {isSaved ? (
-                    <i className="fas fa-heart" style={{ color: "red" }}></i>
+                    <i className="fas fa-heart" style={{color: "red"}}></i>
                 ) : (
                     <i className="far fa-heart"></i>
                 )}
@@ -201,11 +229,11 @@ const DefaultArticle = (props) => {
               </a>
             </div>
             <div className="col-md-6">
-              <div dangerouslySetInnerHTML={{ __html: articles.content }}></div>
-              <SocialBar />
-              <PageWithComments />
+              <div dangerouslySetInnerHTML={{__html: articles.content}}></div>
+              <SocialBar/>
+              <PageWithComments/>
             </div>
-            <ReadMore />
+            <ReadMore/>
           </div>
         </div>
       </>
