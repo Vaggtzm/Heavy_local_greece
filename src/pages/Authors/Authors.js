@@ -18,10 +18,13 @@ const Authors = ()=>{
                         <Author userId={'uSXH49YHlzT8vjQ94ZuJTOz351m2'}/>
                     </div>
                     <div className="col-6 m-2">
-                        <Author userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}/>
+                        <Author userId={'QY7GE8irSce3f4AFKW20DAWVxhr2'}/>
                     </div>
                     <div className="col-5 m-2">
-                        <Author userId={'QY7GE8irSce3f4AFKW20DAWVxhr2'}/>
+                        <Author userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}/>
+                    </div>
+                    <div className="col-6 m-2">
+                        <Author userId={"mmQTo2rdEDZ7YsnpJn15gCuaWz93"}/>
                     </div>
                 </div>
             </div>
