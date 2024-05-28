@@ -26,6 +26,7 @@ import UserHome from './components/Users/UserHome';
 import SavedArtciles from './components/Users/Pages/Saved';
 import './App.css'
 import UserProfile from "./components/UploadSystem/Profile/UserProfile";
+import Authors from "./pages/Authors/Authors";
 function App() {
     const [loading, setLoading] = useState(false);
 
@@ -97,6 +98,8 @@ return (
                         <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
                         <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
                         <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+
+                        <Route path='/about-us' element={<Authors/>}/>
 
                         <Route path='/upload' element={<ArticleUpload/>}/>
                         <Route path='/upload/register' element={<Register/>}/>

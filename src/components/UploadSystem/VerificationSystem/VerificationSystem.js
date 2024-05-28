@@ -75,7 +75,6 @@ const FirebaseFileList = () => {
                 setEarlyReleasesError('Error fetching files: file: ' + error);
             } else if (folder==='articles') {
                 setAlreadyPublishedError('Error fetching files: file: ' + error);
-
             } else {
                 setError('Error fetching files: file: ' + error);
             }
