@@ -165,19 +165,19 @@ const DefaultArticle = (props) => {
               <h3>{articles.title}</h3>
               <hr className="bg-dark"/>
             </div>
-            <div className={"col-4"}>
+            <div className={"col-12"}>
             <div className="w-100 d-flex align-items-center">
-              {(author.wantToShow&&author.photoURL)&& (<div className="image-container" style={{width:"80px", height: "80px"}}>
+              {(author.wantToShow&&author.photoURL)&& (<div className="image-container ms-1" style={{width:"80px", height: "80px"}}>
                 <img
                     src={author.photoURL}
                     alt={author.displayName}
                 />
               </div>)}
               {/* Add margin to the left of the text */}
-              <p className="lead ms-4 text-white text-center">{author.displayName}</p>
+              <p className="lead ms-2 text-white text-center">{author.displayName}</p>
             </div>
             </div>
-            <hr className="bg-dark"/>
+            <hr className={(author.wantToShow?"mt-2 ":"")+"bg-dark"}/>
             <div className="col-md-6 credits-box">
               <img
                   className="img-fluid w-100"
