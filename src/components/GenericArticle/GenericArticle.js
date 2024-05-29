@@ -137,7 +137,7 @@ const DefaultArticle = (props) => {
         remove(savedArticlesRef);
         setIsSaved(false);
       } else {
-        push(savedArticlesRef, true);
+        push(savedArticlesRef, {isEarlyAccess});
         setIsSaved(true);
       }
     }
