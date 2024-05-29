@@ -243,7 +243,7 @@ const FirebaseFileList = () => {
                         onValue(savedArticlesRef, (snapshot) => {
                             const savedArticles = snapshot.val();
                             console.log(savedArticles)
-                            if (savedArticles && savedArticles.isEarlyAccess) {
+                            if (savedArticles) {
                                 update(savedArticlesRef, { isEarlyAccess: false });
                             }
                         });
