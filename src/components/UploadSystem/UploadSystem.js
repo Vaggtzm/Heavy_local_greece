@@ -137,7 +137,7 @@ const ArticleUpload = () => {
             setSubmitError(null);
         } catch (error) {
             console.error('Error submitting article:', error.message);
-            setSubmitError('Error submitting article. Please try again.');
+            setSubmitError('Error submitting article. Please try again.\n'+error.message);
             setSubmitSuccess(false);
         }
     };
