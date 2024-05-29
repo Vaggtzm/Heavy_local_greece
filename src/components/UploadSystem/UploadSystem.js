@@ -9,6 +9,7 @@ import {auth, config, storage} from '../../firebase'; // Import Firebase auth
 import {getIdTokenResult, signOut} from "firebase/auth";
 import UserNav from "../Users/UserNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
+import ImageUpload from "./fancyImage/ImageUpload";
 
 const ArticleUpload = () => {
     const [articleContent, setArticleContent] = useState('');
@@ -171,6 +172,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
+                                    required={true}
                                 />
                             </Form.Group>
                         </Col>
@@ -231,6 +233,7 @@ const ArticleUpload = () => {
                             as="select"
                             value={language}
                             onChange={(e) => setLanguage(e.target.value)}
+                            required={true}
                         >
                             <option value="">Select Language</option> {/* Placeholder option */}
                             {Object.keys(availableLanguages).map((langCode)=> {
@@ -240,8 +243,7 @@ const ArticleUpload = () => {
                     </Form.Group>
 
                     <Form.Group controlId="image">
-                        <Form.Label className={"text-light"}>Upload Image</Form.Label>
-                        <Form.Control type="file" onChange={(e) => setImage(e.target.files[0])} />
+                        <ImageUpload setImage={setImage} image={image} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit">

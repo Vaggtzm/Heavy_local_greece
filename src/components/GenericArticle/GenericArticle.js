@@ -119,7 +119,11 @@ const DefaultArticle = (props) => {
   const getFirebaseStorageUrl = async (imageUrl) => {
     const fileName = imageUrl.split("/").pop();
     const storageRef = ref(storage, `images/${fileName}`);
-    return await getDownloadURL(storageRef);
+    try {
+      return await getDownloadURL(storageRef);
+    }catch(e){
+      console.log(e);
+    }
   };
 
   const toggleSaveArticle = useCallback(() => {
@@ -179,11 +183,11 @@ const DefaultArticle = (props) => {
             </div>
             <hr className={(author.wantToShow?"mt-2 ":"")+"bg-dark"}/>
             <div className="col-md-6 credits-box">
-              <img
+              {articles.img01&&<img
                   className="img-fluid w-100"
                   src={articles.img01}
                   alt={articles.title}
-              />
+              />}
               <p className="lead">
               <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
               </p>

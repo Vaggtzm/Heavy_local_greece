@@ -350,7 +350,7 @@ const FirebaseFileList = () => {
                                     return false;
                                 }}
                             >
-                                {file.fileContent.title}
+                                {file.fileContent.title}({file.name})
                             </a>
                             {(!leader) && <>
                                 <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
