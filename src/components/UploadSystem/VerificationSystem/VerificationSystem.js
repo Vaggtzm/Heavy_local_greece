@@ -1,10 +1,11 @@
 import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
+import {ref as databaseRef, get, child, update, onValue} from 'firebase/database';
 import React, { useEffect, useState } from 'react';
 import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {NavLink, useNavigate} from 'react-router-dom';
-import { auth, config, storage } from '../../../firebase';
+import {auth, config, database, storage} from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import { signOut } from "firebase/auth";
 import { fetchAndActivate, getValue } from "firebase/remote-config";
@@ -231,6 +232,28 @@ const FirebaseFileList = () => {
             await uploadString(destinationFileRef, fileContent);
             alert('File published successfully to the destination folder!');
             await deleteObject(originalFileRef);
+
+            if (isEarlyReleasedArticles) {
+                const usersRef = databaseRef(database, 'users');
+                const snapshot = await get(child(usersRef, '/'));
+                if (snapshot.exists()) {
+                    snapshot.forEach((user) => {
+                        const userData = user.val();
+                        const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${selectedFile.name.replace(".json", "")}`);
+                        onValue(savedArticlesRef, (snapshot) => {
+                            const savedArticles = snapshot.val();
+                            console.log(savedArticles)
+                            if (savedArticles && savedArticles.isEarlyAccess) {
+                                update(savedArticlesRef, { isEarlyAccess: false });
+                            }
+                        });
+
+                    });
+                    console.log("Updated")
+                }
+            }
+
+
             fetchFiles();
 
         } catch (error) {

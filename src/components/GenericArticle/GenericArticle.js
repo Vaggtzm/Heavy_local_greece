@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import { auth, storage, database, config } from "../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
-import {ref as dbRef} from "firebase/database";
+import {ref as dbRef, update} from "firebase/database";
 import { ref as databaseRef, push, remove, onValue } from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
@@ -22,6 +22,22 @@ const DefaultArticle = (props) => {
 
   const [author, setAuthor] = useState({});
 
+  const fetchSavedStatus = async () => {
+    const currentUser = auth.currentUser;
+    if (currentUser) {
+      const savedArticlesRef = databaseRef(
+          database,
+          `users/${currentUser.uid}/savedArticles`
+      );
+      console.log(`users/${currentUser.uid}/savedArticles`);
+      onValue(savedArticlesRef, (snapshot) => {
+        const savedArticles = snapshot.val() || {};
+        console.log(savedArticles)
+        setIsSaved(Object.keys(savedArticles).includes(name));
+      });
+    }
+  };
+
   useEffect(() => {
     const fetchRemoteConfig = async () => {
       await fetchAndActivate(config);
@@ -35,24 +51,9 @@ const DefaultArticle = (props) => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       if (user) {
         setEnableSaving(true);
+        fetchSavedStatus();
       }
     });
-
-    const fetchSavedStatus = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
-        const savedArticlesRef = databaseRef(
-            database,
-            `users/${currentUser.uid}/savedArticles`
-        );
-        onValue(savedArticlesRef, (snapshot) => {
-          const savedArticles = snapshot.val() || {};
-          setIsSaved(!!savedArticles[name]);
-        });
-      }
-    };
-
-    fetchSavedStatus();
 
     return () => {
       unsubscribeAuth();
@@ -134,10 +135,10 @@ const DefaultArticle = (props) => {
           `users/${currentUser.uid}/savedArticles/${name}`
       );
       if (isSaved) {
-        remove(savedArticlesRef);
+        remove(savedArticlesRef).then();
         setIsSaved(false);
       } else {
-        push(savedArticlesRef, {isEarlyAccess});
+        update(savedArticlesRef, {isEarlyAccess}).then();
         setIsSaved(true);
       }
     }
