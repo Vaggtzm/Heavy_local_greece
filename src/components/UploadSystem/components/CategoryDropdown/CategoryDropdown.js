@@ -14,8 +14,7 @@ const CategoryDropdown = ({ categories, onSelectCategory }) => {
         <DropdownButton
             id="dropdown-basic-button"
             title={selectedCategory || "Select a Category"}
-            variant="primary"
-            className="mb-3"
+            variant={"light"}
         >
             {categories.map((category, index) => (
                 <Dropdown.Item

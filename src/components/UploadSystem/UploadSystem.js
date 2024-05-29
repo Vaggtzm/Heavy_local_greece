@@ -119,7 +119,7 @@ const ArticleUpload = () => {
             };
 
             const articleData = {
-                content: articleContent.replaceAll("<p>", "<p class='lead'>").replaceAll("<img>", "<img class='img-fluid'>"),
+                content: articleContent.replaceAll("<p>", "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'"),
                 title,
                 details,
                 Socials: formatSocialsAsString(),
@@ -257,7 +257,7 @@ const ArticleUpload = () => {
                         </Row>
                     </Form.Group>
                     <Form.Group controlId="originalLanguage">
-                        <Row>
+                        <Row className={"d-flex align-items-center"}>
                             <Col>
                                 <Form.Label>Original Language</Form.Label>
                                 <Form.Control
@@ -272,7 +272,7 @@ const ArticleUpload = () => {
                                     })}
                                 </Form.Control>
                             </Col>
-                            <Col>
+                            <Col className="">
                                 <CategoryDropdown
                                     categories={categories}
                                     onSelectCategory={setCategory}

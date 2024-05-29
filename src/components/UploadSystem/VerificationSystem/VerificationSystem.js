@@ -160,7 +160,7 @@ const FirebaseFileList = () => {
             } else {
                 fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             }
-            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>");
+            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
             await uploadString(fileRef, JSON.stringify(fileData));
             const updatedFiles = files.map((file) =>
                 file.name === selectedFile.name ? { ...file, fileContent: fileData } : file

@@ -213,7 +213,7 @@ const TranslationSystem = () => {
         }
 
         const contentToSave = isTranslating ? translationData : fileData;
-        contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>");
+        contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
 
         // Upload the original file content
         await uploadString(fileRef, JSON.stringify(contentToSave));
