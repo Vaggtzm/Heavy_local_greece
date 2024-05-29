@@ -4,7 +4,7 @@ const ReadMore = ()=>{
     return(
         <>
    <div className="container">
-  <h4>Heavy Local Reviews</h4>
+  <h4>Pulse Of The Undeground</h4>
   <div className="row mt-4 text-center">
   <div className="col-md-4 mb-4">
       <div className="card h-100 w-100">
