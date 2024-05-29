@@ -9,7 +9,9 @@ import {auth, config, storage} from '../../firebase'; // Import Firebase auth
 import {getIdTokenResult, signOut} from "firebase/auth";
 import UserNav from "../Users/UserNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
-import ImageUpload from "./fancyImage/ImageUpload";
+import ImageUpload from "./components/fancyImage/ImageUpload";
+import CategoryDropdown from "./components/CategoryDropdown/CategoryDropdown";
+import ImageUploader from "quill-image-uploader";
 
 const ArticleUpload = () => {
     const [articleContent, setArticleContent] = useState('');
@@ -21,6 +23,16 @@ const ArticleUpload = () => {
     const [currentUser, setCurrentUser] = useState(null); // State to hold current user
     const[language, setLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
+    const [category, setCategory] = useState(''); // State to hold selected category
+
+    const categories = [
+        'Technology',
+        'Health',
+        'Science',
+        'Sports',
+        'Business',
+        'Entertainment',
+    ];
 
     const [socials, setSocials] = useState({
         facebook: '',
@@ -107,7 +119,7 @@ const ArticleUpload = () => {
             };
 
             const articleData = {
-                content: articleContent.replaceAll("<p>", "<p class='lead'>"),
+                content: articleContent.replaceAll("<p>", "<p class='lead'>").replaceAll("<img>", "<img class='img-fluid'>"),
                 title,
                 details,
                 Socials: formatSocialsAsString(),
@@ -115,7 +127,8 @@ const ArticleUpload = () => {
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: language,
-                translations:{}
+                translations:{},
+                category: category
             };
 
             articleData.translations[language]=newFileName;
@@ -136,6 +149,7 @@ const ArticleUpload = () => {
 
             setSubmitSuccess(true);
             setSubmitError(null);
+            setCategory("");
         } catch (error) {
             console.error('Error submitting article:', error.message);
             setSubmitError('Error submitting article. Please try again.\n'+error.message);
@@ -154,13 +168,28 @@ const ArticleUpload = () => {
                         <Form.Label className={"text-light"}>Paste Article Content from the document that you have written</Form.Label>
                         <ReactQuill
                             theme="snow"
-                            className={"text-light"}
+                            className="text-light"
                             value={articleContent}
                             onChange={(value) => {
                                 const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
-                                    setArticleContent(sanitizedValue)
+                                setArticleContent(sanitizedValue);
+                            }}
+                            modules={{
+                                toolbar: {
+                                    container: [
+                                        [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                                        [{size: []}],
+                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                        [{'list': 'ordered'}, {'list': 'bullet'},
+                                            {'indent': '-1'}, {'indent': '+1'}],
+                                        ['link', 'image'],
+                                        ['clean']
+                                    ],
+                                    handlers: {
+                                        'image': ImageUploader.handler
+                                    }
                                 }
-                            }
+                            }}
                         />
                     </Form.Group>
 
@@ -228,18 +257,28 @@ const ArticleUpload = () => {
                         </Row>
                     </Form.Group>
                     <Form.Group controlId="originalLanguage">
-                        <Form.Label>Original Language</Form.Label>
-                        <Form.Control
-                            as="select"
-                            value={language}
-                            onChange={(e) => setLanguage(e.target.value)}
-                            required={true}
-                        >
-                            <option value="">Select Language</option> {/* Placeholder option */}
-                            {Object.keys(availableLanguages).map((langCode)=> {
-                                return(<option value={langCode}>{availableLanguages[langCode]}</option>)
-                            })}
-                        </Form.Control>
+                        <Row>
+                            <Col>
+                                <Form.Label>Original Language</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    value={language}
+                                    onChange={(e) => setLanguage(e.target.value)}
+                                    required={true}
+                                >
+                                    <option value="">Select Language</option> {/* Placeholder option */}
+                                    {Object.keys(availableLanguages).map((langCode)=> {
+                                        return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                    })}
+                                </Form.Control>
+                            </Col>
+                            <Col>
+                                <CategoryDropdown
+                                    categories={categories}
+                                    onSelectCategory={setCategory}
+                                />
+                            </Col>
+                        </Row>
                     </Form.Group>
 
                     <Form.Group controlId="image">

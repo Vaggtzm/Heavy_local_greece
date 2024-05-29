@@ -462,6 +462,16 @@ const FirebaseFileList = () => {
                                     onChange={(e) => handleChange(e, 'translations', true)}
                                 />
                             </Form.Group>
+
+                            <Form.Group controlId="translations">
+                                <Form.Label>Category</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.category}
+                                    onChange={(e) => handleChange(e, 'category', false)}
+                                />
+                            </Form.Group>
+
                             <Form.Group controlId="isReady" className={"d-flex justify-content-center"}>
 
                             </Form.Group>
