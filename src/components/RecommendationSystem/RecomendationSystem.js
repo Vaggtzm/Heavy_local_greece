@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {ref as storageRef, getDownloadURL, listAll} from "firebase/storage";
-import {ref as dbRef, update, get, onValue} from "firebase/database";
+import {ref as dbRef, onValue} from "firebase/database";
 import {auth, database, storage} from "../../firebase";
+import {NavLink} from "react-router-dom";
 
 const RecommendationSystem = () => {
     const [favoriteCategories, setFavoriteCategories] = useState([]);
@@ -119,11 +120,16 @@ const RecommendationSystem = () => {
     return (
         <div>
             <h2>Favorite Categories</h2>
-            <ul>
                 {articles.map((article, index) => (
-                    <li key={index}>{article.title}</li>
+                    <div className="card bg-white">
+                        <img className=" img-fluid" src={article.img01}/>
+                        <div className="card-body">
+                            <h5 className="card-title">{article.title}</h5>
+                            <NavLink className="btn btn-danger"
+                                     to={article.link}>Read More</NavLink>
+                        </div>
+                    </div>
                 ))}
-            </ul>
         </div>
     );
 };
