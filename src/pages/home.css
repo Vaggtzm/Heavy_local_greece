@@ -17,14 +17,6 @@ header {
   background-attachment: fixed;
 }
 
-.main{
-  background: rgba(0, 0, 0, 0.62);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-backdrop-filter: blur(7px);
--webkit-backdrop-filter: blur(7px);
-border: 1px solid rgba(0, 0, 0, 0.84);
-}
 
 /* Στυλ για τα κεντρικά στοιχεία του header */
 
@@ -35,51 +27,13 @@ border: 1px solid rgba(0, 0, 0, 0.84);
 }
 
 /* Στυλ για την ενότητα με τα reviews */
-.reviews-section {
-  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+.CenterSection{
+  border-right: 1px solid white;
 }
 
-.card {
-  padding: 10px; /* Απόσταση κάτω */
-  margin-inline:  1rem;
-}
-
-.card-img-top {
-  height: 200px; /* Ύψος εικόνας */
-  object-fit: cover; /* Κάλυψη του πλάτους και του ύψους του περιεχομένου */
-}
-
-.card-title {
-  font-size: 20px; /* Μέγεθος γραμματοσειράς του τίτλου */
-}
-
-.card-text {
-  font-size: 16px; /* Μέγεθος γραμματοσειράς του κειμένου */
-}
-
-/* Στυλ για την ενότητα με τις live chronicles */
-.live-chornicles {
-  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-}
-
-.live-chornicles h4 {
-  margin-bottom: 30px; /* Απόσταση κάτω */
-}
-
-.live-chornicles img {
-  max-width: 100%; /* Μέγιστο πλάτος εικόνας */
-  height: auto; /* Αυτόματο ύψος */
-}
-
-/* Στυλ για την ενότητα με τους Metal Legends */
-.MetalLegends {
-  background-color: #343a40; /* Χρώμα φόντου */
-  color: white; /* Χρώμα κειμένου */
-  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-}
-
-.MetalLegends h3, .MetalLegends p {
-  margin-bottom: 20px; /* Απόσταση κάτω */
+.ExploreMore{
+  height: 100vh;
+  padding: 2rem;
 }
 
 
@@ -89,9 +43,10 @@ border: 1px solid rgba(0, 0, 0, 0.84);
 
 
 
-
-
-
+.ReviewBox{
+  display: flex;
+  flex-direction: row;
+}
 
 
 
@@ -120,4 +75,10 @@ border: 1px solid rgba(0, 0, 0, 0.84);
   .card-text {
       font-size: 14px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
   }
+  .ReviewBox{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
 }
