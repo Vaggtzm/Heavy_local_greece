@@ -255,16 +255,15 @@ const FirebaseFileList = () => {
                             const savedArticles = snapshot.val();
                             console.log(savedArticles)
                             if (savedArticles) {
-                                update(savedArticlesRef, { isEarlyAccess: false });
+                                update(savedArticlesRef, { isEarlyAccess: false, isPublished: true});
                             }
                         });
-
                     });
                     console.log("Updated")
                 }
             }else{
                 const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
-                update(articleRef, { isEarlyAccess: false }).then();
+                update(articleRef, { isEarlyAccess: false, isPublished:true }).then();
             }
 
 

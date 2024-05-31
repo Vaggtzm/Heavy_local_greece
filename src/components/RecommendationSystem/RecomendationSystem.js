@@ -60,37 +60,46 @@ const RecommendationSystem = () => {
     };
 
 
-    const readAllArticles = async () => {
+    const readAllArticles = async (categories) => {
         try {
-            const articles = [];
+            const allArticles = [];
 
-            // Read articles from 'articles' folder
-            const articlesFolderRef = storageRef(storage, 'articles');
-            const articlesList = await listAll(articlesFolderRef);
-            const articlePromises = articlesList.items.map(async (item) => {
-                const downloadUrl = await getDownloadURL(item);
-                const response = await fetch(downloadUrl);
-                const responseJSON = await response.json();
-                responseJSON.link = `/article/${item.name.replace(".json", "")}`
-                return responseJSON;
-            });
-            const articlesData = await Promise.all(articlePromises);
-            articles.push(...articlesData);
+            for (const category of categories) {
+                const categoryRef = dbRef(database, `articles/${category}`);
+                onValue(categoryRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        const categoryData = snapshot.val();
 
-            // Read articles from 'early_releases' folder
-            const earlyReleasesFolderRef = storageRef(storage, 'early_releases');
-            const earlyReleasesList = await listAll(earlyReleasesFolderRef);
-            const earlyReleasesPromises = earlyReleasesList.items.map(async (item) => {
-                const downloadUrl = await getDownloadURL(item);
-                const response = await fetch(downloadUrl);
-                const responseJSON = await response.json();
-                responseJSON.link = `/article/early/${item.name.replace(".json", "")}`
-                return responseJSON;
-            });
-            const earlyReleasesData = await Promise.all(earlyReleasesPromises);
-            articles.push(...earlyReleasesData);
+                        Object.entries(categoryData).forEach(([articleName, articleData]) => {
+                            const isPublished = articleData.isPublished;
+                            if (!isPublished) return;
 
-            return articles;
+                            const isEarlyAccess = articleData.isEarlyAccess;
+                            const folder = isEarlyAccess ? 'early_releases' : 'articles';
+                            const articleRef = storageRef(storage, `${folder}/${articleName}.json`);
+
+                            getDownloadURL(articleRef)
+                                .then((downloadUrl) => fetch(downloadUrl))
+                                .then((response) => response.json())
+                                .then((responseJSON) => {
+                                    responseJSON.link = `/article/${articleName}`;
+
+                                    // Check if article already exists before adding
+                                    if (!allArticles.find((article) => article.name === articleName)) {
+                                        allArticles.push(responseJSON);
+                                        setArticles(allArticles);
+                                    }
+                                })
+                                .catch((error) => console.error('Error fetching article:', error));
+                        });
+                    } else {
+                        console.log("No data available");
+                    }
+                });
+            }
+
+            return allArticles; // Can also return articles array directly
+
         } catch (error) {
             console.error('Error reading articles:', error);
             return [];
@@ -100,19 +109,9 @@ const RecommendationSystem = () => {
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                const fetchCategoriesPromise = fetchCategories(user.uid);
-                const readAllArticlesPromise = readAllArticles();
-
-                Promise.all([fetchCategoriesPromise, readAllArticlesPromise])
-                    .then(([categories, articles]) => {
-                        // Filter articles based on categories
-                        const filteredArticles = articles.filter(article => categories.includes(article.category));
-                        setArticles(filteredArticles);
-                        console.log(filteredArticles);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+                fetchCategories(user.uid).then((categories)=>{
+                    readAllArticles(categories).then();
+                })
             }
         });
     }, []);
