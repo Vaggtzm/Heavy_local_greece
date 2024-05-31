@@ -1,14 +1,13 @@
-import { deleteObject, getDownloadURL, getMetadata, listAll, ref, uploadString } from 'firebase/storage';
-import {ref as databaseRef, get, child, update, onValue} from 'firebase/database';
-import React, { useEffect, useState } from 'react';
+import {deleteObject, getDownloadURL, listAll, ref, uploadString} from 'firebase/storage';
+import {child, get, onValue, ref as databaseRef, remove, update} from 'firebase/database';
+import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {NavLink, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {auth, config, database, storage} from '../../../firebase';
-import Navigation from '../../AppNav/Navigation';
-import { signOut } from "firebase/auth";
-import { fetchAndActivate, getValue } from "firebase/remote-config";
+import {signOut} from "firebase/auth";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 import UserNav from "../../Users/UserNav";
 
 const FirebaseFileList = () => {
@@ -176,7 +175,16 @@ const FirebaseFileList = () => {
     };
 
     const handleChange = (e, field, isObject) => {
+
         let { value } = e.target;
+        if(field==="category"){
+            const oldCategory = fileData.category;
+            const articleRef = databaseRef(database, `articles/${value}/${selectedFile.name.replace('.json', '')}`);
+            update(articleRef, { isEarlyAccess: false }).then();
+
+            const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
+            remove(oldArticleRef).then();
+        }
         if (isObject) {
             value = JSON.parse(value);
         }
@@ -234,6 +242,9 @@ const FirebaseFileList = () => {
             await deleteObject(originalFileRef);
 
             if (isEarlyReleasedArticles) {
+                const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
+                update(articleRef, { isEarlyAccess: false }).then();
+
                 const usersRef = databaseRef(database, 'users');
                 const snapshot = await get(child(usersRef, '/'));
                 if (snapshot.exists()) {
@@ -251,6 +262,9 @@ const FirebaseFileList = () => {
                     });
                     console.log("Updated")
                 }
+            }else{
+                const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
+                update(articleRef, { isEarlyAccess: false }).then();
             }
 
 
