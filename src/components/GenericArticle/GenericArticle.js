@@ -151,23 +151,12 @@ const DefaultArticle = (props) => {
       const height = parseInt(metadata.customMetadata.height, 10);
 
       // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
-      const tolerance = 0.1;
+      const tolerance = 10;
       const aspectRatio = width / height;
       return {result: Math.abs(aspectRatio - 1) <= tolerance, areMetadataFound: true};
     } catch (e) {
       return {result: false, areMetadataFound: false};
     }
-  };
-
-  const getImageDimensions = (file) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => {
-        resolve({ width: img.width, height: img.height });
-      };
-      img.onerror = reject;
-      img.src = URL.createObjectURL(file);
-    });
   };
 
   const getFirebaseStorageUrl = async (imageUrl) => {
