@@ -87,24 +87,43 @@ const AdminSystem= () => {
                                     <tr key={index}>
                                         <td>{users[key].email}</td>
                                         <td>{authorLeader.includes(users[key].email)? "Leader" : admin.includes(users[key].email)?"Admin":"Author"}</td>
-                                        <td className={"row"}>
+                                        <td className="row">
                                             {!roles.admin.includes(email) && (
-                                                <button className="col-3 btn btn-danger" style={{marginRight:"3vh"}} onClick={() => handleRoleChange('admin', email)}>
+                                                <button
+                                                    className="col-12 col-md-3 btn btn-danger"
+                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
+                                                    onClick={() => handleRoleChange('admin', email)}
+                                                >
                                                     Admin
                                                 </button>
                                             )}
                                             {!roles.authorLeader.includes(email) && (
-                                                <button disabled={roles.admin.includes(email)&&currentUser.email!=="pavlos@orfanidis.net.gr"} className="col-3 btn btn-warning" style={{marginRight:"3vh"}} onClick={() => handleRoleChange('authorLeader', email)}>
+                                                <button
+                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                    className="col-12 col-md-3 btn btn-warning"
+                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
+                                                    onClick={() => handleRoleChange('authorLeader', email)}
+                                                >
                                                     Author Leader
                                                 </button>
                                             )}
                                             {!roles.translationSystem.includes(email) && (
-                                                <button disabled={roles.admin.includes(email)&&currentUser.email!=="pavlos@orfanidis.net.gr"} className="col-3 btn btn-info" style={{marginRight:"3vh"}} onClick={() => handleRoleChange('translationSystem', email)}>
+                                                <button
+                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                    className="col-12 col-md-3 btn btn-info"
+                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
+                                                    onClick={() => handleRoleChange('translationSystem', email)}
+                                                >
                                                     Translator
                                                 </button>
                                             )}
                                             {['admin', 'authorLeader', 'translationSystem'].some(role => roles[role].includes(email)) && (
-                                                <button disabled={roles.admin.includes(email)&&currentUser.email!=="pavlos@orfanidis.net.gr"} className="col-3 btn btn-secondary" style={{marginRight:"3vh"}} onClick={() => handleRoleChange('authors', email)}>
+                                                <button
+                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                    className="col-12 col-md-3 btn btn-secondary"
+                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
+                                                    onClick={() => handleRoleChange('authors', email)}
+                                                >
                                                     Author
                                                 </button>
                                             )}
@@ -115,8 +134,8 @@ const AdminSystem= () => {
                             </tbody>
                         </table>
                     </div>
+                </div>
             </div>
-        </div>
         </div>
     );
 }
