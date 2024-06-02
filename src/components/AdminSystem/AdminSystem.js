@@ -101,7 +101,7 @@ const AdminSystem= () => {
                                             {!roles.authorLeader.includes(email) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-warning"
                                                         onClick={() => handleRoleChange('authorLeader', email)}
                                                     >
@@ -112,7 +112,7 @@ const AdminSystem= () => {
                                             {!roles.translationSystem.includes(email) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-info"
                                                         onClick={() => handleRoleChange('translationSystem', email)}
                                                     >
@@ -123,7 +123,7 @@ const AdminSystem= () => {
                                             {['admin', 'authorLeader', 'translationSystem'].some(role => roles[role].includes(email)) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-secondary"
                                                         style={{marginRight: "1vh", marginBottom: "1vh"}}
                                                         onClick={() => handleRoleChange('authors', email)}
