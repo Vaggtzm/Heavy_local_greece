@@ -157,7 +157,7 @@ app.get('/assets/*', async (req, res) => {
     }else{
         const { width, height } = metadata.customMetadata;
         const aspectRatio = width / height;
-        const tolerance = 10;
+        const tolerance = 0.5;
         filePath = changeAnalysis(filePath, "800x800", Math.abs(aspectRatio - 1) <= tolerance)
     }
     //filePath = changeAnalysis(filePath, "800x800", true)

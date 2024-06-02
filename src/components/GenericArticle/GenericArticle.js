@@ -151,9 +151,17 @@ const DefaultArticle = (props) => {
       const height = parseInt(metadata.customMetadata.height, 10);
 
       // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
-      const tolerance = 10;
+      const tolerance = 0.5;
       const aspectRatio = width / height;
-      return {result: Math.abs(aspectRatio - 1) <= tolerance, areMetadataFound: true};
+      const result = Math.abs(aspectRatio - 1) <= tolerance
+
+      if(result){
+        console.log("The picture has been replaced");
+      }else{
+        console.log("the picture is not rectangle")
+      }
+
+      return {result: result, areMetadataFound: true};
     } catch (e) {
       return {result: false, areMetadataFound: false};
     }
