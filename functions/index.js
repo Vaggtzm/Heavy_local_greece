@@ -122,16 +122,13 @@ const getArticle = async (req, res, folder) => {
     }
 };
 
-function changeAnalysis(fileName, analysis, change_analysis) {
-    if(!change_analysis){
-        return fileName
-    }
+function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
     // Find the position of the last dot, which indicates the start of the extension
     const dotIndex = fileName.lastIndexOf('.');
 
     // If there's no dot, return the filename with the suffix appended
     if (dotIndex === -1) {
-        return `${fileName}_${analysis}`;
+        return `${fileName}_${change_analysis?analysis_true:analysis_false}`;
     }
 
     // Extract the name and extension parts
@@ -139,7 +136,7 @@ function changeAnalysis(fileName, analysis, change_analysis) {
     const extension = fileName.substring(dotIndex);
 
     // Construct the new filename
-    return `${name}_${analysis}${extension}`;
+    return `${name}_${change_analysis?analysis_true:analysis_false}${extension}`;
 }
 
 
@@ -152,13 +149,11 @@ app.get('/assets/*', async (req, res) => {
     const imagePath = req.params[0];
     let filePath = "images/" + imagePath;
     const [metadata] = await bucket.file(filePath).getMetadata();
-    if(!metadata.customMetadata){
-        filePath = changeAnalysis(filePath, "800x800", false)
-    }else{
+    if(metadata.customMetadata!==undefined){
         const { width, height } = metadata.customMetadata;
         const aspectRatio = width / height;
         const tolerance = 0.5;
-        filePath = changeAnalysis(filePath, "800x800", Math.abs(aspectRatio - 1) <= tolerance)
+        filePath = changeAnalysis(filePath, "800x800", "800x600", Math.abs(aspectRatio - 1) <= tolerance)
     }
     //filePath = changeAnalysis(filePath, "800x800", true)
 

@@ -124,16 +124,13 @@ const DefaultArticle = (props) => {
     }
   };
 
-  function changeAnalysis(fileName, analysis, change_analysis) {
-    if(!change_analysis){
-      return fileName
-    }
+  function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
     // Find the position of the last dot, which indicates the start of the extension
     const dotIndex = fileName.lastIndexOf('.');
 
     // If there's no dot, return the filename with the suffix appended
     if (dotIndex === -1) {
-      return `${fileName}_${analysis}`;
+      return `${fileName}_${change_analysis?analysis_true:analysis_false}`;
     }
 
     // Extract the name and extension parts
@@ -141,7 +138,7 @@ const DefaultArticle = (props) => {
     const extension = fileName.substring(dotIndex);
 
     // Construct the new filename
-    return `${name}_${analysis}${extension}`;
+    return `${name}_${change_analysis?analysis_true:analysis_false}${extension}`;
   }
 
   const isAlmostRectangle = async (storageRef) => {
@@ -155,12 +152,6 @@ const DefaultArticle = (props) => {
       const aspectRatio = width / height;
       const result = Math.abs(aspectRatio - 1) <= tolerance
 
-      if(result){
-        console.log("The picture has been replaced");
-      }else{
-        console.log("the picture is not rectangle")
-      }
-
       return {result: result, areMetadataFound: true};
     } catch (e) {
       return {result: false, areMetadataFound: false};
@@ -171,7 +162,7 @@ const DefaultArticle = (props) => {
     const fileName = imageUrl.split("/").pop();
     const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
 
-    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", shouldResize.result)}`);
+    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)}`);
     setShouldStoreMetadata(!shouldResize.areMetadataFound)
     setImageStorageRef(storageRef);
     try {
