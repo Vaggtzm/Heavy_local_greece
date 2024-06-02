@@ -20,38 +20,35 @@ const UserNav = () => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-                if (user) {
+            if (user) {
 
-                    const userList = ref(database, 'roles');
-                    onValue(userList, async (snapshot) => {
-                        const roles = snapshot.val();
-
-                        const userList = roles.translationSystem;
-                        setIsTranslator(userList.includes(user.email));
-                        const leaderList = roles.authorLeader;
-                        setIsLeader(leaderList.includes(user.email));
-                        const adminList = roles.admin;
-                        setIsAdmin(adminList.includes(user.email));
-
-
-                        setLoggedIn(true);
-
-                        try {
-                            const idTokenResult = await getIdTokenResult(user);
-                            setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
-                            console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
-                        } catch (e) {
-                            console.error("Error getting ID token result:", e);
-                        }
-                    });
-                } else {
-                    console.log("User is null");
-                    setLoggedIn(false);
-                    setIsTranslator(false);
-                    setIsLeader(false);
-                    setIsAdmin(false);
-                    setIsAuthor(false);
-                }
+                const userList = ref(database, 'roles');
+                onValue(userList, async (snapshot) => {
+                    const roles = snapshot.val();
+    
+                    const userList = roles.translationSystem;
+                    setIsTranslator(userList.includes(user.email));
+                    const leaderList = roles.authorLeader;
+                    setIsLeader(leaderList.includes(user.email));
+                    const adminList = roles.admin;
+                    setIsAdmin(adminList.includes(user.email));
+                    setLoggedIn(true);
+                    try {
+                        const idTokenResult = await getIdTokenResult(user);
+                        setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
+                        console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
+                    } catch (e) {
+                        console.error("Error getting ID token result:", e);
+                    }
+                });
+            } else {
+                console.log("User is null");
+                setLoggedIn(false);
+                setIsTranslator(false);
+                setIsLeader(false);
+                setIsAdmin(false);
+                setIsAuthor(false);
+            }
         });
 
         // Clean up the subscription on unmount
