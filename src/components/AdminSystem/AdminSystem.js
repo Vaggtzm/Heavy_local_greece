@@ -121,7 +121,7 @@ const AdminSystem= () => {
                                                 </div>
                                             )}
                                             {['admin', 'authorLeader', 'translationSystem'].some(role => roles[role].includes(email)) && (
-                                                <div className="col-3" style={{padding: "0"}}>
+                                                <div className="col-4" style={{padding: "0"}}>
                                                     <button
                                                         disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
                                                         className="btn btn-secondary"
