@@ -122,6 +122,26 @@ const getArticle = async (req, res, folder) => {
     }
 };
 
+function changeAnalysis(fileName, analysis, change_analysis) {
+    if(!change_analysis){
+        return fileName
+    }
+    // Find the position of the last dot, which indicates the start of the extension
+    const dotIndex = fileName.lastIndexOf('.');
+
+    // If there's no dot, return the filename with the suffix appended
+    if (dotIndex === -1) {
+        return `${fileName}_${analysis}`;
+    }
+
+    // Extract the name and extension parts
+    const name = fileName.substring(0, dotIndex);
+    const extension = fileName.substring(dotIndex);
+
+    // Construct the new filename
+    return `${name}_${analysis}${extension}`;
+}
+
 
 
 app.get('/article/:article', (req, res, folder)=>{getArticle(req, res, "articles").then()});
@@ -130,18 +150,25 @@ app.get('/article/early/:article', (req, res, folder)=>{getArticle(req, res, "ea
 
 app.get('/assets/*', async (req, res) => {
     const imagePath = req.params[0];
-    const filePath = "images/" + imagePath;
-    try {
-    const file = await bucket.file(filePath).download();
+    let filePath = "images/" + imagePath;
     const [metadata] = await bucket.file(filePath).getMetadata();
+    const { width, height } = metadata.customMetadata;
+    const aspectRatio = width / height;
+    filePath = changeAnalysis(filePath, "800x800", Math.abs(aspectRatio - 1) <= tolerance)
+    //filePath = changeAnalysis(filePath, "800x800", true)
 
-    if (metadata && metadata.contentType) {
-        res.contentType(metadata.contentType); // Set content type based on file's contentType
-    } else {
-        res.contentType('application/octet-stream'); // Fallback content type for unknown file types
-    }
-
-    res.send(file[0]);
+    try {
+        
+        const contentType = metadata.contentType;
+        // Check if image is almost rectangular
+        // Use 800x800 quality for almost rectangular images
+        
+        const fileData = await bucket.file(filePath).download();
+        //res.contentType(contentType);
+        console.log("sent smaller file")
+        res.send(fileData[0]);
+        return;
+    
     } catch (error) {
         console.error('Error fetching file:', error);
         res.status(404).send('File not found');
