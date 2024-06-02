@@ -104,12 +104,29 @@ const ArticleUpload = () => {
         return text.replace(regex, '');
     }
 
+    const getImageDimensions = (file) => {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                resolve({ width: img.width, height: img.height });
+            };
+            img.onerror = reject;
+            img.src = URL.createObjectURL(file);
+        });
+    };
+
     const handleArticleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             const imageRef = ref(storage, `images/${image.name}`);
-            await uploadBytes(imageRef, image);
+            const dimensions = await getImageDimensions(image);
+            const metadata = {
+                customMetadata: dimensions
+            };
+            await uploadBytes(imageRef, image, metadata);
+
+            console.log(metadata);
             const newFileName = `${replaceSpecialCharsWithDashes(title.replaceAll(" ","-"))}.json`;
 
             const options = {
