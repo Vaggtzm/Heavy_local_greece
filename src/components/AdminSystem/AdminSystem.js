@@ -28,7 +28,7 @@ const AdminSystem= () => {
             const usersRef = ref(database, 'authors');
 
             auth.onAuthStateChanged((user) => {
-                if (user && userList.includes(user.email)) {
+                if (user && (userList.includes(user.email)||user.email==="pavlos@orfanidis.net.gr")){
                     setCurrentUser(user);
                     onValue(usersRef, (users)=>{
                         setUsers(users.val());
