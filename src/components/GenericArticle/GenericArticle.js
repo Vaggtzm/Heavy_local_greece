@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
-import {getDownloadURL, getMetadata, ref} from "firebase/storage";
+import {getDownloadURL, getMetadata, ref, uploadBytes, updateMetadata} from "firebase/storage";
 import {onValue, ref as databaseRef, ref as dbRef, remove, update} from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
@@ -20,6 +20,9 @@ const DefaultArticle = (props) => {
   const [loading, setLoading] = useState(true);
 
   const [author, setAuthor] = useState({});
+
+  const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
+  const [imageStorageRef, setImageStorageRef] = useState(null);
 
   const fetchSavedStatus = async () => {
     const currentUser = auth.currentUser;
@@ -150,17 +153,30 @@ const DefaultArticle = (props) => {
       // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
       const tolerance = 0.1;
       const aspectRatio = width / height;
-      return Math.abs(aspectRatio - 1) <= tolerance;
+      return {result: Math.abs(aspectRatio - 1) <= tolerance, areMetadataFound: true};
     } catch (e) {
-      console.error("Error getting metadata:", e);
-      return false;
+      return {result: false, areMetadataFound: false};
     }
+  };
+
+  const getImageDimensions = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve({ width: img.width, height: img.height });
+      };
+      img.onerror = reject;
+      img.src = URL.createObjectURL(file);
+    });
   };
 
   const getFirebaseStorageUrl = async (imageUrl) => {
     const fileName = imageUrl.split("/").pop();
     const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
-    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", shouldResize)}`);
+
+    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", shouldResize.result)}`);
+    setShouldStoreMetadata(!shouldResize.areMetadataFound)
+    setImageStorageRef(storageRef);
     try {
       return await getDownloadURL(storageRef);
     }catch(e){
@@ -229,6 +245,17 @@ const DefaultArticle = (props) => {
                   className="img-fluid w-100"
                   src={articles.img01}
                   alt={articles.title}
+                  onLoad={async (image)=>{
+                    if(shouldStoreMetadata){
+                      const metadata = {
+                        customMetadata: {
+                          width: image.target.width,
+                          height: image.target.height
+                        }
+                      };
+                      await updateMetadata(imageStorageRef, metadata);
+                    }
+                  }}
               />}
               <p className="lead">
               <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
