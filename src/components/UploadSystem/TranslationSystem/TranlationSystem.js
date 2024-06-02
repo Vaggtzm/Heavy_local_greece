@@ -17,11 +17,12 @@ import {
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useNavigate } from 'react-router-dom';
-import { auth, config, storage } from '../../../firebase';
+import {auth, config, database, storage} from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
 import { signOut } from 'firebase/auth';
 import { fetchAndActivate, getValue } from "firebase/remote-config";
 import UserNav from "../../Users/UserNav";
+import {onValue, ref as databaseRef} from "firebase/database";
 
 const TranslationSystem = () => {
     const [files, setFiles] = useState([]);
@@ -108,7 +109,11 @@ const TranslationSystem = () => {
     };
 
     useEffect(() => {
-        const initialize = async () => {
+
+        const roles = databaseRef(database, "/roles");
+        onValue(roles, async (snapshot) => {
+            const roles = snapshot.val();
+
             try {
                 await fetchAndActivate(config);
             } catch (err) {
@@ -116,7 +121,8 @@ const TranslationSystem = () => {
             }
             const serverLanguages = getValue(config, "languages").asString()
             setAvailableLanguages(JSON.parse(serverLanguages))
-            const userList = JSON.parse(getValue(config, "translationSystem").asString());
+
+            const userList = [...Object.values(roles.translationSystem), ...Object.values(roles.admin)];
             console.log(userList);
             const unsubscribe = auth.onAuthStateChanged((user) => {
                 if (user && userList.includes(user.email)) {
@@ -131,9 +137,7 @@ const TranslationSystem = () => {
             await fetchFiles();
 
             return () => unsubscribe();
-        };
-
-        initialize();
+        });
     }, [navigate]);
 
     function replaceSpecialCharsWithDashes(text) {

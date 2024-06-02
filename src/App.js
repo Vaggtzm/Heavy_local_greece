@@ -28,6 +28,7 @@ import './App.css'
 import UserProfile from "./components/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
+import AdminSystem from "./components/AdminSystem/AdminSystem";
 function App() {
     const [loading, setLoading] = useState(false);
 
@@ -102,6 +103,7 @@ return (
 
                         <Route path='/about-us' element={<Authors/>}/>
                         <Route path='/recommended' element={<RecommendationSystem/>}/>
+                        <Route path='/admin' element={<AdminSystem/>}/>
 
                         <Route path='/upload' element={<ArticleUpload/>}/>
                         <Route path='/upload/register' element={<Register/>}/>

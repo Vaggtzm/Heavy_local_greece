@@ -99,6 +99,12 @@ const UserNav = () => {
                   </>
               )}
 
+              {(isAdmin)&&
+                  <NavLink to="/admin" className='nav-link text-white link'>
+                      User Administration
+                  </NavLink>
+              }
+
               {(isAdmin||isLeader)&&
                   <NavLink to="/upload/admin" className='nav-link text-white link'>
                       Admin Dashboard

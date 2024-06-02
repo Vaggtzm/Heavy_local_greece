@@ -5,9 +5,8 @@ import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-boot
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
-import {auth, config, database, storage} from '../../../firebase';
+import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
-import {fetchAndActivate, getValue} from "firebase/remote-config";
 import UserNav from "../../Users/UserNav";
 
 const FirebaseFileList = () => {
@@ -102,25 +101,13 @@ const FirebaseFileList = () => {
     };
 
     useEffect(() => {
-        const initializeConfigAndAuth = async () => {
-            try {
-                await fetchAndActivate(config);
-            } catch (err) {
-                console.log(err);
-            }
+        const roles = databaseRef(database, "/roles");
 
-            const userList = JSON.parse(getValue(config, "admin").asString());
-            let leaderList = [];
+        onValue(roles, (snapshot) => {
+            const roles = snapshot.val();
 
-            try {
-                leaderList = JSON.parse(getValue(config, "authorLeader").asString());
-            } catch (e) {
-                console.log(e);
-            }
-
-            console.log(userList);
-            console.log(leaderList);
-
+            const userList = roles.admin;
+            let leaderList = roles.authorLeader;
             auth.onAuthStateChanged((user) => {
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
                     setCurrentUser(user);
@@ -131,11 +118,8 @@ const FirebaseFileList = () => {
                     signOut(auth).then();
                 }
             });
-
             fetchFiles();
-        };
-
-        initializeConfigAndAuth();
+        });
     }, [navigate]);
 
 
