@@ -74,60 +74,66 @@ const AdminSystem= () => {
                     <div className="col-12">
                         <table className="table table-dark table-striped">
                             <thead>
-                            <tr>
-                                <th scope="col">Email</th>
-                                <th scope="col">Role</th>
-                                <th scope="col">Change Role</th>
+                            <tr className={"row"} style={{marginRight: "0.1vh"}}>
+                                <th className={"col-4"}>Email</th>
+                                <th className={"col-4"}>Role</th>
+                                <th className={"col-4"}>Change Role</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {users && Object.keys(users).map((key, index) => {
+                            {users&&roles && Object.keys(users).map((key, index) => {
                                 const email = users[key].email;
                                 return (
-                                    <tr key={index}>
-                                        <td>{users[key].displayName}</td>
-                                        <td>{authorLeader.includes(users[key].email)? "Leader" : admin.includes(users[key].email)?"Admin":"Author"}</td>
-                                        <td className="row">
+                                    <tr key={index} className={"row"}>
+                                        <td className={"col-4"}>{users[key].displayName}({users[key].email})</td>
+                                        <td className={"col-4"}>{authorLeader.includes(users[key].email)? "Author Leader" : admin.includes(users[key].email)?"Admin":roles.translationSystem.includes(users[key].email)?"Translator":"Author"}</td>
+                                        <td className="row col-4">
                                             {!roles.admin.includes(email) && (
-                                                <button
-                                                    className="col-12 col-md-3 btn btn-danger"
-                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
-                                                    onClick={() => handleRoleChange('admin', email)}
-                                                >
-                                                    Admin
-                                                </button>
+                                                <div className="col-4">
+                                                    <button
+                                                        className="btn btn-danger"
+                                                        onClick={() => handleRoleChange('admin', email)}
+                                                    >
+                                                        Admin
+                                                    </button>
+                                                </div>
                                             )}
                                             {!roles.authorLeader.includes(email) && (
-                                                <button
-                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
-                                                    className="col-12 col-md-3 btn btn-warning"
-                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
-                                                    onClick={() => handleRoleChange('authorLeader', email)}
-                                                >
-                                                    Author Leader
-                                                </button>
+                                                <div className="col-4" style={{padding: "0"}}>
+                                                    <button
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        className="btn btn-warning"
+                                                        onClick={() => handleRoleChange('authorLeader', email)}
+                                                    >
+                                                        Author Leader
+                                                    </button>
+                                                </div>
                                             )}
                                             {!roles.translationSystem.includes(email) && (
-                                                <button
-                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
-                                                    className="col-12 col-md-3 btn btn-info"
-                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
-                                                    onClick={() => handleRoleChange('translationSystem', email)}
-                                                >
-                                                    Translator
-                                                </button>
+                                                <div className="col-4" style={{padding: "0"}}>
+                                                    <button
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        className="btn btn-info"
+                                                        onClick={() => handleRoleChange('translationSystem', email)}
+                                                    >
+                                                        Translator
+                                                    </button>
+                                                </div>
                                             )}
                                             {['admin', 'authorLeader', 'translationSystem'].some(role => roles[role].includes(email)) && (
-                                                <button
-                                                    disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
-                                                    className="col-12 col-md-3 btn btn-secondary"
-                                                    style={{marginRight: "1vh", marginBottom: "1vh"}}
-                                                    onClick={() => handleRoleChange('authors', email)}
-                                                >
-                                                    Author
-                                                </button>
+                                                <div className="col-3" style={{padding: "0"}}>
+                                                    <button
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"}
+                                                        className="btn btn-secondary"
+                                                        style={{marginRight: "1vh", marginBottom: "1vh"}}
+                                                        onClick={() => handleRoleChange('authors', email)}
+                                                    >
+                                                        Author
+                                                    </button>
+                                                </div>
                                             )}
                                         </td>
+
                                     </tr>
                                 );
                             })}
