@@ -1,14 +1,13 @@
-import React, { useEffect, useState, useCallback } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import { auth, storage, database, config } from "../../firebase";
-import { ref, getDownloadURL } from "firebase/storage";
-import {ref as dbRef, update} from "firebase/database";
-import { ref as databaseRef, push, remove, onValue } from "firebase/database";
+import React, {useCallback, useEffect, useState} from "react";
+import {NavLink, useParams} from "react-router-dom";
+import {auth, config, database, storage} from "../../firebase";
+import {getDownloadURL, getMetadata, ref} from "firebase/storage";
+import {onValue, ref as databaseRef, ref as dbRef, remove, update} from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
 import AppNav from "./../AppNav/AppNav";
-import { fetchAndActivate, getValue } from "firebase/remote-config";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 const DefaultArticle = (props) => {
   const [isEarlyAccess] = useState(props.earlyAccess);
@@ -89,19 +88,24 @@ const DefaultArticle = (props) => {
       const data = await response.json();
 
       const usersRef = dbRef(database, `authors/${data.sub}`);
-      if(usersRef)
-      onValue(usersRef, (snapshot) => {
-        if(snapshot.exists()) {
-          const usersData = snapshot.val();
-          console.log(usersData);
-          setAuthor(usersData);
-        }else{
-          setAuthor({
-            displayName: data.sub
-          })
-        }
-      });
-      data.img01 = await getFirebaseStorageUrl(data.img01);
+      if(usersRef) {
+        onValue(usersRef, async (snapshot) => {
+          if (snapshot.exists()) {
+            const usersData = snapshot.val();
+            let userImage = ref(storage, `/profile_images/${data.sub}_600x600`);
+            usersData.photoURL = await getDownloadURL(userImage);
+            usersData.wantToShow = true;
+            console.log(usersData);
+
+            setAuthor(usersData);
+          } else {
+            setAuthor({
+              displayName: data.sub
+            })
+          }
+        });
+        data.img01 = await getFirebaseStorageUrl(data.img01);
+      }
 
       if (data.translations && Object.keys(data.translations).length > 0) {
         const translationsResult = await checkTranslations(data);
@@ -117,9 +121,46 @@ const DefaultArticle = (props) => {
     }
   };
 
+  function changeAnalysis(fileName, analysis, change_analysis) {
+    if(!change_analysis){
+      return fileName
+    }
+    // Find the position of the last dot, which indicates the start of the extension
+    const dotIndex = fileName.lastIndexOf('.');
+
+    // If there's no dot, return the filename with the suffix appended
+    if (dotIndex === -1) {
+      return `${fileName}_${analysis}`;
+    }
+
+    // Extract the name and extension parts
+    const name = fileName.substring(0, dotIndex);
+    const extension = fileName.substring(dotIndex);
+
+    // Construct the new filename
+    return `${name}_${analysis}${extension}`;
+  }
+
+  const isAlmostRectangle = async (storageRef) => {
+    try {
+      const metadata = await getMetadata(storageRef);
+      const width = parseInt(metadata.customMetadata.width, 10);
+      const height = parseInt(metadata.customMetadata.height, 10);
+
+      // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
+      const tolerance = 0.1;
+      const aspectRatio = width / height;
+      return Math.abs(aspectRatio - 1) <= tolerance;
+    } catch (e) {
+      console.error("Error getting metadata:", e);
+      return false;
+    }
+  };
+
   const getFirebaseStorageUrl = async (imageUrl) => {
     const fileName = imageUrl.split("/").pop();
-    const storageRef = ref(storage, `images/${fileName}`);
+    const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
+    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", shouldResize)}`);
     try {
       return await getDownloadURL(storageRef);
     }catch(e){
