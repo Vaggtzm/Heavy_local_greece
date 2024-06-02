@@ -152,9 +152,13 @@ app.get('/assets/*', async (req, res) => {
     const imagePath = req.params[0];
     let filePath = "images/" + imagePath;
     const [metadata] = await bucket.file(filePath).getMetadata();
-    const { width, height } = metadata.customMetadata;
-    const aspectRatio = width / height;
-    filePath = changeAnalysis(filePath, "800x800", Math.abs(aspectRatio - 1) <= tolerance)
+    if(!metadata.customMetadata){
+        filePath = changeAnalysis(filePath, "800x800", false)
+    }else{
+        const { width, height } = metadata.customMetadata;
+        const aspectRatio = width / height;
+        filePath = changeAnalysis(filePath, "800x800", Math.abs(aspectRatio - 1) <= tolerance)
+    }
     //filePath = changeAnalysis(filePath, "800x800", true)
 
     try {
