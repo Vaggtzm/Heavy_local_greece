@@ -85,7 +85,7 @@ const AdminSystem= () => {
                                 const email = users[key].email;
                                 return (
                                     <tr key={index}>
-                                        <td>{users[key].email}</td>
+                                        <td>{users[key].displayName}</td>
                                         <td>{authorLeader.includes(users[key].email)? "Leader" : admin.includes(users[key].email)?"Admin":"Author"}</td>
                                         <td className="row">
                                             {!roles.admin.includes(email) && (
