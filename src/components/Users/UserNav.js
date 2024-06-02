@@ -1,6 +1,6 @@
 import React , {useEffect ,useState} from 'react';
 import {getIdTokenResult, signOut} from 'firebase/auth';
-import {auth, config} from '../../firebase';
+import {auth, config, database} from '../../firebase';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,6 +8,7 @@ import InstallButton from '../PWAinstal/pwaInstall';
 import {Button} from "react-bootstrap";
 import {NavLink, useNavigate} from "react-router-dom";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
+import {onValue, ref} from "firebase/database";
 
 const UserNav = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -19,57 +20,38 @@ const UserNav = () => {
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                console.log("User has been authenticated:", user);
-                try {
-                    await fetchAndActivate(config);
-                    console.log("Remote config activated");
-                } catch (err) {
-                    console.error("Error activating remote config:", err);
-                    return;
-                }
+                if (user) {
 
-                try {
-                    const userList = JSON.parse(getValue(config, "translationSystem").asString());
-                    setIsTranslator(userList.includes(user.email));
-                    console.log("User is translator:", userList.includes(user.email));
-                } catch (e) {
-                    console.error("Error getting translator list:", e);
-                }
+                    const userList = ref(database, 'roles');
+                    onValue(userList, async (snapshot) => {
+                        const roles = snapshot.val();
 
-                try {
-                    const leaderList = JSON.parse(getValue(config, "authorLeader").asString());
-                    setIsLeader(leaderList.includes(user.email));
-                    console.log("User is leader:", leaderList.includes(user.email));
-                } catch (e) {
-                    console.error("Error getting leader list:", e);
-                }
+                        const userList = roles.translationSystem;
+                        setIsTranslator(userList.includes(user.email));
+                        const leaderList = roles.authorLeader;
+                        setIsLeader(leaderList.includes(user.email));
+                        const adminList = roles.admin;
+                        setIsAdmin(adminList.includes(user.email));
 
-                try {
-                    const adminList = JSON.parse(getValue(config, "admin").asString());
-                    setIsAdmin(adminList.includes(user.email));
-                    console.log("User is admin:", adminList.includes(user.email));
-                } catch (e) {
-                    console.error("Error getting admin list:", e);
-                }
 
-                setLoggedIn(true);
+                        setLoggedIn(true);
 
-                try {
-                    const idTokenResult = await getIdTokenResult(user);
-                    setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
-                    console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
-                } catch (e) {
-                    console.error("Error getting ID token result:", e);
+                        try {
+                            const idTokenResult = await getIdTokenResult(user);
+                            setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
+                            console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
+                        } catch (e) {
+                            console.error("Error getting ID token result:", e);
+                        }
+                    });
+                } else {
+                    console.log("User is null");
+                    setLoggedIn(false);
+                    setIsTranslator(false);
+                    setIsLeader(false);
+                    setIsAdmin(false);
+                    setIsAuthor(false);
                 }
-            } else {
-                console.log("User is null");
-                setLoggedIn(false);
-                setIsTranslator(false);
-                setIsLeader(false);
-                setIsAdmin(false);
-                setIsAuthor(false);
-            }
         });
 
         // Clean up the subscription on unmount
