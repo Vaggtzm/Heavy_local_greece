@@ -169,6 +169,7 @@ const FirebaseFileList = () => {
             setFiles(updatedFiles);
 
             setShowModal(false);
+            setAuthorName("");
             fetchFiles();
         } catch (error) {
             setError('Error saving file data: ' + error.message);
