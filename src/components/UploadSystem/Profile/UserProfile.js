@@ -131,7 +131,7 @@ const UserProfile = () => {
                 <div style={{color: '#fff'}}>
 
                     <h2 className={"row d-flex text-white"}>
-                        <p className={"col-4"}>
+                        <p className={"col-4 h1"}>
                             User Profile
                         </p>
 
