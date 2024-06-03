@@ -85,19 +85,19 @@ function App() {
 return (
         <>
             {(process.env.NODE_ENV === 'development'&&malakatino) && (
-                <span style={{
+                <b style={{
                     position: 'fixed',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: '21vh',
+                    fontSize: '25vh',
                     color: 'rgba(255, 0, 0, 0.6)', // Light grey color
                     zIndex: 1000, // Ensure it stays in the background
                     pointerEvents: 'none', // Make it non-interactive
                     userSelect: 'none', // Prevent text selection
                 }} className={"rotate-90"}>
-                    Βαγγέλη είσαι ηλίθιος
-                </span>
+                    Vaggelis, you are an idiot
+                </b>
             )}
             <NotificationToast/>
             <Routes>
