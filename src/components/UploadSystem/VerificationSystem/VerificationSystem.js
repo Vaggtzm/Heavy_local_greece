@@ -21,6 +21,7 @@ const FirebaseFileList = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const [sortByDate, setSortByDate] = useState(false);
+    const [authorName, setAuthorName] = useState('');
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -128,6 +129,22 @@ const FirebaseFileList = () => {
         setFileData({
             ...file.fileContent,
         });
+
+        const authorRef = databaseRef(database, `authors/${file.fileContent.sub}`);
+        try{
+            get(authorRef).then((snapshot)=>{
+                if(snapshot.exists()){
+                    console.log(snapshot.val())
+                    setAuthorName(snapshot.val().displayName);
+                }else{
+                    setAuthorName("");
+                }
+            });
+        }catch(e){
+            console.log(e)
+            setAuthorName("");
+        }
+
         setIsAlreadyPublished(isAlreadyPub);
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
@@ -292,7 +309,7 @@ const FirebaseFileList = () => {
                     {(sortByDate?files.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }):files).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.fileContent.isReady && <><i
@@ -314,7 +331,7 @@ const FirebaseFileList = () => {
                     {(sortByDate?earlyReleasedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }):earlyReleasedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <p key={file.fileContent.date}
@@ -353,7 +370,7 @@ const FirebaseFileList = () => {
                     {(sortByDate?alreadyPublishedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }):alreadyPublishedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <p key={file.fileContent.date}
@@ -451,11 +468,27 @@ const FirebaseFileList = () => {
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
-                                <Form.Label>Author code</Form.Label>
+                                <Form.Label>Author code({authorName})</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={fileData.sub}
-                                    onChange={(e) => handleChange(e, 'sub', false)}
+                                    onChange={(e) => {
+                                        const authorRef = databaseRef(database, `authors/${e.target.value}`);
+                                        try{
+                                            get(authorRef).then((snapshot)=>{
+                                                if(snapshot.exists()){
+                                                    console.log(snapshot.val())
+                                                    setAuthorName(snapshot.val().displayName);
+                                                }else{
+                                                    setAuthorName("");
+                                                }
+                                            });
+                                        }catch(e){
+                                            console.log(e)
+                                            setAuthorName("");
+                                        }
+                                        handleChange(e, 'sub', false)
+                                    }}
                                 />
                             </Form.Group>
                             <Form.Group controlId="date">
