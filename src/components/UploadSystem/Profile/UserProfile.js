@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Form, Alert } from 'react-bootstrap';
-import { auth, config, storage } from '../../../firebase';
+import {auth, database, storage} from '../../../firebase';
 import {
     reauthenticateWithCredential,
     EmailAuthProvider,
-    signInWithEmailAndPassword,
     updateProfile, updatePassword
 } from "firebase/auth";
-import { fetchAndActivate, getValue } from "firebase/remote-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {ref as databaseRef, get, update} from "firebase/database";
 import UserNav from "../../Users/UserNav";
-import { getFunctions, httpsCallable } from "firebase/functions";
 
 const UserProfile = () => {
     const [user, setUser] = useState(auth.currentUser || null);
@@ -22,20 +20,28 @@ const UserProfile = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || '');
+    const[userRef, setUserRef] = useState(null);
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            await fetchAndActivate(config);
-            const userList = JSON.parse(getValue(config, "translationSystem").asString());
-            // Your logic here
-        };
 
-        fetchUserData();
+        const unsubscribe = auth.onAuthStateChanged(async  (user) => {
+            const userRef = databaseRef(database, `authors/${user.uid}`);
+            setUserRef(userRef);
+            const userstore = await get(userRef);
 
-        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if(userstore.exists()){
+                const userData = userstore.val();
+                if(!userData.wantToShow){
+                    userData.wantToShow = false;
+                }else {
+                    user.wantToShow = userData.wantToShow;
+                }
+            }
+
             setUser(user);
             setDisplayName(user?.displayName || '');
             setProfileImageUrl(user?.photoURL || '');
+
         });
 
         return () => unsubscribe();
@@ -86,11 +92,8 @@ const UserProfile = () => {
             }
 
             // Initialize Firebase Functions
-            const functions = getFunctions();
-            const updateUserInAuthors = httpsCallable(functions, 'updateUserInAuthors');
-
-            // Call the updateUserInAuthors function
-            await updateUserInAuthors({
+            const userRef = databaseRef(database, `authors/${user.uid}`);
+            await update(userRef, {
                 email: user.email,
                 displayName: displayName.trim(),
                 photoURL: user.photoURL || ''
@@ -125,8 +128,28 @@ const UserProfile = () => {
         <>
             <UserNav />
             <div className="container mt-4">
-                <div style={{ color: '#fff' }}>
-                    <h2>User Profile</h2>
+                <div style={{color: '#fff'}}>
+
+                    <h2 className={"row d-flex text-white"}>
+                        <p className={"col-4"}>
+                            User Profile
+                        </p>
+
+                        <Form className={"col d-flex justify-content-end"}>
+                            <Form.Check
+                                type="switch"
+                                id="sort-by-date-switch"
+                                label="Show profile picture on articles"
+                                checked={user.wantToShow}
+                                onChange={() => {
+                                    user.wantToShow = !user.wantToShow;
+                                    update(userRef, {
+                                        wantToShow: user.wantToShow
+                                    });
+                                }}
+                            />
+                        </Form>
+                    </h2>
                     {error && <Alert variant="danger">{error}</Alert>}
                     {successMessage && <Alert variant="success">{successMessage}</Alert>}
                     <Form onSubmit={handleUpdateProfile}>
@@ -136,7 +159,7 @@ const UserProfile = () => {
                                 type="text"
                                 value={displayName}
                                 onChange={handleDisplayNameChange}
-                                style={{ backgroundColor: '#333', color: '#fff' }}
+                                style={{backgroundColor: '#333', color: '#fff'}}
                             />
                         </Form.Group>
                         <Form.Group controlId="profileImage">
@@ -146,14 +169,14 @@ const UserProfile = () => {
                                     <img
                                         src={profileImageUrl}
                                         alt="Profile"
-                                        style={{ width: '100px', height: '100px', borderRadius: '50%' }}
+                                        style={{width: '100px', height: '100px', borderRadius: '50%'}}
                                     />
                                 </div>
                             )}
                             <Form.Control
                                 type="file"
                                 onChange={handleProfileImageChange}
-                                style={{ backgroundColor: '#333', color: '#fff' }}
+                                style={{backgroundColor: '#333', color: '#fff'}}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">
@@ -167,7 +190,7 @@ const UserProfile = () => {
                                 type="password"
                                 value={password}
                                 onChange={handlePasswordChange}
-                                style={{ backgroundColor: '#333', color: '#fff' }}
+                                style={{backgroundColor: '#333', color: '#fff'}}
                             />
                         </Form.Group>
                         <Form.Group controlId="newPassword">
@@ -176,7 +199,7 @@ const UserProfile = () => {
                                 type="password"
                                 value={newPassword}
                                 onChange={handleNewPasswordChange}
-                                style={{ backgroundColor: '#333', color: '#fff' }}
+                                style={{backgroundColor: '#333', color: '#fff'}}
                             />
                         </Form.Group>
                         <Form.Group controlId="confirmPassword">
@@ -185,7 +208,7 @@ const UserProfile = () => {
                                 type="password"
                                 value={confirmPassword}
                                 onChange={handleConfirmPasswordChange}
-                                style={{ backgroundColor: '#333', color: '#fff' }}
+                                style={{backgroundColor: '#333', color: '#fff'}}
                             />
                         </Form.Group>
                         <Button variant="primary" type="submit">

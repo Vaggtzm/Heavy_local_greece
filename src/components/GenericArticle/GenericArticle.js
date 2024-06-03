@@ -97,7 +97,6 @@ const DefaultArticle = (props) => {
             const usersData = snapshot.val();
             let userImage = ref(storage, `/profile_images/${data.sub}_600x600`);
             usersData.photoURL = await getDownloadURL(userImage);
-            usersData.wantToShow = true;
             console.log(usersData);
 
             setAuthor(usersData);
