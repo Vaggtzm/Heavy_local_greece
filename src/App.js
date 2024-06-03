@@ -32,6 +32,7 @@ import AdminSystem from "./components/AdminSystem/AdminSystem";
 function App() {
     const [loading, setLoading] = useState(false);
 
+    const malakatino = true;
 
     const saveDeviceToken = async (token) => {
         try {
@@ -80,44 +81,56 @@ function App() {
     }, []);
 
 
-    {/**firestore */
-    }
+
 return (
         <>
-                <>
-                    <NotificationToast/>
-                    <Routes>
-                        <Route path='/' element={<Home/>}/>
-                        <Route path='/articles-page' element={<Articles/>}/>
-                        <Route path='/Art-Gallery-page' element={<Gallery/>}/>
-                        <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
-                        <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
-                        <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
-                        <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
-                        <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
-                        <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
+            {(process.env.NODE_ENV === 'development'&&malakatino) && (
+                <span style={{
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    fontSize: '21vh',
+                    color: 'rgba(255, 0, 0, 0.6)', // Light grey color
+                    zIndex: 1000, // Ensure it stays in the background
+                    pointerEvents: 'none', // Make it non-interactive
+                    userSelect: 'none', // Prevent text selection
+                }} className={"rotate-90"}>
+                    Βαγγέλη είσαι ηλίθιος
+                </span>
+            )}
+            <NotificationToast/>
+            <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/articles-page' element={<Articles/>}/>
+                <Route path='/Art-Gallery-page' element={<Gallery/>}/>
+                <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
+                <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
+                <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
+                <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
+                <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
+                <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
 
-                        <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
-                        <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
-                        <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+                <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
+                <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+                <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
 
-                        <Route path='/about-us' element={<Authors/>}/>
-                        <Route path='/recommended' element={<RecommendationSystem/>}/>
-                        <Route path='/admin' element={<AdminSystem/>}/>
+                <Route path='/about-us' element={<Authors/>}/>
+                <Route path='/recommended' element={<RecommendationSystem/>}/>
+                <Route path='/admin' element={<AdminSystem/>}/>
 
-                        <Route path='/upload' element={<ArticleUpload/>}/>
-                        <Route path='/upload/register' element={<Register/>}/>
-                        <Route path='/upload/profile' element={<UserProfile/>}/>
-                        <Route path='/upload/admin' element={<FirebaseFileList/>}/>
-                        <Route path='/upload/login' element={<Login admin={false}/>}/>
-                        <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
-                        <Route path='/upload/translation' element={<TranlationSystem/>}/>
-                        <Route path='/User/login' element={<UserLog />}/>
-                        <Route path='/User/register' element={<UserRegister />}/>
-                        <Route path='/User/home' element={<UserHome />}/>
-                        <Route path='/User/Saved' element={<SavedArtciles />}/>
-                    </Routes>
-                </>
+                <Route path='/upload' element={<ArticleUpload/>}/>
+                <Route path='/upload/register' element={<Register/>}/>
+                <Route path='/upload/profile' element={<UserProfile/>}/>
+                <Route path='/upload/admin' element={<FirebaseFileList/>}/>
+                <Route path='/upload/login' element={<Login admin={false}/>}/>
+                <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+                <Route path='/upload/translation' element={<TranlationSystem/>}/>
+                <Route path='/User/login' element={<UserLog />}/>
+                <Route path='/User/register' element={<UserRegister />}/>
+                <Route path='/User/home' element={<UserHome />}/>
+                <Route path='/User/Saved' element={<SavedArtciles />}/>
+            </Routes>
         </>
     );
 }
