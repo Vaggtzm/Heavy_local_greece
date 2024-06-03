@@ -1,10 +1,10 @@
 import UserNav from "../Users/UserNav";
 import React, {useEffect, useState} from "react";
-import {fetchAndActivate, getValue} from "firebase/remote-config";
-import {auth, config, database} from "../../firebase";
+import {auth, database, storage} from "../../firebase";
 import {signOut} from "firebase/auth";
 import {useNavigate} from "react-router-dom";
 import {onValue, ref, update} from "firebase/database";
+import {getDownloadURL, ref as storageRef} from "firebase/storage";
 
 const AdminSystem= () => {
 
@@ -30,8 +30,19 @@ const AdminSystem= () => {
             auth.onAuthStateChanged((user) => {
                 if (user && (userList.includes(user.email)||user.email==="pavlos@orfanidis.net.gr")){
                     setCurrentUser(user);
-                    onValue(usersRef, (users)=>{
-                        setUsers(users.val());
+                    onValue(usersRef, async (users)=>{
+                        users = users.val()
+                        await Promise.all(
+                        Object.keys(users).map(async key => {
+                            const photoUrlRef = storageRef(storage, `profile_images/${key}_600x600`);
+                            try {
+                                users[key].photoURL = await getDownloadURL(photoUrlRef);
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        }));
+
+                        setUsers(users);
                     });
                 } else {
                     setCurrentUser(null);
@@ -75,18 +86,22 @@ const AdminSystem= () => {
                         <table className="table table-dark table-striped">
                             <thead>
                             <tr className={"row"} style={{marginRight: "0.1vh"}}>
-                                <th className={"col-4"}>Email</th>
-                                <th className={"col-4"}>Role</th>
+                                <th className={"col-2"}>Image</th>
+                                <th className={"col-3"}>Email</th>
+                                <th className={"col-3"}>Role</th>
                                 <th className={"col-4"}>Change Role</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {users&&roles && Object.keys(users).map((key, index) => {
+                            {users&&roles && Object.keys(users).map( (key, index) => {
                                 const email = users[key].email;
+
+
                                 return (
                                     <tr key={index} className={"row"}>
-                                        <td className={"col-4"}>{users[key].displayName}({users[key].email})</td>
-                                        <td className={"col-4"}>{authorLeader.includes(users[key].email)? "Author Leader" : admin.includes(users[key].email)?"Admin":roles.translationSystem.includes(users[key].email)?"Translator":"Author"}</td>
+                                        <td className={"col-2"}>{users[key].photoURL&&<img className={"w-75 m-4"} alt={users[key].displayName} src={users[key].photoURL}/>}</td>
+                                        <td className={"col-3"}>{users[key].displayName} ({users[key].email})</td>
+                                        <td className={"col-3"}>{authorLeader.includes(users[key].email) ? "Author Leader" : admin.includes(users[key].email) ? "Admin" : roles.translationSystem.includes(users[key].email) ? "Translator" : "Author"}</td>
                                         <td className="row col-4">
                                             {!roles.admin.includes(email) && (
                                                 <div className="col-4">
@@ -101,7 +116,7 @@ const AdminSystem= () => {
                                             {!roles.authorLeader.includes(email) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr" && currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-warning"
                                                         onClick={() => handleRoleChange('authorLeader', email)}
                                                     >
@@ -112,7 +127,7 @@ const AdminSystem= () => {
                                             {!roles.translationSystem.includes(email) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr" && currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-info"
                                                         onClick={() => handleRoleChange('translationSystem', email)}
                                                     >
@@ -123,7 +138,7 @@ const AdminSystem= () => {
                                             {['admin', 'authorLeader', 'translationSystem'].some(role => roles[role].includes(email)) && (
                                                 <div className="col-4" style={{padding: "0"}}>
                                                     <button
-                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr"&& currentUser.email !== "tzimasvaggelis02@gmail.com"}
+                                                        disabled={roles.admin.includes(email) && currentUser.email !== "pavlos@orfanidis.net.gr" && currentUser.email !== "tzimasvaggelis02@gmail.com"}
                                                         className="btn btn-secondary"
                                                         style={{marginRight: "1vh", marginBottom: "1vh"}}
                                                         onClick={() => handleRoleChange('authors', email)}
