@@ -130,16 +130,16 @@ const Home = () => {
                 <img
                   className="card-img-top shadow-lg h-100 "
                   src={
-                    "https://pulse-of-the-underground.com/assets/a4286966306_65.jpeg"
+                    "https://pulse-of-the-underground.com/assets/346073861_246735371275177_9135930120637580542_n.jpg"
                   }
                   alt="Disimulator"
                 ></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                  Hoth - Oathbreaker (Album Review) - Star Wars Tales Told with Ominous Melodies
+                  ALBUM REVIEW: Navigating the Depths of Udåd's Eponymous Album
                   </h4>
                   <a
-                    href="/article/Hoth---Oathbreaker-album-review---Star-Wars-Tales-Told-With-Ominous-Melodies"
+                    href="/article/ALBUM-REVIEW-Navigating-the-Depths-of-Udds-Eponymous-Album"
                     className="btn btn-primary"
                   >
                     Read More
@@ -152,15 +152,15 @@ const Home = () => {
                 <img
                   className="card-img-top shadow-lg h-100"
                   src={
-                    "https://pulse-of-the-underground.com/assets/438146560_122106913652303851_8313006724310594386_n.jpg"
+                    "https://pulse-of-the-underground.com/assets/occult.jpg"
                   }
                   alt="Disimulator"
                 ></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                  The Battle of Good vs. Evil in Metal Form: “Immortal King” Reviewed                   </h4>
+                  Cosmic Riffs and Smoky Dreams: “The Chained, The Burned, The Wounded”                  </h4>
                   <a
-                    href="/article/The-Battle-of-Good-vs.-Evil-in-Metal-Form:-“Immortal-King”-Reviewed"
+                    href="/article/Cosmic-Riffs-and-Smoky-Dreams-The-Chained-The-Burned-The-Wounded"
                     className="btn btn-primary"
                   >
                     Read More
@@ -174,16 +174,16 @@ const Home = () => {
                 <img
                   className="card-img-top shadow-lg h-100"
                   src={
-                    "https://pulse-of-the-underground.com/assets/a2181404431_65.jpeg"
+                    "https://pulse-of-the-underground.com/assets/264x264.jpg"
                   }
                   alt="Disimulator"
                 ></img>
                 <div className="card-body">
                   <h4 className="card-title">
-                  Nimbifer: Reviving the Raw Style - band review 
+                  Infektum: Walking in the Path of Neue Deutsche Härte - A Band Review 
                   </h4>
                   <a
-                    href="/article/Nimbifer:-Reviving-the-Raw-Style---band-review"
+                    href="/article/Infektum-Walking-in-the-Path-of-Neue-Deutsche-Hrte---a-band-review-"
                     className="btn btn-primary"
                   >
                     Read More
@@ -378,7 +378,22 @@ const Home = () => {
               </a></li>
             </ul>
             <hr className="bg-white"/>
+            <h3>General News</h3>
+            <div className="col-md-12 m-2">
+             <div className="card h-100 w-100">
+                <div className="card-body">
+                  <h4 className="card-title">
+                  Νέο βίντεο κλιπ από τους Meden Agan                  </h4>
+                  <a
+                    href="/article/Νέο-βίντεο-κλιπ-από-τους-Meden-Agan"
+                    className="btn btn-primary"
+                  >
+                    Read More
+                  </a>
+                </div>
+              </div>
 
+             </div>
 
             <ul className="list-unstyled">
               <li> <Socials /></li>
