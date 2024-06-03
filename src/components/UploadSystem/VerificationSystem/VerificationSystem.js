@@ -421,7 +421,10 @@ const FirebaseFileList = () => {
                     <Toast.Body>The article link has been copied to the clipboard.</Toast.Body>
                 </Toast>
 
-                <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => setFileData({})}>
+                <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => {
+                    setFileData({})
+                    setAuthorName("");
+                }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit File Data</Modal.Title>
                     </Modal.Header>
@@ -469,7 +472,7 @@ const FirebaseFileList = () => {
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
-                                <Form.Label>Author code({authorName})</Form.Label>
+                                <Form.Label>Author code{authorName&&<>({authorName})</>}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={fileData.sub}
