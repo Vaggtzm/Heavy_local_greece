@@ -215,18 +215,26 @@ const DefaultArticle = (props) => {
               <hr className="bg-dark"/>
             </div>
             <div className={"col-12"}>
-            <div className="w-100 d-flex align-items-center">
-              {(author.wantToShow&&author.photoURL)&& (<div className="image-container ms-1" style={{width:"80px", height: "80px"}}>
-                <img
-                    src={author.photoURL}
-                    alt={author.displayName}
-                />
-              </div>)}
-              {/* Add margin to the left of the text */}
-              <p className="lead ms-2 text-white text-center">{author.displayName}</p>
+              <div className="w-100 d-flex align-items-center">
+                {(author.wantToShow && author.photoURL) && (
+                    <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
+                      <img
+                          src={author.photoURL}
+                          alt={author.displayName}
+                      />
+                    </div>)}
+                {/* Add margin to the left of the text */}
+                <div>
+                <div className={"row m-0"}>
+                  <span className="text-white text-center h4">{author.displayName}</span>
+                </div>
+                <div className={"row m-0"}>
+                  <span className="text-white text-center h6">{author.role}</span>
+                </div>
+                </div>
+              </div>
             </div>
-            </div>
-            <hr className={(author.wantToShow?"mt-2 ":"")+"bg-dark"}/>
+            <hr className={(author.wantToShow ? "mt-2 " : "") + "bg-dark"}/>
             <div className="col-md-6 credits-box">
               {articles.img01&&<img
                   className="img-fluid w-100"
