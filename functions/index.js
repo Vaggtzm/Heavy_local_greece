@@ -207,6 +207,8 @@ async function updateImageMetadata(filePath) {
   }
 
 app.get("/assets/*", async (req, res) => {
+    res.set('Cache-Control', 'public, max-age=604800');
+
   const imagePath = req.params[0];
   let filePath = "images/" + imagePath;
   const [metadata] = await bucket.file(filePath).getMetadata();

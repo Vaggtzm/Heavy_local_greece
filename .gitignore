@@ -1,3 +1,4 @@
+functions/node_modules
 *admin*
 venv
 *.cache
@@ -27,3 +28,9 @@ yarn-error.log*
 .firebase/hosting.YnVpbGQ.cache
 
 *.cache
+
+*.log
+
+functions/index.html
+
+functions/node_modules/.bin/
