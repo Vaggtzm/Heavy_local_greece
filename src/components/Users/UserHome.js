@@ -44,34 +44,34 @@ const UserHome = () => {
             <div className="container">
               <div className="row">
                 <div className="col-md-12">
-                  <h3>Early Bird realeses</h3>
+                  <h3>Early Bird Top</h3>
                 </div>
                 <div className="col-md-4">
                 <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/SuperHorror.webp"} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/fred.jpg"} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">R’n’R απ’το μνήμα - Superhorror - Church of I.D.G.A.F. (single review)</h4>
-          <a href="/article/RNR-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">Frédéric D. Oberland is a versatile French artist, composer, multi-instrumentalist, photographer, and visual artist.</h4>
+          <a href="/article/early/Frdric-D-Oberland--" className="btn btn-primary">Read More</a>
         </div>
       </div>
 
                 </div>
                 <div className="col-md-4">
                 <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/NightPleasure.webp"} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/a1160982583_5.jpg"} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Single Review: Night Pleasure Hotel Reveals Heartfelt “Niko”</h4>
-          <a href="/article/Night-pleasure-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">ALBUM REVIEW: Unearthing the Shamanic Depths of Wounded Funeral’s Latest Masterpiece, “Skaalp”</h4>
+          <a href="/article/early/ALBUM-REVIEW-Unearthing-the-Shamanic-Depths-of-Wounded-Funerals-Skaalp" className="btn btn-primary">Read More</a>
         </div>
       </div>
 
                 </div>
                 <div className="col-md-4">
                 <div className="card h-100 w-100 review-card">
-        <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/kokkinia2.jpg"} alt="Disimulator"></img>
+        <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Suffering_Souls.jpeg"} alt="Disimulator"></img>
         <div className="card-body">
-          <h4 className="card-title">Το Μιαρό Δέντρο - Kokkinià - Arboreal (single review+band info)</h4>
-          <a href="/article/KOKKINIA-archive" className="btn btn-primary">Read More</a>
+          <h4 className="card-title">ALBUM REVIEW: Suffering Souls’ “An Iconic Taste of Demise” — Aggression Meets Elegance</h4>
+          <a href="/article/early/ALBUM-REVIEW-Suffering-Souls-An-Iconic-Taste-of-Demise---Aggression-Meets-Elegance" className="btn btn-primary">Read More</a>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ const UserHome = () => {
         <div className="row">
 
         </div>
-  <h4>Regular Stream</h4>
+  <h4>Explore More</h4>
   <div className="row mt-4 text-center">
   <div className="col-md-6 mb-4">
       <div className="card h-100 w-100">

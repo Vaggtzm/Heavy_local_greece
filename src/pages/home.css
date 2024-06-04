@@ -33,10 +33,14 @@ header {
 
 .ExploreMore{
   height: 100vh;
-  padding: 2rem;
+  padding-bottom: 1rem;
 }
 
+.testinomial{
+  height: 100vh;
+  padding-bottom: 1rem;
 
+}
 
 
 
