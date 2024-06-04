@@ -469,10 +469,7 @@ const Home = () => {
       <h6 class="text-primary mb-3 text-white">Translator</h6>
       <p class="px-xl-3 text-white">
         <i class="fas fa-quote-left pe-2">
-        </i>        My name is Daniela, I am a half Greek and half Italian who lives in Thessaloniki. I studied Italian language & literature and obtained an advanced degree in translation studies. Professionally, I am a full-time back office agent in Teleperformance, and a part time teacher of Italian and translator. My hobbies include bellydancing, writing poetry, reading, creating YouTube playlists and AI artworks
-
-        
-        .
+        </i>My name is Daniela, I am a half Greek and half Italian who lives in Thessaloniki. I studied Italian language & literature and obtained an advanced degree in translation studies. Professionally, I am a full-time back office agent in Teleperformance, and a part time teacher of Italian and translator. My hobbies include bellydancing, writing poetry, reading, creating YouTube playlists and AI artworks .
       </p>
       <ul class="list-unstyled d-flex justify-content-center mb-0">
         <li>
@@ -583,16 +580,20 @@ For over a decade, I've been deeply immersed in the underground metal scene, act
     </div>
     <div class="col-md-6 mb-0 text-white">
       <div class="d-flex justify-content-center mb-4">
-        <img />
-          class="rounded-circle shadow-1-strong" width="150" height="150" />
+        <img src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FVSGMmP7o4DWwimc0tZjHC02487B3_600x600?alt=media&token=f315cd30-ad6f-4876-875e-d4ca72c15e58"} className="rounded-circle shadow-1-strong" width="150" height="150" />
       </div>
-      <h5 class="mb-3 text-white">Porfanid </h5>c
+      <h5 class="mb-3 text-white">Porfanid </h5>
       <h6 class="text-primary mb-3 text-white">Developer/Co-Admin</h6>
-      <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2 text-white"></i>
+        <p class="px-xl-3 text-white">
+            <i className="fas fa-quote-left pe-2 text-white"></i>
+            I am a student at the Computer Science Engineering department at the University of Ioannina. I am programming apps since I was a little kid and I have made a lot of projects.
 
-      </p>
-      <ul class="list-unstyled d-flex justify-content-center mb-0">
+            I have worked in many different programming languages.
+
+            I started learning Fortran because that was what my father could teach me. Then I moved on to bash,html, css and javascript, when I created my first web site what I was in junior highschool since I wanted the server to update on its own without me having to do it manually. After that I started programming a few apps on .NET.
+            <i className="fas fa-quote-right pe-2 text-white"></i>
+        </p>
+        <ul class="list-unstyled d-flex justify-content-center mb-0">
         <li>
           <i class="fas fa-star fa-sm text-warning"></i>
         </li>
