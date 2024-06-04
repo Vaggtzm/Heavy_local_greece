@@ -7,6 +7,8 @@ import PrimaryCarousel from "../components/PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "../components/carousel/carousel";
 import CasterFmPlayer from "../components/Users/CasterFmPlayer";
 import {getDownloadURL, ref} from "firebase/storage";
+import Author from "./Authors/Author/Author";
+import Footer from "../components/footer/footer";
 
 const Home = () => {
 
@@ -454,160 +456,29 @@ const Home = () => {
     </div>
   </div>
 
-  <div class="row text-center">
-    <div class="col-md-4 mb-5 mb-md-0">
-      <div class="d-flex justify-content-center mb-4">
-        <img src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FuSXH49YHlzT8vjQ94ZuJTOz351m2_600x600?alt=media&token=790b5543-cfdf-4855-b9e6-0ad90c7c92ca"
-          class="rounded-circle shadow-1-strong" width="150" height="150" />
-      </div>
-      <h5 class="mb-3 text-white">Daniela Palaiochorinou </h5>
-      <h6 class="text-primary mb-3 text-white">Translator</h6>
-      <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2">
-        </i>My name is Daniela, I am a half Greek and half Italian who lives in Thessaloniki. I studied Italian language & literature and obtained an advanced degree in translation studies. Professionally, I am a full-time back office agent in Teleperformance, and a part time teacher of Italian and translator. My hobbies include bellydancing, writing poetry, reading, creating YouTube playlists and AI artworks .
-      </p>
-      <ul class="list-unstyled d-flex justify-content-center mb-0">
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star-half-alt fa-sm text-warning"></i>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-4 mb-5 mb-md-0">
-      <div class="d-flex justify-content-center mb-4">
-        <img src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FgbK4OvgKbyYDfYCfIjboOqjA9Yv1_800x800?alt=media&token=cb71bba5-db24-4b99-af3d-a9ea3ecc3742"
-          class="rounded-circle shadow-1-strong" width="150" height="150" />
-      </div>
-      <h5 class="mb-3 text-white">Daria "Aeonia" Bratu</h5>
-      <h6 class="text-primary mb-3 text-white">Chief Editor "ENG TEAM"</h6>
-      <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2 text-white"></i>
-        Hailing from Bucharest, Romania, I'm a multi-disciplinary being fascinated by the convergence of geography and journalism. I pursued my academic interests concurrently, as both a visiting student at the University of Cambridge and a Ph.D. candidate in Geography at the University of Bucharest. Additionally, I hold degrees in Journalism from the Faculty of Journalism and Mass Communication Studies.
+            <div className="row text-center">
 
-For over a decade, I've been deeply immersed in the underground metal scene, actively writing about bands and albums while attending countless events.
-      </p>
-      <ul class="list-unstyled d-flex justify-content-center mb-0">
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-4 mb-0 text-white pb-2">
-      <div class="d-flex justify-content-center mb-4">
-        <img src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FQY7GE8irSce3f4AFKW20DAWVxhr2_600x600?alt=media&token=f8946065-4188-4fae-b646-53bf179936f7"
-          class="rounded-circle shadow-1-strong" width="150" height="150" />
-      </div>
-      <h5 class="mb-3 text-white">	Michalis "Scholasticus"Antonopoulos </h5>
-      <h6 class="text-primary mb-3 text-white">Chief Editor "GRE TEAM"</h6>
-      <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2 text-white"></i>
-      </p>
-      <ul class="list-unstyled d-flex justify-content-center mb-0">
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="far fa-star fa-sm text-warning"></i>
-        </li>
-      </ul>
-    </div>
-    <hr className="bg-white"/>
-    <div class="col-md-6 mb-0 text-white">
-      <div class="d-flex justify-content-center mb-4">
-        <img src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FYnKl6Fza8kcshY5rTlmeQZAokIg1?alt=media&token=61697f62-4856-4eef-aab4-9083ff7136ba"
-          class="rounded-circle shadow-1-strong" width="150" height="150" />
-      </div>
-      <h5 class="mb-3 text-white">	Vaggelis Tzimas </h5>
-      <h6 class="text-primary mb-3 text-white">Administrator/Project Owner</h6>
-      <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2 text-white"></i>Born and raised in Crete, I relocated to Ioannina, Greece at the tender age of 12. This move marked the start of my lifelong engagement with music and technology, beginning with my study of the guitar at a local music school. Upon completing my secondary education, I pursued further studies in Computer Engineering at a prestigious community college. It was during this formative period that my interest in programming and web development began to flourish. Today, I am proud to hold the position of a computer technician, supplemented by my ongoing education in programming
-      </p>
-      <ul class="list-unstyled d-flex justify-content-center mb-0">
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="far fa-star fa-sm text-warning"></i>
-        </li>
-      </ul>
-    </div>
-    <div class="col-md-6 mb-0 text-white">
-      <div class="d-flex justify-content-center mb-4">
-        <img src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/profile_images%2FVSGMmP7o4DWwimc0tZjHC02487B3_600x600?alt=media&token=f315cd30-ad6f-4876-875e-d4ca72c15e58"} className="rounded-circle shadow-1-strong" width="150" height="150" />
-      </div>
-      <h5 class="mb-3 text-white">Porfanid </h5>
-      <h6 class="text-primary mb-3 text-white">Developer/Co-Admin</h6>
-        <p class="px-xl-3 text-white">
-            <i className="fas fa-quote-left pe-2 text-white"></i>
-            I am a student at the Computer Science Engineering department at the University of Ioannina. I am programming apps since I was a little kid and I have made a lot of projects.
 
-            I have worked in many different programming languages.
+                <Author rating={4.5} className={"col-md-4 mb-5 mb-md-0"} userId={'uSXH49YHlzT8vjQ94ZuJTOz351m2'}/>
 
-            I started learning Fortran because that was what my father could teach me. Then I moved on to bash,html, css and javascript, when I created my first web site what I was in junior highschool since I wanted the server to update on its own without me having to do it manually. After that I started programming a few apps on .NET.
-            <i className="fas fa-quote-right pe-2 text-white"></i>
-        </p>
-        <ul class="list-unstyled d-flex justify-content-center mb-0">
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-warning"></i>
-        </li>
-        <li>
-          <i class="far fa-star fa-sm text-warning"></i>
-        </li>
-      </ul>
-    </div>
-  </div>
-  
-</section>
+                <Author rating={5} className={"col-md-4 mb-5 mb-md-0"} userId={'gbK4OvgKbyYDfYCfIjboOqjA9Yv1'}/>
+
+                <Author rating={4} className={"col-md-4 mb-0 text-white pb-2"} userId={'QY7GE8irSce3f4AFKW20DAWVxhr2'}/>
+
+
+
+                <hr className="bg-white"/>
+
+                <Author rating={4} className={"col-md-6 mb-0 text-white"} userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}/>
+
+                <Author rating={4} className={"col-md-6 mb-0 text-white"} userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}/>
+
+
+
+
+            </div>
+
+        </section>
        </section>
 
         {/**events */}
