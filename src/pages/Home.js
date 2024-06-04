@@ -451,11 +451,6 @@ const Home = () => {
   <div class="row d-flex justify-content-center">
     <div class="col-md-10 col-xl-8 text-center">
       <h3 class="mb-4 text-white">Testimonials</h3>
-      <p class="mb-4 pb-2 mb-md-5 pb-md-0 text-white">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet
-        numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum
-        quisquam eum porro a pariatur veniam.
-      </p>
     </div>
   </div>
 
@@ -528,8 +523,7 @@ For over a decade, I've been deeply immersed in the underground metal scene, act
       <h5 class="mb-3 text-white">	Michalis "Scholasticus"Antonopoulos </h5>
       <h6 class="text-primary mb-3 text-white">Chief Editor "GRE TEAM"</h6>
       <p class="px-xl-3 text-white">
-        <i class="fas fa-quote-left pe-2 text-white"></i>At vero eos et accusamus et iusto odio
-        dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti.
+        <i class="fas fa-quote-left pe-2 text-white"></i>
       </p>
       <ul class="list-unstyled d-flex justify-content-center mb-0">
         <li>
