@@ -7,6 +7,8 @@ const RSS = require("rss");
 const path = require("path");
 const fs = require("fs");
 const Jimp = require('jimp');
+const os = require('os');
+const { mkdirp } = require('mkdirp')
 
 const serviceAccount = require("./heavy-local-admin.json");
 

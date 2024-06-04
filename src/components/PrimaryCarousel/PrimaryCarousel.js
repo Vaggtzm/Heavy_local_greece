@@ -1,9 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Carousel.css'
+import {getDownloadURL, ref} from "firebase/storage";
+import {storage} from "../../firebase";
+
 const PrimaryCarousel = () => {
+
+  const [images, setImages] = React.useState([]);
+
+  useEffect(() => {
+    Promise.all([
+      getImageSource("images/Concerts/workInProgress/DSC_0016_800x600.JPG"),
+      getImageSource("images/Concerts/workInProgress/DSC_0058_800x600.JPG"),
+      getImageSource("images/Concerts/workInProgress/DSC_0028_800x600.JPG"),
+    ]).then((imageUrls)=>{
+        setImages(imageUrls);
+    })
+  },[]);
+
+  const getImageSource= async(imagepath)=>{
+    const imageRef = ref(storage, imagepath);
+    return await getDownloadURL(imageRef)
+  }
+
   const settings = {
     dots: false,
     infinite: true,
@@ -37,17 +58,9 @@ const PrimaryCarousel = () => {
   return (
     <Slider {...settings} >
 
-      <div className='bg-dark carousel-item'>
-
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0016.JPG"}   alt="slide2" />
-      </div>
-      <div className='bg-dark carousel-item'>
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0058.JPG"}  alt="slide3" />
-      </div>
-      <div className='bg-dark carousel-item'>
-        <img src={"https://heavy-local.com/assets/Concerts/workInProgress/DSC_0028.JPG"}  alt="slide4" />
-      </div>
-      
+      {images.map((image, index)=>{return(<div className='bg-dark carousel-item'>
+        <img src={image}   alt={`slide${index}`} />
+      </div>)})}
     </Slider>
   );
 };

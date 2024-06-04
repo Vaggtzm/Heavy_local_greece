@@ -1,17 +1,17 @@
 import React from "react";
 import AppNavigation from "../components/AppNav/AppNav";
 import "./home.css";
-import Footer from "../components/footer/footer";
 import Socials from "../components/SocialMedia/socials";
-import SocialBar from "../components/ShareBtns/SocialMediaBar";
 import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
-import Youtube from "../components/YoutubeAPI/Youtube";
 import PrimaryCarousel from "../components/PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "../components/carousel/carousel";
 import CasterFmPlayer from "../components/Users/CasterFmPlayer";
-import { NavLink } from "react-router-dom";
+import {getDownloadURL, ref} from "firebase/storage";
 
 const Home = () => {
+
+
+
   return (
     <>
       <AppNavigation />
