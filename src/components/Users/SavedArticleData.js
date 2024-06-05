@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getDownloadURL, ref} from "firebase/storage";
 import {storage} from "../../firebase";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -55,7 +56,7 @@ const SavedArticleData = (props) =>{
             <div className="card-body">
             <h5 className="card-title">{data.title}</h5>
               <p className="card-text">This article is saved</p>
-              <a className="btn btn-danger" href={`/article/${props.article}`}>Read More</a>
+              <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
             </div>
 
             </div>
@@ -63,8 +64,8 @@ const SavedArticleData = (props) =>{
             <div className="card-body">
               <h5 className="card-title">{props.article}</h5>
               <p className="card-text">This article is not saved</p>
-              <a className="btn btn-danger" href={`/article/${props.article}`}>Read More</a>
-
+              <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
+s
             </div>
           )}
         </>

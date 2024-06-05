@@ -83,7 +83,7 @@ const Home = () => {
             <p className="lead">
             TumulTum's journey is a testament to dedication, passion, and an unyielding commitment to artistic expression through the guitar. He is a courageous and distinctive guitarist who has been honing his craft for over 19 years. It is a thrilling opportunity.
             </p>
-              <NavLink="/article/tumultum-archive" className="btn btn-danger">Read More</NavLink>
+              <NavLink to="/article/tumultum-archive" className="btn btn-danger">Read More</NavLink>
           </div>
           <h3>Collabs and Sponshorships : </h3>
 
