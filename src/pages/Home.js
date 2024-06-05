@@ -246,6 +246,8 @@ const Home = () => {
                             <h3>Latest Reviews(GRE)</h3>
                             <hr className="bg-dark"/>
                             <div className="ReviewBox">
+
+
                                 <div className="col-md-4 m-2">
                                     <div className="card h-100 w-100">
                                         <img
@@ -268,55 +270,58 @@ const Home = () => {
                                             </NavLink>
                                         </div>
                                     </div>
-
                                 </div>
+
+
+
                                 <div className="col-md-4 m-2">
                                     <div className="card h-100 w-100">
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/Noiz-Ritual-Band-1.jpg"
+                                                "https://pulse-of-the-underground.com/assets/kawir-kydoimos.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Ξετυλίγοντας την ψυχή - Noiz Ritual - Embrace The Noiz (EP review + band
-                                                info)
+                                                Στα Άδυτα του Πολέμου - Kawir - Kydoimos (Album Review)
                                             </h4>
                                             <NavLink
-                                                to="/article/Ξετυλίγοντας-την-ψυχή---Noiz-Ritual---Embrace-The-Noiz-(EP-review-+-band-info)"
+                                                to="/article/Στα-Άδυτα-του-Πολέμου---Kawir---Kydoimos-Album-Review"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
                                             </NavLink>
                                         </div>
                                     </div>
-
                                 </div>
+
+
                                 <div className="col-md-4 m-2">
                                     <div className="card h-100 w-100">
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/images.png"
+                                                "https://pulse-of-the-underground.com/assets/meta_eyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ==.webp"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Hard’n’ heavy Blues - Rattlesquad - 1233 (album review + band
-                                                info) </h4>
+                                                Μια επικίνδυνη φουντωτή παρέα στο Δάσος - Chiral  - In the Company of Wolves (single review + band info)
+                                            </h4>
                                             <NavLink
-                                                to="/article/Hard’n’-heavy--Blues---Rattlesquad---1233-(album-review-+-band-info)"
+                                                to="/article/Μια-επικίνδυνη-φουντωτή-παρέα-στο-Δάσος---Chiral----In-the-Company-of-Wolves-single-review--band-info"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
                                             </NavLink>
                                         </div>
                                     </div>
-
                                 </div>
+
+
                             </div>
 
                         </div>

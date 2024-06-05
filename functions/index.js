@@ -168,17 +168,6 @@ app.get("/article/early/:article", (req, res, folder) => {
     getArticle(req, res, "early_releases").then();
 });
 
-async function getFileObject(file) {
-    const [metadata] = await file.getMetadata();
-    console.log(metadata)
-
-    return {
-        filePath: file.name,
-        contentType: metadata.contentType,
-        fileObject: file
-    };
-}
-
 
 // Express route to handle image requests
 app.get("/assets/*", async (req, res) => {
