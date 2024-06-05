@@ -9,6 +9,8 @@ const fs = require("fs");
 const Jimp = require('jimp');
 const os = require('os');
 const { mkdirp } = require('mkdirp')
+const { spawn } = require('child_process');
+const stream = require('stream');
 
 const serviceAccount = require("./heavy-local-admin.json");
 
@@ -166,54 +168,56 @@ app.get("/article/:article", (req, res, folder) => {
 app.get("/article/early/:article", (req, res, folder) => {
   getArticle(req, res, "early_releases").then();
 });
-async function updateImageMetadata(filePath) {
-    try {
-      // Get a reference to the image
-      const imageRef = bucket.file(filePath);
+
+async function getFileObject(file) {
+    const [metadata] = await file.getMetadata();
+    console.log(metadata)
   
-      // Get the current metadata
-      const [metadata] = await imageRef.getMetadata();
-  
-      // Check if custom metadata already exists (optional)
-      if (metadata.customMetadata && metadata.customMetadata.width && metadata.customMetadata.height) {
-        console.log('Image already has width and height metadata.');
-        return;  // Optional: Exit if metadata already exists
-      }
-  
-      // Download the image to get dimensions
-      const imageBuffer = await imageRef.downloadAsBuffer();
-  
-      // Use Jimp to read image dimensions
-      const image = await Jimp.read(imageBuffer);
-      const width = image.getWidth();
-      const height = image.getHeight();
-  
-      // Update custom metadata
-      const updatedMetadata = {
-        customMetadata: {
-          width,
-          height,
-          ...(metadata.customMetadata || {})  // Preserve existing custom metadata
-        }
-      };
-  
-      // Update the image metadata
-      await imageRef.setMetadata(updatedMetadata);
-      console.log(`Image metadata updated successfully for ${filePath}`);
-  
-    } catch (error) {
-      console.error(`Error updating image metadata: ${error}`);
-    }
+    return {
+      filePath: file.name,
+      contentType: metadata.contentType,
+      fileObject: file
+    };
   }
 
+  
+
+// Express route to handle image requests
 app.get("/assets/*", async (req, res) => {
-    res.set('Cache-Control', 'public, max-age=604800');
+  res.set('Cache-Control', 'public, max-age=604800');
 
   const imagePath = req.params[0];
   let filePath = "images/" + imagePath;
-  const [metadata] = await bucket.file(filePath).getMetadata();
-  if (metadata.customMetadata !== undefined) {
-    const { width, height } = metadata.customMetadata;
+  const file = bucket.file(filePath);
+
+  try {
+    // Download the image file to a buffer
+    const [fileBuffer] = await file.download();
+
+    // Check and update metadata if not already set
+    const [metadata] = await file.getMetadata();
+    console.log("Hello")
+    console.log(metadata.metadata);
+    
+    if (!metadata.metadata.width) {
+      console.log()
+      const dimensions = await getImageDimensionsBuffer(fileBuffer);
+      const newMetadata = {
+        metadata: {
+          width: dimensions.width.toString(),
+          height: dimensions.height.toString(),
+        },
+      };
+
+      console.log(newMetadata);
+      metadata.metadata = newMetadata.metadata;
+
+      await file.setMetadata(newMetadata);
+      console.log('Metadata updated successfully');
+    }
+    
+    
+    const { width, height } = metadata.metadata;
     const aspectRatio = width / height;
     const tolerance = 0.5;
     filePath = changeAnalysis(
@@ -222,22 +226,14 @@ app.get("/assets/*", async (req, res) => {
       "800x600",
       Math.abs(aspectRatio - 1) <= tolerance
     );
-  }else{
-    updateImageMetadata(filePath);
-  }
-  //filePath = changeAnalysis(filePath, "800x800", true)
 
-  try {
-    const contentType = metadata.contentType;
-    // Check if image is almost rectangular
-    // Use 800x800 quality for almost rectangular images
+    // Fetch the updated image file
+    const updatedFile = bucket.file(filePath);
+    const [updatedFileBuffer] = await updatedFile.download();
 
-    const fileData = await bucket.file(filePath).download();
-    //res.contentType(contentType);
-    res.send(fileData[0]);
-    return;
+    res.send(updatedFileBuffer);
   } catch (error) {
-    console.error("Error fetching file:", error);
+    console.log("Error fetching file:", error);
     res.status(404).send("File not found");
   }
 });
@@ -252,55 +248,78 @@ exports.webApi = functions
 NOTIFICATION HANDLING
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-const getImageDimensions = async (object) => {
-    // File and directory paths.
-    const { name: filePath, contentType } = object;
-    console.log(object);
-    const tempLocalFile = path.join(os.tmpdir(), filePath);
-    const tempLocalDir = path.dirname(tempLocalFile);
+const getImageDimensions = async (object)=> {
+    const { name: filePath, contentType, bucket: bucketName } = object;
+    console.log('Processing file:', filePath);
   
-    // Exit if this is triggered on a file that is not an image.
+    // Exit if not an image.
     if (!contentType.startsWith('image/')) {
-      return console.log('This is not an image.');
+      console.log('Skipping non-image:', filePath);
+      return;
     }
   
     // Cloud Storage files.
-    const bucket = admin.storage().bucket(object.bucket);
     const file = bucket.file(filePath);
   
-    // Create the temp directory where the storage file will be downloaded.SS
-    await mkdirp(tempLocalDir);
+    try {
+      // Download the image file to a buffer
+      const [fileBuffer] = await file.download();
+      console.log('The file has been downloaded to a buffer');
   
-    // Download file from bucket.
-    await file.download({ destination: tempLocalFile });
-    console.log('The file has been downloaded to', tempLocalFile);
+      // Get dimensions from the buffer
+      const dimensions = await getImageDimensionsBuffer(fileBuffer);
+      console.log(`Height:${dimensions.height} Width:${dimensions.width}`);
   
-    // Get Dimensions of the image
-    const { stdout } = await execFile(
-      'identify',
-      ['-format', '%wx%h', tempLocalFile],
-      { capture: ['stdout', 'stderr'] }
-    );
-    const [height, width] = stdout.split('x');
-    console.log(`Height:${height} Width:${width}`);
+      // Update custom metadata with width and height
+      const metadata = {
+        metadata: {
+          width: dimensions.width.toString(),
+          height: dimensions.height.toString(),
+        },
+      };
+      await file.setMetadata(metadata);
+      console.log('Metadata updated successfully');
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+  function getImageDimensionsBuffer(buffer) {
+    return new Promise((resolve, reject) => {
+      const identifyProcess = spawn('identify', ['-format', '%wx%h', '-']);
+      
+      // Write buffer to the stdin of the identify process
+      const bufferStream = new stream.PassThrough();
+      bufferStream.end(buffer);
+      bufferStream.pipe(identifyProcess.stdin);
   
-    // Update custom metadata with width and height
-    const metadata = {
-      width: parseInt(width),
-      height: parseInt(height),
-    };
-    await file.setMetadata({ custom: metadata });
+      let decodedStdout = '';
   
-    // Cleanup
-    fs.unlinkSync(tempLocalFile);
-    return console.log('Done');
-  };
+      identifyProcess.stdout.on('data', (chunk) => {
+        decodedStdout += chunk.toString();
+      });
+  
+      identifyProcess.stderr.on('data', (error) => {
+        console.error('Error:', error.toString());
+        reject(new Error('Failed to identify image dimensions'));
+      });
+  
+      identifyProcess.on('close', (code) => {
+        if (code === 0) {
+          const [width, height] = decodedStdout.trim().split('x');
+          resolve({ width: parseInt(width, 10), height: parseInt(height, 10) });
+        } else {
+          reject(new Error('identify command failed'));
+        }
+      });
+    });
+  }
 
 
 exports.sendNotification = functions.storage
   .object()
   .onFinalize(async (object) => {
-    getImageDimensions(object);
+    await getImageDimensions(object);
     try {
       // Check if the uploaded file is under the 'articles' directory
       const filePath = object.name; // Full path of the uploaded file in Firebase Storage
