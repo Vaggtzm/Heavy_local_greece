@@ -1,4 +1,5 @@
 import React from "react";
+import {NavLink} from "react-router-dom";
 
 const ReadMore = () => {
     return (
@@ -49,7 +50,7 @@ const ReadMore = () => {
                                     from the timeless allure of classic rock. This album marks not only a musical
                                     evolution but a deeply personal journey for Holler, whose raw emotion and unabashed
                                     influences are palpable throughout. </p>
-                                <a href="/article/Holler-archive" className="btn btn-primary">Read More</a>
+                                <NavLink to="/article/Holler-archive" className="btn btn-primary">Read More</NavLink>
                             </div>
                         </div>
                     </div>
@@ -69,7 +70,7 @@ const ReadMore = () => {
                                     listeners through a journey that oscillates between chaos and melancholy, echoing
                                     the existential ponderings of philosophers past..
                                 </p>
-                                <a href="/article/ECR-archive" className="btn btn-primary">Read More</a>
+                                <NavLink to="/article/ECR-archive" className="btn btn-primary">Read More</NavLink>
                             </div>
                         </div>
                     </div>
