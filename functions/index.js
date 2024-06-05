@@ -140,9 +140,8 @@ function changeAnalysis(
 
     // If there's no dot, return the filename with the suffix appended
     if (dotIndex === -1) {
-        //127.0.0.1:8443/heavy-local-12bc4/us-central1/webApi/assets/Concerts/workInProgress/DSC_0058.JPG
 
-        http: return `${fileName}_${
+        return `${fileName}_${
             change_analysis ? analysis_true : analysis_false
         }`;
     }
