@@ -8,6 +8,7 @@ import Youtube from "../YoutubeAPI/Youtube";
 import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "./../carousel/carousel";
 import CasterFmPlayer from "./CasterFmPlayer";
+import {NavLink} from "react-router-dom";
 const UserHome = () => {
   
   return (
@@ -51,7 +52,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/fred.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Frédéric D. Oberland is a versatile French artist, composer, multi-instrumentalist, photographer, and visual artist.</h4>
-          <a href="/article/early/Frdric-D-Oberland--" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/early/Frdric-D-Oberland--" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
 
@@ -61,7 +62,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/a1160982583_5.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">ALBUM REVIEW: Unearthing the Shamanic Depths of Wounded Funeral’s Latest Masterpiece, “Skaalp”</h4>
-          <a href="/article/early/ALBUM-REVIEW-Unearthing-the-Shamanic-Depths-of-Wounded-Funerals-Skaalp" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/early/ALBUM-REVIEW-Unearthing-the-Shamanic-Depths-of-Wounded-Funerals-Skaalp" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
 
@@ -71,7 +72,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://pulse-of-the-underground.com/assets/Suffering_Souls.jpeg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">ALBUM REVIEW: Suffering Souls’ “An Iconic Taste of Demise” — Aggression Meets Elegance</h4>
-          <a href="/article/early/ALBUM-REVIEW-Suffering-Souls-An-Iconic-Taste-of-Demise---Aggression-Meets-Elegance" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/early/ALBUM-REVIEW-Suffering-Souls-An-Iconic-Taste-of-Demise---Aggression-Meets-Elegance" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
 
@@ -96,7 +97,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Hydra.jpg"} alt="Dreariness"></img>
         <div className="card-body">
           <h4 className="card-title">Veins of Obsidian: Luctus' Hydra's Menacing Ode to Black Metal </h4>
-          <a href="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/Lyctus-hydra-archive" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
     </div>
@@ -105,7 +106,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/Civerous.webp"} alt="Zong"></img>
         <div className="card-body">
           <h4 className="card-title">Unleashing Eastern Metal Fury: Lethargy’s “Our Life Belongs to Us”</h4>
-          <a href="/article/Lethargy-archive" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/Lethargy-archive" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
     </div>
@@ -114,7 +115,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={"https://heavy-local.com/assets/korrection.webp"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Παλαιάς κοπής ανταρσία - KorrectioN - Having Fun (single review + info)</h4>
-          <a href="/article/korrection-archive" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/korrection-archive" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
     </div>
@@ -124,7 +125,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg h-100" src={'https://heavy-local.com/assets/Degenerate.jpg'} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Μια αμφίρροπη μάχη - Degenerate Mind - Nothing Left (single review)</h4>
-          <a href="/article/degenerate-mind-archive" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/degenerate-mind-archive" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
     </div>
@@ -136,7 +137,7 @@ const UserHome = () => {
         <img className="card-img-top shadow-lg  h-100" src={"https://heavy-local.com/assets/Herc.jpg"} alt="Disimulator"></img>
         <div className="card-body">
           <h4 className="card-title">Βουτιά στην περιπέτεια του Silmarillion- Herc - “Of Light and Darkness” (album review)</h4>
-          <a href="/article/Silmarillion-archive" className="btn btn-primary">Read More</a>
+            <NavLink to="/article/Silmarillion-archive" className="btn btn-primary">Read More</NavLink>
         </div>
       </div>
     </div>
@@ -149,19 +150,18 @@ const UserHome = () => {
           <h4>Live Chronicles by Daria (ENG)</h4>
           <div className="row text-center mt-4">
             <div className="col-md-6">
-              <img src={"https://heavy-local.com/assets/chronicles/chronicle-02/yothiria-02.jpg"} className="img-fluid" />
+              <img alt={"Live Chronicles"} src={"https://heavy-local.com/assets/chronicles/chronicle-02/yothiria-02.jpg"} className="img-fluid" />
             </div>
             <div className="col-md-6">
               <h3>
                 Chronicles of the Underworld Vol 2: Yoth Iria's Epic Odyssey at
                 Psychosounds Festival
               </h3>
-              <a
-                href="/Chronicles_of_the_underworld_vol-2_archive"
+              <NavLink to="/Chronicles_of_the_underworld_vol-2_archive"
                 className="btn btn-primary"
               >
                 Read More
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>
@@ -180,9 +180,9 @@ const UserHome = () => {
               <p className="lead text-white">
               Σήμερα στο Legends θα γίνει μια ιδιαίτερη μνεία για έναν drummer, έναν Έλληνα drummer που έχει φτάσει να ανήκει στο πάνθεον της μέταλ και δη της death, τον Γιώργο Κόλλια! Παρόλο που πρόκειται για έναν βετεράνο καλλιτέχνη και λίαν καταξιωμένο, πασίγνωστο σε όλη την υφήλιο στους χώρους της Extreme Metal 
               </p>
-              <a href="/legends-5-archive" className="btn btn-primary">
+              <NavLink to="/legends-5-archive" className="btn btn-primary">
                 Read More
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>

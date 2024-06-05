@@ -9,6 +9,7 @@ import CasterFmPlayer from "../components/Users/CasterFmPlayer";
 import {getDownloadURL, ref} from "firebase/storage";
 import Author from "./Authors/Author/Author";
 import Footer from "../components/footer/footer";
+import {NavLink} from "react-router-dom";
 
 const Home = () => {
 
@@ -49,7 +50,7 @@ const Home = () => {
           <p className="lead">
           On the evening of June 1st, 2024, Hidden – The Social Space from Bucharest transformed into a sanctum of metal, hosting an exclusive concert featuring two titans of the Romanian metal scene: Akral Necrosis and Spinecrusher. This event not only marked a monumental occasion for the Romanian underground movement but also celebrated a significant milestone for Akral Necrosis. The band members decided to release their first live album at the very place it was recorded, adding an extra layer of importance to the evening.
           </p>
-          <a href="/article/Akral-Necrosis-and-Spinecrusher-Live-in-Hidden-10624" className="btn btn-danger">Read More</a>
+              <NavLink to="/article/Akral-Necrosis-and-Spinecrusher-Live-in-Hidden-10624" className="btn btn-danger">Read More</NavLink>
 
             <hr className="bg-white"/>
             <h3>2024 Mindless Sinner X Marauder 25/5/24 @ Κύτταρο, Αθήνα</h3>
@@ -59,14 +60,14 @@ const Home = () => {
 
 Αν και η βραδιά ξεκίνησε με καθυστέρηση (για άγνωστους λόγους), κανένας από τους παρευρισκόμενους δεν έδειξε ενοχλημένος, αφού κάθε χεβιμεταλλάς που σέβεται τον εαυτό του είναι πάντα έτοιμος για όλα.
 </p> 
-            <a href="/article/Mindless-Sinner-X-Marauder-25524---" className="btn btn-danger">Read More</a>
+              <NavLink to="/article/Mindless-Sinner-X-Marauder-25524---" className="btn btn-danger">Read More</NavLink>
             <hr className="bg-white"/>
             <h3>Eldingar x Urza x Decemberance (25/05/24)</h3>
 
             <img src="https://pulse-of-the-underground.com/assets/decembrance.jpg" className="img-fluid w-75 rounded-2 m-2"/>
             <p>
             Δεύτερη φορά στο ιστορικό An Club στα Εξάρχεια των Αθηνών, αυτή την φορά για ανταπόκριση! Τα λόγια περιττεύουν όταν μπαίνεις σε αυτόν τον υπέροχο χώρο! Με ένα ποτήρι Captain Morgan για αρχή πήγα το Σάββατο αυτό σε ένα σκοτεινό, δυσοίωνο μα και ταυτόχρονα μελωδικό live! 4 σχεδόν ώρες ερέβους και ατμοσφαιρικών συνθέσεων με πρωταγωνιστές 3 underground έμπειρες μπάντες, τους Eldingar, τους Urza και τους Decemberance!</p> 
-            <a href="/article/TestEldingar-x-Urza-x-Decemberance-250524" className="btn btn-danger">Read More</a>
+              <NavLink to="/article/TestEldingar-x-Urza-x-Decemberance-250524" className="btn btn-danger">Read More</NavLink>
 
 
             <hr className="bg-white"/>
@@ -74,7 +75,7 @@ const Home = () => {
             <img src="https://pulse-of-the-underground.com/assets/Thomas_Libero.jpg" className="img-fluid w-75 h-75 rounded-2 m-2" />
             <p>
             Thomas Libero’s latest single, “Questa Storia La Scrivo Io” ("I Write My Own Story"), is now available on all streaming and digital download platforms. The track serves as a prelude to his highly anticipated album, “La Mia Guerra”, set to release in October 2024. Libero’s new single is a powerful anthem of self-actualization, designed to inspire listeners to overcome daily challenges and believe in their own potential.</p> 
-            <a href="/article/Thomas-Libero’s-Uplifting-New-Single-“Questa-Storia-La-Scrivo-Io”-Out-Now" className="btn btn-danger">Read More</a>
+              <NavLink to="/article/Thomas-Libero’s-Uplifting-New-Single-“Questa-Storia-La-Scrivo-Io”-Out-Now" className="btn btn-danger">Read More</NavLink>
             <hr className="bg-white"/>
 
             <h3>Delve into TumulTum Project Curtains </h3>
@@ -82,7 +83,7 @@ const Home = () => {
             <p className="lead">
             TumulTum's journey is a testament to dedication, passion, and an unyielding commitment to artistic expression through the guitar. He is a courageous and distinctive guitarist who has been honing his craft for over 19 years. It is a thrilling opportunity.
             </p>
-            <a href="/article/tumultum-archive" className="btn btn-danger">Read More</a>
+              <NavLink="/article/tumultum-archive" className="btn btn-danger">Read More</NavLink>
           </div>
           <h3>Collabs and Sponshorships : </h3>
 
@@ -99,12 +100,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   Ποτέ μην τα παρατάς - O.Y.D. - Caving In (Single Review +band info)                                     </h4>
-                  <a
-                    href="/article/Ποτέ-μην-τα-παρατάς---OYD---Caving-In-Single-Review-band-info-"
+                  <NavLink to="/article/Ποτέ-μην-τα-παρατάς---OYD---Caving-In-Single-Review-band-info-"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
              </div>
@@ -120,12 +120,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   JEHOVAH ON DEATH - Goya's Witches (EP review) - Μια Βουτιά σε Σκοτεινές Εποχές                                     </h4>
-                  <a
-                    href="/article/JEHOVAH-ON-DEATH---Goyas-Witches-EP-review--------"
+                  <NavLink to="/article/JEHOVAH-ON-DEATH---Goyas-Witches-EP-review--------"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
              </div>
@@ -147,12 +146,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   NEW ALBUM: Eva Can’t Drops “Emisferi” — A Spectacular Quest in Sound </h4>
-                  <a
-                    href="/article/NEW-ALBUM-Eva-Cant-Drops-Emisferi--An-Epic-Journey-in-Sound"
+                  <NavLink to="/article/NEW-ALBUM-Eva-Cant-Drops-Emisferi--An-Epic-Journey-in-Sound"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
              </div>
@@ -168,12 +166,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   Cosmic Riffs and Smoky Dreams: “The Chained, The Burned, The Wounded”                  </h4>
-                  <a
-                    href="/article/Cosmic-Riffs-and-Smoky-Dreams-The-Chained-The-Burned-The-Wounded"
+                  <NavLink to="/article/Cosmic-Riffs-and-Smoky-Dreams-The-Chained-The-Burned-The-Wounded"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -191,12 +188,11 @@ const Home = () => {
                   <h4 className="card-title">
                   Infektum: Walking in the Path of Neue Deutsche Härte - A Band Review 
                   </h4>
-                  <a
-                    href="/article/Infektum-Walking-in-the-Path-of-Neue-Deutsche-Hrte---a-band-review-"
+                  <NavLink to="/article/Infektum-Walking-in-the-Path-of-Neue-Deutsche-Hrte---a-band-review-"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
              </div>
@@ -222,12 +218,11 @@ const Home = () => {
                   <h4 className="card-title">
                   Διασχίζοντας τις Κρύπτες του Σύμπαντος - Blasteroid - Crypts of Mind (Album Review)
                   </h4>
-                  <a
-                    href="/article/Διασχίζοντας-τις-Κρύπτες-του-Σύμπαντος---Blasteroid---Crypts-of-Mind-Album-Review"
+                  <NavLink to="/article/Διασχίζοντας-τις-Κρύπτες-του-Σύμπαντος---Blasteroid---Crypts-of-Mind-Album-Review"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -245,12 +240,11 @@ const Home = () => {
                   <h4 className="card-title">
                   Ξετυλίγοντας την ψυχή - Noiz Ritual - Embrace The Noiz (EP review + band info)
                                     </h4>
-                  <a
-                    href="/article/Ξετυλίγοντας-την-ψυχή---Noiz-Ritual---Embrace-The-Noiz-(EP-review-+-band-info)"
+                  <NavLink to="/article/Ξετυλίγοντας-την-ψυχή---Noiz-Ritual---Embrace-The-Noiz-(EP-review-+-band-info)"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -267,12 +261,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   Hard’n’ heavy  Blues - Rattlesquad - 1233 (album review + band info)                  </h4>
-                  <a
-                    href="/article/Hard’n’-heavy--Blues---Rattlesquad---1233-(album-review-+-band-info)"
+                  <NavLink to="/article/Hard’n’-heavy--Blues---Rattlesquad---1233-(album-review-+-band-info)"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -291,12 +284,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   INTERVIEW: Häxenzijrkell on the Mystical Origins and Evolution of Their Black Metal Sound                  </h4>
-                  <a
-                    href="/article/INTERVIEW:-Häxenzijrkell-on-the-Mystical-Origins-and-Evolution-of-Their-Black-Metal-Sound"
+                  <NavLink to="/article/INTERVIEW:-Häxenzijrkell-on-the-Mystical-Origins-and-Evolution-of-Their-Black-Metal-Sound"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -312,12 +304,11 @@ const Home = () => {
                   <h4 className="card-title">
                   INTERVIEW: Demande à la Poussière on Shaping Art from Chaos                 
                    </h4>
-                  <a
-                    href="/article/Demande-à-la-Poussière’s-Journey:-An-In-Depth-Conversation-on-Evolution,-Inspiration,-and-“Kintsugi”"
+                  <NavLink to="/article/Demande-à-la-Poussière’s-Journey:-An-In-Depth-Conversation-on-Evolution,-Inspiration,-and-“Kintsugi”"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -333,12 +324,11 @@ const Home = () => {
                   <h4 className="card-title">
                   Animamortua:Interview                  
                   </h4>
-                  <a
-                    href="/article/Animamortua"
+                  <NavLink to="/article/Animamortua"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -353,12 +343,12 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   Exclusive Interview with Lethargy UA: Harmonizing Resilience and Melodic Might                  </h4>
-                  <a
-                    href="/article/Exclusive-Interview-with-Lethargy-UA:-Harmonizing-Resilience-and-Melodic-Might"
+                  <NavLink
+                    to="/article/Exclusive-Interview-with-Lethargy-UA:-Harmonizing-Resilience-and-Melodic-Might"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -372,12 +362,12 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   INTERVIEW: Get to Know Thy Legion                  </h4>
-                  <a
-                    href="/article/INTERVIEW -Get-to-Know-Thy-Legion"
+                  <NavLink
+                    to="/article/INTERVIEW -Get-to-Know-Thy-Legion"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
@@ -392,12 +382,11 @@ const Home = () => {
                 <div className="card-body">
                   <h4 className="card-title">
                   Νέο βίντεο κλιπ από τους Meden Agan                  </h4>
-                  <a
-                    href="/article/Νέο-βίντεο-κλιπ-από-τους-Meden-Agan"
+                  <NavLink to="/article/Νέο-βίντεο-κλιπ-από-τους-Meden-Agan"
                     className="btn btn-primary"
                   >
                     Read More
-                  </a>
+                  </NavLink>
                 </div>
               </div>
 
