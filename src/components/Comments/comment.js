@@ -27,6 +27,6 @@ class PageWithComments extends React.Component {
             </>
         );
     }
-};
+}
 
 export default PageWithComments;
