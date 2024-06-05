@@ -28,13 +28,13 @@ const database = admin.database();
 
 app.get("/feed", async (req, res) => {
     const feed = new RSS({
-        title: "Heavy Local Greece",
+        title: "Pulse Of The Underground",
         description: "An active news website for underground metal bands",
-        feed_url: "https://heavy-local.com/feed",
-        site_url: "https://heavy-local.com",
-        image_url: "https://heavy-local.com/favicon.png",
-        managingEditor: "heavylocalgreece@gmail.com (Heavy Local Greece)",
-        webMaster: "heavylocalgreece@gmail.com (Heavy Local Greece)",
+        feed_url: "https://pulse-of-the-underground.com/feed",
+        site_url: "https://pulse-of-the-underground.com/",
+        image_url: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
+        managingEditor: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
+        webMaster: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
         pubDate: new Date().toUTCString(),
     });
 
@@ -70,9 +70,9 @@ app.get("/feed", async (req, res) => {
                 title: article.title,
                 description: article.content.replace(
                     "/assets",
-                    "https://heavy-local.com/assets"
+                    "https://pulse-of-the-underground.com/assets"
                 ),
-                url: `https://heavy-local.com/article/${file.name
+                url: `https://pulse-of-the-underground.com/article/${file.name
                     .split("/")
                     .pop()
                     .replace(".json", "")}`,
@@ -335,12 +335,12 @@ exports.sendNotification = functions.storage
             const payload = {
                 notification: {
                     title: "New Article Uploaded!",
-                    body: "Go to Heavy Local to read our new article",
-                    image: "https://heavy-local.com/favicon.png",
+                    body: "Go to Pulse Of The Underground to read our new article",
+                    image: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
                 },
                 data: {
                     articleId: articleId,
-                    url: `https://heavy-local.com/article/${articleId.replace(
+                    url: `https://pulse-of-the-underground.com/article/${articleId.replace(
                         /\.json$/,
                         ""
                     )}`,
