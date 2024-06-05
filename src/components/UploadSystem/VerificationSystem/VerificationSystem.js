@@ -30,7 +30,7 @@ const FirebaseFileList = () => {
         img01: '',
         sub: '',
         date: '',
-        lang:'',
+        lang: '',
         translations: {},
         isReady: false
 
@@ -46,7 +46,7 @@ const FirebaseFileList = () => {
     const fetchArticlesCategory = async (folder) => {
         try {
             let publishedListRef = ref(storage, folder);
-            let { items: publishedItems } = await listAll(publishedListRef);
+            let {items: publishedItems} = await listAll(publishedListRef);
 
             return await Promise.all(
                 publishedItems.map(async (item) => {
@@ -55,10 +55,10 @@ const FirebaseFileList = () => {
 
                     try {
                         fileContent = await fileContent.json();
-                    }catch (e) {
-                        if (folder==='early_releases') {
+                    } catch (e) {
+                        if (folder === 'early_releases') {
                             setEarlyReleasesError('Error fetching files: file: ' + item.name + " : " + error);
-                        } else if (folder==='articles') {
+                        } else if (folder === 'articles') {
                             setAlreadyPublishedError('Error fetching files: file: ' + item.name + " : " + error);
                         } else {
                             setError('Error fetching files: ' + error.message);
@@ -67,13 +67,13 @@ const FirebaseFileList = () => {
                         console.log(item);
                     }
 
-                    return { name: item.name, downloadUrl, fileContent };
+                    return {name: item.name, downloadUrl, fileContent};
                 })
             );
         } catch (error) {
-            if (folder==='early_releases') {
+            if (folder === 'early_releases') {
                 setEarlyReleasesError('Error fetching files: file: ' + error);
-            } else if (folder==='articles') {
+            } else if (folder === 'articles') {
                 setAlreadyPublishedError('Error fetching files: file: ' + error);
             } else {
                 setError('Error fetching files: file: ' + error);
@@ -131,16 +131,16 @@ const FirebaseFileList = () => {
         });
 
         const authorRef = databaseRef(database, `authors/${file.fileContent.sub}`);
-        try{
-            get(authorRef).then((snapshot)=>{
-                if(snapshot.exists()){
+        try {
+            get(authorRef).then((snapshot) => {
+                if (snapshot.exists()) {
                     console.log(snapshot.val())
                     setAuthorName(snapshot.val().displayName);
-                }else{
+                } else {
                     setAuthorName("");
                 }
             });
-        }catch(e){
+        } catch (e) {
             console.log(e)
             setAuthorName("");
         }
@@ -164,7 +164,7 @@ const FirebaseFileList = () => {
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
             await uploadString(fileRef, JSON.stringify(fileData));
             const updatedFiles = files.map((file) =>
-                file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
+                file.name === selectedFile.name ? {...file, fileContent: fileData} : file
             );
             setFiles(updatedFiles);
 
@@ -178,11 +178,11 @@ const FirebaseFileList = () => {
 
     const handleChange = (e, field, isObject) => {
 
-        let { value } = e.target;
-        if(field==="category"){
+        let {value} = e.target;
+        if (field === "category") {
             const oldCategory = fileData.category;
             const articleRef = databaseRef(database, `articles/${value}/${selectedFile.name.replace('.json', '')}`);
-            update(articleRef, { isEarlyAccess: false }).then();
+            update(articleRef, {isEarlyAccess: false}).then();
 
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(oldArticleRef).then();
@@ -206,7 +206,7 @@ const FirebaseFileList = () => {
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete the file "${file.name}"?`);
-        if(!isConfirmed) return;
+        if (!isConfirmed) return;
         try {
             let fileRef;
             if (isAlreadyPub) {
@@ -245,7 +245,7 @@ const FirebaseFileList = () => {
 
             if (isEarlyReleasedArticles) {
                 const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
-                update(articleRef, { isEarlyAccess: false }).then();
+                update(articleRef, {isEarlyAccess: false}).then();
 
                 const usersRef = databaseRef(database, 'users');
                 const snapshot = await get(child(usersRef, '/'));
@@ -257,15 +257,15 @@ const FirebaseFileList = () => {
                             const savedArticles = snapshot.val();
                             console.log(savedArticles)
                             if (savedArticles) {
-                                update(savedArticlesRef, { isEarlyAccess: false, isPublished: true});
+                                update(savedArticlesRef, {isEarlyAccess: false, isPublished: true});
                             }
                         });
                     });
                     console.log("Updated")
                 }
-            }else{
+            } else {
                 const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
-                update(articleRef, { isEarlyAccess: false, isPublished:true }).then();
+                update(articleRef, {isEarlyAccess: false, isPublished: true}).then();
             }
 
 
@@ -284,7 +284,7 @@ const FirebaseFileList = () => {
 
     return (
         <>
-            <UserNav />
+            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
                     <p className={"col-4"}>
@@ -307,14 +307,16 @@ const FirebaseFileList = () => {
                 </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
-                    {(sortByDate?files.toSorted((a, b) => {
+                    {(sortByDate ? files.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateB - dateA;
-                    }):files).map((file, index) => (
+                    }) : files).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             {file.fileContent.isReady && <><i
-                                className={"text-success fa-solid fa-check"}></i><span> </span></>}<p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                                className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
+                            key={file.fileContent.date}
+                            className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
                             <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
                                 Edit
                             </Button>
@@ -329,11 +331,11 @@ const FirebaseFileList = () => {
                     copy the link</small></h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
-                    {(sortByDate?earlyReleasedArticles.toSorted((a, b) => {
+                    {(sortByDate ? earlyReleasedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateB - dateA;
-                    }):earlyReleasedArticles).map((file, index) => (
+                    }) : earlyReleasedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <p key={file.fileContent.date}
                                className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
@@ -368,11 +370,11 @@ const FirebaseFileList = () => {
                     to copy the link</small></h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
-                    {(sortByDate?alreadyPublishedArticles.toSorted((a, b) => {
+                    {(sortByDate ? alreadyPublishedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateB - dateA;
-                    }):alreadyPublishedArticles).map((file, index) => (
+                    }) : alreadyPublishedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-white"}>
                             <p key={file.fileContent.date}
                                className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
@@ -472,22 +474,22 @@ const FirebaseFileList = () => {
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
-                                <Form.Label>Author code{authorName&&<>({authorName})</>}</Form.Label>
+                                <Form.Label>Author code{authorName && <>({authorName})</>}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={fileData.sub}
                                     onChange={(e) => {
                                         const authorRef = databaseRef(database, `authors/${e.target.value}`);
-                                        try{
-                                            get(authorRef).then((snapshot)=>{
-                                                if(snapshot.exists()){
+                                        try {
+                                            get(authorRef).then((snapshot) => {
+                                                if (snapshot.exists()) {
                                                     console.log(snapshot.val())
                                                     setAuthorName(snapshot.val().displayName);
-                                                }else{
+                                                } else {
                                                     setAuthorName("");
                                                 }
                                             });
-                                        }catch(e){
+                                        } catch (e) {
                                             console.log(e)
                                             setAuthorName("");
                                         }

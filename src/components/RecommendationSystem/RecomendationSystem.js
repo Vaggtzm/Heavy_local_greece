@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {ref as storageRef, getDownloadURL, listAll} from "firebase/storage";
 import {ref as dbRef, onValue} from "firebase/database";
 import {auth, database, storage} from "../../firebase";
@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 
 const RecommendationSystem = () => {
     const [favoriteCategories, setFavoriteCategories] = useState([]);
-    const [articles, setArticles]=useState([]);
+    const [articles, setArticles] = useState([]);
 
     const fetchCategories = (userId) => {
         return new Promise((resolve, reject) => {
@@ -19,8 +19,8 @@ const RecommendationSystem = () => {
                         return ({
                             name: key,
                             isEarlyAccess: savedArticlesData[key].isEarlyAccess
-                        })});
-
+                        })
+                    });
 
 
                     const categories = [];
@@ -109,7 +109,7 @@ const RecommendationSystem = () => {
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
-                fetchCategories(user.uid).then((categories)=>{
+                fetchCategories(user.uid).then((categories) => {
                     readAllArticles(categories).then();
                 })
             }
@@ -119,16 +119,16 @@ const RecommendationSystem = () => {
     return (
         <div>
             <h2>Favorite Categories</h2>
-                {articles.map((article, index) => (
-                    <div className="card bg-white">
-                        <img className=" img-fluid" src={article.img01}/>
-                        <div className="card-body">
-                            <h5 className="card-title">{article.title}</h5>
-                            <NavLink className="btn btn-danger"
-                                     to={article.link}>Read More</NavLink>
-                        </div>
+            {articles.map((article, index) => (
+                <div className="card bg-white">
+                    <img className=" img-fluid" src={article.img01}/>
+                    <div className="card-body">
+                        <h5 className="card-title">{article.title}</h5>
+                        <NavLink className="btn btn-danger"
+                                 to={article.link}>Read More</NavLink>
                     </div>
-                ))}
+                </div>
+            ))}
         </div>
     );
 };

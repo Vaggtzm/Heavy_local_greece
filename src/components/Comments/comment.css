@@ -1,15 +1,15 @@
 /* comment.css */
-  
-  
-  .commentbox .comment {
+
+
+.commentbox .comment {
     margin-bottom: 15px;
-  }
-  
-  .commentbox .comment .user {
+}
+
+.commentbox .comment .user {
     font-weight: bold;
-  }
-  
-  .commentbox .comment .content {
+}
+
+.commentbox .comment .content {
     margin-top: 5px;
-  }
+}
   

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
-import { auth } from '../../../firebase';
-import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from 'firebase/auth';
+import React, {useState} from 'react';
+import {Form, Button, Alert, Row, Col} from 'react-bootstrap';
+import {auth} from '../../../firebase';
+import {createUserWithEmailAndPassword, updateProfile, sendEmailVerification} from 'firebase/auth';
 import Container from 'react-bootstrap/Container';
 import {useNavigate} from "react-router-dom";
-import { getFunctions, httpsCallable } from "firebase/functions";
+import {getFunctions, httpsCallable} from "firebase/functions";
 
 const Register = () => {
     const [name, setName] = useState('');
@@ -23,7 +23,7 @@ const Register = () => {
             const user = userCredential.user;
 
             // Update user profile with name
-            await updateProfile(user, { displayName: name });
+            await updateProfile(user, {displayName: name});
             await updateUserInAuthors({
                 email: email,
                 displayName: name,
@@ -81,7 +81,7 @@ const Register = () => {
                             />
                         </Form.Group>
 
-                        <Button className={"m-3"} variant="secondary" type="button" onClick={()=>{
+                        <Button className={"m-3"} variant="secondary" type="button" onClick={() => {
                             navigate("/upload/login")
                         }}>
                             Login

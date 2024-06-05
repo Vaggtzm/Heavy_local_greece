@@ -1,19 +1,19 @@
-  
-  .form-label {
+
+.form-label {
     font-weight: bold;
-  }
-  
-  .form-control {
+}
+
+.form-control {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-    
-  
-  .text-danger {
+}
+
+
+.text-danger {
     margin-top: 5px;
     font-size: 14px;
-  }
+}
   

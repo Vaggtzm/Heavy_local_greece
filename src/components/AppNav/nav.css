@@ -1,12 +1,12 @@
 
-
-.brand{
+.brand {
     width: 9rem;
     height: 5rem;
     border-radius: 10px;
     padding-inline: 2rem;
 }
-.link{
+
+.link {
     margin-inline: 3rem;
     padding: 2rem;
 }

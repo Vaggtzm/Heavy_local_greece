@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, Alert } from 'react-bootstrap';
+import React, {useState, useEffect} from 'react';
+import {Button, Form, Alert} from 'react-bootstrap';
 import {auth, database, storage} from '../../../firebase';
 import {
     reauthenticateWithCredential,
     EmailAuthProvider,
     updateProfile, updatePassword
 } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {ref as databaseRef, get, update} from "firebase/database";
 import UserNav from "../../Users/UserNav";
 
@@ -20,20 +20,20 @@ const UserProfile = () => {
     const [successMessage, setSuccessMessage] = useState('');
     const [profileImage, setProfileImage] = useState(null);
     const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || '');
-    const[userRef, setUserRef] = useState(null);
+    const [userRef, setUserRef] = useState(null);
 
     useEffect(() => {
 
-        const unsubscribe = auth.onAuthStateChanged(async  (user) => {
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
             const userRef = databaseRef(database, `authors/${user.uid}`);
             setUserRef(userRef);
             const userstore = await get(userRef);
 
-            if(userstore.exists()){
+            if (userstore.exists()) {
                 const userData = userstore.val();
-                if(!userData.wantToShow){
+                if (!userData.wantToShow) {
                     userData.wantToShow = false;
-                }else {
+                } else {
                     user.wantToShow = userData.wantToShow;
                 }
             }
@@ -126,7 +126,7 @@ const UserProfile = () => {
 
     return (
         <>
-            <UserNav />
+            <UserNav/>
             <div className="container mt-4">
                 <div style={{color: '#fff'}}>
 

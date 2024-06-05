@@ -1,5 +1,5 @@
 import React from 'react';
-import  commentBox  from "commentbox.io";
+import commentBox from "commentbox.io";
 import "./comment.css"
 
 class PageWithComments extends React.Component {
@@ -16,15 +16,15 @@ class PageWithComments extends React.Component {
     render() {
         return (
             <>
-            <div className='container'>
-                <div className='row'>
-                    <div className='col-md-12'>
-                    <div className="commentbox" />
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-md-12'>
+                            <div className="commentbox"/>
+                        </div>
                     </div>
-                </div>
 
-            </div>
-</>
+                </div>
+            </>
         );
     }
 };

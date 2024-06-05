@@ -1,12 +1,12 @@
 // UserCards.js
-import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
+import React, {useEffect, useState} from 'react';
+import {getDatabase, ref, onValue, off} from 'firebase/database';
 import {getDownloadURL, ref as storageRef} from 'firebase/storage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './author.css';
 import {storage} from "../../../firebase";
 
-const Author = ({ userId, className, rating }) => {
+const Author = ({userId, className, rating}) => {
     const [user, setUser] = useState([]);
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const Author = ({ userId, className, rating }) => {
         };
     }, [userId]);
 
-    function StarRating({ rating }) {
+    function StarRating({rating}) {
         const fullStars = Math.floor(rating);
         const partialStar = rating - fullStars > 0;
 
@@ -68,7 +68,7 @@ const Author = ({ userId, className, rating }) => {
             <StarRating rating={rating}></StarRating>
 
         </div>
-);
+    );
 };
 
 export default Author;

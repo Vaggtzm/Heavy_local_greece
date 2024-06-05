@@ -4,14 +4,14 @@
     padding-top: 56.25%; /* Αναλογία πλάτους προς ύψος 16:9 */
     position: relative;
     overflow: hidden; /* Αποκόπτει τα επιπλέον μέρη της εικόνας */
-  }
-  
-  .carousel-item img {
+}
+
+.carousel-item img {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Εξασφαλίζει ότι η εικόνα θα είναι πλήρως ορατή */
     position: absolute;
     top: 0;
     left: 0;
-  }
+}
   

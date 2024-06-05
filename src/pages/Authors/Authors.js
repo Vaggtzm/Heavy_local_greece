@@ -2,10 +2,10 @@ import AppNavigation from "../../components/AppNav/AppNav";
 import React from "react";
 import Author from "./Author/Author";
 
-const Authors = ()=>{
-    return(
+const Authors = () => {
+    return (
         <>
-            <AppNavigation />
+            <AppNavigation/>
 
             <div className="container">
                 <h1 className="my-4">User Cards</h1>

@@ -6,7 +6,7 @@ import {
     ref,
     uploadString,
 } from 'firebase/storage';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Alert,
     Button,
@@ -16,11 +16,11 @@ import {
 } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {auth, config, database, storage} from '../../../firebase';
 import Navigation from '../../AppNav/Navigation';
-import { signOut } from 'firebase/auth';
-import { fetchAndActivate, getValue } from "firebase/remote-config";
+import {signOut} from 'firebase/auth';
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 import UserNav from "../../Users/UserNav";
 import {onValue, ref as databaseRef} from "firebase/database";
 
@@ -68,7 +68,7 @@ const TranslationSystem = () => {
     const fetchArticlesCategory = async (folder) => {
         try {
             let publishedListRef = ref(storage, folder);
-            let { items: publishedItems } = await listAll(publishedListRef);
+            let {items: publishedItems} = await listAll(publishedListRef);
 
             return await Promise.all(
                 publishedItems.map(async (item) => {
@@ -82,7 +82,7 @@ const TranslationSystem = () => {
                             console.error(e);
                         }
 
-                        return { name: item.name, downloadUrl, fileContent };
+                        return {name: item.name, downloadUrl, fileContent};
                     } catch (error) {
                         console.error(error);
                     }
@@ -177,7 +177,6 @@ const TranslationSystem = () => {
             translationFileRef = ref(storage, `${originalFolder}/${selectedFile.name}`);
 
 
-
             fileData.translations[newLanguage] = newFileName;
             fileData.translations[originalLanguage] = selectedFile.name;
             fileData.lang = originalLanguage;
@@ -193,7 +192,7 @@ const TranslationSystem = () => {
             await uploadString(fileRef, JSON.stringify(translationData));
 
             // Update related files without fetching them by using existing references
-            const relatedTranslations = { ...fileData.translations, [newLanguage]: newFileName };
+            const relatedTranslations = {...fileData.translations, [newLanguage]: newFileName};
 
             await Promise.all(
                 Object.keys(relatedTranslations).map(async (lang) => {
@@ -231,7 +230,7 @@ const TranslationSystem = () => {
         }
 
         const updatedFiles = files.map((file) =>
-            file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
+            file.name === selectedFile.name ? {...file, fileContent: fileData} : file
         );
         setFiles(updatedFiles);
 
@@ -269,7 +268,7 @@ const TranslationSystem = () => {
     };
 
     const handleTranslationChange = (e, field) => {
-        const { value } = e.target;
+        const {value} = e.target;
         setTranslationData((prevData) => ({
             ...prevData,
             [field]: value,
@@ -278,7 +277,7 @@ const TranslationSystem = () => {
 
     return (
         <>
-            <UserNav />
+            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
                     <p className={"col-3"}>
@@ -295,22 +294,27 @@ const TranslationSystem = () => {
                         />
                     </Form>
                 </h2>
-                <hr className="bg-white" />
-                <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span></h3>
+                <hr className="bg-white"/>
+                <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
+                </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 <ListGroup>
-                    {(sortByDate?files.toSorted((a, b) => {
+                    {(sortByDate ? files.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateA - dateB;
-                    }):files).map((file, index) => (
+                    }) : files).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.fileContent.isReady&& <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}<p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                            {file.fileContent.isReady && <><i
+                                className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
+                            key={file.fileContent.date}
+                            className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
 
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                        return (<p key={lang}
+                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -326,17 +330,19 @@ const TranslationSystem = () => {
                 <h3 className={"text-white"}>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 <ListGroup>
-                    {(sortByDate?earlyReleasedArticles.toSorted((a, b) => {
+                    {(sortByDate ? earlyReleasedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateA - dateB;
-                    }):earlyReleasedArticles).map((file, index) => (
+                    }) : earlyReleasedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
-                                {
-                                    (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                            <p key={file.fileContent.date}
+                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                            {
+                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                        return (<p key={lang}
+                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -352,17 +358,19 @@ const TranslationSystem = () => {
                 <h3 className={"text-white"}>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 <ListGroup>
-                    {(sortByDate?alreadyPublishedArticles.toSorted((a, b) => {
+                    {(sortByDate ? alreadyPublishedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
                         return dateA - dateB;
-                    }):alreadyPublishedArticles).map((file, index) => (
+                    }) : alreadyPublishedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                            <p key={file.fileContent.date}
+                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
                             {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang} className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                        return (<p key={lang}
+                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -416,27 +424,28 @@ const TranslationSystem = () => {
                                     <h5>Original</h5>
                                     <Form.Group controlId="originalContent">
                                         <Form.Label>Content</Form.Label>
-                                        <ReactQuill key={`original-${selectedFile?.name}`} theme="snow" value={fileData.content} readOnly={true} />
+                                        <ReactQuill key={`original-${selectedFile?.name}`} theme="snow"
+                                                    value={fileData.content} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalTitle">
                                         <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" value={fileData.title} readOnly={true} />
+                                        <Form.Control type="text" value={fileData.title} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalDetails">
                                         <Form.Label>Details</Form.Label>
-                                        <Form.Control type="text" value={fileData.details} readOnly={true} />
+                                        <Form.Control type="text" value={fileData.details} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalImg01">
                                         <Form.Label>Image URL</Form.Label>
-                                        <Form.Control type="text" value={fileData.img01} readOnly={true} />
+                                        <Form.Control type="text" value={fileData.img01} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalSub">
                                         <Form.Label>Author Code</Form.Label>
-                                        <Form.Control type="text" value={fileData.sub} readOnly={true} />
+                                        <Form.Control type="text" value={fileData.sub} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalDate">
                                         <Form.Label>Date</Form.Label>
-                                        <Form.Control type="text" value={fileData.date} readOnly={true} />
+                                        <Form.Control type="text" value={fileData.date} readOnly={true}/>
                                     </Form.Group>
                                     <Form.Group controlId="originalLanguage">
                                         <Form.Label>Original Language</Form.Label>
@@ -446,9 +455,11 @@ const TranslationSystem = () => {
                                             onChange={(e) => setOriginalLanguage(e.target.value)}
                                             disabled={!!fileData.lang}
                                         >
-                                            <option value="">Select Language</option> {/* Placeholder option */}
-                                            {Object.keys(availableLanguages).map((langCode)=> {
-                                                return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                            <option value="">Select Language</option>
+                                            {/* Placeholder option */}
+                                            {Object.keys(availableLanguages).map((langCode) => {
+                                                return (
+                                                    <option value={langCode}>{availableLanguages[langCode]}</option>)
                                             })}
                                         </Form.Control>
                                     </Form.Group>
@@ -462,7 +473,7 @@ const TranslationSystem = () => {
                                             theme="snow"
                                             value={translationData.content}
                                             onChange={(value) =>
-                                                handleTranslationChange({ target: { value } }, 'content')
+                                                handleTranslationChange({target: {value}}, 'content')
                                             }
                                         />
                                     </Form.Group>
@@ -517,9 +528,11 @@ const TranslationSystem = () => {
                                                     value={newLanguage}
                                                     onChange={(e) => setNewLanguage(e.target.value)}
                                                 >
-                                                    <option value="">Select Language</option> {/* Placeholder option */}
-                                                    {Object.keys(availableLanguages).map((langCode)=> {
-                                                        return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                                    <option value="">Select Language</option>
+                                                    {/* Placeholder option */}
+                                                    {Object.keys(availableLanguages).map((langCode) => {
+                                                        return (<option
+                                                            value={langCode}>{availableLanguages[langCode]}</option>)
                                                     })}
                                                 </Form.Control>
                                             </Form.Group>

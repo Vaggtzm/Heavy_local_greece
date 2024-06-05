@@ -1,6 +1,6 @@
-import { getDownloadURL, ref } from "firebase/storage";
-import React, { useEffect, useState } from "react";
-import { storage } from "../../firebase";
+import {getDownloadURL, ref} from "firebase/storage";
+import React, {useEffect, useState} from "react";
+import {storage} from "../../firebase";
 import {NavLink} from "react-router-dom";
 
 const FetchedArticles = (props) => {
@@ -33,21 +33,22 @@ const FetchedArticles = (props) => {
             setArticle(tempData);
         });
     }, [props.article.name]);
-    return(
+    return (
         <>
             {article && (
-            <div className="card h-100 w-100 bg-white">
-            <img className=" img-fluid" src={article.img01} />
-            <div className="card-body">
-            <h5 className="card-title">{article.title}</h5>
-              <p className="card-text">This article is saved</p>
-              <NavLink className="btn btn-danger" to={`/article/${props.article.name.split(/\.(?=[^\.]+$)/)[0]}`}>Read More</NavLink>
-            </div>
+                <div className="card h-100 w-100 bg-white">
+                    <img className=" img-fluid" src={article.img01}/>
+                    <div className="card-body">
+                        <h5 className="card-title">{article.title}</h5>
+                        <p className="card-text">This article is saved</p>
+                        <NavLink className="btn btn-danger"
+                                 to={`/article/${props.article.name.split(/\.(?=[^\.]+$)/)[0]}`}>Read More</NavLink>
+                    </div>
 
-            </div>
-          )}
+                </div>
+            )}
         </>
-        
+
     )
 }
 

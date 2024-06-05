@@ -2,15 +2,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-  }
-  
-  /* Individual image card */
-  .card {
+}
+
+/* Individual image card */
+.card {
     width: 300px; /* Adjust the width as needed */
     margin-bottom: 20px;
-  }
-  
-  .card-img-top {
+}
+
+.card-img-top {
     width: 100%;
     height: auto;
-  }
+}

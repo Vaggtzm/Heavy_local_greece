@@ -1,10 +1,10 @@
-import { ref, uploadBytes, uploadString } from 'firebase/storage';
-import React, { useEffect, useState } from 'react';
-import { Alert, Button, Col, Form, Row } from 'react-bootstrap';
+import {ref, uploadBytes, uploadString} from 'firebase/storage';
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, Col, Form, Row} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css'
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {auth, config, storage} from '../../firebase'; // Import Firebase auth
 import {getIdTokenResult, signOut} from "firebase/auth";
 import UserNav from "../Users/UserNav";
@@ -21,7 +21,7 @@ const ArticleUpload = () => {
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(null);
     const [currentUser, setCurrentUser] = useState(null); // State to hold current user
-    const[language, setLanguage] = useState('');
+    const [language, setLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
     const [category, setCategory] = useState(''); // State to hold selected category
 
@@ -46,7 +46,7 @@ const ArticleUpload = () => {
     useEffect(() => {
 
         try {
-            fetchAndActivate(config).then(()=>{
+            fetchAndActivate(config).then(() => {
                 const serverLanguages = getValue(config, "languages").asString()
                 setAvailableLanguages(JSON.parse(serverLanguages))
             });
@@ -58,11 +58,11 @@ const ArticleUpload = () => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in
-                getIdTokenResult(user).then((idTokenResult)=>{
+                getIdTokenResult(user).then((idTokenResult) => {
                     if (idTokenResult.claims && idTokenResult.claims.admin) {
                         console.log("the user is an admin");
-                    }else{
-                        signOut(auth).then(()=>{
+                    } else {
+                        signOut(auth).then(() => {
                             console.log("Trying to login again")
                             navigate('/upload/login');
                         });
@@ -108,7 +108,7 @@ const ArticleUpload = () => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-                resolve({ width: img.width, height: img.height });
+                resolve({width: img.width, height: img.height});
             };
             img.onerror = reject;
             img.src = URL.createObjectURL(file);
@@ -127,7 +127,7 @@ const ArticleUpload = () => {
             await uploadBytes(imageRef, image, metadata);
 
             console.log(metadata);
-            const newFileName = `${replaceSpecialCharsWithDashes(title.replaceAll(" ","-"))}.json`;
+            const newFileName = `${replaceSpecialCharsWithDashes(title.replaceAll(" ", "-"))}.json`;
 
             const options = {
                 day: '2-digit',
@@ -144,11 +144,11 @@ const ArticleUpload = () => {
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: language,
-                translations:{},
+                translations: {},
                 category: category
             };
 
-            articleData.translations[language]=newFileName;
+            articleData.translations[language] = newFileName;
 
             const articleDataRef = ref(storage, `upload_from_authors/${newFileName}`);
             await uploadString(articleDataRef, JSON.stringify(articleData));
@@ -169,20 +169,21 @@ const ArticleUpload = () => {
             setCategory("");
         } catch (error) {
             console.error('Error submitting article:', error.message);
-            setSubmitError('Error submitting article. Please try again.\n'+error.message);
+            setSubmitError('Error submitting article. Please try again.\n' + error.message);
             setSubmitSuccess(false);
         }
     };
 
     return (
         <div>
-            <UserNav />
+            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"h2 text-white"}>Author Upload System</h2>
-                <hr className="bg-dark" />
-                <Form className={"card bg-dark"} style={{width:"150vh"}} onSubmit={handleArticleSubmit}>
+                <hr className="bg-dark"/>
+                <Form className={"card bg-dark"} style={{width: "150vh"}} onSubmit={handleArticleSubmit}>
                     <Form.Group controlId="articleContent">
-                        <Form.Label className={"text-light"}>Paste Article Content from the document that you have written</Form.Label>
+                        <Form.Label className={"text-light"}>Paste Article Content from the document that you have
+                            written</Form.Label>
                         <ReactQuill
                             theme="snow"
                             className="text-light"
@@ -194,7 +195,7 @@ const ArticleUpload = () => {
                             modules={{
                                 toolbar: {
                                     container: [
-                                        [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                                        [{'header': '1'}, {'header': '2'}, {'font': []}],
                                         [{size: []}],
                                         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
                                         [{'list': 'ordered'}, {'list': 'bullet'},
@@ -242,7 +243,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     placeholder="Facebook"
                                     value={socials.facebook}
-                                    onChange={(e) => setSocials({ ...socials, facebook: e.target.value })}
+                                    onChange={(e) => setSocials({...socials, facebook: e.target.value})}
                                 />
                             </Col>
                             <Col>
@@ -250,7 +251,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     placeholder="Instagram"
                                     value={socials.instagram}
-                                    onChange={(e) => setSocials({ ...socials, instagram: e.target.value })}
+                                    onChange={(e) => setSocials({...socials, instagram: e.target.value})}
                                 />
                             </Col>
                         </Row>
@@ -260,7 +261,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     placeholder="Spotify"
                                     value={socials.spotify}
-                                    onChange={(e) => setSocials({ ...socials, spotify: e.target.value })}
+                                    onChange={(e) => setSocials({...socials, spotify: e.target.value})}
                                 />
                             </Col>
                             <Col>
@@ -268,7 +269,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     placeholder="YouTube"
                                     value={socials.youtube}
-                                    onChange={(e) => setSocials({ ...socials, youtube: e.target.value })}
+                                    onChange={(e) => setSocials({...socials, youtube: e.target.value})}
                                 />
                             </Col>
                         </Row>
@@ -283,9 +284,10 @@ const ArticleUpload = () => {
                                     onChange={(e) => setLanguage(e.target.value)}
                                     required={true}
                                 >
-                                    <option value="">Select Language</option> {/* Placeholder option */}
-                                    {Object.keys(availableLanguages).map((langCode)=> {
-                                        return(<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                    <option value="">Select Language</option>
+                                    {/* Placeholder option */}
+                                    {Object.keys(availableLanguages).map((langCode) => {
+                                        return (<option value={langCode}>{availableLanguages[langCode]}</option>)
                                     })}
                                 </Form.Control>
                             </Col>
@@ -299,7 +301,7 @@ const ArticleUpload = () => {
                     </Form.Group>
 
                     <Form.Group controlId="image">
-                        <ImageUpload setImage={setImage} image={image} />
+                        <ImageUpload setImage={setImage} image={image}/>
                     </Form.Group>
 
                     <Button variant="primary" type="submit">

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {Dropdown, DropdownButton} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const CategoryDropdown = ({ categories, onSelectCategory }) => {
+const CategoryDropdown = ({categories, onSelectCategory}) => {
     const [selectedCategory, setSelectedCategory] = useState('');
 
     const handleSelect = (category) => {

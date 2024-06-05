@@ -1,20 +1,19 @@
-
 /* home.css */
 
 /* Υφασματόστρωμα για την γραμματοσειρά */
 @font-face {
-  font-family: Font-1;
-  src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
+    font-family: Font-1;
+    src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
 }
 
 /* Στυλ για το header */
 header {
-  color: white; /* Χρώμα κειμένου */
-  padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-  background-image: url(./../assets/MainBackground.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    color: white; /* Χρώμα κειμένου */
+    padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
+    background-image: url(./../assets/MainBackground.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 
@@ -22,71 +21,59 @@ header {
 
 /* Στυλ για τον τίτλο */
 .font-1 {
-  color: whitesmoke; /* Χρώμα γραμματοσειράς */
-  font-family: Font-1;
+    color: whitesmoke; /* Χρώμα γραμματοσειράς */
+    font-family: Font-1;
 }
 
 /* Στυλ για την ενότητα με τα reviews */
-.CenterSection{
-  border-right: 1px solid white;
+.CenterSection {
+    border-right: 1px solid white;
 }
 
-.ExploreMore{
-  height: 100vh;
-  padding-bottom: 1rem;
+.ExploreMore {
+    height: 100vh;
+    padding-bottom: 1rem;
 }
 
-.testinomial{
-  height: 100vh;
-  padding-bottom: 1rem;
-  background-image: url(./../assets/MainBackground.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+.testinomial {
+    height: 100vh;
+    padding-bottom: 1rem;
+    background-image: url(./../assets/MainBackground.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 
-}
-
-
-
-
-
-
-.ReviewBox{
-  display: flex;
-  flex-direction: row;
 }
 
 
-
-
-
-
-
-
-
+.ReviewBox {
+    display: flex;
+    flex-direction: row;
+}
 
 
 /* Media query για κινητές συσκευές */
 @media (max-width: 768px) {
-  header {
-      padding: 20px 0; /* Ανάστροφα περιθώρια (20px πάνω, 0 κάτω) */
-  }
+    header {
+        padding: 20px 0; /* Ανάστροφα περιθώρια (20px πάνω, 0 κάτω) */
+    }
 
-  .card-img-top {
-      height: 150px; /* Μικρότερο ύψος εικόνας για μικρές οθόνες */
-  }
+    .card-img-top {
+        height: 150px; /* Μικρότερο ύψος εικόνας για μικρές οθόνες */
+    }
 
-  .card-title {
-      font-size: 18px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
-  }
+    .card-title {
+        font-size: 18px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
+    }
 
-  .card-text {
-      font-size: 14px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
-  }
-  .ReviewBox{
-    display: flex;
-    flex-direction: column;
-  }
-  
-  
+    .card-text {
+        font-size: 14px; /* Μικρότερο μέγεθος γραμματοσειράς για μικρές οθόνες */
+    }
+
+    .ReviewBox {
+        display: flex;
+        flex-direction: column;
+    }
+
+
 }

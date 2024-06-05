@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
 
-const AdminSystem= () => {
+const AdminSystem = () => {
 
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
@@ -28,19 +28,19 @@ const AdminSystem= () => {
             const usersRef = ref(database, 'authors');
 
             auth.onAuthStateChanged((user) => {
-                if (user && (userList.includes(user.email)||user.email==="pavlos@orfanidis.net.gr")){
+                if (user && (userList.includes(user.email) || user.email === "pavlos@orfanidis.net.gr")) {
                     setCurrentUser(user);
-                    onValue(usersRef, async (users)=>{
+                    onValue(usersRef, async (users) => {
                         users = users.val()
                         await Promise.all(
-                        Object.keys(users).map(async key => {
-                            const photoUrlRef = storageRef(storage, `profile_images/${key}_600x600`);
-                            try {
-                                users[key].photoURL = await getDownloadURL(photoUrlRef);
-                            } catch (e) {
-                                console.error(e);
-                            }
-                        }));
+                            Object.keys(users).map(async key => {
+                                const photoUrlRef = storageRef(storage, `profile_images/${key}_600x600`);
+                                try {
+                                    users[key].photoURL = await getDownloadURL(photoUrlRef);
+                                } catch (e) {
+                                    console.error(e);
+                                }
+                            }));
 
                         setUsers(users);
                     });
@@ -52,7 +52,6 @@ const AdminSystem= () => {
             });
         });
     }, [navigate]);
-
 
 
     const handleRoleChange = (role, email) => {
@@ -73,14 +72,12 @@ const AdminSystem= () => {
     };
 
 
-
-
     return (
         <div>
-            <UserNav />
+            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"h2 text-white"}>User Admin System</h2>
-                <hr className="bg-white" />
+                <hr className="bg-white"/>
                 <div className="row">
                     <div className="col-12">
                         <table className="table table-dark table-striped">
@@ -93,13 +90,15 @@ const AdminSystem= () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {users&&roles && Object.keys(users).map( (key, index) => {
+                            {users && roles && Object.keys(users).map((key, index) => {
                                 const email = users[key].email;
 
 
                                 return (
                                     <tr key={index} className={"row"}>
-                                        <td className={"col-2"}>{users[key].photoURL&&<img className={"w-75 m-4"} alt={users[key].displayName} src={users[key].photoURL}/>}</td>
+                                        <td className={"col-2"}>{users[key].photoURL &&
+                                            <img className={"w-75 m-4"} alt={users[key].displayName}
+                                                 src={users[key].photoURL}/>}</td>
                                         <td className={"col-3"}>{users[key].displayName} ({users[key].email})</td>
                                         <td className={"col-3"}>{authorLeader.includes(users[key].email) ? "Author Leader" : admin.includes(users[key].email) ? "Admin" : roles.translationSystem.includes(users[key].email) ? "Translator" : "Author"}</td>
                                         <td className="row col-4">

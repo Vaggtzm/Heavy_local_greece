@@ -4,8 +4,7 @@ import {storage} from "../../firebase";
 import {NavLink} from "react-router-dom";
 
 
-
-const SavedArticleData = (props) =>{
+const SavedArticleData = (props) => {
     const [data, setData] = useState({});
 
     const getFirebaseStorageUrl = async (imageUrl) => {
@@ -35,7 +34,7 @@ const SavedArticleData = (props) =>{
             }
             const data = await response.json();
             data.img01 = await getFirebaseStorageUrl(data.img01);
-            return  data
+            return data
         } catch (error) {
             console.error("Error fetching data:", error.message);
         }
@@ -47,29 +46,29 @@ const SavedArticleData = (props) =>{
             console.log(tempData);
             setData(tempData);
         });
-    },[])
-    return(
+    }, [])
+    return (
         <>
             {props.isSaved ? (
-            <div className="card h-100 w-100">
-            <img className=" img-fluid" src={data.img01} />
-            <div className="card-body">
-            <h5 className="card-title">{data.title}</h5>
-              <p className="card-text">This article is saved</p>
-              <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
-            </div>
+                <div className="card h-100 w-100">
+                    <img className=" img-fluid" src={data.img01}/>
+                    <div className="card-body">
+                        <h5 className="card-title">{data.title}</h5>
+                        <p className="card-text">This article is saved</p>
+                        <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
+                    </div>
 
-            </div>
-          ) : (
-            <div className="card-body">
-              <h5 className="card-title">{props.article}</h5>
-              <p className="card-text">This article is not saved</p>
-              <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
-s
-            </div>
-          )}
+                </div>
+            ) : (
+                <div className="card-body">
+                    <h5 className="card-title">{props.article}</h5>
+                    <p className="card-text">This article is not saved</p>
+                    <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
+                    s
+                </div>
+            )}
         </>
-        
+
     )
 }
 

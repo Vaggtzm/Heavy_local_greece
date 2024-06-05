@@ -1,8 +1,14 @@
-import {signInWithEmailAndPassword, sendEmailVerification, getIdTokenResult, sendPasswordResetEmail, signOut} from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import { auth } from '../../../firebase';
-import { useNavigate } from 'react-router-dom';
+import {
+    signInWithEmailAndPassword,
+    sendEmailVerification,
+    getIdTokenResult,
+    sendPasswordResetEmail,
+    signOut
+} from 'firebase/auth';
+import React, {useEffect, useState} from 'react';
+import {Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
+import {auth} from '../../../firebase';
+import {useNavigate} from 'react-router-dom';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -47,7 +53,7 @@ const Login = (props) => {
                  * Admin system for Vaggelis
                  */
 
-                if(props.admin&&user.email==="tzimasvaggelis02@gmail.com"){
+                if (props.admin && user.email === "tzimasvaggelis02@gmail.com") {
                     navigate("/upload/admin")
                 }
 
@@ -73,12 +79,12 @@ const Login = (props) => {
         }
     };
 
-    const sendVerification= async () => {
+    const sendVerification = async () => {
         try {
             await sendEmailVerification(user);
             setError("Email verification has been sent. Please check your inbox");
             setEmailVerification(false);
-        }catch(error){
+        } catch (error) {
             setError(error);
 
         }
@@ -89,7 +95,10 @@ const Login = (props) => {
             <Row className="justify-content-center mt-5">
                 <Col md={6}>
                     <h2 className="text-center mb-4">Login</h2>
-                    {error && <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification && <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email Verification</Button>}</Alert>}
+                    {error &&
+                        <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification &&
+                            <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email
+                                Verification</Button>}</Alert>}
                     <Form onSubmit={handleLogin}>
                         <Form.Group controlId="email">
                             <Form.Label>Email address</Form.Label>
@@ -112,15 +121,15 @@ const Login = (props) => {
                         </Form.Group>
 
                         <Form.Group>
-                            <Button variant="link" onClick={async ()=>{
+                            <Button variant="link" onClick={async () => {
                                 try {
                                     await sendPasswordResetEmail(auth, email);
                                     setError("Password reset email has been sent to your email.");
                                     setEmailVerification(false)
-                                }catch(error){
-                                    if(error.code==="auth/missing-email"){
+                                } catch (error) {
+                                    if (error.code === "auth/missing-email") {
                                         setError("Please enter your email first.");
-                                    }else{
+                                    } else {
                                         setError(error.message);
                                     }
                                 }
@@ -129,9 +138,9 @@ const Login = (props) => {
                         </Form.Group>
 
 
-                            <Button variant={"secondary"} type={"button"} onClick={()=>{
-                                navigate("/upload/register")
-                            }}>Register</Button>
+                        <Button variant={"secondary"} type={"button"} onClick={() => {
+                            navigate("/upload/register")
+                        }}>Register</Button>
 
                         <Button variant="primary" type="submit" className="w-100 mt-3">
                             Login

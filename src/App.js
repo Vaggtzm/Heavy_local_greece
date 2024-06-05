@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getToken } from "firebase/messaging";
-import { useEffect , useState } from "react";
-import { Route, Routes } from 'react-router-dom';
+import {getToken} from "firebase/messaging";
+import {useEffect, useState} from "react";
+import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import { messaging } from './firebase';
+import {messaging} from './firebase';
 import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
@@ -29,6 +29,7 @@ import UserProfile from "./components/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
 import AdminSystem from "./components/AdminSystem/AdminSystem";
+
 function App() {
     const [loading, setLoading] = useState(false);
 
@@ -40,7 +41,7 @@ function App() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ token }),
+                body: JSON.stringify({token}),
             });
 
             if (response.ok) {
@@ -80,10 +81,9 @@ function App() {
     }, []);
 
 
-
-return (
+    return (
         <>
-        
+
             <NotificationToast/>
             <Routes>
                 <Route path='/' element={<Home/>}/>
@@ -111,10 +111,10 @@ return (
                 <Route path='/upload/login' element={<Login admin={false}/>}/>
                 <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
                 <Route path='/upload/translation' element={<TranlationSystem/>}/>
-                <Route path='/User/login' element={<UserLog />}/>
-                <Route path='/User/register' element={<UserRegister />}/>
-                <Route path='/User/home' element={<UserHome />}/>
-                <Route path='/User/Saved' element={<SavedArtciles />}/>
+                <Route path='/User/login' element={<UserLog/>}/>
+                <Route path='/User/register' element={<UserRegister/>}/>
+                <Route path='/User/home' element={<UserHome/>}/>
+                <Route path='/User/Saved' element={<SavedArtciles/>}/>
             </Routes>
         </>
     );
