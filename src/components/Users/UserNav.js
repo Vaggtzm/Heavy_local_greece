@@ -62,8 +62,8 @@ const UserNav = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white' />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/User/home" className='text-white link'>Home</Nav.Link>
-            <Nav.Link href="/User/Saved" className='text-white link'>Saved Articles</Nav.Link>
+            <NavLink to="/User/home" className='nav-link text-white link'>Home</NavLink>
+            <NavLink to="/User/Saved" className='nav-link text-white link'>Saved Articles</NavLink>
               {isAuthor && (
                   <>
                       <NavLink to="/upload" className='nav-link text-white link'>
@@ -95,7 +95,7 @@ const UserNav = () => {
                 </NavLink>
               }
 
-              {(loggedIn)&&<Nav.Link onClick={()=>{signOut(auth).then(()=>{navigate("/")})}} className='text-white link'><Button variant={"outline-danger"}>Sign Out</Button></Nav.Link>}
+              {(loggedIn)&&<NavLink onClick={()=>{signOut(auth).then(()=>{navigate("/")})}} className='nav-link text-white link'><Button variant={"outline-danger"}>Sign Out</Button></NavLink>}
           </Nav>
         </Navbar.Collapse>
       </Container>
