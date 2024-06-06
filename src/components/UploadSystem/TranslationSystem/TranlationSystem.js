@@ -23,6 +23,7 @@ import {signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import UserNav from "../../Users/UserNav";
 import {onValue, ref as databaseRef} from "firebase/database";
+import fetchArticlesCategory from "../articleData/articleData";
 
 const TranslationSystem = () => {
     const [files, setFiles] = useState([]);
@@ -65,43 +66,16 @@ const TranslationSystem = () => {
 
     const [availableLanguages, setAvailableLanguages] = useState({});
 
-    const fetchArticlesCategory = async (folder) => {
-        try {
-            let publishedListRef = ref(storage, folder);
-            let {items: publishedItems} = await listAll(publishedListRef);
-
-            return await Promise.all(
-                publishedItems.map(async (item) => {
-                    try {
-                        const downloadUrl = await getDownloadURL(item);
-                        let fileContent = await fetch(downloadUrl);
-
-                        try {
-                            fileContent = await fileContent.json();
-                        } catch (e) {
-                            console.error(e);
-                        }
-
-                        return {name: item.name, downloadUrl, fileContent};
-                    } catch (error) {
-                        console.error(error);
-                    }
-                })
-            );
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const fetchFiles = async () => {
         try {
-            const publishedFilesData = await fetchArticlesCategory('upload_from_authors');
+            const publishedFilesData = await fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError);
             setFiles(publishedFilesData);
 
-            const publishedFilesData2 = await fetchArticlesCategory('articles');
+            const publishedFilesData2 = await fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError);
             setAlreadyPublishedArticles(publishedFilesData2);
 
-            const publishedFilesData3 = await fetchArticlesCategory('early_releases');
+            const publishedFilesData3 = await fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError);
             setEarlyReleasedArticles(publishedFilesData3);
         } catch (error) {
             console.error(error);
@@ -302,7 +276,7 @@ const TranslationSystem = () => {
                     {(sortByDate ? files.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }) : files).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             {file.fileContent.isReady && <><i
@@ -314,7 +288,8 @@ const TranslationSystem = () => {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
                                         return (<p key={lang}
-                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
+                                        );
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -333,7 +308,7 @@ const TranslationSystem = () => {
                     {(sortByDate ? earlyReleasedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }) : earlyReleasedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             <p key={file.fileContent.date}
@@ -342,7 +317,8 @@ const TranslationSystem = () => {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
                                         return (<p key={lang}
-                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
+                                        );
                                     })
                                 ) : (
                                     <p>No translations available</p>
@@ -361,7 +337,7 @@ const TranslationSystem = () => {
                     {(sortByDate ? alreadyPublishedArticles.toSorted((a, b) => {
                         const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
                         const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateA - dateB;
+                        return dateB - dateA;
                     }) : alreadyPublishedArticles).map((file, index) => (
                         <ListGroup.Item key={index} className={"bg-dark text-light"}>
                             <p key={file.fileContent.date}
@@ -370,7 +346,8 @@ const TranslationSystem = () => {
                                 (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
                                     Object.keys(file.fileContent.translations).map((lang) => {
                                         return (<p key={lang}
-                                                   className="form-label badge bg-dark-subtle text-dark m-1">{availableLanguages[lang]}</p>);
+                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
+                                        );
                                     })
                                 ) : (
                                     <p>No translations available</p>

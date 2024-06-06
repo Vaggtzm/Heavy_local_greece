@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import UserNav from "../../Users/UserNav";
+import fetchArticlesCategory from "../articleData/articleData";
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
@@ -43,56 +44,19 @@ const FirebaseFileList = () => {
 
     const [showToast, setShowToast] = useState(false);
 
-    const fetchArticlesCategory = async (folder) => {
-        try {
-            let publishedListRef = ref(storage, folder);
-            let {items: publishedItems} = await listAll(publishedListRef);
 
-            return await Promise.all(
-                publishedItems.map(async (item) => {
-                    const downloadUrl = await getDownloadURL(item);
-                    let fileContent = await fetch(downloadUrl);
-
-                    try {
-                        fileContent = await fileContent.json();
-                    } catch (e) {
-                        if (folder === 'early_releases') {
-                            setEarlyReleasesError('Error fetching files: file: ' + item.name + " : " + error);
-                        } else if (folder === 'articles') {
-                            setAlreadyPublishedError('Error fetching files: file: ' + item.name + " : " + error);
-                        } else {
-                            setError('Error fetching files: ' + error.message);
-                        }
-                        console.log(e);
-                        console.log(item);
-                    }
-
-                    return {name: item.name, downloadUrl, fileContent};
-                })
-            );
-        } catch (error) {
-            if (folder === 'early_releases') {
-                setEarlyReleasesError('Error fetching files: file: ' + error);
-            } else if (folder === 'articles') {
-                setAlreadyPublishedError('Error fetching files: file: ' + error);
-            } else {
-                setError('Error fetching files: file: ' + error);
-            }
-            console.log(error);
-        }
-    };
 
     const fetchFiles = async () => {
         try {
-            fetchArticlesCategory('upload_from_authors').then((publishedFilesData) => {
+            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
                 setFiles(publishedFilesData);
             });
 
-            fetchArticlesCategory('articles').then((publishedFilesData) => {
+            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
                 setAlreadyPublishedArticles(publishedFilesData);
             });
 
-            fetchArticlesCategory('early_releases').then((publishedFilesData) => {
+            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
                 setEarlyReleasedArticles(publishedFilesData);
             });
 
@@ -224,13 +188,15 @@ const FirebaseFileList = () => {
         }
     };
 
-    const handlePublish = async () => {
+    const handlePublish = async (to_normal_release) => {
         if (!selectedFile) return;
 
         try {
             let originalFileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             let destinationFileRef = ref(storage, `early_releases/${selectedFile.name}`);
-
+            if(to_normal_release){
+                destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
+            }
             if (isEarlyReleasedArticles) {
                 originalFileRef = ref(storage, `early_releases/${selectedFile.name}`);
                 destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
@@ -265,7 +231,7 @@ const FirebaseFileList = () => {
                 }
             } else {
                 const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
-                update(articleRef, {isEarlyAccess: false, isPublished: true}).then();
+                update(articleRef, {isEarlyAccess: to_normal_release, isPublished: true}).then();
             }
 
 
@@ -565,7 +531,9 @@ const FirebaseFileList = () => {
 
                             {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
-                                    <Button variant="success" onClick={handlePublish} className="">
+                                    <Button variant="success" onClick={()=> {
+                                        handlePublish(false);
+                                    }} className="">
                                         Publish Normally
                                     </Button>
                                 </Col>
@@ -573,9 +541,18 @@ const FirebaseFileList = () => {
 
                             {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
-                                    <Button variant="success" onClick={handlePublish}
+                                    <Button variant="success" onClick={()=> {
+                                        handlePublish(false);
+                                    }}
                                             className={"m-3 justify-content-center"}>
-                                        Publish
+                                        Publish Early
+                                    </Button>
+
+                                    <Button variant="warning" onClick={()=> {
+                                        handlePublish(true);
+                                    }}
+                                            className={"m-3 justify-content-center"}>
+                                        Publish Normally
                                     </Button>
                                 </Col>
                             )}
