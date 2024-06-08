@@ -33,7 +33,6 @@ const TranslationSystem = () => {
     const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
@@ -100,9 +99,8 @@ const TranslationSystem = () => {
             console.log(userList);
             const unsubscribe = auth.onAuthStateChanged((user) => {
                 if (user && userList.includes(user.email)) {
-                    setCurrentUser(user);
+
                 } else {
-                    setCurrentUser(null);
                     navigate('/upload');
                     signOut(auth).then();
                 }

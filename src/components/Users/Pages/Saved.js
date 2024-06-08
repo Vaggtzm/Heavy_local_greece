@@ -9,12 +9,10 @@ import SavedArticleData from "../SavedArticleData";
 
 const SavedArtciles = () => {
     const [data, setData] = useState(null);
-    const [currentUser, setCurrentUser] = useState();
 
     useEffect(() => {
         auth.onAuthStateChanged(async (user) => {
             if (user) {
-                setCurrentUser(user)
                 console.log(user, "User logged in ");
                 const dataRef = databaseRef(database, `users/${user.uid}/savedArticles/`);
                 onValue(dataRef, (snapshot) => {

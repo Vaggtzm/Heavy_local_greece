@@ -19,7 +19,6 @@ const FirebaseFileList = () => {
     const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const [sortByDate, setSortByDate] = useState(false);
     const [authorName, setAuthorName] = useState('');
@@ -74,10 +73,8 @@ const FirebaseFileList = () => {
             let leaderList = roles.authorLeader;
             auth.onAuthStateChanged((user) => {
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
-                    setCurrentUser(user);
                     setIsLeader(leaderList.includes(user.email));
                 } else {
-                    setCurrentUser(null);
                     navigate('/upload');
                     signOut(auth).then();
                 }
@@ -216,7 +213,7 @@ const FirebaseFileList = () => {
                 const snapshot = await get(child(usersRef, '/'));
                 if (snapshot.exists()) {
                     snapshot.forEach((user) => {
-                        const userData = user.val();
+                        user.val();
                         const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${selectedFile.name.replace(".json", "")}`);
                         onValue(savedArticlesRef, (snapshot) => {
                             const savedArticles = snapshot.val();
@@ -242,7 +239,7 @@ const FirebaseFileList = () => {
     };
 
     const copyLinkToClipboard = (link) => {
-        navigator.clipboard.writeText(link).then(r => {
+        navigator.clipboard.writeText(link).then(() => {
             setShowToast(true);
         });
     };
@@ -470,7 +467,7 @@ const FirebaseFileList = () => {
                                     label="The article is ready to be published"
                                     checked={fileData.isReady}
                                     className={"bg-warning-subtle rounded-3 justify-content-center"}
-                                    onChange={(e) => {
+                                    onChange={() => {
                                         console.log(fileData.isReady)
                                         if (!fileData.isReady) {
                                             handleChange({target: {value: true}}, 'isReady', false)
