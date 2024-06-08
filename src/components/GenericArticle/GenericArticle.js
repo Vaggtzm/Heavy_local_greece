@@ -8,6 +8,7 @@ import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
 import AppNav from "./../AppNav/AppNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
+import {Helmet} from "react-helmet";
 
 const DefaultArticle = (props) => {
     const [isEarlyAccess] = useState(props.earlyAccess);
@@ -207,6 +208,9 @@ const DefaultArticle = (props) => {
 
     return (
         <>
+            <Helmet>
+                <title>{articles.title}</title>
+            </Helmet>
             <AppNav/>
             <div className="container">
                 <div className="row text-white">
