@@ -18,7 +18,7 @@ const AcidMamoth = () => {
                     <hr className="bg-dark"></hr>
                     <div className="col-md-6 credits-box">
                         <img src={"/assets/AcidMammoth_main.jpg"}
-                             className=" w-100  ScentAlbumCover shadow-lg rounded-4"></img>
+                             className=" w-100  ScentAlbumCover shadow-lg rounded-4" alt={"Acid Mammoth image"}></img>
                         <p><a href="https://web.facebook.com/acidmammoth/?_rdc=1&_rdr"><i
                             className="bi bi-facebook"></i></a> <a
                             href="https://www.instagram.com/acidmammoth/?hl=el"><i className="bi bi-instagram"></i></a>

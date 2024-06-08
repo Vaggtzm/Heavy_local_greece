@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
+import Navigation from "../../components/AppNav/Navigation";
 import ReadMore from "../../components/ReadMore/ReadMore";
 import PageWithComments from "../../components/Comments/comment";
 
@@ -12,7 +12,7 @@ const chronicle02 = () => {
                     <div className="col-md-12">
                         <h3>
                             Chronicles of the Underworld Vol 2: Yoth Iria's Epic Odyssey at Psychosounds Festival </h3>
-                        <p className="lead"> By Daria aeonian </p>
+                        <p className="lead"> By Daria Aeonia </p>
                         <hr className="bg-dark"></hr>
 
                     </div>
@@ -63,10 +63,10 @@ const chronicle02 = () => {
 
                     </div>
                     <div className="col-md-6 border-right-1">
-                        <img src={"/assets/chronicles/chronicle-02/Yothiria01.jpg"}
+                        <img alt={"Yoth Iria"} src={"/assets/chronicles/chronicle-02/Yothiria01.jpg"}
                              className="img-fluid w-75 h-25 m-4"/>
                         <hr className="bg-dark"></hr>
-                        <img src={"/assets/chronicles/chronicle-02/yothiria-02.jpg"}
+                        <img alt={"Yoth Iria"} src={"/assets/chronicles/chronicle-02/yothiria-02.jpg"}
                              className="img-fluid w-75 h-25 m-4"/>
                         <hr className="bg-dark"></hr>
 

@@ -12,7 +12,6 @@ const Aleah = () => {
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">
                         <h3 className="display-4">Αleah Liane Stanbridge – Το Κύκνειο Άσμα
-
                             <p className="lead">Ιστορία/Παρελθόν</p>
                             <hr className="bg-dark"></hr>
                         </h3>
@@ -20,6 +19,7 @@ const Aleah = () => {
                     <hr className="bg-dark"></hr>
                     <div className="col-md-6 credits-box">
                         <img src={"/assets/aleah.jpg"}
+                             alt={"Αleah Liane Stanbridge"}
                              className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                         <h4>Πηγες</h4>
                         <p className="lead d-flex justify-content-evenly">

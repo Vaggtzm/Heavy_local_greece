@@ -19,6 +19,7 @@ const AutumnMachinery = () => {
                     <hr className="bg-dark"></hr>
                     <div className="col-md-6 credits-box">
                         <img src={"/assets/AutumnMachinery.webp"}
+                             alt={"Autumn Machinery"}
                              className="img-fluid w-100 ScentAlbumCover shadow-lg rounded-4"></img>
                         <p><a href="https://www.facebook.com/autumnmacmusic"><i className="bi bi-facebbok"></i></a> <a
                             href="https://www.instagram.com/autumnmacmusic/ "><i className="bi bi-instagram"></i></a><a

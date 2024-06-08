@@ -27,8 +27,6 @@ yarn-debug.log*
 yarn-error.log*
 .firebase/hosting.YnVpbGQ.cache
 
-*.cache
-
 *.log
 
 functions/index.html

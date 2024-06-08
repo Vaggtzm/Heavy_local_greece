@@ -23,7 +23,30 @@ def main(uid_to_make_admin):
     except Exception as e:
         print('Error setting custom claims:', e)
 
+def check_if_user_is_admin(uid):
+    try:
+        # Initialize Firebase Admin SDK with service account credentials
+        cred = credentials.Certificate('./heavy-local-admin.json')  # Path to your service account JSON file
+        firebase_admin.initialize_app(cred)
+
+        # Retrieve the user to check custom claims
+        user = auth.get_user(uid)
+        print(user.custom_claims)
+        if 'admin' in user.custom_claims and user.custom_claims['admin'] == True:
+            print(f"User with UID {uid} is an admin.")
+            return True
+        else:
+            print(f"User with UID {uid} is not an admin.")
+            return False
+    
+    except Exception as e:
+        print('Error fetching user data:', e)
+        return False
+
+
 # Run the main function
 if __name__ == "__main__":
-    main(sys.argv[1])
+    uid = sys.argv[1]
+#    main(uid)
+    check_if_user_is_admin(uid)
 

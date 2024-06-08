@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
@@ -31,8 +31,6 @@ import RecommendationSystem from "./components/RecommendationSystem/Recomendatio
 import AdminSystem from "./components/AdminSystem/AdminSystem";
 
 function App() {
-    const [loading, setLoading] = useState(false);
-
 
     const saveDeviceToken = async (token) => {
         try {
@@ -55,6 +53,7 @@ function App() {
         }
     };
 
+
     async function requestPermission() {
         //requesting permission using Notification API
         const permission = await Notification.requestPermission();
@@ -68,7 +67,6 @@ function App() {
             console.log("Token generated : ", token);
 
             await saveDeviceToken(token);
-            setLoading(false);
 
         } else if (permission === "denied") {
             //notifications are blocked
@@ -77,7 +75,8 @@ function App() {
     }
 
     useEffect(() => {
-        requestPermission();
+        requestPermission().then(r => {});
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -97,7 +96,6 @@ function App() {
                 <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
 
                 <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
-                <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
                 <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
 
                 <Route path='/about-us' element={<Authors/>}/>

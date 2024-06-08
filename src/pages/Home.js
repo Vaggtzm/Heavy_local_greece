@@ -6,9 +6,7 @@ import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
 import PrimaryCarousel from "../components/PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "../components/carousel/carousel";
 import CasterFmPlayer from "../components/Users/CasterFmPlayer";
-import {getDownloadURL, ref} from "firebase/storage";
 import Author from "./Authors/Author/Author";
-import Footer from "../components/footer/footer";
 import {NavLink} from "react-router-dom";
 
 const Home = () => {

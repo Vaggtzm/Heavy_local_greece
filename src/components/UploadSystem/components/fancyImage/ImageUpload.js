@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Form, Button, Container, Row, Col} from 'react-bootstrap';
+import {Form, Container, Row, Col} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ImageUpload.css'; // Custom CSS file for additional styling
 

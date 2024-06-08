@@ -85,11 +85,11 @@ const chronicle01 = () => {
 
                     </div>
                     <div className="col-md-6 border-right-1">
-                        <img src={"/assets/chronicles/chronicle-01/01.jpg"} className="img-fluid w-75 h-25 m-4"/>
+                        <img alt={"Psychosounds Festival 2023"} src={"/assets/chronicles/chronicle-01/01.jpg"} className="img-fluid w-75 h-25 m-4"/>
                         <hr className="bg-dark"></hr>
-                        <img src={"/assets/chronicles/chronicle-01/02.JPEG"} className="img-fluid w-75 h-25 m-4"/>
+                        <img alt={"Psychosounds Festival 2023"} src={"/assets/chronicles/chronicle-01/02.JPEG"} className="img-fluid w-75 h-25 m-4"/>
                         <hr className="bg-dark"></hr>
-                        <img src={"/assets/chronicles/chronicle-01/03.JPEG"} className="img-fluid w-75 h-25 m-4"/>
+                        <img alt={"Psychosounds Festival 2023"} src={"/assets/chronicles/chronicle-01/03.JPEG"} className="img-fluid w-75 h-25 m-4"/>
 
                     </div>
 

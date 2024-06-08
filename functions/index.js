@@ -6,9 +6,6 @@ const RSS = require("rss");
 
 const path = require("path");
 const fs = require("fs");
-const Jimp = require('jimp');
-const os = require('os');
-const {mkdirp} = require('mkdirp')
 const {spawn} = require('child_process');
 const stream = require('stream');
 

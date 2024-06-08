@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
-import {getDownloadURL, getMetadata, ref, uploadBytes, updateMetadata} from "firebase/storage";
+import {getDownloadURL, getMetadata, ref, updateMetadata} from "firebase/storage";
 import {onValue, ref as databaseRef, ref as dbRef, remove, update} from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";

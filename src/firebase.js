@@ -6,7 +6,6 @@ import {getMessaging} from 'firebase/messaging';
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
 import {getRemoteConfig} from "firebase/remote-config";
-import {fetchAndActivate} from "firebase/remote-config";
 
 
 const firebaseConfig = {
@@ -21,15 +20,13 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
-
-const appCheck = initializeAppCheck(app, {
+initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
 
     // Optional argument. If true, the SDK automatically refreshes App Check
     // tokens as needed.
     isTokenAutoRefreshEnabled: true
 });
-
 export const config = getRemoteConfig(app);
 config.settings = {
     minimumFetchIntervalMillis: 36000, // 1 minute

@@ -51,8 +51,7 @@ const RecommendationSystem = () => {
         try {
             const url = await getDownloadURL(articleRef);
             const response = await fetch(url);
-            const articleData = await response.json();
-            return articleData;
+            return await response.json();
         } catch (error) {
             console.error('Error fetching article data:', error);
             return null;
