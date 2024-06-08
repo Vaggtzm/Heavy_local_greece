@@ -1,0 +1,9 @@
+{
+    "parameters": {
+        "languages": {
+            "defaultValue": {
+                "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
+            }
+        }
+    }
+}
