@@ -1,4 +1,4 @@
-import {deleteObject, getDownloadURL, listAll, ref, uploadString} from 'firebase/storage';
+import {deleteObject, getDownloadURL, ref, uploadString} from 'firebase/storage';
 import {child, get, onValue, ref as databaseRef, remove, update} from 'firebase/database';
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
@@ -43,7 +43,6 @@ const FirebaseFileList = () => {
     const [leader, setIsLeader] = useState(true);
 
     const [showToast, setShowToast] = useState(false);
-
 
 
     const fetchFiles = async () => {
@@ -194,7 +193,7 @@ const FirebaseFileList = () => {
         try {
             let originalFileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             let destinationFileRef = ref(storage, `early_releases/${selectedFile.name}`);
-            if(to_normal_release){
+            if (to_normal_release) {
                 destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
             }
             if (isEarlyReleasedArticles) {
@@ -243,10 +242,57 @@ const FirebaseFileList = () => {
     };
 
     const copyLinkToClipboard = (link) => {
-        const articleLink = "https://pulse-of-the-underground.com" + link;
-        navigator.clipboard.writeText(articleLink);
-        setShowToast(true);
+        navigator.clipboard.writeText(link).then(r => {
+            setShowToast(true);
+        });
     };
+
+    const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
+        console.log((leader) ? "User is Leader" : "User is not leader");
+        return (
+            <ListGroup>
+                {(sortByDate ? files.toSorted((a, b) => {
+                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                }) : files).map((file, index) => (
+                    <ListGroup.Item key={index} className={"bg-dark text-white"}>
+                        {file.fileContent.isReady && <><i
+                            className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
+                        key={file.fileContent.date}
+                        className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
+
+                        {(isEarlyReleased || isAlreadyPublished) ? <a
+                            className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                            style={{
+                                cursor: "pointer"
+                            }}
+                            href={'/article/' + ((isEarlyReleased) && "early/") + file.name.replace('.json', '')}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                copyLinkToClipboard('/article/' + ((isEarlyReleased) && "early/") + file.name.replace('.json', ''));
+                                return false;
+                            }}
+                        >
+                            {file.fileContent.title}
+                        </a> : <>{file.fileContent.title}</>
+
+                        }
+
+                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) &&
+                            <Button variant="info" className="ms-2"
+                                    onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}>
+                                Edit
+                            </Button>}
+                        {(!leader) && <Button variant="danger" className="ms-2"
+                                              onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}>
+                            Delete
+                        </Button>}
+                    </ListGroup.Item>
+                ))}
+            </ListGroup>
+        );
+    }
 
     return (
         <>
@@ -272,104 +318,17 @@ const FirebaseFileList = () => {
                     Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
                 </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? files.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : files).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            {file.fileContent.isReady && <><i
-                                className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
-                            key={file.fileContent.date}
-                            className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
-                            <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, false)}>
-                                Edit
-                            </Button>
-                            {(!leader) && <Button variant="danger" className="ms-2"
-                                                  onClick={() => handleDelete(file, false, false)}>
-                                Delete
-                            </Button>}
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
+
+                {handleShowList(files, false, false)}
+
                 <h3 className={"text-light"}>Early Releases <small className={"small text-info"}>Click on an article to
                     copy the link</small></h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? earlyReleasedArticles.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : earlyReleasedArticles).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            <p key={file.fileContent.date}
-                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
-                            <a
-                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                style={{
-                                    cursor: "pointer"
-                                }}
-                                href={'/article/early/' + file.name.replace('.json', '')}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    copyLinkToClipboard('/article/early/' + file.name.replace('.json', ''));
-                                    return false;
-                                }}
-                            >
-                                {file.fileContent.title}
-                            </a>
-                            {(!leader) && <>
-                                <Button variant="info" className="ms-2" onClick={() => handleEdit(file, false, true)}>
-                                    Edit
-                                </Button>
-                                <Button variant="danger" className="ms-2"
-                                        onClick={() => handleDelete(file, false, true)}>
-                                    Delete
-                                </Button>
-                            </>
-                            }
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
+                {handleShowList(earlyReleasedArticles, false, true)}
                 <h3 className={"text-light"}>Already Published <small className={"small text-info"}>Click on an article
                     to copy the link</small></h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? alreadyPublishedArticles.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : alreadyPublishedArticles).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                            <p key={file.fileContent.date}
-                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
-                            <a
-                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                style={{
-                                    cursor: "pointer"
-                                }}
-                                href={'/article/' + file.name.replace('.json', '')}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    copyLinkToClipboard('/article/' + file.name.replace('.json', ''));
-                                    return false;
-                                }}
-                            >
-                                {file.fileContent.title}({file.name})
-                            </a>
-                            {(!leader) && <>
-                                <Button variant="info" className="ms-2" onClick={() => handleEdit(file, true, false)}>
-                                    Edit
-                                </Button>
-                                <Button variant="danger" className="ms-2"
-                                        onClick={() => handleDelete(file, true, false)}>
-                                    Delete
-                                </Button>
-                            </>}
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
+                {handleShowList(alreadyPublishedArticles, true, false)}
 
                 <Toast
                     onClose={() => setShowToast(false)}
@@ -531,7 +490,7 @@ const FirebaseFileList = () => {
 
                             {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
-                                    <Button variant="success" onClick={()=> {
+                                    <Button variant="success" onClick={() => {
                                         handlePublish(false);
                                     }} className="">
                                         Publish Normally
@@ -541,14 +500,14 @@ const FirebaseFileList = () => {
 
                             {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
-                                    <Button variant="success" onClick={()=> {
+                                    <Button variant="success" onClick={() => {
                                         handlePublish(false);
                                     }}
                                             className={"m-3 justify-content-center"}>
                                         Publish Early
                                     </Button>
 
-                                    <Button variant="warning" onClick={()=> {
+                                    <Button variant="warning" onClick={() => {
                                         handlePublish(true);
                                     }}
                                             className={"m-3 justify-content-center"}>

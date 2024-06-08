@@ -249,6 +249,39 @@ const TranslationSystem = () => {
         }));
     };
 
+    const handleShowList = (files, isEarlyRelease, isAlreadyPublished)=>{
+        return (
+            <ListGroup>
+                {(sortByDate ? files.toSorted((a, b) => {
+                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                }) : files).map((file, index) => (
+                    <ListGroup.Item key={index} className={"bg-dark text-light"}>
+                        {file.fileContent.isReady && <><i
+                            className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
+                        key={file.fileContent.date}
+                        className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
+                        {
+                            (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
+                                Object.keys(file.fileContent.translations).map((lang) => {
+                                    return (<p key={lang}
+                                               className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
+                                    );
+                                })
+                            ) : (
+                                <p>No translations available</p>
+                            )
+                        }
+                        <Button variant="warning" onClick={() => handleTranslate(file, isAlreadyPublished, isEarlyRelease)}>
+                            Translate
+                        </Button>
+                    </ListGroup.Item>
+                ))}
+            </ListGroup>
+        )
+    }
+
     return (
         <>
             <UserNav/>
@@ -272,93 +305,14 @@ const TranslationSystem = () => {
                 <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
                 </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? files.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : files).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            {file.fileContent.isReady && <><i
-                                className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
-                            key={file.fileContent.date}
-                            className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
-
-                            {
-                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
-                                    Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang}
-                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
-                                        );
-                                    })
-                                ) : (
-                                    <p>No translations available</p>
-                                )
-                            }
-                            <Button variant="warning" onClick={() => handleTranslate(file, false, false)}>
-                                Translate
-                            </Button>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
+                {handleShowList(files, false, false)}
 
                 <h3 className={"text-white"}>Early Releases</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? earlyReleasedArticles.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : earlyReleasedArticles).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            <p key={file.fileContent.date}
-                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
-                            {
-                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
-                                    Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang}
-                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
-                                        );
-                                    })
-                                ) : (
-                                    <p>No translations available</p>
-                                )
-                            }
-                            <Button variant="warning" onClick={() => handleTranslate(file, false, true)}>
-                                Translate
-                            </Button>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
-
+                {handleShowList(earlyReleasedArticles, true, false)}
                 <h3 className={"text-white"}>Already Published</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
-                <ListGroup>
-                    {(sortByDate ? alreadyPublishedArticles.toSorted((a, b) => {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }) : alreadyPublishedArticles).map((file, index) => (
-                        <ListGroup.Item key={index} className={"bg-dark text-light"}>
-                            <p key={file.fileContent.date}
-                               className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>{file.fileContent.title}
-                            {
-                                (file.fileContent.translations && Object.keys(file.fileContent.translations).length > 0) ? (
-                                    Object.keys(file.fileContent.translations).map((lang) => {
-                                        return (<p key={lang}
-                                                   className={"form-label badge text-dark m-1 " + ((lang===file.fileContent.lang)?"bg-warning-subtle":"bg-dark-subtle")}>{availableLanguages[lang]}</p>
-                                        );
-                                    })
-                                ) : (
-                                    <p>No translations available</p>
-                                )
-                            }
-                            <Button variant="warning" onClick={() => handleTranslate(file, true, false)}>
-                                Translate
-                            </Button>
-                        </ListGroup.Item>
-                    ))}
-                </ListGroup>
+                {handleShowList(alreadyPublishedArticles, false, true)}
 
                 <Modal
                     width={'300vh'}

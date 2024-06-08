@@ -425,22 +425,7 @@ exports.saveDeviceToken = functions
         }
     });
 
-/**User Handling */
 
-exports.syncUserToAuthors = functions.auth.user().onCreate((user) => {
-    const userId = user.uid;
-    const email = user.email;
-    const displayName = user.displayName || "";
-    const photoURL = user.photoURL || "";
-
-    const authorData = {
-        email: email,
-        displayName: displayName,
-        photoURL: photoURL,
-    };
-
-    return admin.database().ref(`/authors/${userId}`).set(authorData);
-});
 
 exports.deleteUserFromAuthors = functions.auth.user().onDelete((user) => {
     const userId = user.uid;
