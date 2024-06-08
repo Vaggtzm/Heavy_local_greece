@@ -21,7 +21,6 @@ const Register = () => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-
             // Update user profile with name
             await updateProfile(user, {displayName: name});
             await updateUserInAuthors({
