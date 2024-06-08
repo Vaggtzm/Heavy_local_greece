@@ -157,11 +157,11 @@ function changeAnalysis(
     }${extension}`;
 }
 
-app.get("/article/:article", (req, res, folder) => {
+app.get("/article/:article", (req, res) => {
     getArticle(req, res, "articles").then();
 });
 
-app.get("/article/early/:article", (req, res, folder) => {
+app.get("/article/early/:article", (req, res) => {
     getArticle(req, res, "early_releases").then();
 });
 
@@ -233,7 +233,7 @@ NOTIFICATION HANDLING
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 const getImageDimensions = async (object) => {
-    const {name: filePath, contentType, bucket: bucketName} = object;
+    const {name: filePath, contentType} = object;
     console.log('Processing file:', filePath);
 
     // Exit if not an image.
