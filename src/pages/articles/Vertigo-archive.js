@@ -1,12 +1,10 @@
 import React from "react";
-import Navigation from "../../components/Navigation/Navigation";
 import './articles.css'
 import PageWithComments from "../../components/Comments/comment";
 
 const Vertigo = () => {
     return (
         <>
-            <Navigation/>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">

@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {getIdTokenResult, signOut} from 'firebase/auth';
-import {auth, config, database} from '../../firebase';
+import {auth, database} from '../../firebase';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import InstallButton from '../PWAinstal/pwaInstall';
 import {Button} from "react-bootstrap";
 import {NavLink, useNavigate} from "react-router-dom";
-import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {onValue, ref} from "firebase/database";
 
 const UserNav = () => {
@@ -21,7 +20,6 @@ const UserNav = () => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
-
                 const userList = ref(database, 'roles');
                 onValue(userList, async (snapshot) => {
                     const roles = snapshot.val();
@@ -59,7 +57,7 @@ const UserNav = () => {
         <Navbar expand="lg" className="bg-dark navbar">
             <Container className='navbar'>
                 <Navbar.Brand className='navbar-brand brand  text-white' href="#home"><img
-                    src={"https://heavy-local.com/assets/HeavyLocalLogo.jpg"}
+                    src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
                     className='img-fluid rounded-circle'/></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white'/>
                 <Navbar.Collapse id="basic-navbar-nav">

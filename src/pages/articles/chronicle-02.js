@@ -6,7 +6,6 @@ import PageWithComments from "../../components/Comments/comment";
 const chronicle02 = () => {
     return (
         <>
-            <Navigation/>
             <div className="container-fluid">
                 <div className="row  text-center">
                     <div className="col-md-12">

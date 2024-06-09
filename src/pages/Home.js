@@ -14,7 +14,6 @@ const Home = () => {
 
     return (
         <>
-            <AppNavigation/>
             <header>
                 <div className="container mt-4 main ">
                     <div className="row text-center  p-3 m-2 shadow-lg">

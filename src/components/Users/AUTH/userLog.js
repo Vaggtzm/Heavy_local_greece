@@ -4,7 +4,7 @@ import {auth} from "../../../firebase";
 import {useNavigate} from "react-router-dom";
 import './auth.css'
 import {Alert, Button} from "react-bootstrap";
-import AppNav from "../../AppNav/AppNav";
+
 
 const UserLog = () => {
     const navigate = useNavigate();
@@ -61,7 +61,6 @@ const UserLog = () => {
 
     return (
         <>
-            <AppNav/>
             <div className="container">
                 <h4 className="display-4 m-3 p-1">Login</h4>
                 <hr className="bg-dark"></hr>

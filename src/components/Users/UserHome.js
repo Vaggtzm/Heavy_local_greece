@@ -1,10 +1,5 @@
 import React from "react";
-import Footer from "./../footer/footer";
 import Socials from "./../SocialMedia/socials";
-import SocialBar from "../SocialMedia/socials";
-import AppNavigation from "../AppNav/AppNav";
-import SpotifyBanner from "../SpotifyBanner/SpotifyBanner";
-import Youtube from "../YoutubeAPI/Youtube";
 import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
 import SecondaryCarousel from "./../carousel/carousel";
 import CasterFmPlayer from "./CasterFmPlayer";
@@ -14,7 +9,6 @@ const UserHome = () => {
 
     return (
         <>
-            <AppNavigation/>
             <header>
 
                 <div className="container mt-4 main ">
@@ -222,7 +216,6 @@ const UserHome = () => {
                     </div>
                 </div>
             </section>
-            <Footer/>
         </>
     );
 };

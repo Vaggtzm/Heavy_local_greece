@@ -8,7 +8,6 @@ import {
 } from "firebase/auth";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {ref as databaseRef, get, update} from "firebase/database";
-import UserNav from "../../Users/UserNav";
 
 const UserProfile = () => {
     const [user, setUser] = useState(auth.currentUser || null);
@@ -126,7 +125,6 @@ const UserProfile = () => {
 
     return (
         <>
-            <UserNav/>
             <div className="container mt-4">
                 <div style={{color: '#fff'}}>
 

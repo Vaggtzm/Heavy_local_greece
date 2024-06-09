@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
@@ -29,6 +29,8 @@ import UserProfile from "./components/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
 import AdminSystem from "./components/AdminSystem/AdminSystem";
+import Footer from "./components/footer/footer";
+import AppNavigation from "./components/AppNav/AppNav";
 
 function App() {
 
@@ -84,6 +86,7 @@ function App() {
         <>
 
             <NotificationToast/>
+            <AppNavigation/>
             <Routes>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/articles-page' element={<Articles/>}/>
@@ -114,6 +117,7 @@ function App() {
                 <Route path='/User/home' element={<UserHome/>}/>
                 <Route path='/User/Saved' element={<SavedArtciles/>}/>
             </Routes>
+            <Footer/>
         </>
     );
 }

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {ref, listAll, getDownloadURL} from 'firebase/storage';
 import {storage} from "../../firebase";
 import FetchedArticles from './FetchedArticles';
-import AppNavigation from "../../components/AppNav/AppNav";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../home.css";
 
@@ -31,7 +30,6 @@ const Articles = () => {
 
     return (
         <>
-            <AppNavigation/>
             <div className="container">
                 <h1>Saved Articles</h1>
                 <div className="row">

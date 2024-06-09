@@ -6,7 +6,6 @@ import {onValue, ref as databaseRef, ref as dbRef, remove, update} from "firebas
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
-import AppNav from "./../AppNav/AppNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {Helmet} from "react-helmet";
 
@@ -211,7 +210,6 @@ const DefaultArticle = (props) => {
             <Helmet>
                 <title>{articles.title}</title>
             </Helmet>
-            <AppNav/>
             <div className="container">
                 <div className="row text-white">
                     <div className="col-md-12 d-flex justify-content-evenly">

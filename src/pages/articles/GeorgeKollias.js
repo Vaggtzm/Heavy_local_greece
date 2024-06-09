@@ -7,7 +7,6 @@ import './articles.css';
 const GeorgeKollias = () => {
     return (
         <>
-            <Navigation/>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">

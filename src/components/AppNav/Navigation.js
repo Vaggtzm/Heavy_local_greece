@@ -4,11 +4,10 @@ import {Button} from "react-bootstrap";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, NavLink} from "react-router-dom";
 import {auth} from "../../firebase";
 import InstallButton from '../PWAinstal/pwaInstall';
 import './nav.css';
-
 const Navigation = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
@@ -32,12 +31,12 @@ const Navigation = () => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" className='bg-white'/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="/" className='text-white link'>Home</Nav.Link>
-                        <Nav.Link href="/articles-page" className='text-white link'>Articles</Nav.Link>
-                        <Nav.Link href="/Art-Gallery-page" className='text-white link'>Art Gallery</Nav.Link>
-                        <Nav.Link className='text-white link'><InstallButton/></Nav.Link>
-                        <Nav.Link href="/User/register" className='text-white link'>Create Account</Nav.Link>
-                        <Nav.Link href="/User/login" className='text-white link'>Log in</Nav.Link>
+                        <NavLink to="/" className='nav-link text-white link'>Home</NavLink>
+                        <NavLink to="/articles-page" className='nav-link text-white link'>Articles</NavLink>
+                        <NavLink to="/Art-Gallery-page" className='nav-link text-white link'>Art Gallery</NavLink>
+                        <NavLink to='nav-link text-white link'><InstallButton/></NavLink>
+                        <NavLink to="/User/register" className='nav-link text-white link'>Create Account</NavLink>
+                        <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
 
                         {(loggedIn) && <Nav.Link onClick={() => {
                             signOut(auth).then(() => {

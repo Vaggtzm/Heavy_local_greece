@@ -176,7 +176,6 @@ const ArticleUpload = () => {
 
     return (
         <div>
-            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"h2 text-white"}>Author Upload System</h2>
                 <hr className="bg-dark"/>

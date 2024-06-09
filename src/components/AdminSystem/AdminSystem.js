@@ -74,7 +74,6 @@ const AdminSystem = () => {
 
     return (
         <div>
-            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"h2 text-white"}>User Admin System</h2>
                 <hr className="bg-white"/>

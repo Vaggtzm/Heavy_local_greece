@@ -1,8 +1,5 @@
 import {
-    deleteObject,
     getDownloadURL,
-    getMetadata,
-    listAll,
     ref,
     uploadString,
 } from 'firebase/storage';
@@ -18,10 +15,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
 import {auth, config, database, storage} from '../../../firebase';
-import Navigation from '../../AppNav/Navigation';
 import {signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from "firebase/remote-config";
-import UserNav from "../../Users/UserNav";
 import {onValue, ref as databaseRef} from "firebase/database";
 import fetchArticlesCategory from "../articleData/articleData";
 
@@ -282,7 +277,6 @@ const TranslationSystem = () => {
 
     return (
         <>
-            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
                     <p className={"col-3"}>

@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {database, storage} from "../../../firebase";
+import {database} from "../../../firebase";
 import {ref as databaseRef, onValue} from "firebase/database";
-import {ref, getDownloadURL} from "firebase/storage";
-import AppNavigation from "../../AppNav/AppNav";
 import {auth} from "../../../firebase";
 import SavedArticleData from "../SavedArticleData";
 
@@ -30,7 +28,6 @@ const SavedArtciles = () => {
 
     return (
         <>
-            <AppNavigation/>
             <div className="container">
                 <h1>Saved Articles</h1>
                 <div className="row">

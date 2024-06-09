@@ -6,7 +6,6 @@ import PageWithComments from "../../components/Comments/comment";
 const AutumnMachinery = () => {
     return (
         <>
-            <Navigation/>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12 d-flex justify-content-evenly">

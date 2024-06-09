@@ -7,7 +7,6 @@ import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
 import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
-import UserNav from "../../Users/UserNav";
 import fetchArticlesCategory from "../articleData/articleData";
 
 const FirebaseFileList = () => {
@@ -293,7 +292,6 @@ const FirebaseFileList = () => {
 
     return (
         <>
-            <UserNav/>
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
                     <p className={"col-4"}>
