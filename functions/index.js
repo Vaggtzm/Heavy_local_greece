@@ -168,23 +168,15 @@ app.get("/article/early/:article", (req, res) => {
 
 // Express route to handle image requests
 app.get("/assets/*", async (req, res) => {
-    res.set('Cache-Control', 'public, max-age=604800');
-
     const imagePath = req.params[0];
     let filePath = "images/" + imagePath;
     const file = bucket.file(filePath);
 
     try {
-        // Download the image file to a buffer
-        const [fileBuffer] = await file.download();
-
         // Check and update metadata if not already set
         const [metadata] = await file.getMetadata();
-        console.log("Hello")
-        console.log(metadata.metadata);
-
         if (!metadata.metadata.width) {
-            console.log()
+            const [fileBuffer] = await file.download(); // Download the image file to a buffer
             const dimensions = await getImageDimensionsBuffer(fileBuffer);
             const newMetadata = {
                 metadata: {
@@ -192,16 +184,11 @@ app.get("/assets/*", async (req, res) => {
                     height: dimensions.height.toString(),
                 },
             };
-
-            console.log(newMetadata);
-            metadata.metadata = newMetadata.metadata;
-
             await file.setMetadata(newMetadata);
-            console.log('Metadata updated successfully');
+            metadata.metadata = newMetadata.metadata;
         }
 
-
-        const {width, height} = metadata.metadata;
+        const { width, height } = metadata.metadata;
         const aspectRatio = width / height;
         const tolerance = 0.5;
         filePath = changeAnalysis(
@@ -211,11 +198,17 @@ app.get("/assets/*", async (req, res) => {
             Math.abs(aspectRatio - 1) <= tolerance
         );
 
-        // Fetch the updated image file
+        // Fetch the updated file path
         const updatedFile = bucket.file(filePath);
-        const [updatedFileBuffer] = await updatedFile.download();
 
-        res.send(updatedFileBuffer);
+        // Generate a signed URL for the updated file
+        const [url] = await updatedFile.getSignedUrl({
+            action: 'read',
+            expires: '03-01-2025',  // Set an appropriate expiration date
+        });
+
+        // Redirect to the signed URL
+        res.redirect(url);
     } catch (error) {
         console.log("Error fetching file:", error);
         res.status(404).send("File not found");
