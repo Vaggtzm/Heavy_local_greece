@@ -89,7 +89,7 @@ const Register = () => {
                             />
                         </Form.Group>
 
-                        <Form.Group className={"row"} controlId="buttons">
+                        <Form.Group className={"row mt-4"} controlId="buttons">
                         <Button className={"col-4"} variant="danger" type="button" onClick={registerWithGoogle}>
                             Register with google
                         </Button>

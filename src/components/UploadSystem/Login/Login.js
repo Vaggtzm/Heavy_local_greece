@@ -58,7 +58,7 @@ const Login = (props) => {
             const idTokenResult = await user.getIdTokenResult(true);
 
             // Check if user has admin claims
-            if (!idTokenResult.claims&&!idTokenResult.claims.admin) {
+            if (!idTokenResult.claims||!idTokenResult.claims.admin) {
                 console.log("User is not an admin");
                 navigate('/User/home');
             } else {
