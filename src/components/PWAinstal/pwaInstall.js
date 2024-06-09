@@ -33,7 +33,7 @@ function InstallButton() {
 
     return (
         <>
-            <a className='text-white nav-link' onClick={installApp}>Mobile App</a>
+            <div className='nav-link text-white link' onClick={installApp}>Mobile App</div>
         </>
     );
 }

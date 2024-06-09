@@ -34,7 +34,7 @@ const Navigation = () => {
                         <NavLink to="/" className='nav-link text-white link'>Home</NavLink>
                         <NavLink to="/articles-page" className='nav-link text-white link'>Articles</NavLink>
                         <NavLink to="/Art-Gallery-page" className='nav-link text-white link'>Art Gallery</NavLink>
-                        <NavLink to='nav-link text-white link'><InstallButton/></NavLink>
+                        <InstallButton/>
                         <NavLink to="/User/register" className='nav-link text-white link'>Create Account</NavLink>
                         <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
 

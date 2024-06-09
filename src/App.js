@@ -20,8 +20,6 @@ import Register from "./components/UploadSystem/Register/Register";
 import FirebaseFileList from "./components/UploadSystem/VerificationSystem/VerificationSystem";
 import TranlationSystem from "./components/UploadSystem/TranslationSystem/TranlationSystem";
 
-import UserLog from './components/Users/AUTH/userLog';
-import UserRegister from './components/Users/AUTH/UserRegister';
 import UserHome from './components/Users/UserHome';
 import SavedArtciles from './components/Users/Pages/Saved';
 import './App.css'
@@ -112,8 +110,8 @@ function App() {
                 <Route path='/upload/login' element={<Login admin={false}/>}/>
                 <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
                 <Route path='/upload/translation' element={<TranlationSystem/>}/>
-                <Route path='/User/login' element={<UserLog/>}/>
-                <Route path='/User/register' element={<UserRegister/>}/>
+                <Route path='/User/login' element={<Login admin={false}/>}/>
+                <Route path='/User/register' element={<Register/>}/>
                 <Route path='/User/home' element={<UserHome/>}/>
                 <Route path='/User/Saved' element={<SavedArtciles/>}/>
             </Routes>

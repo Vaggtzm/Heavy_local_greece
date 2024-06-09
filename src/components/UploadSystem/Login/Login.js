@@ -9,6 +9,7 @@ import React, {useEffect, useState} from 'react';
 import {Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -25,11 +26,14 @@ const Login = (props) => {
                 if (!user.emailVerified) {
                     await signOut(auth);
                 } else {
-                    // User is signed in and email is verified
+                    //User is signed in and email is verified
                     const idTokenResult = await getIdTokenResult(user);
                     if (idTokenResult.claims && idTokenResult.claims.admin) {
                         console.log("the user is an admin");
                         navigate('/upload');
+                    } else {
+                        console.log("the user is not an admin");
+                        navigate('/User/home');
                     }
                 }
             }
@@ -38,42 +42,39 @@ const Login = (props) => {
         return () => unsubscribe(); // Clean up subscription
     }, [navigate]);
 
+    const handleUserLoggedIn = async (user) => {
+        setUser(user);
+
+        if (!user.emailVerified) {
+            setError('Please verify your email before logging in.');
+        } else {
+
+            if (props.admin && user.email === "tzimasvaggelis02@gmail.com") {
+                navigate("/upload/admin")
+            }
+
+
+            // User is signed in and email is verified
+            const idTokenResult = await user.getIdTokenResult(true);
+
+            // Check if user has admin claims
+            if (!idTokenResult.claims&&!idTokenResult.claims.admin) {
+                console.log("User is not an admin");
+                navigate('/User/home');
+            } else {
+                console.log("User is an admin");
+                navigate('/upload');
+                // Navigate to admin-only page or perform admin-specific actions
+            }
+        }
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            setUser(user);
-
-            if (!user.emailVerified) {
-                setError('Please verify your email before logging in.');
-            } else {
-
-                /**
-                 * Admin system for Vaggelis
-                 */
-
-                if (props.admin && user.email === "tzimasvaggelis02@gmail.com") {
-                    navigate("/upload/admin")
-                }
-
-
-                // User is signed in and email is verified
-                const idTokenResult = await user.getIdTokenResult(true);
-
-                // Log the entire ID token result for debugging
-                console.log('ID Token Result:', idTokenResult);
-
-                // Check if user has admin claims
-                if (!!idTokenResult.claims.admin) {
-                    console.log("User is an admin");
-                    navigate('/upload');
-                    // Navigate to admin-only page or perform admin-specific actions
-                } else {
-                    console.log("User is not an admin");
-                    setError('You do not have permission to access this page');
-                }
-            }
+            await handleUserLoggedIn(user);
         } catch (error) {
             setError('Login failed: ' + error.message);
         }
@@ -90,16 +91,26 @@ const Login = (props) => {
         }
     }
 
+    const signInWithGoogle = async () => {
+        try {
+            const provider = new GoogleAuthProvider();
+            const user = await signInWithPopup(auth, provider);
+            await handleUserLoggedIn(user.user);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     return (
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col md={6}>
-                    <h2 className="text-center mb-4">Login</h2>
+                    <h2 className="text-center mb-4 text-white">Login</h2>
                     {error &&
                         <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification &&
                             <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email
                                 Verification</Button>}</Alert>}
-                    <Form onSubmit={handleLogin}>
+                    <Form className={"card bg-dark w-100 text-white p-4"} onSubmit={handleLogin}>
                         <Form.Group controlId="email">
                             <Form.Label>Email address</Form.Label>
                             <Form.Control
@@ -120,6 +131,14 @@ const Login = (props) => {
                             />
                         </Form.Group>
 
+
+                        <Form.Group className={"mt-4"}>
+                            <Button variant={"danger"} onClick={signInWithGoogle}>
+                                Log in with Google
+                            </Button>
+
+
+                        </Form.Group>
                         <Form.Group>
                             <Button variant="link" onClick={async () => {
                                 try {

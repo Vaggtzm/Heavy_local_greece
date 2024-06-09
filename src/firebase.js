@@ -10,13 +10,13 @@ import {getRemoteConfig} from "firebase/remote-config";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
-    authDomain: "heavy-local-12bc4.firebaseapp.com",
+    authDomain: "pulse-of-the-underground.com",
     databaseURL: "https://heavy-local-12bc4-default-rtdb.firebaseio.com",
     projectId: "heavy-local-12bc4",
     storageBucket: "heavy-local-12bc4.appspot.com",
     messagingSenderId: "1095342862820",
     appId: "1:1095342862820:web:641656e6dff630f438d7f1",
-    measurementId: "G-K1TR05V7PB"
+    measurementId: "G-K1TR05V7PB",
 };
 
 export const app = initializeApp(firebaseConfig);
