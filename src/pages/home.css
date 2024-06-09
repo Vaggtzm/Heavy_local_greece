@@ -31,18 +31,15 @@ header {
 }
 
 .ExploreMore {
-    height: 100vh;
     padding-bottom: 1rem;
 }
 
 .testinomial {
-    height: 100vh;
     padding-bottom: 1rem;
     background-image: url(./../assets/MainBackground.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
 }
 
 
