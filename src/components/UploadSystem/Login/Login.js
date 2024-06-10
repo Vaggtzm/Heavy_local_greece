@@ -69,6 +69,15 @@ const Login = (props) => {
         }
     }
 
+    const handleError=async (error)=>{
+        if (error.code === 'auth/account-exists-with-different-credential') {
+            setError("This email has logged in with a different provider");
+        } else {
+            console.error(error);
+            setError(error.message);
+        }
+    }
+
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
@@ -76,7 +85,7 @@ const Login = (props) => {
             const user = userCredential.user;
             await handleUserLoggedIn(user);
         } catch (error) {
-            setError('Login failed: ' + error.message);
+            await handleError(error);
         }
     };
 
@@ -97,7 +106,7 @@ const Login = (props) => {
             const user = await signInWithPopup(auth, provider);
             await handleUserLoggedIn(user.user);
         } catch (error) {
-            setError(error.message);
+            await handleError(error);
         }
     };
 
@@ -106,8 +115,9 @@ const Login = (props) => {
             const provider = new GithubAuthProvider()
             const user = await signInWithPopup(auth, provider);
             await handleUserLoggedIn(user.user);
+            console.log("Hello")
         } catch (error) {
-            setError(error.message);
+            await handleError(error);
         }
     };
 
