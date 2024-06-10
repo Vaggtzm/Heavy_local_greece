@@ -10,6 +10,8 @@ import {Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
 import {GoogleAuthProvider, signInWithPopup, GithubAuthProvider} from "firebase/auth";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -18,6 +20,7 @@ const Login = (props) => {
     const [emailVerification, setEmailVerification] = useState(false);
     const navigate = useNavigate();
     const [user, setUser] = useState(auth.currentUser);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -143,12 +146,19 @@ const Login = (props) => {
 
                         <Form.Group controlId="password">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
+                            <div className="input-group">
+                                <Form.Control
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                                <Button variant="outline-secondary" onClick={()=>{
+                                    setShowPassword(!showPassword)
+                                }}>
+                                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                                </Button>
+                            </div>
                         </Form.Group>
 
 
