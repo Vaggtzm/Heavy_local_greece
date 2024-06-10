@@ -9,7 +9,7 @@ import React, {useEffect, useState} from 'react';
 import {Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
-import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {GoogleAuthProvider, signInWithPopup, GithubAuthProvider} from "firebase/auth";
 
 const Login = (props) => {
     const [email, setEmail] = useState('');
@@ -101,6 +101,16 @@ const Login = (props) => {
         }
     };
 
+    const signInWithGithub = async () => {
+        try {
+            const provider = new GithubAuthProvider()
+            const user = await signInWithPopup(auth, provider);
+            await handleUserLoggedIn(user.user);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     return (
         <Container>
             <Row className="justify-content-center mt-5">
@@ -135,6 +145,10 @@ const Login = (props) => {
                         <Form.Group className={"mt-4"}>
                             <Button variant={"danger"} onClick={signInWithGoogle}>
                                 Log in with Google
+                            </Button>
+
+                            <Button variant={"secondary"} className={"bg-dark"} onClick={signInWithGithub}>
+                                Log in with Github
                             </Button>
 
 
