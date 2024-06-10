@@ -263,10 +263,10 @@ const FirebaseFileList = () => {
                             style={{
                                 cursor: "pointer"
                             }}
-                            href={'/article/' + ((isEarlyReleased) && "early/") + file.name.replace('.json', '')}
+                            href={'/article/' + ((isEarlyReleased) ? "early/":"") + file.name.replace('.json', '')}
                             onClick={(e) => {
                                 e.preventDefault();
-                                copyLinkToClipboard('/article/' + ((isEarlyReleased) && "early/") + file.name.replace('.json', ''));
+                                copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/":"") + file.name.replace('.json', ''));
                                 return false;
                             }}
                         >

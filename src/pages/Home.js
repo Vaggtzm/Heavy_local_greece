@@ -124,16 +124,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/unnamed (2).jpg"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fmeta_eyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D_800x800.webp?alt=media&token=27a24b67-b767-4471-8f33-9ba99c6a05a7"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Ποτέ μην τα παρατάς - O.Y.D. - Caving In (Single Review +band
-                                                info) </h4>
+                                                A dangerous, furry company in the Woods - Chiral - In the Company of Wolves (single review + band info)
+                                            </h4>
                                             <NavLink
-                                                to="/article/Ποτέ-μην-τα-παρατάς---OYD---Caving-In-Single-Review-band-info-"
+                                                to="/article/Adangerous-furrycompanyintheWoods-Chiral-IntheCompanyofWolves-singlereview-bandinfo--en"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -146,15 +146,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/a2116733161_65.jpeg"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FVonavibe%20I%20SMALL_800x800.jpg?alt=media&token=52c6e3bb-5ff7-4be1-97ef-2b6e60d560cb"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                JEHOVAH ON DEATH - Goya's Witches (EP review) - Μια Βουτιά σε Σκοτεινές
-                                                Εποχές </h4>
-                                            <NavLink to="/article/JEHOVAH-ON-DEATH---Goyas-Witches-EP-review--------"
+                                                VONAVIBE - New Single and Video for “Vonavibe” from the Upcoming Album “Bleed To Life”
+                                            </h4>
+                                            <NavLink to="/article/VONAVIBE---New-Single-and-Video-for-Vonavibe-from-the-Upcoming-Album-Bleed-To-Life"
                                                      className="btn btn-primary"
                                             >
                                                 Read More
@@ -173,16 +173,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/441525811_10225432808742940_248116143813906946_n.jpg"
+                                                "https://pulse-of-the-underground.com/assets/unnamed (2).jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                NEW ALBUM: Eva Can’t Drops “Emisferi” — A Spectacular Quest in
-                                                Sound </h4>
+                                                Never give up - O.Y.D. - Caving In (Single Review +band info)
+                                            </h4>
                                             <NavLink
-                                                to="/article/NEW-ALBUM-Eva-Cant-Drops-Emisferi--An-Epic-Journey-in-Sound"
+                                                to="/article/Nevergiveup-O-Y-D--CavingIn-SingleReview-bandinfo--en"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -276,16 +276,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/kawir-kydoimos.jpg"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa1249967617_16_800x800.jpg?alt=media&token=f1d05ccb-c017-4c1d-8c7f-7886bf986b73"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Στα Άδυτα του Πολέμου - Kawir - Kydoimos (Album Review)
+                                                Ατμοσφαιρικοί Αντίλαλοι - Orsak:Oslo - Iron Echoes (EP Review +band info)
                                             </h4>
                                             <NavLink
-                                                to="/article/Στα-Άδυτα-του-Πολέμου---Kawir---Kydoimos-Album-Review"
+                                                to="/article/Ατμοσφαιρικοί-Αντίλαλοι---Orsak-Oslo---Iron-Echoes-EP-Review-band-info"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -300,16 +300,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/meta_eyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ==.webp"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fhaxenzijrkell_800x800.jpg?alt=media&token=c6f12913-ad01-436f-a967-35060528b4a7"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Μια επικίνδυνη φουντωτή παρέα στο Δάσος - Chiral  - In the Company of Wolves (single review + band info)
+                                                ΣΥΝΕΝΤΕΥΞΗ: Οι Häxenzijrkell Για Τις Μυστικιστικές Καταβολές Και Την Εξέλιξη Του Black Metal Ήχου Τους
                                             </h4>
                                             <NavLink
-                                                to="/article/Μια-επικίνδυνη-φουντωτή-παρέα-στο-Δάσος---Chiral----In-the-Company-of-Wolves-single-review--band-info"
+                                                to="/article/ΣΥΝΕΝΤΕΥΞΗ-ΟιH-xenzijrkellΓιαΤιςΜυστικιστικέςΚαταβολέςΚαιΤηνΕξέλιξηΤουBlackMetalΉχουΤους-el"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
