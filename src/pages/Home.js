@@ -300,16 +300,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fhaxenzijrkell_800x800.jpg?alt=media&token=c6f12913-ad01-436f-a967-35060528b4a7"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F441525811_10225432808742940_248116143813906946_n_800x800.jpg?alt=media&token=6bba8f87-aa73-4057-b5ba-04688d229b06"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                ΣΥΝΕΝΤΕΥΞΗ: Οι Häxenzijrkell Για Τις Μυστικιστικές Καταβολές Και Την Εξέλιξη Του Black Metal Ήχου Τους
+                                                ΝΕΟ ΑΛΜΠΟΥΜ: Οι Eva Can’t Κυκλοφορούν το “Emisferi” — μια Μοναδική Ημισφαιρική Αναζήτηση!
                                             </h4>
                                             <NavLink
-                                                to="/article/ΣΥΝΕΝΤΕΥΞΗ-ΟιH-xenzijrkellΓιαΤιςΜυστικιστικέςΚαταβολέςΚαιΤηνΕξέλιξηΤουBlackMetalΉχουΤους-el"
+                                                to="/article/ΝΕΟΑΛΜΠΟΥΜ-ΟιEvaCan-tΚυκλοφορούντο-Emisferi--μιαΜοναδικήΗμισφαιρικήΑναζήτηση--el"
                                                 className="btn btn-primary"
                                             >
                                                 Read More

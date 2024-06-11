@@ -225,6 +225,56 @@ exports.webApi = functions
 NOTIFICATION HANDLING
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+const handleArticleCategories = async (object) => {
+    const filePath = object.name;
+
+    const directory = path.dirname(filePath).split('/').join('_');
+
+    // Only proceed if the uploaded file is a JSON file
+    if (path.extname(filePath) !== '.json') {
+        return null;
+    }
+
+    const [files] = await bucket.getFiles({ prefix: path.dirname(filePath) });
+
+    const articles = {};
+
+    for (const file of files) {
+        if (path.extname(file.name) !== '.json') {
+            continue;
+        }
+
+        const fileContents = await file.download();
+        const content = JSON.parse(fileContents[0].toString('utf8'));
+
+        const categories = content.category ? content.category.split(',') : ['undefined'];
+        const date = content.date || '';
+
+        categories.forEach(category => {
+            category = category.trim();
+            if (!articles[category]) {
+                articles[category] = [];
+            }
+
+            articles[category].push({
+                filename: path.basename(file.name, '.json'),
+                date: new Date(date.split('/').reverse().join('-'))
+            });
+        });
+    }
+
+    for (const category in articles) {
+        articles[category].sort((a, b) => b.date - a.date);
+        articles[category] = articles[category].slice(0, 3).map(article => article.filename);
+    }
+
+    await admin.database().ref(`/articlesList/${directory}`).set(articles);
+
+    console.log('Articles organized and stored in the database successfully.');
+    return null;
+}
+
+
 const getImageDimensions = async (object) => {
     const {name: filePath, contentType} = object;
     console.log('Processing file:', filePath);
@@ -261,6 +311,67 @@ const getImageDimensions = async (object) => {
     }
 }
 
+const sendNotofication = async (object) => {
+        
+    try {
+        // Check if the uploaded file is under the 'articles' directory
+        const filePath = object.name; // Full path of the uploaded file in Firebase Storage
+        if (!filePath.startsWith("articles/")) {
+            console.log(
+                'Uploaded file is not in the "articles" directory. Skipping...'
+            );
+            return null;
+        }
+
+        // Extract the articleId from the file path
+        const articleId = filePath.split("/")[1];
+
+        // Prepare the notification payload with a link
+        const payload = {
+            notification: {
+                title: "New Article Uploaded!",
+                body: "Go to Pulse Of The Underground to read our new article",
+                image: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
+            },
+            data: {
+                articleId: articleId,
+                url: `https://pulse-of-the-underground.com/article/${articleId.replace(
+                    /\.json$/,
+                    ""
+                )}`,
+            },
+        };
+
+        // Get registration tokens to send notifications (replace with your implementation)
+        const tokens = await getDeviceTokens(); // Implement this function to fetch tokens
+
+        // Send FCM notification to each device token
+        const deleteTokensPromises = [];
+        for (const token of tokens) {
+            const message = {
+                token: token,
+                notification: payload.notification,
+                data: payload.data,
+            };
+            try {
+                await admin.messaging().send(message);
+            } catch (error) {
+                console.error("Error sending notification to token:", token, error);
+                // If sending fails due to an error, delete the token from Realtime Database
+                const tokenRef = database.ref(`deviceTokens/${token}`);
+                deleteTokensPromises.push(tokenRef.remove());
+            }
+        }
+
+        // Wait for all delete operations to complete
+        await Promise.all(deleteTokensPromises);
+
+        console.log("Notifications sent successfully");
+    } catch (error) {
+        console.error("Error sending notification:", error);
+    }
+}
+
 function getImageDimensionsBuffer(buffer) {
     return new Promise((resolve, reject) => {
         const identifyProcess = spawn('identify', ['-format', '%wx%h', '-']);
@@ -293,67 +404,10 @@ function getImageDimensionsBuffer(buffer) {
 }
 
 
-exports.sendNotification = functions.storage
+exports.handleNewArticle = functions.storage
     .object()
-    .onFinalize(async (object) => {
-        await getImageDimensions(object);
-        try {
-            // Check if the uploaded file is under the 'articles' directory
-            const filePath = object.name; // Full path of the uploaded file in Firebase Storage
-            if (!filePath.startsWith("articles/")) {
-                console.log(
-                    'Uploaded file is not in the "articles" directory. Skipping...'
-                );
-                return null;
-            }
-
-            // Extract the articleId from the file path
-            const articleId = filePath.split("/")[1];
-
-            // Prepare the notification payload with a link
-            const payload = {
-                notification: {
-                    title: "New Article Uploaded!",
-                    body: "Go to Pulse Of The Underground to read our new article",
-                    image: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
-                },
-                data: {
-                    articleId: articleId,
-                    url: `https://pulse-of-the-underground.com/article/${articleId.replace(
-                        /\.json$/,
-                        ""
-                    )}`,
-                },
-            };
-
-            // Get registration tokens to send notifications (replace with your implementation)
-            const tokens = await getDeviceTokens(); // Implement this function to fetch tokens
-
-            // Send FCM notification to each device token
-            const deleteTokensPromises = [];
-            for (const token of tokens) {
-                const message = {
-                    token: token,
-                    notification: payload.notification,
-                    data: payload.data,
-                };
-                try {
-                    await admin.messaging().send(message);
-                } catch (error) {
-                    console.error("Error sending notification to token:", token, error);
-                    // If sending fails due to an error, delete the token from Realtime Database
-                    const tokenRef = database.ref(`deviceTokens/${token}`);
-                    deleteTokensPromises.push(tokenRef.remove());
-                }
-            }
-
-            // Wait for all delete operations to complete
-            await Promise.all(deleteTokensPromises);
-
-            console.log("Notifications sent successfully");
-        } catch (error) {
-            console.error("Error sending notification:", error);
-        }
+    .onFinalize(async (object)=>{
+        await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
     });
 
 // Function to fetch device tokens (registration tokens)
