@@ -186,18 +186,17 @@ const FirebaseFileList = () => {
         }
     };
 
-    const handlePublish = async (to_normal_release) => {
-        if (!selectedFile) return;
+    const handlePublish = async (to_normal_release, filename, isEarlyReleasedArticles) => {
 
         try {
-            let originalFileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
-            let destinationFileRef = ref(storage, `early_releases/${selectedFile.name}`);
+            let originalFileRef = ref(storage, `upload_from_authors/${filename}`);
+            let destinationFileRef = ref(storage, `early_releases/${filename}`);
             if (to_normal_release) {
-                destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
+                destinationFileRef = ref(storage, `articles/${filename}`);
             }
             if (isEarlyReleasedArticles) {
-                originalFileRef = ref(storage, `early_releases/${selectedFile.name}`);
-                destinationFileRef = ref(storage, `articles/${selectedFile.name}`);
+                originalFileRef = ref(storage, `early_releases/${filename}`);
+                destinationFileRef = ref(storage, `articles/${filename}`);
             }
 
             const downloadUrl = await getDownloadURL(originalFileRef);
@@ -216,7 +215,7 @@ const FirebaseFileList = () => {
             await deleteObject(originalFileRef);
 
             if (isEarlyReleasedArticles) {
-                const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
+                const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
                 update(articleRef, {isEarlyAccess: false}).then();
 
                 const usersRef = databaseRef(database, 'users');
@@ -224,7 +223,7 @@ const FirebaseFileList = () => {
                 if (snapshot.exists()) {
                     snapshot.forEach((user) => {
                         user.val();
-                        const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${selectedFile.name.replace(".json", "")}`);
+                        const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${filename.replace(".json", "")}`);
                         onValue(savedArticlesRef, (snapshot) => {
                             const savedArticles = snapshot.val();
                             console.log(savedArticles)
@@ -236,7 +235,7 @@ const FirebaseFileList = () => {
                     console.log("Updated")
                 }
             } else {
-                const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
+                const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
                 update(articleRef, {isEarlyAccess: to_normal_release, isPublished: true}).then();
             }
 
@@ -333,6 +332,34 @@ const FirebaseFileList = () => {
                                                 Delete
                                             </Button>
                                         )}
+
+                                        {(!isAlreadyPublished && isEarlyReleased && !leader) && (
+                                            <Button variant="success" onClick={() => {
+                                                handlePublish(false, file.name, isEarlyReleased);
+                                            }} className="ms-2">
+                                                Publish Normally
+                                            </Button>
+                                        )}
+
+
+                                        {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
+                                            <>
+                                                <Button variant="success"  onClick={() => {
+                                                    handlePublish(false, file.name, isEarlyReleased);
+                                                }}
+                                                        className={"ms-2 justify-content-center"}>
+                                                    Publish Early
+                                                </Button>
+
+                                                <Button variant="warning" onClick={() => {
+                                                    handlePublish(true, file.name, isEarlyReleased);
+                                                }}
+                                                        className={"ms-2 justify-content-center"}>
+                                                    Publish Normally
+                                                </Button>
+                                            </>
+                                        )}
+
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
@@ -399,6 +426,33 @@ const FirebaseFileList = () => {
                             >
                                 Delete
                             </Button>
+                        )}
+
+                        {(!isAlreadyPublished && isEarlyReleased && !leader) && (
+                                <Button variant="success" onClick={() => {
+                                    handlePublish(false, file.name, isEarlyReleased);
+                                }} className="ms-2">
+                                    Publish Normally
+                                </Button>
+                        )}
+
+
+                        {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
+                            <>
+                                <Button variant="success" onClick={() => {
+                                    handlePublish(false, file.name, isEarlyReleased);
+                                }}
+                                        className={"ms-2 justify-content-center"}>
+                                    Publish Early
+                                </Button>
+
+                                <Button variant="warning" onClick={() => {
+                                    handlePublish(true, file.name, isEarlyReleased);
+                                }}
+                                        className={"ms-2 justify-content-center"}>
+                                    Publish Normally
+                                </Button>
+                            </>
                         )}
                     </ListGroup.Item>
                 ))}
@@ -613,38 +667,8 @@ const FirebaseFileList = () => {
                                 />
                             </Col>
                         </Row>
-                        
+
                         <Row>
-
-
-                            {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
-                                <Col className={"col-4"}>
-                                    <Button variant="success" onClick={() => {
-                                        handlePublish(false);
-                                    }} className="">
-                                        Publish Normally
-                                    </Button>
-                                </Col>
-                            )}
-
-
-                            {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
-                                <Col className={"col-4"}>
-                                    <Button variant="success" onClick={() => {
-                                        handlePublish(false);
-                                    }}
-                                            className={"m-3 justify-content-center"}>
-                                        Publish Early
-                                    </Button>
-
-                                    <Button variant="warning" onClick={() => {
-                                        handlePublish(true);
-                                    }}
-                                            className={"m-3 justify-content-center"}>
-                                        Publish Normally
-                                    </Button>
-                                </Col>
-                            )}
                             <Col className={"col-2 d-flex justify-content-center"}>
                                 <Button variant="secondary" className={"m-3"} onClick={() => setShowModal(false)}>
                                     Close
