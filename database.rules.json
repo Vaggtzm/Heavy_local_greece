@@ -6,6 +6,9 @@
         ".write": "auth != null && auth.uid === $uid"
       }
     },
+    "gallery": {
+      ".read": true
+    },
     ".write": "auth.token.admin === true"
   }
 }

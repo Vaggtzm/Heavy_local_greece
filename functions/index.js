@@ -169,6 +169,7 @@ app.get("/article/early/:article", (req, res) => {
 // Express route to handle image requests
 app.get("/assets/*", async (req, res) => {
     const imagePath = req.params[0];
+    const fullScale = req.query.fullScale;
     let filePath = "images/" + imagePath;
     const file = bucket.file(filePath);
 
@@ -191,12 +192,15 @@ app.get("/assets/*", async (req, res) => {
         const { width, height } = metadata.metadata;
         const aspectRatio = width / height;
         const tolerance = 0.5;
-        filePath = changeAnalysis(
-            filePath,
-            "800x800",
-            "800x600",
-            Math.abs(aspectRatio - 1) <= tolerance
-        );
+
+        if(fullScale!==true) {
+            filePath = changeAnalysis(
+                filePath,
+                "800x800",
+                "800x600",
+                Math.abs(aspectRatio - 1) <= tolerance
+            );
+        }
 
         // Fetch the updated file path
         const updatedFile = bucket.file(filePath);

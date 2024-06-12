@@ -4,7 +4,7 @@ import {auth, database, storage} from '../../../firebase';
 import {
     reauthenticateWithCredential,
     EmailAuthProvider,
-    updateProfile, updatePassword
+    updateProfile, updatePassword, getIdTokenResult
 } from "firebase/auth";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {ref as databaseRef, get, update} from "firebase/database";
@@ -24,7 +24,16 @@ const UserProfile = () => {
     useEffect(() => {
 
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
-            const userRef = databaseRef(database, `authors/${user.uid}`);
+            const idTokenResult =  await getIdTokenResult(user);
+            let userFolder;
+            if (idTokenResult.claims && idTokenResult.claims.admin) {
+                console.log("the user is an admin");
+                userFolder = 'authors';
+            } else {
+                userFolder = 'users';
+            }
+
+            const userRef = databaseRef(database, `${userFolder}/${user.uid}`);
             setUserRef(userRef);
             const userstore = await get(userRef);
 
@@ -90,8 +99,7 @@ const UserProfile = () => {
                 });
             }
 
-            // Initialize Firebase Functions
-            const userRef = databaseRef(database, `authors/${user.uid}`);
+
             await update(userRef, {
                 email: user.email,
                 displayName: displayName.trim(),
