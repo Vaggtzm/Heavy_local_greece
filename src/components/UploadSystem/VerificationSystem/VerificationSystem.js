@@ -9,6 +9,7 @@ import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import fetchArticlesCategory from "../articleData/articleData";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
+import EditLinks from "./EditLinks";
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
@@ -378,14 +379,10 @@ const FirebaseFileList = () => {
                                     onChange={(e) => handleChange(e, 'details', false)}
                                 />
                             </Form.Group>
-                            <Form.Group controlId="socials">
-                                <Form.Label>Social Media Links</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.Socials}
-                                    onChange={(e) => handleChange(e, 'Socials', false)}
-                                />
-                            </Form.Group>
+                            <EditLinks initialHtmlString={fileData.Socials} setOutput={(value)=>{
+                                console.log(value);
+                                handleChange({target: {value: value}}, 'Socials', false)
+                            }}/>
                             <Form.Group controlId="img01">
                                 <Form.Label>Image URL</Form.Label>
                                 <Form.Control
