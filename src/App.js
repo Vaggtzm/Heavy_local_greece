@@ -29,6 +29,7 @@ import RecommendationSystem from "./components/RecommendationSystem/Recomendatio
 import AdminSystem from "./components/AdminSystem/AdminSystem";
 import Footer from "./components/footer/footer";
 import AppNavigation from "./components/AppNav/AppNav";
+import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 
 function App() {
 
@@ -102,6 +103,8 @@ function App() {
                 <Route path='/about-us' element={<Authors/>}/>
                 <Route path='/recommended' element={<RecommendationSystem/>}/>
                 <Route path='/admin' element={<AdminSystem/>}/>
+
+                <Route path='/gallery/upload' element={<UploadGalleryItem/>}/>
 
                 <Route path='/upload' element={<ArticleUpload/>}/>
                 <Route path='/upload/register' element={<Register/>}/>

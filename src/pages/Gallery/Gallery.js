@@ -18,8 +18,6 @@ const ArtGallery = () => {
             if (data) {
                 console.log(data);
                 setGalleryItems(data);
-            } else {
-                console.log("hello")
             }
         });
     }, []);
