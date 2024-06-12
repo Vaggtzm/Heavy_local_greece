@@ -201,9 +201,17 @@ const FirebaseFileList = () => {
             }
 
             const downloadUrl = await getDownloadURL(originalFileRef);
-            const fileContent = await fetch(downloadUrl).then(res => res.text());
+            const fileContent = JSON.parse(await fetch(downloadUrl).then(res => res.text()));
+            const options = {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            };
 
-            await uploadString(destinationFileRef, fileContent);
+            fileContent.written_date = fileContent.date;
+            fileContent.date = new Date().toLocaleDateString('en-GB', options);
+
+            await uploadString(destinationFileRef, JSON.stringify(fileContent));
             alert('File published successfully to the destination folder!');
             await deleteObject(originalFileRef);
 
@@ -605,7 +613,9 @@ const FirebaseFileList = () => {
                                 />
                             </Col>
                         </Row>
+                        
                         <Row>
+
 
                             {(!isAlreadyPublished && isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
@@ -616,6 +626,7 @@ const FirebaseFileList = () => {
                                     </Button>
                                 </Col>
                             )}
+
 
                             {(!isAlreadyPublished && !isEarlyReleasedArticles && !leader) && (
                                 <Col className={"col-4"}>
