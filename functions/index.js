@@ -193,7 +193,7 @@ app.get("/assets/*", async (req, res) => {
         const aspectRatio = width / height;
         const tolerance = 0.5;
 
-        if(fullScale!==true) {
+        if(fullScale!=="true") {
             filePath = changeAnalysis(
                 filePath,
                 "800x800",

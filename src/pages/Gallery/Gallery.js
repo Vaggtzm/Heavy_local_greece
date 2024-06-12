@@ -43,7 +43,7 @@ const ArtGallery = () => {
                                         <div className="card mb-3">
                                             <a
                                                 className="lightbox"
-                                                href={`${item.image}?fullScale=1`}
+                                                href={`${item.image}?fullScale=true`}
                                             >
                                                 <img
                                                     src={item.image}
