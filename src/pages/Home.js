@@ -1,5 +1,4 @@
 import React from "react";
-import AppNavigation from "../components/AppNav/AppNav";
 import "./home.css";
 import Socials from "../components/SocialMedia/socials";
 import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
@@ -124,16 +123,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fmeta_eyJzcmNCdWNrZXQiOiJiemdsZmlsZXMifQ%3D%3D_800x800.webp?alt=media&token=27a24b67-b767-4471-8f33-9ba99c6a05a7"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Funnamed%20(3)_800x800.jpg?alt=media&token=9733d2d5-54af-4b32-a0b7-1f6adba86eb4"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                A dangerous, furry company in the Woods - Chiral - In the Company of Wolves (single review + band info)
+                                                Μονομάχοι εναντίον Τυράννων - Gentihaa - Butcher’s Nails (single review + info)
                                             </h4>
                                             <NavLink
-                                                to="/article/Adangerous-furrycompanyintheWoods-Chiral-IntheCompanyofWolves-singlereview-bandinfo--en"
+                                                to="/article/Μονομάχοι-εναντίον-Τυράννων----Gentihaa---Butchers-Nails-single-review--info"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -146,15 +145,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FVonavibe%20I%20SMALL_800x800.jpg?alt=media&token=52c6e3bb-5ff7-4be1-97ef-2b6e60d560cb"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FGANGSTA'S%20PARADISE%20-%20PROMO%20BANNER_800x600.jpg?alt=media&token=1c2a27b0-2dba-4d69-bf9c-37c16caedfb3"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                VONAVIBE - New Single and Video for “Vonavibe” from the Upcoming Album “Bleed To Life”
+                                                SINGLE REVIEW: Primal Roots Reinvents “Gangsta’s Paradise” with Explosive Metal Energy
                                             </h4>
-                                            <NavLink to="/article/VONAVIBE---New-Single-and-Video-for-Vonavibe-from-the-Upcoming-Album-Bleed-To-Life"
+                                            <NavLink to="/article/SINGLE-REVIEW-Primal-Roots-Reinvents-Gangstas-Paradise-with-Explosive-Metal-Energy"
                                                      className="btn btn-primary"
                                             >
                                                 Read More
@@ -173,16 +172,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/unnamed (2).jpg"
+                                                "https://pulse-of-the-underground.com/assets/Stroszek.jpeg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Never give up - O.Y.D. - Caving In (Single Review +band info)
+                                                ALBUM REVIEW: “About All the Bad Days in the World” by Stroszek — An Introspective Triumph
                                             </h4>
                                             <NavLink
-                                                to="/article/Nevergiveup-O-Y-D--CavingIn-SingleReview-bandinfo--en"
+                                                to="/article/ALBUM-REVIEW-About-All-the-Bad-Days-in-the-World-by-Stroszek--An-Introspective-Triumph"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -195,16 +194,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/occult.jpg"
+                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fkarkara_800x800.jpg?alt=media&token=da7278f7-cd02-4827-a45a-a3542222c70b"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Cosmic Riffs and Smoky Dreams: “The Chained, The Burned, The
-                                                Wounded” </h4>
+                                                Navigate through the inner workings of the mind in the ambiance of fuzzrock!
+                                            </h4>
                                             <NavLink
-                                                to="/article/Cosmic-Riffs-and-Smoky-Dreams-The-Chained-The-Burned-The-Wounded"
+                                                to="/article/Navigate-through-the-inner-workings-of-the-mind-in-the-ambiance-of-fuzzrock"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -218,16 +217,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/264x264.jpg"
+                                                "https://pulse-of-the-underground.com/assets/GD.png"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Infektum: Walking in the Path of Neue Deutsche Härte - A Band Review
+                                                SINGLE REVIEW: “Straight to Hell” by Garage Distillery — Old-School Metal for the Modern Age
                                             </h4>
                                             <NavLink
-                                                to="/article/Infektum-Walking-in-the-Path-of-Neue-Deutsche-Hrte---a-band-review-"
+                                                to="/article/SINGLE-REVIEW-Straight-to-Hell-by-Garage-Distillery--Old-School-Metal-for-the-Modern-Age"
                                                 className="btn btn-primary"
                                             >
                                                 Read More

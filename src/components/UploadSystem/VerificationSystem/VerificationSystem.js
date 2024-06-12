@@ -22,6 +22,7 @@ const FirebaseFileList = () => {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const [sortByDate, setSortByDate] = useState(false);
+    const [sortByCategory, setSortByCategory] = useState(false);
     const [authorName, setAuthorName] = useState('');
     const [fileData, setFileData] = useState({
         content: '',
@@ -247,56 +248,156 @@ const FirebaseFileList = () => {
 
     const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
         console.log((leader) ? "User is Leader" : "User is not leader");
+
+        let sortedList = [...files];
+
+        if (sortByCategory) {
+            sortedList.sort((a, b) => {
+                if(!a.fileContent.category || !b.fileContent.category){
+                    return 0;
+                }else {
+                    return a.fileContent.category.localeCompare(b.fileContent.category)
+                }
+            });
+            const groupedByCategory = sortedList.reduce((acc, article) => {
+                const category = article.fileContent.category || 'Uncategorized';
+                if (!acc[category]) {
+                    acc[category] = [];
+                }
+                acc[category].push(article);
+                return acc;
+            }, {});
+
+            return (
+                <>
+                    {Object.entries(groupedByCategory).map(([category, articles]) => (
+                        <div key={category}>
+                            <h5 className={"text-white"}>{category}</h5>
+                            <ListGroup>
+                                {(sortByDate ? articles.sort((a, b) => {
+                                    try {
+                                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                                        return dateB - dateA;
+                                    } catch (e) {
+                                        console.log(b);
+                                        return -1;
+                                    }
+                                }) : articles).map((file, index) => (
+                                    <ListGroup.Item key={index} className={"bg-dark text-white"}>
+                                        {file.fileContent.isReady && <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}
+                                        <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">
+                                            {file.fileContent.date}
+                                        </p>
+
+                                        {(isEarlyReleased || isAlreadyPublished) ? (
+                                            <a
+                                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                                                style={{ cursor: "pointer" }}
+                                                href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', ''));
+                                                    return false;
+                                                }}
+                                            >
+                                                {file.fileContent.title}
+                                            </a>
+                                        ) : (
+                                            <>{file.fileContent.title}</>
+                                        )}
+
+                                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
+                                            <Button
+                                                variant="info"
+                                                className="ms-2"
+                                                onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}
+                                            >
+                                                Edit
+                                            </Button>
+                                        )}
+                                        {(!leader) && (
+                                            <Button
+                                                variant="danger"
+                                                className="ms-2"
+                                                onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        )}
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </div>
+                    ))}
+                </>
+            );
+        }
+
+
+        if (sortByDate) {
+            sortedList = sortedList.sort((a, b) => {
+                try {
+                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                    return dateB - dateA;
+                } catch (e) {
+                    console.log(b);
+                    return -1;
+                }
+            });
+        }
+
         return (
             <ListGroup>
-                {(sortByDate ? files.toSorted((a, b) => {
-                    try {
-                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                        return dateB - dateA;
-                    }catch(e){
-                        console.log(b)
-                        return -1;
-                    }
-
-                }) : files).map((file, index) => (
+                {sortedList.map((file, index) => (
                     <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                        {file.fileContent.isReady && <><i
-                            className={"text-success fa-solid fa-check"}></i><span> </span></>}<p
-                        key={file.fileContent.date}
-                        className="form-label badge bg-dark-subtle text-dark m-1">{file.fileContent.date}</p>
+                        {file.fileContent.isReady && <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}
+                        <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">
+                            {file.fileContent.date}
+                        </p>
 
-                        {(isEarlyReleased || isAlreadyPublished) ? <a
-                            className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                            style={{
-                                cursor: "pointer"
-                            }}
-                            href={'/article/' + ((isEarlyReleased) ? "early/":"") + file.name.replace('.json', '')}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/":"") + file.name.replace('.json', ''));
-                                return false;
-                            }}
-                        >
-                            {file.fileContent.title}
-                        </a> : <>{file.fileContent.title}</>
+                        {(isEarlyReleased || isAlreadyPublished) ? (
+                            <a
+                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                                style={{ cursor: "pointer" }}
+                                href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', ''));
+                                    return false;
+                                }}
+                            >
+                                {file.fileContent.title}
+                            </a>
+                        ) : (
+                            <>{file.fileContent.title}</>
+                        )}
 
-                        }
-
-                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) &&
-                            <Button variant="info" className="ms-2"
-                                    onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}>
+                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
+                            <Button
+                                variant="info"
+                                className="ms-2"
+                                onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}
+                            >
                                 Edit
-                            </Button>}
-                        {(!leader) && <Button variant="danger" className="ms-2"
-                                              onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}>
-                            Delete
-                        </Button>}
+                            </Button>
+                        )}
+                        {(!leader) && (
+                            <Button
+                                variant="danger"
+                                className="ms-2"
+                                onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}
+                            >
+                                Delete
+                            </Button>
+                        )}
                     </ListGroup.Item>
                 ))}
             </ListGroup>
         );
-    }
+    };
+
 
     return (
         <>
@@ -313,6 +414,13 @@ const FirebaseFileList = () => {
                             label="Sort by Date"
                             checked={sortByDate}
                             onChange={() => setSortByDate(!sortByDate)}
+                        />
+                        <Form.Check
+                            type="switch"
+                            id="sort-by-category-switch"
+                            label="Sort by Category"
+                            checked={sortByCategory}
+                            onChange={() => setSortByCategory(!sortByCategory)}
                         />
                     </Form>
                 </h2>
