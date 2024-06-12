@@ -14,7 +14,7 @@ function EditLinks({ initialHtmlString, setOutput }) {
         const parsedHtml = parse(initialHtmlString?initialHtmlString:"");
 
         // Extract href values from the first <p> element
-        if (parsedHtml && parsedHtml.type === 'p' &&parsedHtml.props.children) {
+        if (parsedHtml && parsedHtml.type === 'p' &&parsedHtml.props.children &&parsedHtml.props.children.forEach) {
             parsedHtml.props.children.forEach((element) => {
                 if (element.type === 'a' && element.props.href) {
                     if (element.props.href.includes('facebook.com')) {

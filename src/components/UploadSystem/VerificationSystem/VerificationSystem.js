@@ -250,9 +250,15 @@ const FirebaseFileList = () => {
         return (
             <ListGroup>
                 {(sortByDate ? files.toSorted((a, b) => {
-                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                    return dateB - dateA;
+                    try {
+                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                        return dateB - dateA;
+                    }catch(e){
+                        console.log(b)
+                        return -1;
+                    }
+
                 }) : files).map((file, index) => (
                     <ListGroup.Item key={index} className={"bg-dark text-white"}>
                         {file.fileContent.isReady && <><i
