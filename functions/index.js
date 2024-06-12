@@ -222,8 +222,18 @@ exports.webApi = functions
     .https.onRequest(app);
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------
-NOTIFICATION HANDLING
+Article Upload Hndling
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+const categories = {
+    "Top News":5,
+    "General News":1,
+    "Interviews":5,
+    "Collabs and Sponsorships":2,
+    "Latest Reviews(ENG)":3,
+    "Latest Reviews(GRE)":3,
+    "Legends":1
+};
 
 const handleArticleCategories = async (object) => {
     const filePath = object.name;
@@ -265,7 +275,8 @@ const handleArticleCategories = async (object) => {
 
     for (const category in articles) {
         articles[category].sort((a, b) => b.date - a.date);
-        articles[category] = articles[category].slice(0, 3).map(article => article.filename);
+        const size = categories[category]||3;
+        articles[category] = articles[category].slice(0, size).map(article => article.filename);
     }
 
     await admin.database().ref(`/articlesList/${directory}`).set(articles);

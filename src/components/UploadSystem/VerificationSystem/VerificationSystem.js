@@ -8,6 +8,7 @@ import {useNavigate} from 'react-router-dom';
 import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import fetchArticlesCategory from "../articleData/articleData";
+import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
@@ -444,10 +445,22 @@ const FirebaseFileList = () => {
 
                             <Form.Group controlId="translations">
                                 <Form.Label>Category</Form.Label>
-                                <Form.Control
-                                    type="text"
+
+                                <CategoryDropdown
+                                    categories={[
+                                        "Top News",
+                                        "General News",
+                                        "Interviews",
+                                        "Collabs and Sponsorships",
+                                        "Latest Reviews(ENG)",
+                                        "Latest Reviews(GRE)",
+                                        "Legends"
+                                    ]}
+                                    onSelectCategory={(category)=>{
+                                        handleChange({target: {value: category}}, 'category', false)
+                                    }}
+                                    required ={true}
                                     value={fileData.category}
-                                    onChange={(e) => handleChange(e, 'category', false)}
                                 />
                             </Form.Group>
 

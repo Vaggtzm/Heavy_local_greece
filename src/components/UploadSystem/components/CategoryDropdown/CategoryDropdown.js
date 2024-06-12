@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const CategoryDropdown = ({categories, onSelectCategory}) => {
-    const [selectedCategory, setSelectedCategory] = useState('');
+const CategoryDropdown = ({categories, onSelectCategory, required, value}) => {
+    const [selectedCategory, setSelectedCategory] = useState(value||'');
 
     const handleSelect = (category) => {
         setSelectedCategory(category);
@@ -15,6 +15,7 @@ const CategoryDropdown = ({categories, onSelectCategory}) => {
             id="dropdown-basic-button"
             title={selectedCategory || "Select a Category"}
             variant={"light"}
+            required={required}
         >
             {categories.map((category, index) => (
                 <Dropdown.Item

@@ -26,12 +26,13 @@ const ArticleUpload = () => {
     const [category, setCategory] = useState(''); // State to hold selected category
 
     const categories = [
-        'Technology',
-        'Health',
-        'Science',
-        'Sports',
-        'Business',
-        'Entertainment',
+        "Top News",
+        "General News",
+        "Interviews",
+        "Collabs and Sponsorships",
+        "Latest Reviews(ENG)",
+        "Latest Reviews(GRE)",
+        "Legends"
     ];
 
     const [socials, setSocials] = useState({
@@ -294,6 +295,7 @@ const ArticleUpload = () => {
                                 <CategoryDropdown
                                     categories={categories}
                                     onSelectCategory={setCategory}
+                                    required ={true}
                                 />
                             </Col>
                         </Row>
