@@ -58,13 +58,13 @@ const AppNavigation = () => {
 
     // Επιστρέφει το ανάλογο Navbar ανάλογα με την εισαγωγή του χρήστη
     return (
-        <Navbar expand="lg" className="bg-dark" variant="dark">
+        <Navbar expand="lg" className="sticky-top" variant="dark" style={{backgroundColor: "rgba(0,0,0,0.85)"}}>
             <Container fluid>
                 <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
                     <img
                         src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
                         className="img-fluid rounded-circle"
-                        style={{maxWidth: "50px", maxHeight: "50px"}}
+                        style={{maxWidth: "100px", maxHeight: "100px"}}
                         alt="Navbar Brand"
                     />
                 </Link>
