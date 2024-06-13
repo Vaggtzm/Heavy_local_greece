@@ -30,6 +30,7 @@ import AdminSystem from "./components/AdminSystem/AdminSystem";
 import Footer from "./components/footer/footer";
 import AppNavigation from "./components/AppNav/AppNav";
 import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
+import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 function App() {
 
@@ -86,9 +87,12 @@ function App() {
 
             <NotificationToast/>
             <AppNavigation/>
-            <Routes>
+            <div style={{
+                minHeight: '63vh'
+            }}>
+            <Routes >
                 <Route path='/' element={<Home/>}/>
-                <Route path='/articles-page' element={<Articles/>}/>
+                <Route path='/articles-page' element={<ArticlesList/>}/>
                 <Route path='/Art-Gallery-page' element={<Gallery/>}/>
                 <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
                 <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
@@ -118,6 +122,7 @@ function App() {
                 <Route path='/User/home' element={<UserHome/>}/>
                 <Route path='/User/Saved' element={<SavedArtciles/>}/>
             </Routes>
+            </div>
             <Footer/>
         </>
     );
