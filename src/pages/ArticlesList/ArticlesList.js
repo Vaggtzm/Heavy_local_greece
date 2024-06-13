@@ -157,12 +157,16 @@ const ArticlesList = () => {
             ) : (
                 <div>
                     {(authorCode)&& (<div className="d-flex justify-content-center mb-5">
-                        <div className="row">
+                        <div className="row w-100">
                             <div className="col-4 d-flex justify-content-center">
                                 <div className="w-75 mx-auto">
                                     <img
                                         className="img-fluid rounded-5"
-                                        style={{border: "10px solid white"}}
+                                        style={{
+                                            border: "3vh solid white",
+                                            minHeight: "35vh",
+                                            minWidth: "35vh",
+                                        }}
                                         src={author.photoURL}
                                         alt={author.displayName}
                                     />
@@ -171,7 +175,7 @@ const ArticlesList = () => {
                             <div className="col-8">
                                 {author.displayName &&
                                     <h4 className="card-title fw-bolder text-center text-light">{author.displayName}</h4>}
-                                <hr className="bg-white"/>
+                                <hr className="bg-white text-white"/>
                                 <div className="card-text text-light">
                                     {author.bio}
                                 </div>
