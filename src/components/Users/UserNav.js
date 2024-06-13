@@ -64,6 +64,9 @@ const UserNav = () => {
                     <Nav className="me-auto">
                         <NavLink to="/User/home" className='nav-link text-white link'>Home</NavLink>
                         <NavLink to="/User/Saved" className='nav-link text-white link'>Saved Articles</NavLink>
+                        <NavLink to="/articles-page" className='nav-link text-white link'>Articles</NavLink>
+                        <NavLink to="/Art-Gallery-page" className='nav-link text-white link'>Art Gallery</NavLink>
+                        <InstallButton/>
                         {isAuthor && (
                             <>
                                 <NavLink to="/upload" className='nav-link text-white link'>
@@ -71,9 +74,6 @@ const UserNav = () => {
                                 </NavLink>
                                 <NavLink to="/upload/profile" className='nav-link text-white link'>
                                     Profile
-                                </NavLink>
-                                <NavLink to="/articles-page" className='nav-link text-white link'>
-                                    Article List
                                 </NavLink>
                             </>
                         )}

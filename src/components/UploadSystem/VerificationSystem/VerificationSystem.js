@@ -138,13 +138,14 @@ const FirebaseFileList = () => {
         }
     };
 
-    const handleChange = (e, field, isObject) => {
+    const handleChange = async (e, field, isObject) => {
 
         let {value} = e.target;
         if (field === "category") {
             const oldCategory = fileData.category;
             const articleRef = databaseRef(database, `articles/${value}/${selectedFile.name.replace('.json', '')}`);
-            update(articleRef, {isEarlyAccess: false}).then();
+            const data = await get(articleRef);
+            update(articleRef, data.val()).then();
 
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(oldArticleRef).then();
