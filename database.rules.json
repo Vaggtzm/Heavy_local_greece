@@ -9,6 +9,12 @@
     "gallery": {
       ".read": true
     },
+    "articlesList": {
+      ".read": true
+    },
+    "authors": {
+      ".read": true
+    },
     ".write": "auth.token.admin === true"
   }
 }
