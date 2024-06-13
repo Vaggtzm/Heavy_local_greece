@@ -121,6 +121,8 @@ function App() {
                 <Route path='/User/register' element={<Register/>}/>
                 <Route path='/User/home' element={<UserHome/>}/>
                 <Route path='/User/Saved' element={<SavedArtciles/>}/>
+
+                <Route path='/author/:authorCode' element={<ArticlesList/>}/>
             </Routes>
             </div>
             <Footer/>

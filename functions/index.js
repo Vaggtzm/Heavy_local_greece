@@ -261,6 +261,11 @@ const handleArticleCategories = async (object) => {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
+        const ref = admin.database().ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
+        const newArticle = path.basename(file.name, '.json');
+
+        await ref.update({[newArticle]: true});
+
         const categories = content.category ? content.category.split(',') : ['undefined'];
         const date = content.date || '';
 

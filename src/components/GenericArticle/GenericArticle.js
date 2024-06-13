@@ -216,8 +216,9 @@ const DefaultArticle = (props) => {
                         <h3>{articles.title}</h3>
                         <hr className="bg-dark"/>
                     </div>
+
                     <div className={"col-12"}>
-                        <div className="w-100 d-flex align-items-center">
+                        <div  className="w-100 d-flex align-items-center">
                             {(author.wantToShow && author.photoURL) && (
                                 <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
                                     <img
@@ -226,16 +227,18 @@ const DefaultArticle = (props) => {
                                     />
                                 </div>)}
                             {/* Add margin to the left of the text */}
-                            <div>
+                            <NavLink to={`/author/${articles.sub}`} className={"nav-link"}>
                                 <div className={"row m-0"}>
-                                    <span className="text-white text-center h4">{author.displayName}</span>
+                                    <span className="text-info text-center h4">{author.displayName}</span>
                                 </div>
                                 <div className={"row m-0"}>
                                     <span className="text-white text-center h6">{author.role}</span>
                                 </div>
-                            </div>
+                            </NavLink>
                         </div>
+
                     </div>
+
                     <hr className={(author.wantToShow ? "mt-2 " : "") + "bg-dark"}/>
                     <div className="col-md-6 credits-box">
                         {articles.img01 && <img
