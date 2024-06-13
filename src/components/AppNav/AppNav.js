@@ -1,22 +1,118 @@
-import {useEffect, useState} from "react";
-import {auth} from "../../firebase";
-import UserNav from "./../Users/UserNav";
-import Navigation from "./Navigation";
+import React, {useEffect, useState} from "react";
+import {auth, database} from "../../firebase";
+import Container from "react-bootstrap/Container";
+import {Link, NavLink, useNavigate} from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
+import InstallButton from "../PWAinstal/pwaInstall";
+import {getIdTokenResult, signOut} from "firebase/auth";
+import {Button} from "react-bootstrap";
+import {onValue, ref} from "firebase/database";
 
 const AppNavigation = () => {
+
     const [loggedIn, setLoggedIn] = useState(false);
+    const [isAuthor, setIsAuthor] = useState(true);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isTranslator, setIsTranslator] = useState(false);
+    const [isLeader, setIsLeader] = useState(false);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            setLoggedIn(!!user); // Ελέγχει αν υπάρχει χρήστης και ενημερώνει την κατάσταση εισόδου
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                const userList = ref(database, 'roles');
+                onValue(userList, async (snapshot) => {
+                    const roles = snapshot.val();
+
+                    const userList = roles.translationSystem;
+                    setIsTranslator(userList.includes(user.email));
+                    const leaderList = roles.authorLeader;
+                    setIsLeader(leaderList.includes(user.email));
+                    const adminList = roles.admin;
+                    setIsAdmin(adminList.includes(user.email));
+                    setLoggedIn(true);
+                    try {
+                        const idTokenResult = await getIdTokenResult(user);
+                        setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
+                        console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
+                    } catch (e) {
+                        console.error("Error getting ID token result:", e);
+                    }
+                });
+            } else {
+                console.log("User is null");
+                setLoggedIn(false);
+                setIsTranslator(false);
+                setIsLeader(false);
+                setIsAdmin(false);
+                setIsAuthor(false);
+            }
         });
 
-        // Καθαρίζει τη συνδρομή όταν το component ξεφορτώνεται
+        // Clean up the subscription on unmount
         return () => unsubscribe();
     }, []);
 
+
     // Επιστρέφει το ανάλογο Navbar ανάλογα με την εισαγωγή του χρήστη
-    return loggedIn ? <UserNav/> : <Navigation/>;
+    return (
+        <Navbar expand="lg" className="bg-dark" variant="dark">
+            <Container fluid>
+                <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
+                    <img
+                        src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
+                        className="img-fluid rounded-circle"
+                        style={{maxWidth: "50px", maxHeight: "50px"}}
+                        alt="Navbar Brand"
+                    />
+                </Link>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="d-flex justify-content-center justify-content-evenly w-100 table-hover">
+                        <NavLink to={(loggedIn) ? "/User/home" : "/"} className='nav-link text-white '>Home</NavLink>
+                        {(loggedIn) && <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
+                        <NavLink to="/articles-page" className='nav-link text-white'>Articles</NavLink>
+                        <NavLink to="/Art-Gallery-page" className='nav-link text-white'>Art Gallery</NavLink>
+                        <InstallButton/>
+                        {isAuthor && (
+                            <>
+                                <NavLink to="/upload" className='nav-link text-white'>Upload</NavLink>
+                                <NavLink to="/upload/profile" className='nav-link text-white'>Profile</NavLink>
+                            </>
+                        )}
+
+                        {(isAdmin) &&
+                            <NavLink to="/admin" className='nav-link text-white'>User Administration</NavLink>
+                        }
+
+                        {(isAdmin || isLeader) &&
+                            <NavLink to="/upload/admin" className='nav-link text-white'>Admin Dashboard</NavLink>
+                        }
+                        {isTranslator &&
+                            <NavLink to={"/upload/translation"} className='nav-link text-white'>Translation
+                                System</NavLink>
+                        }
+
+                        {(loggedIn) ? (
+                            <Nav.Link onClick={() => {
+                                signOut(auth).then(() => {
+                                    navigate("/")
+                                })
+                            }} className='nav-link text-white'><Button variant="outline-danger">Sign
+                                Out</Button></Nav.Link>
+                        ) : (<>
+                                <NavLink to="/User/register" className='nav-link text-white link'>Create
+                                    Account</NavLink>
+                                <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
+                            </>
+                        )}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
 };
 
 export default AppNavigation;

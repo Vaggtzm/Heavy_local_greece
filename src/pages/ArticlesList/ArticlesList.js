@@ -163,9 +163,7 @@ const ArticlesList = () => {
                                     <img
                                         className="img-fluid rounded-5"
                                         style={{
-                                            border: "3vh solid white",
-                                            minHeight: "35vh",
-                                            minWidth: "35vh",
+                                            border: "3vh solid grey",
                                         }}
                                         src={author.photoURL}
                                         alt={author.displayName}

@@ -1,11 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import './PWA.css'
-
+import React, { useState, useEffect } from 'react';
+import './PWA.css';
 
 function InstallButton() {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        // Function to check if the device width is less than 768px
+        const checkIsMobile = () => {
+            return window.innerWidth < 768;
+        };
+
+        setIsMobile(checkIsMobile());
+
         const handleBeforeInstallPrompt = (event) => {
             event.preventDefault();
             setDeferredPrompt(event);
@@ -31,11 +38,16 @@ function InstallButton() {
         }
     };
 
+    if (!isMobile) {
+        return null; // Don't render the component if not on a mobile device
+    }
+
     return (
-        <>
-            <div className='nav-link text-white link' onClick={installApp}>Mobile App</div>
-        </>
+        <div className='nav-link text-white link' onClick={installApp}>
+            Mobile App
+        </div>
     );
 }
 
 export default InstallButton;
+

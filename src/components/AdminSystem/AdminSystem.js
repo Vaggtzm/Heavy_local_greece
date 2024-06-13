@@ -1,4 +1,3 @@
-import UserNav from "../Users/UserNav";
 import React, {useEffect, useState} from "react";
 import {auth, database, storage} from "../../firebase";
 import {signOut} from "firebase/auth";

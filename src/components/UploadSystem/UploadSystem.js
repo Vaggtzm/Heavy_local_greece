@@ -7,7 +7,6 @@ import './quill-custom.css'
 import {useNavigate} from "react-router-dom";
 import {auth, config, storage} from '../../firebase'; // Import Firebase auth
 import {getIdTokenResult, signOut} from "firebase/auth";
-import UserNav from "../Users/UserNav";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import ImageUpload from "./components/fancyImage/ImageUpload";
 import CategoryDropdown from "./components/CategoryDropdown/CategoryDropdown";

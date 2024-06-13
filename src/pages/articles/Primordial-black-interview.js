@@ -1,5 +1,4 @@
 import React from "react";
-import Navigation from "../../components/AppNav/Navigation";
 import PageWithComments from "../../components/Comments/comment";
 import './articles.css';
 
