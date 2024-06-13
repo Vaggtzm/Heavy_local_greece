@@ -1,6 +1,6 @@
 // UserCards.js
 import React, {useEffect, useState} from 'react';
-import {getDatabase, ref, onValue, off} from 'firebase/database';
+import {getDatabase, off, onValue, ref} from 'firebase/database';
 import {getDownloadURL, ref as storageRef} from 'firebase/storage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './author.css';
@@ -52,22 +52,29 @@ const Author = ({userId, className, rating}) => {
 
     return (
         <NavLink className={`${className} nav-link`} to={`/author/${userId}`}>
-            <div className="d-flex justify-content-center mb-4">
-                <img
-                    src={user.photoURL}
-                    alt={user.displayName}
-                    className="rounded-circle shadow-1-strong" width="150" height="150"/>
+            <div className={"ms-5"}>
+                <div className={"card bg-dark w-100 rounded-4"}>
+                    <div className="d-flex justify-content-center mb-4 mt-4">
+                        <img
+                            src={user.photoURL}
+                            alt={user.displayName}
+                            style={{border: "10px solid grey"}}
+                            className="rounded-4 " width="150" height="150"/>
+                    </div>
+                    <h5 className="mb-3 text-white">{user.displayName} </h5>
+                    <h6 className="text-primary mb-3 text-white">{user.role}</h6>
+                    <div className={"d-flex justify-content-center"}>
+                    <hr className={"text-light w-75"}/>
+                    </div>
+                    <p className="px-xl-3 text-white">
+                        <i className="fas fa-quote-left pe-2"></i>
+                        {user.bio}
+                        <i className="fas fa-quote-right pe-2"></i>
+                    </p>
+
+                    <StarRating rating={rating}></StarRating>
+                </div>
             </div>
-            <h5 className="mb-3 text-white">{user.displayName} </h5>
-            <h6 className="text-primary mb-3 text-white">{user.role}</h6>
-            <p className="px-xl-3 text-white">
-                <i className="fas fa-quote-left pe-2"></i>
-                {user.bio}
-                <i className="fas fa-quote-right pe-2"></i>
-            </p>
-
-            <StarRating rating={rating}></StarRating>
-
         </NavLink>
     );
 };
