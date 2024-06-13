@@ -5,6 +5,7 @@ import {getDownloadURL, ref as storageRef} from 'firebase/storage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './author.css';
 import {storage} from "../../../firebase";
+import {NavLink} from "react-router-dom";
 
 const Author = ({userId, className, rating}) => {
     const [user, setUser] = useState([]);
@@ -50,7 +51,7 @@ const Author = ({userId, className, rating}) => {
     }
 
     return (
-        <div className={className}>
+        <NavLink className={`${className} nav-link`} to={`/author/${userId}`}>
             <div className="d-flex justify-content-center mb-4">
                 <img
                     src={user.photoURL}
@@ -67,7 +68,7 @@ const Author = ({userId, className, rating}) => {
 
             <StarRating rating={rating}></StarRating>
 
-        </div>
+        </NavLink>
     );
 };
 
