@@ -20,8 +20,8 @@ fs.readFile(builtIndexPath, 'utf8', (err, data) => {
   // Perform replacements
   const modifiedData = data
     .replace('<title>Pulse Of The Underground</title>', `<title>${title}</title>`)
-    .replace('<meta property="og:title" content="Pulse Of The Underground"/>', `<meta property="og:title" content="${title}"/>`)
-    .replace('<meta property="og:image" content="/assets/PulseOfTheUnderground.jpg"/>', `<meta property="og:image" content="${thumbnail}"/>`);
+    .replace('<meta property="og:title" content="Pulse Of The Underground"/>', `<meta property="og:title" content='${title}'/>`)
+    .replace('<meta property="og:image" content="/assets/PulseOfTheUnderground.jpg"/>', `<meta property="og:image" content='${thumbnail}'/>`);
 
   // Write the modified content to the functions folder
   fs.writeFile(modifiedIndexPath, modifiedData, 'utf8', (err) => {

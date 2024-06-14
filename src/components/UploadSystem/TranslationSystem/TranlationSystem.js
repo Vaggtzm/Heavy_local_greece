@@ -34,6 +34,7 @@ const TranslationSystem = () => {
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
     const [isTranslating, setIsTranslating] = useState(false);
     const [sortByDate, setSortByDate] = useState(false);
+    const [user, setUser] = useState(null);
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -94,7 +95,7 @@ const TranslationSystem = () => {
             console.log(userList);
             const unsubscribe = auth.onAuthStateChanged((user) => {
                 if (user && userList.includes(user.email)) {
-
+                    setUser(user);
                 } else {
                     navigate('/upload');
                     signOut(auth).then();
@@ -131,6 +132,8 @@ const TranslationSystem = () => {
         let newFileName = selectedFile.name;
         let fileRef;
         let translationFileRef;
+
+        fileData.translatedBy = user.uid;
 
         if (!fileData.translations) {
             fileData.translations = {};

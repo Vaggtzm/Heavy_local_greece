@@ -1,5 +1,5 @@
 {
-  "hosting": {
+  "hosting": [{
     "site": "heavy-local-12bc4",
     "predeploy": "npm run build",
     "public": "build",
@@ -26,11 +26,24 @@
         "function": "webApi"
       },
       {
+        "source": "/author/**",
+        "function": "webApi"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
     ]
   },
+    {
+      "site": "heavy-local-author",
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "proxySubdomains"
+        }]
+    }
+  ],
   "functions": {
     "source": "functions",
     "runtime": "nodejs20"

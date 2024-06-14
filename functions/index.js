@@ -165,6 +165,40 @@ app.get("/article/early/:article", (req, res) => {
     getArticle(req, res, "early_releases").then();
 });
 
+app.get("/author/*",async (req, res)=>{
+    const authorCode = req.params[0];
+    let author = await database.ref(`/authors/${authorCode}`).get();
+    if(!author.exists()){
+        return res.status(404).send("Author not found");
+    }
+
+    author = author.val();
+
+    const filepath = path.resolve(__dirname, "index.html");
+
+
+    const updatedFile = bucket.file("profile_images/" + authorCode + "_600x600");
+
+    // Generate a signed URL for the updated file
+    const expirationDate = new Date('2025-03-01');  // March 1st, 2025
+    const [url] = await updatedFile.getSignedUrl({
+        action: 'read',
+        expires: expirationDate,
+    });
+
+    try {
+        // Read and replace placeholders in the HTML template
+        let htmlData = fs.readFileSync(filepath, "utf-8");
+        htmlData = htmlData.replace(/_TITLE_/g, author.displayName.replaceAll("'",'"'));
+        htmlData = htmlData.replace(/_THUMB_/g, url);
+
+        res.send(htmlData);
+    } catch (error) {
+        console.error("Error fetching author:", error);
+        res.status(500).send("Error fetching author");
+    }
+})
+
 
 // Express route to handle image requests
 app.get("/assets/*", async (req, res) => {
@@ -261,10 +295,14 @@ const handleArticleCategories = async (object) => {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
-        const ref = admin.database().ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
+        const ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
         const newArticle = path.basename(file.name, '.json');
-
         await ref.update({[newArticle]: true});
+
+        if(content.trtranslatedBy!==undefined) {
+            const ref = database.ref(`/authors/${content.translatedBy}/translatedArticles/${directory}/${content.category}`)
+            await ref.update({[newArticle]: true});
+        }
 
         const categories = content.category ? content.category.split(',') : ['undefined'];
         const date = content.date || '';

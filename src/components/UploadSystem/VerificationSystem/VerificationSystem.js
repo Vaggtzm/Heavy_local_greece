@@ -24,6 +24,7 @@ const FirebaseFileList = () => {
     const [sortByDate, setSortByDate] = useState(false);
     const [sortByCategory, setSortByCategory] = useState(false);
     const [authorName, setAuthorName] = useState('');
+    const [translatorName, setTranslatorName] = useState('');
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -105,6 +106,21 @@ const FirebaseFileList = () => {
         } catch (e) {
             console.log(e)
             setAuthorName("");
+        }
+
+        const translatorRef = databaseRef(database, `authors/${file.fileContent.translatedBy}`);
+        try {
+            get(translatorRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val())
+                    setTranslatorName(snapshot.val().displayName);
+                } else {
+                    setTranslatorName("");
+                }
+            });
+        } catch (e) {
+            console.log(e)
+            setTranslatorName("");
         }
 
         setIsAlreadyPublished(isAlreadyPub);
@@ -525,6 +541,7 @@ const FirebaseFileList = () => {
                 <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => {
                     setFileData({})
                     setAuthorName("");
+                    setTranslatorName("");
                 }}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit File Data</Modal.Title>
@@ -566,6 +583,14 @@ const FirebaseFileList = () => {
                                     type="text"
                                     value={fileData.img01}
                                     onChange={(e) => handleChange(e, 'img01', false)}
+                                />
+                            </Form.Group>
+                            <Form.Group controlId="translator">
+                                <Form.Label>Translator{translatorName && <>({translatorName})</>}</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    value={fileData.translatedBy}
+                                    onChange={(e) => handleChange(e, 'translatedBy', false)}
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
