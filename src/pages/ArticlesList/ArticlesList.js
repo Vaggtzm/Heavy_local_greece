@@ -5,6 +5,7 @@ import { auth, database, storage } from "../../firebase";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink, useParams} from "react-router-dom";
 import { Accordion, Nav, Spinner } from 'react-bootstrap';
+import {Helmet} from "react-helmet";
 
 const ArticlesList = () => {
     const [articles, setArticles] = useState({});
@@ -12,6 +13,8 @@ const ArticlesList = () => {
     const [activeKey, setActiveKey] = useState("Collabs and Sponsorships");
     const [loggedIn, setLoggedIn] = useState(false);
     const [author, setAuthor] = useState({});
+
+    const [borderSize, setBorderSize] = useState(6);
 
     const imgRef = useRef(null);
 
@@ -66,15 +69,23 @@ const ArticlesList = () => {
             }
         });
 
+        window.addEventListener('resize', updateBorderSize);
+
     }, [authorCode]);
 
     const getBorderSize = () => {
-        if(!imgRef.current){return 0.3;}
+        if(!imgRef.current||imgRef.current.clientWidth===0||imgRef.current.clientHeight===0){return 6;}
         const width = imgRef.current.clientWidth;
         const height = imgRef.current.clientHeight;
         console.log("height", height)
         return (imgRef.current.clientWidth>100)?Math.min(width, height)*0.06:Math.min(width, height)*0.1;
     }
+
+    const updateBorderSize = () => {
+        setBorderSize(getBorderSize());
+    }
+
+    useEffect(updateBorderSize, [imgRef.current]);
 
     const fetchArticlesWithImages = async (data) => {
         const updatedData = {};
@@ -151,6 +162,9 @@ const ArticlesList = () => {
 
     return (
         <div className="container mt-5 mb-5 overflow-hidden" style={{ marginBottom: "11.4vh" }}>
+            {author.displayName&&(<Helmet>
+                <title>{author.displayName} - Pulse of the Underground</title>
+            </Helmet>)}
             {loading ? (
                 <Spinner style={{
                     width: '100px',
@@ -174,7 +188,7 @@ const ArticlesList = () => {
                                         ref={imgRef}
                                         className="img-fluid rounded-5"
                                         style={{
-                                            border: `${getBorderSize()}px solid grey`,
+                                            border: `${borderSize}px solid grey`,
                                         }}
                                         src={author.photoURL}
                                         alt={author.displayName}
@@ -183,7 +197,7 @@ const ArticlesList = () => {
                             </div>
                             <div className="col-8">
                                 {author.displayName &&
-                                    <h4 className="card-title fw-bolder text-center text-light">{author.displayName}</h4>}
+                                    <h1 className="card-title fw-bolder text-center text-light">{author.displayName}</h1>}
                                 <hr className="bg-white text-white"/>
                                 <div className="card-text text-light">
                                     {author.bio}
