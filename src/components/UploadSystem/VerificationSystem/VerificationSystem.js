@@ -208,15 +208,20 @@ const FirebaseFileList = () => {
     const handlePublish = async (to_normal_release, filename, isEarlyReleasedArticles) => {
 
         try {
-            let originalFileRef = ref(storage, `upload_from_authors/${filename}`);
-            let destinationFileRef = ref(storage, `early_releases/${filename}`);
+            let originalfolder = "upload_from_authors";
+            let folder = "early_releases";
+
+
             if (to_normal_release) {
-                destinationFileRef = ref(storage, `articles/${filename}`);
+                folder = "articles";
             }
             if (isEarlyReleasedArticles) {
-                originalFileRef = ref(storage, `early_releases/${filename}`);
-                destinationFileRef = ref(storage, `articles/${filename}`);
+                folder = "articles";
+                originalfolder = "early_releases";
             }
+
+            const destinationFileRef = ref(storage, `${folder}/${filename}`);
+            let originalFileRef = ref(storage, `${originalfolder}/${filename}`);
 
             const downloadUrl = await getDownloadURL(originalFileRef);
             const fileContent = JSON.parse(await fetch(downloadUrl).then(res => res.text()));
@@ -236,6 +241,21 @@ const FirebaseFileList = () => {
             if (isEarlyReleasedArticles) {
                 const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
                 update(articleRef, {isEarlyAccess: false}).then();
+
+
+                let newRef;
+                let oldRef;
+                if(fileContent.translatedBy===undefined) {
+                    newRef = databaseRef(database,`/authors/${fileContent.sub}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database,`/authors/${fileContent.sub}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                }else {
+                    newRef = databaseRef(database,`/authors/${fileContent.translatedBy}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database,`/authors/${fileContent.translatedBy}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                }
+
+                update(newRef, {[filename.replace(".json", "")]: true}).then();
+                remove(oldRef).then();
+
 
                 const usersRef = databaseRef(database, 'users');
                 const snapshot = await get(child(usersRef, '/'));

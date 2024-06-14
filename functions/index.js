@@ -297,7 +297,6 @@ const handleArticleCategories = async (object) => {
 
 
         const newArticle = path.basename(file.name, '.json');
-
         let ref;
         if(content.translatedBy===undefined) {
             ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
@@ -306,6 +305,7 @@ const handleArticleCategories = async (object) => {
 
         }
         await ref.update({[newArticle]: true});
+
         const categories = content.category ? content.category.split(',') : ['undefined'];
         const date = content.date || '';
 
