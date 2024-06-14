@@ -78,14 +78,23 @@ const ArticlesList = () => {
         const width = imgRef.current.clientWidth;
         const height = imgRef.current.clientHeight;
         console.log("height", height)
-        return (imgRef.current.clientWidth>100)?Math.min(width, height)*0.06:Math.min(width, height)*0.1;
+        let computerPercentage = 0.06;
+        let mobilePercentage = 0.03;
+        if(author.dimentions){
+            console.log("author.dimentions", author.dimentions)
+            computerPercentage = computerPercentage*author.dimentions.computer;
+            mobilePercentage = mobilePercentage*author.dimentions.mobile;
+        }
+        const computerValue = Math.min(width, height)*computerPercentage;
+        const mobileValue = Math.min(width, height)*mobilePercentage;
+        return (imgRef.current.clientWidth>100)?computerValue:mobileValue;
     }
 
     const updateBorderSize = () => {
         setBorderSize(getBorderSize());
     }
 
-    useEffect(updateBorderSize, [imgRef.current]);
+    useEffect(updateBorderSize, [imgRef.current, author]);
 
     const fetchArticlesWithImages = async (data) => {
         const updatedData = {};
@@ -190,7 +199,7 @@ const ArticlesList = () => {
                                         ref={imgRef}
                                         className="img-fluid rounded-5"
                                         style={{
-                                            border: `${borderSize}px solid grey`,
+                                            border: `${borderSize}px solid ${author.color?author.color:'grey'}`,
                                         }}
                                         src={author.photoURL}
                                         alt={author.displayName}
