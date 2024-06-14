@@ -20,6 +20,7 @@ const DefaultArticle = (props) => {
     const [loading, setLoading] = useState(true);
 
     const [author, setAuthor] = useState({});
+    const [translator, setTranslator] = useState({});
 
     const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
     const [imageStorageRef, setImageStorageRef] = useState(null);
@@ -89,6 +90,23 @@ const DefaultArticle = (props) => {
                 throw new Error("Failed to fetch data");
             }
             const data = await response.json();
+            const translatorRef = dbRef(database, `authors/${data.translatedBy}`);
+
+
+            onValue(translatorRef, async (snapshot) => {
+                if (snapshot.exists()) {
+                    const translatorData = snapshot.val();
+                    let userImage = ref(storage, `/profile_images/${data.translatedBy}_600x600`);
+                    translatorData.photoURL = await getDownloadURL(userImage);
+                    console.log(translatorData);
+
+                    setTranslator(translatorData);
+                } else {
+                    setTranslator(null)
+                }
+            });
+
+
 
             const usersRef = dbRef(database, `authors/${data.sub}`);
             if (usersRef) {
@@ -217,8 +235,8 @@ const DefaultArticle = (props) => {
                         <hr className="bg-dark"/>
                     </div>
 
-                    <div className={"col-12"}>
-                        <div  className="w-100 d-flex align-items-center">
+                    <div className={"col-12 row"}>
+                        <div className="col-6 w-50 d-flex align-items-center">
                             {(author.wantToShow && author.photoURL) && (
                                 <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
                                     <img
@@ -237,6 +255,26 @@ const DefaultArticle = (props) => {
                             </NavLink>
                         </div>
 
+
+
+                        {translator&& <div className="col-6 w-50 d-flex align-items-center">
+                            {(translator.wantToShow && translator.photoURL) && (
+                                <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
+                                    <img
+                                        src={translator.photoURL}
+                                        alt={translator.displayName}
+                                    />
+                                </div>)}
+                            {/* Add margin to the left of the text */}
+                            <NavLink to={`/author/${articles.translatedBy}`} className={"nav-link"}>
+                                <div className={"row m-0"}>
+                                    <span className="text-info text-center h4">{translator.displayName}</span>
+                                </div>
+                                <div className={"row m-0"}>
+                                    <span className="text-white text-center h6">{translator.role}</span>
+                                </div>
+                            </NavLink>
+                        </div>}
                     </div>
 
                     <hr className={(author.wantToShow ? "mt-2 " : "") + "bg-dark"}/>

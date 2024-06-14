@@ -90,6 +90,8 @@ const ArticlesList = () => {
     const fetchArticlesWithImages = async (data) => {
         const updatedData = {};
 
+        console.log(data);
+
         for (const category in data) {
             const categoryData = data[category];
             updatedData[category] = {};

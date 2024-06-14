@@ -295,15 +295,17 @@ const handleArticleCategories = async (object) => {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
-        const ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
+
         const newArticle = path.basename(file.name, '.json');
-        await ref.update({[newArticle]: true});
 
-        if(content.trtranslatedBy!==undefined) {
-            const ref = database.ref(`/authors/${content.translatedBy}/translatedArticles/${directory}/${content.category}`)
-            await ref.update({[newArticle]: true});
+        let ref;
+        if(content.translatedBy===undefined) {
+            ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
+        }else {
+            ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${content.category}`)
+
         }
-
+        await ref.update({[newArticle]: true});
         const categories = content.category ? content.category.split(',') : ['undefined'];
         const date = content.date || '';
 

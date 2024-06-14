@@ -93,7 +93,7 @@ const FirebaseFileList = () => {
             ...file.fileContent,
         });
 
-        const authorRef = databaseRef(database, `authors/${file.fileContent.sub}`);
+        const authorRef = databaseRef(database, `authors/${fileData.sub}`);
         try {
             get(authorRef).then((snapshot) => {
                 if (snapshot.exists()) {
@@ -108,14 +108,16 @@ const FirebaseFileList = () => {
             setAuthorName("");
         }
 
-        const translatorRef = databaseRef(database, `authors/${file.fileContent.translatedBy}`);
+        const translatorRef = databaseRef(database, `authors/${fileData.translatedBy}`);
         try {
             get(translatorRef).then((snapshot) => {
                 if (snapshot.exists()) {
                     console.log(snapshot.val())
-                    setTranslatorName(snapshot.val().displayName);
+                    console.log(snapshot.val());
+                    setTranslatorName(snapshot.val().displayName||'');
                 } else {
                     setTranslatorName("");
+                    console.log()
                 }
             });
         } catch (e) {
@@ -590,7 +592,23 @@ const FirebaseFileList = () => {
                                 <Form.Control
                                     type="text"
                                     value={fileData.translatedBy}
-                                    onChange={(e) => handleChange(e, 'translatedBy', false)}
+                                    onChange={(e) => {
+                                        const authorRef = databaseRef(database, `authors/${e.target.value}`);
+                                        try {
+                                            get(authorRef).then((snapshot) => {
+                                                if (snapshot.exists()) {
+                                                    console.log(snapshot.val())
+                                                    setTranslatorName(snapshot.val().displayName);
+                                                } else {
+                                                    setTranslatorName("");
+                                                }
+                                            });
+                                        } catch (e) {
+                                            console.log(e)
+                                            setAuthorName("");
+                                        }
+                                        handleChange(e, 'translatedBy', false).then(r => {})
+                                    }}
                                 />
                             </Form.Group>
                             <Form.Group controlId="sub">
