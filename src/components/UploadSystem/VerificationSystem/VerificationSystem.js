@@ -88,6 +88,12 @@ const FirebaseFileList = () => {
 
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
+
+        file.data = {
+            isEarlyAccess: isEarlyReleased,
+            isPublished: isAlreadyPub
+        }
+
         setSelectedFile(file);
         setFileData({
             ...file.fileContent,
@@ -106,6 +112,7 @@ const FirebaseFileList = () => {
         } catch (e) {
             console.log(e)
             setAuthorName("");
+
         }
 
         const translatorRef = databaseRef(database, `authors/${fileData.translatedBy}`);
@@ -157,14 +164,34 @@ const FirebaseFileList = () => {
     };
 
     const handleChange = async (e, field, isObject) => {
+        console.log(selectedFile);
+
 
         let {value} = e.target;
         if (field === "category") {
             const oldCategory = fileData.category;
             const articleRef = databaseRef(database, `articles/${value}/${selectedFile.name.replace('.json', '')}`);
-            const data = await get(articleRef);
-            update(articleRef, data.val()).then();
+            const data = selectedFile.data
+            update(articleRef, data).then();
 
+            let folder
+
+            if (data.isEarlyAccess) {
+                folder = "early_releases"
+            } else if (data.isPublished) {
+                folder = "articles"
+            } else {
+                folder = "upload_from_authors";
+
+            }
+
+            const author = (selectedFile.fileContent.translatedBy)?selectedFile.fileContent.translatedBy:selectedFile.fileContent.sub;
+
+            const authorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
+            remove(authorRef).then();
+
+            const newAuthorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${value}/`);
+            update(newAuthorRef, {[selectedFile.name.replace('.json', '')]: true});
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(oldArticleRef).then();
         }
