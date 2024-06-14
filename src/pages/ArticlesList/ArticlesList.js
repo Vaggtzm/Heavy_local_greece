@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { onValue, ref } from 'firebase/database';
 import { getDownloadURL, ref as storageRef } from 'firebase/storage';
 import { auth, database, storage } from "../../firebase";
@@ -12,6 +12,8 @@ const ArticlesList = () => {
     const [activeKey, setActiveKey] = useState("Collabs and Sponsorships");
     const [loggedIn, setLoggedIn] = useState(false);
     const [author, setAuthor] = useState({});
+
+    const imgRef = useRef(null);
 
     const { authorCode } = useParams();
 
@@ -65,6 +67,14 @@ const ArticlesList = () => {
         });
 
     }, [authorCode]);
+
+    const getBorderSize = () => {
+        if(!imgRef.current){return 0.3;}
+        const width = imgRef.current.clientWidth;
+        const height = imgRef.current.clientHeight;
+        console.log("height", height)
+        return (imgRef.current.clientWidth>100)?Math.min(width, height)*0.06:Math.min(width, height)*0.1;
+    }
 
     const fetchArticlesWithImages = async (data) => {
         const updatedData = {};
@@ -140,7 +150,7 @@ const ArticlesList = () => {
     };
 
     return (
-        <div className="container m-5" style={{ marginBottom: "11.4vh" }}>
+        <div className="container mt-5 mb-5 overflow-hidden" style={{ marginBottom: "11.4vh" }}>
             {loading ? (
                 <Spinner style={{
                     width: '100px',
@@ -161,9 +171,10 @@ const ArticlesList = () => {
                             <div className="col-4 d-flex justify-content-center">
                                 <div className="w-75 mx-auto">
                                     <img
+                                        ref={imgRef}
                                         className="img-fluid rounded-5"
                                         style={{
-                                            border: "3vh solid grey",
+                                            border: `${getBorderSize()}px solid grey`,
                                         }}
                                         src={author.photoURL}
                                         alt={author.displayName}

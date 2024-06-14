@@ -58,7 +58,7 @@ const AppNavigation = () => {
 
     // Επιστρέφει το ανάλογο Navbar ανάλογα με την εισαγωγή του χρήστη
     return (
-        <Navbar expand="lg" className="sticky-top" variant="dark" style={{backgroundColor: "rgba(0,0,0,0.85)"}}>
+        <Navbar expand="lg" className="sticky-top overflow-hidden" variant="dark" style={{backgroundColor: "rgba(0,0,0,0.85)"}}>
             <Container fluid>
                 <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
                     <img
