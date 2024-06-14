@@ -508,12 +508,14 @@ const Home = () => {
 
                             <hr className="bg-white"/>
 
-                            <Author rating={4} className={"col-md-6 mb-0 text-white"}
+                            <Author rating={4} className={"col-md-4 mb-0 text-white"}
+                                    userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}/>
+
+                            <Author rating={4} className={"col-md-4 mb-0 text-white"}
                                     userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}/>
 
-                            <Author rating={4} className={"col-md-6 mb-0 text-white"}
+                            <Author rating={4} className={"col-md-4 mb-0 text-white"}
                                     userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}/>
-
 
                         </div>
 
