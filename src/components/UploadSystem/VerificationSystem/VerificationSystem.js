@@ -168,9 +168,12 @@ const FirebaseFileList = () => {
 
 
         let {value} = e.target;
-        if (field === "category") {
+        if (field === "category"||field==="sub"||field==="translatedBy") {
+            if(field === "category"){
+                fileData.category = value;
+            }
             const oldCategory = fileData.category;
-            const articleRef = databaseRef(database, `articles/${value}/${selectedFile.name.replace('.json', '')}`);
+            const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
             const data = selectedFile.data
             update(articleRef, data).then();
 
@@ -182,7 +185,6 @@ const FirebaseFileList = () => {
                 folder = "articles"
             } else {
                 folder = "upload_from_authors";
-
             }
 
             const author = (selectedFile.fileContent.translatedBy)?selectedFile.fileContent.translatedBy:selectedFile.fileContent.sub;
@@ -190,8 +192,9 @@ const FirebaseFileList = () => {
             const authorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(authorRef).then();
 
-            const newAuthorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${value}/`);
+            const newAuthorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${fileData.category}/`);
             update(newAuthorRef, {[selectedFile.name.replace('.json', '')]: true});
+            console.log(`Updated: authors/${author}/writtenArticles/${folder}/${fileData.category}/`)
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(oldArticleRef).then();
         }
