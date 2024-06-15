@@ -220,10 +220,10 @@ const ArticlesList = () => {
                             )}
 
                     {(articles['early_releases']||articles['articles']) &&<div className="row bg-dark p-3">
-                        <div className="col-md-3">
+                        <div className="col-md-3 d-none d-md-block">
                             <Nav variant="pills" className="flex-column sticky-top" activeKey={activeKey}
                                  onSelect={(selectedKey) => setActiveKey(selectedKey)}>
-                                {loggedIn &&articles['early_releases'] && (
+                                {loggedIn && articles['early_releases'] && (
                                     <Nav.Item>
                                         <Nav.Link eventKey="early_releases">{nice_titles['early_releases']}</Nav.Link>
                                     </Nav.Item>

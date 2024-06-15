@@ -472,7 +472,7 @@ const FirebaseFileList = () => {
                                     return false;
                                 }}
                             >
-                                {file.fileContent.title}
+                                {file.fileContent.title} - {file.name}
                             </a>
                         ) : (
                             <>{file.fileContent.title}</>
