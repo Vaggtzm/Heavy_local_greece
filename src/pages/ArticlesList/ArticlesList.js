@@ -191,31 +191,33 @@ const ArticlesList = () => {
                 </Spinner>
             ) : (
                 <div>
-                    {(authorCode)&& (<div className="d-flex justify-content-center mb-5">
-                        <div className="row w-100">
-                            <div className="col-4 d-flex justify-content-center">
-                                <div className="w-75 mx-auto">
-                                    <img
-                                        ref={imgRef}
-                                        className="img-fluid rounded-5"
-                                        style={{
-                                            border: `${borderSize}px solid ${author.color?author.color:'grey'}`,
-                                        }}
-                                        src={author.photoURL}
-                                        alt={author.displayName}
-                                    />
+                    {(authorCode)&& (<div className="mb-5">
+                            <div className="row flex-column flex-md-row">
+                                <div className="col-md-4 col-12 mb-5">
+                                    <div className="w-75 mx-auto">
+                                        <img
+                                            ref={imgRef}
+                                            className="img-fluid rounded-5"
+                                            style={{
+                                                border: `${borderSize}px solid ${author.color ? author.color : 'grey'}`,
+                                            }}
+                                            src={author.photoURL}
+                                            alt={author.displayName}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-8">
-                                {author.displayName &&
-                                    <h1 className="card-title fw-bolder text-center text-light">{author.displayName}</h1>}
-                                <hr className="bg-white text-white"/>
-                                <div className="card-text text-light">
-                                    {author.bio}
+                                <div className="col-md-8 col-12">
+                                    {author.displayName && (
+                                        <h1 className="card-title fw-bolder text-center text-light h1">{author.displayName}</h1>
+                                    )}
+                                    <hr className="bg-white text-white"/>
+                                    <div className="card-text text-light">
+                                        {author.bio}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>)}
+                            )}
 
                     {(articles['early_releases']||articles['articles']) &&<div className="row bg-dark p-3">
                         <div className="col-md-3">
