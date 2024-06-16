@@ -53,8 +53,8 @@ const Author = ({userId, className, rating}) => {
     return (
         <NavLink className={`${className} nav-link`} to={`/author/${userId}`}>
             <div className={"ms-5"}>
-                <div className={"card bg-dark w-100 rounded-4"}>
-                    <div className="d-flex justify-content-center mb-4 mt-4">
+                <div className={"card bg-dark w-100 rounded-4 p-4"}>
+                    <div className="d-flex justify-content-center mb-4 w-100">
                         <img
                             src={user.photoURL}
                             alt={user.displayName}
@@ -66,7 +66,7 @@ const Author = ({userId, className, rating}) => {
                     <div className={"d-flex justify-content-center"}>
                     <hr className={"text-light w-75"}/>
                     </div>
-                    <p className="px-xl-3 text-white">
+                    <p className="px-xl-3 text-white w-100">
                         <i className="fas fa-quote-left pe-2"></i>
                         {user.bio}
                         <i className="fas fa-quote-right pe-2"></i>
