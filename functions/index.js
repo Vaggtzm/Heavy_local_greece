@@ -275,7 +275,6 @@ const categories = {
 
 const handleArticleCategories = async (object) => {
     const filePath = object.name;
-
     const directory = path.dirname(filePath).split('/').join('_');
 
     // Only proceed if the uploaded file is a JSON file
@@ -284,8 +283,8 @@ const handleArticleCategories = async (object) => {
     }
 
     const [files] = await bucket.getFiles({ prefix: path.dirname(filePath) });
-
     const articles = {};
+    const allArticles = [];
 
     for (const file of files) {
         if (path.extname(file.name) !== '.json') {
@@ -295,44 +294,91 @@ const handleArticleCategories = async (object) => {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
-
+        // Extract the newArticle name from the file name without the .json extension
         const newArticle = path.basename(file.name, '.json');
-        let ref;
-        if(content.translatedBy===undefined) {
-            ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${content.category}`)
-        }else {
-            ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${content.category}`)
 
-        }
-        await ref.update({[newArticle]: true});
-
-        const categories = content.category ? content.category.split(',') : ['undefined'];
-        const date = content.date || '';
+        // Extract categories (if multiple, split by comma and trim)
+        const categories = content.category ? content.category.split(',').map(cat => cat.trim()) : ['undefined'];
 
         categories.forEach(category => {
-            category = category.trim();
             if (!articles[category]) {
                 articles[category] = [];
             }
-
-            articles[category].push({
-                filename: path.basename(file.name, '.json'),
-                date: new Date(date.split('/').reverse().join('-'))
-            });
+            articles[category].push(newArticle);
         });
+
+        // Collect all articles with their metadata
+        allArticles.push({
+            filename: newArticle,
+            date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
+            categories
+        });
+
+        // Update author's written articles
+        let ref;
+        if (content.translatedBy === undefined) {
+            ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${categories[0]}`);
+        } else {
+            ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${categories[0]}`);
+        }
+        await ref.child(newArticle).set(true);
     }
 
+    // Save articles in `articlesList` as lists of filenames
+    const articlesList = {};
     for (const category in articles) {
-        articles[category].sort((a, b) => b.date - a.date);
-        const size = categories[category]||3;
-        articles[category] = articles[category].slice(0, size).map(article => article.filename);
+        articlesList[category] = articles[category];
     }
 
-    await admin.database().ref(`/articlesList/${directory}`).set(articles);
+    // Save `articlesList` in Firebase
+    await admin.database().ref(`/articlesList/${directory}`).set(articlesList);
+
+    // Prepare to store latest articles for each category
+    const latestArticlesByCategory = {};
+
+    // Group all articles by category
+    const articlesByCategory = {};
+    allArticles.forEach(article => {
+        article.categories.forEach(category => {
+            if (!articlesByCategory[category]) {
+                articlesByCategory[category] = [];
+            }
+            articlesByCategory[category].push(article);
+        });
+    });
+
+    // Find the latest articles for each category
+    for (const category in articlesByCategory) {
+        // Sort articles by date in descending order
+        articlesByCategory[category].sort((a, b) => b.date - a.date);
+
+        // Get the latest date from the sorted list
+        const latestDate = articlesByCategory[category][0].date;
+
+        // Filter for articles with the latest date
+        const latestArticles = articlesByCategory[category].filter(article => article.date.getTime() === latestDate.getTime());
+
+        if (latestArticles.length > 0) {
+            // Extract filenames of all latest articles in this category
+            const latestArticleFilenames = latestArticles.map(article => article.filename);
+
+            // Store the list of latest article filenames for the category
+            latestArticlesByCategory[category] = latestArticleFilenames;
+        } else {
+            // Handle case where no articles found for the latest date
+            console.warn(`No latest article found for category '${category}'`);
+            // You might want to set a default or handle this case accordingly
+        }
+    }
+
+    // Save `latestArticlesByCategory` in Firebase under `articlesListLatestTest`
+    await admin.database().ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
 
     console.log('Articles organized and stored in the database successfully.');
     return null;
-}
+};
+
+
 
 
 const getImageDimensions = async (object) => {

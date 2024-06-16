@@ -98,8 +98,8 @@ const ArticleUpload = () => {
     };
 
     function replaceSpecialCharsWithDashes(text) {
-        // Regular expression to match any character that is not alphanumeric or a dash
-        const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
+        // Regular expression to match any character that Firebase Realtime Database does not support in keys
+        const regex = /[.$#[\]/\u0000-\u001F\u007F-\uFFFF]/g;
         // Replace matched characters with dashes
         return text.replace(regex, '');
     }
