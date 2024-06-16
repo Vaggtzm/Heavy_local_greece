@@ -58,15 +58,11 @@ header {
 
 .ExploreMore {
     padding-bottom: 1rem;
+    
 }
 
 .testinomial {
-    padding-bottom: 1rem;
-    background-image: url(./../assets/MainBackground.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
+    padding-bottom: 1rem;}
 
 
 .ReviewBox {
