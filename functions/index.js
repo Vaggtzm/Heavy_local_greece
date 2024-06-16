@@ -275,14 +275,19 @@ const categories = {
 
 const handleArticleCategories = async (object) => {
     const filePath = object.name;
-    const directory = path.dirname(filePath).split('/').join('_');
-
+    const directory = path.dirname(filePath);
     // Only proceed if the uploaded file is a JSON file
     if (path.extname(filePath) !== '.json') {
         return null;
     }
+    const directories = ['articles', 'early_releases', 'upload_from_authors'];
+    await Promise.all(directories.map(async (dir) => {return handle_single_dir(dir)}));
+}
 
-    const [files] = await bucket.getFiles({ prefix: path.dirname(filePath) });
+
+const handle_single_dir = async (directory) =>{
+
+    const [files] = await bucket.getFiles({ prefix: directory });
     const articles = {};
     const allArticles = [];
 
@@ -290,7 +295,6 @@ const handleArticleCategories = async (object) => {
         if (path.extname(file.name) !== '.json') {
             continue;
         }
-
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
@@ -321,7 +325,7 @@ const handleArticleCategories = async (object) => {
         } else {
             ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${categories[0]}`);
         }
-        await ref.child(newArticle).set(true);
+        ref.child(newArticle).set(true).then(()=>{});
     }
 
     // Save articles in `articlesList` as lists of filenames
@@ -360,10 +364,8 @@ const handleArticleCategories = async (object) => {
 
         if (latestArticles.length > 0) {
             // Extract filenames of all latest articles in this category
-            const latestArticleFilenames = latestArticles.map(article => article.filename);
-
             // Store the list of latest article filenames for the category
-            latestArticlesByCategory[category] = latestArticleFilenames;
+            latestArticlesByCategory[category] = latestArticles.map(article => article.filename);
         } else {
             // Handle case where no articles found for the latest date
             console.warn(`No latest article found for category '${category}'`);

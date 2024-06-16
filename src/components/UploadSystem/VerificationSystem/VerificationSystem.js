@@ -49,15 +49,15 @@ const FirebaseFileList = () => {
 
     const fetchFiles = async () => {
         try {
-            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
+            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData) => {
                 setFiles(publishedFilesData);
             });
 
-            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
+            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 10).then((publishedFilesData) => {
                 setAlreadyPublishedArticles(publishedFilesData);
             });
 
-            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError).then((publishedFilesData) => {
+            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 100).then((publishedFilesData) => {
                 setEarlyReleasedArticles(publishedFilesData);
             });
 
