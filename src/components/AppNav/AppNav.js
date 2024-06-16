@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from "react";
-import {auth, database} from "../../firebase";
+import React, { useEffect, useState, useRef } from 'react';
+import { auth, database } from "../../firebase";
 import Container from "react-bootstrap/Container";
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import InstallButton from "../PWAinstal/pwaInstall";
-import {getIdTokenResult, signOut} from "firebase/auth";
-import {Button} from "react-bootstrap";
-import {onValue, ref} from "firebase/database";
-
+import { getIdTokenResult, signOut } from "firebase/auth";
+import { Button } from "react-bootstrap";
+import { onValue, ref } from "firebase/database";
+import './Observer.css';
 const AppNavigation = () => {
-
     const [loggedIn, setLoggedIn] = useState(false);
     const [isAuthor, setIsAuthor] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isTranslator, setIsTranslator] = useState(false);
     const [isLeader, setIsLeader] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(false);
     const navigate = useNavigate();
-
+    const placeholderRef = useRef(null);
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -55,63 +55,80 @@ const AppNavigation = () => {
         return () => unsubscribe();
     }, []);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setMenuVisible(!entry.isIntersecting);
+            },
+            { threshold: [0] }
+        );
 
-    // Επιστρέφει το ανάλογο Navbar ανάλογα με την εισαγωγή του χρήστη
+        if (placeholderRef.current) {
+            observer.observe(placeholderRef.current);
+        }
+
+        return () => {
+            if (placeholderRef.current) {
+                observer.unobserve(placeholderRef.current);
+            }
+        };
+    }, []);
+
     return (
-        <Navbar expand="lg" className="sticky-top overflow-hidden" variant="dark" style={{backgroundColor: "rgba(0,0,0,0.85)"}}>
-            <Container fluid>
-                <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
-                    <img
-                        src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
-                        className="img-fluid rounded-circle"
-                        style={{maxWidth: "100px", maxHeight: "100px"}}
-                        alt="Navbar Brand"
-                    />
-                </Link>
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="d-flex justify-content-center justify-content-evenly w-100 table-hover">
-                        <NavLink to={(loggedIn) ? "/User/home" : "/"} className='nav-link text-white '>Home</NavLink>
-                        {(loggedIn) && <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
-                        <NavLink to="/articles-page" className='nav-link text-white'>Articles</NavLink>
-                        <NavLink to="/Art-Gallery-page" className='nav-link text-white'>Art Gallery</NavLink>
-                        <InstallButton/>
-                        {isAuthor && (
-                            <>
-                                <NavLink to="/upload" className='nav-link text-white'>Upload</NavLink>
-                                <NavLink to="/upload/profile" className='nav-link text-white'>Profile</NavLink>
-                            </>
-                        )}
+        <>
+            <div ref={placeholderRef} style={{ height: '1px' }}></div>
+            <Navbar expand="lg" className={`sticky-top overflow-hidden ${menuVisible ? 'visible' : 'hidden'}`} variant="dark" style={{ backgroundColor: "rgba(0,0,0,0.85)" }}>
+                <Container fluid>
+                    <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
+                        <img
+                            src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
+                            className="img-fluid rounded-circle"
+                            style={{ maxWidth: "100px", maxHeight: "100px" }}
+                            alt="Navbar Brand"
+                        />
+                    </Link>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="d-flex justify-content-center justify-content-evenly w-100 table-hover">
+                            <NavLink to={(loggedIn) ? "/User/home" : "/"} className='nav-link text-white '>Home</NavLink>
+                            {(loggedIn) && <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
+                            <NavLink to="/articles-page" className='nav-link text-white'>Articles</NavLink>
+                            <NavLink to="/Art-Gallery-page" className='nav-link text-white'>Art Gallery</NavLink>
+                            <InstallButton />
+                            {isAuthor && (
+                                <>
+                                    <NavLink to="/upload" className='nav-link text-white'>Upload</NavLink>
+                                    <NavLink to="/upload/profile" className='nav-link text-white'>Profile</NavLink>
+                                </>
+                            )}
 
-                        {(isAdmin) &&
-                            <NavLink to="/admin" className='nav-link text-white'>User Administration</NavLink>
-                        }
+                            {(isAdmin) &&
+                                <NavLink to="/admin" className='nav-link text-white'>User Administration</NavLink>
+                            }
 
-                        {(isAdmin || isLeader) &&
-                            <NavLink to="/upload/admin" className='nav-link text-white'>Admin Dashboard</NavLink>
-                        }
-                        {isTranslator &&
-                            <NavLink to={"/upload/translation"} className='nav-link text-white'>Translation
-                                System</NavLink>
-                        }
+                            {(isAdmin || isLeader) &&
+                                <NavLink to="/upload/admin" className='nav-link text-white'>Admin Dashboard</NavLink>
+                            }
+                            {isTranslator &&
+                                <NavLink to={"/upload/translation"} className='nav-link text-white'>Translation System</NavLink>
+                            }
 
-                        {(loggedIn) ? (
-                            <Nav.Link onClick={() => {
-                                signOut(auth).then(() => {
-                                    navigate("/")
-                                })
-                            }} className='nav-link text-white'><Button variant="outline-danger">Sign
-                                Out</Button></Nav.Link>
-                        ) : (<>
-                                <NavLink to="/User/register" className='nav-link text-white link'>Create
-                                    Account</NavLink>
+                            {(loggedIn) ? (
+                                <Nav.Link onClick={() => {
+                                    signOut(auth).then(() => {
+                                        navigate("/")
+                                    })
+                                }} className='nav-link text-white'><Button variant="outline-danger">Sign Out</Button></Nav.Link>
+                            ) : (<>
+                                <NavLink to="/User/register" className='nav-link text-white link'>Create Account</NavLink>
                                 <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
                             </>
-                        )}
-                    </Nav>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
+                            )}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+        </>
     );
 };
 

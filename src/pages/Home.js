@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import Socials from "../components/SocialMedia/socials";
 import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
@@ -9,11 +9,26 @@ import Author from "./Authors/Author/Author";
 import {NavLink} from "react-router-dom";
 
 const Home = () => {
+    const [scrolled, setScrolled] = useState(false);
 
+    useEffect(() => {
+        let timer;
+        const handleScroll = () => {
+            setScrolled(true);
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                setScrolled(false);
+            }, 1000);
+        };
 
-    return (
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+         return (
         <>
-            <header>
+            <header  className={scrolled ? "scrolled" : ""}>
                 <div className="container mt-4 main ">
                     <div className="row text-center  p-3 m-2 shadow-lg">
                         <div className="col-md-12">
@@ -32,9 +47,12 @@ const Home = () => {
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
                 </div>
-                <div className="container my-5 bg-transparent">
+                </header>
+<section  className={`feed ${scrolled ? "scrolled" : ""}` }>
+<div className="container my-5 bg-transparent">
                     <div className="row text-white text-center">
                         {/* Main Article Section */}
                         <div className="col-md-8 ">
@@ -467,7 +485,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-            </header>
+</section>
+                
             <section className="ExploreMore">
                 <h2 className="text-center text-white">Explore More</h2>
                 <div className="container">

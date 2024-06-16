@@ -1,0 +1,15 @@
+.navbar {
+    transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.navbar.visible {
+    opacity: 1;
+    height: auto;
+}
+
+.navbar.hidden {
+    opacity: 0;
+    height: 0;
+}

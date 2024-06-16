@@ -14,9 +14,35 @@ header {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    transition: transform 0.5s ease-in-out;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+   }
+/*Scroll Header Animation */
+header {
+    transition: transform 0.5s ease;
+  }
+  
+  header.scrolled {
+    transform: translateX(100%);
+  }
+  
+  .feed {
+    margin-top: 200px; /* Adjust according to the height of the header */
+    opacity: 0;
+    transition: opacity 0.5s ease;  }
+  
+  .feed.scrolled {
+    opacity: 1;
+  }
+  .ExploreMore{
+    background-image: url(./../assets/MainBackground.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
 }
-
-
 /* Στυλ για τα κεντρικά στοιχεία του header */
 
 /* Στυλ για τον τίτλο */
