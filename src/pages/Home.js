@@ -11,22 +11,23 @@ import {NavLink} from "react-router-dom";
 const Home = () => {
     const [scrolled, setScrolled] = useState(false);
 
-    useEffect(() => {
-        let timer;
-        const handleScroll = () => {
-            setScrolled(true);
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                setScrolled(false);
-            }, 1000);
-        };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-         return (
+    useEffect(() => {
+      const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        if (scrollTop > 0 && !scrolled) {
+          setScrolled(true);
+        } else if (scrollTop === 0 && scrolled) {
+          setScrolled(false);
+        }
+      };
+  
+      window.addEventListener("scroll", handleScroll);
+  
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, [scrolled]);         return (
         <>
             <header  className={scrolled ? "scrolled" : ""}>
                 <div className="container mt-4 main ">
