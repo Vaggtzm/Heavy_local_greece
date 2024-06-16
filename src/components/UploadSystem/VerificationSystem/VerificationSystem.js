@@ -261,8 +261,10 @@ const FirebaseFileList = () => {
                 year: 'numeric'
             };
 
-            fileContent.written_date = fileContent.date;
-            fileContent.date = new Date().toLocaleDateString('en-GB', options);
+            if(!fileContent.translatedBy) {
+                fileContent.written_date = fileContent.date;
+                fileContent.date = new Date().toLocaleDateString('en-GB', options);
+            }
 
             await uploadString(destinationFileRef, JSON.stringify(fileContent));
             alert('File published successfully to the destination folder!');
