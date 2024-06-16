@@ -12,22 +12,21 @@ const Home = () => {
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-      const handleScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (scrollTop > 0 && !scrolled) {
-          setScrolled(true);
-        } else if (scrollTop === 0 && scrolled) {
-          setScrolled(false);
-        }
-      };
-  
-      window.addEventListener("scroll", handleScroll);
-  
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, [scrolled]);
-      return (
+        let timer;
+        const handleScroll = () => {
+            setScrolled(true);
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                setScrolled(false);
+            }, 1000);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+         return (
         <>
             <header  className={scrolled ? "scrolled" : ""}>
                 <div className="container mt-4 main ">
@@ -509,36 +508,37 @@ const Home = () => {
                     <div className="testinomial">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-10 col-xl-8 text-center">
-                            
                                 <h3 className="mb-4 text-white">Testimonials</h3>
                             </div>
                         </div>
 
                         <div className="row text-center">
-                        {/**Daniela */}
-                        <Author rating={4.5} className={"col-md-4 mb-5 mb-md-0 pb-4"}  userId={'uSXH49YHlzT8vjQ94ZuJTOz351m2'}/>
-                        {/**Daria */}
-                        <Author rating={5} className={"col-md-4 mb-5 mb-md-0"} userId={'gbK4OvgKbyYDfYCfIjboOqjA9Yv1'}/>
-                        {/**ΜπετοΒλακας */}
-                        <Author rating={4} className={"col-md-4 mb-0 text-white pb-2"}
+
+
+                            <Author rating={4.5} className={"col-md-4 mb-5 mb-md-0"}
+                                    userId={'uSXH49YHlzT8vjQ94ZuJTOz351m2'}/>
+
+                            <Author rating={5} className={"col-md-4 mb-5 mb-md-0"}
+                                    userId={'gbK4OvgKbyYDfYCfIjboOqjA9Yv1'}/>
+
+                            <Author rating={4} className={"col-md-4 mb-5 text-white pb-2"}
                                     userId={'QY7GE8irSce3f4AFKW20DAWVxhr2'}/>
-                     {/**Μπετονιερα */}
-                     <Author rating={4} className={"col-md-6 mb-0 text-white"}
+
+
+                            <hr className="bg-white"/>
+
+                            <Author rating={4} className={"col-md-6 mb-5 text-white"}
+                                    userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}/>
+
+                            <Author rating={4} className={"col-md-6 mb-5 text-white"}
                                     userId={"mmQTo2rdEDZ7YsnpJn15gCuaWz93"}/>
-                     {/**Παλουκι */}
+                            <hr className="bg-white"/>
 
-                    <Author rating={4} className={"col-md-6 mb-0 text-white"}
-                            userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}/>
-                       {/**Vaggelis */}
-
-                         <Author rating={4} className={"col-md-6 mb-0 text-white"}
-                                    userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}/>
-                        {/**Θα μπορουσε και ανθρωπος */}
-
-                    <Author rating={4} className={"col-md-6 mb-0 text-white"}
+                            <Author rating={4} className={"col-md-6 mb-0 text-white"}
                                     userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}/>
 
-
+                            <Author rating={4} className={"col-md-6 mb-0 text-white"}
+                                    userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}/>
 
                         </div>
 

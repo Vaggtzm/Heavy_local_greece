@@ -5,7 +5,6 @@ import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
 import {messaging} from './firebase';
-import Articles from './pages/Articles/articles';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -31,6 +30,8 @@ import Footer from "./components/footer/footer";
 import AppNavigation from "./components/AppNav/AppNav";
 import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
+
+import NotFound from "./pages/NotFound/NotFound";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -117,6 +118,8 @@ function App() {
                     <Route path='/User/home' element={<UserHome />} />
                     <Route path='/User/Saved' element={<SavedArtciles />} />
                     <Route path='/author/:authorCode' element={<ArticlesList />} />
+
+                    <Route path={"/404"} element={<NotFound/>} />
                 </Routes>
             </div>
             <Footer />

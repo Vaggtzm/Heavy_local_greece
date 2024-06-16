@@ -576,11 +576,3 @@ exports.saveDeviceToken = functions
             return res.status(500).json({error: "Failed to save device token."});
         }
     });
-
-
-
-exports.deleteUserFromAuthors = functions.auth.user().onDelete((user) => {
-    const userId = user.uid;
-
-    return admin.database().ref(`/authors/${userId}`).remove();
-});
