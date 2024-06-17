@@ -179,7 +179,7 @@ const ArticleUpload = () => {
             <div className="container mt-4">
                 <h2 className={"h2 text-white"}>Author Upload System</h2>
                 <hr className="bg-dark"/>
-                <Form className={"card bg-dark"} style={{width: "150vh"}} onSubmit={handleArticleSubmit}>
+                <Form className={"bg-transparent p-5"} onSubmit={handleArticleSubmit}>
                     <Form.Group controlId="articleContent">
                         <Form.Label className={"text-light"}>Paste Article Content from the document that you have
                             written</Form.Label>
