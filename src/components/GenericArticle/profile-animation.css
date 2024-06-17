@@ -1,0 +1,56 @@
+
+
+.profile-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 69, 0, 0.5);
+    opacity: 0.5;
+    transition: opacity 0.5s ease-in-out;
+    border-radius: 50%;
+    animation: hellfire 3s infinite;
+}
+
+@keyframes hellfire {
+    0% {
+        background: rgba(255, 69, 0, 0.5);
+        opacity: 0.5;
+    }
+    50% {
+        background: rgba(255, 140, 0, 0.7);
+        opacity: 0.7;
+    }
+    100% {
+        background: rgba(255, 69, 0, 0.5);
+        opacity: 0.5;
+    }
+}
+
+@keyframes profile-image-animation {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes special-card-animation {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 140, 0, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+    }
+}

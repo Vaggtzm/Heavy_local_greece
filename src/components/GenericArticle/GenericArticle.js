@@ -8,6 +8,7 @@ import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {Helmet} from "react-helmet";
+import AuthorOfArticle from "./AuthorOfArticle";
 
 const DefaultArticle = (props) => {
     const [isEarlyAccess] = useState(props.earlyAccess);
@@ -236,45 +237,10 @@ const DefaultArticle = (props) => {
                     </div>
 
                     <div className={"col-12 row"}>
-                        <div className="col-6 w-50 d-flex align-items-center">
-                            {(author.wantToShow && author.photoURL) && (
-                                <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
-                                    <img
-                                        src={author.photoURL}
-                                        alt={author.displayName}
-                                    />
-                                </div>)}
-                            {/* Add margin to the left of the text */}
-                            <NavLink to={`/author/${articles.sub}`} className={"nav-link"}>
-                                <div className={"row m-0"}>
-                                    <span className="text-info text-center h4">{author.displayName}</span>
-                                </div>
-                                <div className={"row m-0"}>
-                                    <span className="text-white text-center h6">{author.role}</span>
-                                </div>
-                            </NavLink>
-                        </div>
 
+                        <AuthorOfArticle author={author} authorCode={articles.sub}/>
 
-
-                        {translator&& <div className="col-6 w-50 d-flex align-items-center">
-                            {(translator.wantToShow && translator.photoURL) && (
-                                <div className="image-container ms-1" style={{width: "80px", height: "80px"}}>
-                                    <img
-                                        src={translator.photoURL}
-                                        alt={translator.displayName}
-                                    />
-                                </div>)}
-                            {/* Add margin to the left of the text */}
-                            <NavLink to={`/author/${articles.translatedBy}`} className={"nav-link"}>
-                                <div className={"row m-0"}>
-                                    <span className="text-info text-center h4">{translator.displayName}</span>
-                                </div>
-                                <div className={"row m-0"}>
-                                    <span className="text-white text-center h6">{translator.role}</span>
-                                </div>
-                            </NavLink>
-                        </div>}
+                        <AuthorOfArticle author={translator} authorCode={articles.translatedBy}/>
                     </div>
 
                     <hr className={(author.wantToShow ? "mt-2 " : "") + "bg-dark"}/>
