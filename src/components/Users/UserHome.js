@@ -45,13 +45,13 @@ const UserHome = () => {
                                 <div className="col-md-4">
                                     <div className="card h-100 w-100 review-card">
                                         <img className="card-img-top shadow-lg h-100"
-                                             src={"https://pulse-of-the-underground.com/assets/fred.jpg"}
+                                             src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa1615728745_10_800x800.jpg?alt=media&token=d965a76e-8f4c-4d97-9bac-dfda4c6cc8ca"}
                                              alt="Disimulator"></img>
                                         <div className="card-body">
-                                            <h4 className="card-title">Frédéric D. Oberland is a versatile French
-                                                artist, composer, multi-instrumentalist, photographer, and visual
-                                                artist.</h4>
-                                            <NavLink to="/article/early/Frdric-D-Oberland--"
+                                            <h4 className="card-title">
+                                            ALBUM REVIEW: "Gathering the Dark (Alternate Version)" by Frostmoon Eclipse — An Old-School Black Metal Gem Reborn
+                                                .</h4>
+                                            <NavLink to="https://pulse-of-the-underground.com/article/early/ALBUM-REVIEW:-Gathering-the-Dark-(Alternate-Version)-by-Frostmoon-Eclipse--An-Old-School-Black-Metal-Gem-Reborn"
                                                      className="btn btn-primary">Read More</NavLink>
                                         </div>
                                     </div>
@@ -60,13 +60,14 @@ const UserHome = () => {
                                 <div className="col-md-4">
                                     <div className="card h-100 w-100 review-card">
                                         <img className="card-img-top shadow-lg h-100"
-                                             src={"https://pulse-of-the-underground.com/assets/a1160982583_5.jpg"}
+                                             src={"https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FSuffering_Souls_800x800.jpeg?alt=media&token=c5db8154-9fc1-4575-8fd2-0d8f529cda80"}
                                              alt="Disimulator"></img>
                                         <div className="card-body">
-                                            <h4 className="card-title">ALBUM REVIEW: Unearthing the Shamanic Depths of
-                                                Wounded Funeral’s Latest Masterpiece, “Skaalp”</h4>
+                                            <h4 className="card-title">
+                                            ALBUM REVIEW: Suffering Souls’ “An Iconic Taste of Demise” — Aggression Meets Elegance
+                                            </h4>
                                             <NavLink
-                                                to="/article/early/ALBUM-REVIEW-Unearthing-the-Shamanic-Depths-of-Wounded-Funerals-Skaalp"
+                                                to="https://pulse-of-the-underground.com/article/early/ALBUM-REVIEW-Suffering-Souls-An-Iconic-Taste-of-Demise---Aggression-Meets-Elegance"
                                                 className="btn btn-primary">Read More</NavLink>
                                         </div>
                                     </div>

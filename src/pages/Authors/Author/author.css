@@ -14,3 +14,54 @@
     object-fit: cover;
     object-position: top;
 }
+
+
+
+
+.card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.card.hovered .card-content,
+.card.expanded .card-content {
+  max-height: 500px; /* Adjust this value based on content height */
+  opacity: 1;
+}
+
+.card-content p {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.card.hovered .card-content p,
+.card.expanded .card-content p {
+  opacity: 1;
+}
+
+/* Animation for LED light effect */
+@keyframes led-border {
+  0% { box-shadow: 0 0 5px rgba(255, 69, 0, 0.6), 0 0 15px rgba(255, 69, 0, 0.4); }
+  50% { box-shadow: 0 0 10px rgba(255, 140, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.6); }
+  100% { box-shadow: 0 0 5px rgba(255, 69, 0, 0.6), 0 0 15px rgba(255, 69, 0, 0.4); }
+}
+
+.card.hovered {
+  animation: led-border 1s infinite alternate;
+}
+
+/* Mobile specific styles */
+@media (max-width: 768px) {
+  .card-content {
+    max-height: 500px; /* Adjust this value based on content height */
+    opacity: 1;
+  }
+}
