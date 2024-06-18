@@ -7,6 +7,7 @@ import SecondaryCarousel from "../components/carousel/carousel";
 import CasterFmPlayer from "../components/Users/CasterFmPlayer";
 import Author from "./Authors/Author/Author";
 import {NavLink} from "react-router-dom";
+import AutoMusic from "../components/AutoMusic/AutoMusic";
 
 const Home = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -47,6 +48,7 @@ const Home = () => {
                                     <hr className="bg-dark"/>
                                 </div>
                             </div>
+                            <Socials/>
                         </div>
                        
                     </div>
@@ -55,24 +57,19 @@ const Home = () => {
 <section  className={`feed ${scrolled ? "scrolled" : ""}` }>
 <div className="container my-5 bg-transparent">
                     <div className="row text-white text-center">
+
                         {/* Main Article Section */}
                         <div className="col-md-8 ">
                             <div className="CenterSection">
                                 <h2>Top News</h2>
-                                <h3>2024Akral Necrosis and Spinecrusher Live in Hidden (1/06/24)</h3>
+                                <h3>Blind Sun x Rattlesquad x WiderSin (07/06/24)</h3>
                                 <img
-                                    src="https://pulse-of-the-underground.com/assets/436109394_905826201552525_5669456048747792072_n.jpg"
+                                    src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F7JuneIlion_800x800.jpg?alt=media&token=fbbceafd-78f6-4c43-a724-77b3316917f2"
                                     className="img-fluid w-75 rounded-2 m-2"/>
                                 <p className="lead">
-                                    On the evening of June 1st, 2024, Hidden – The Social Space from Bucharest
-                                    transformed into a sanctum of metal, hosting an exclusive concert featuring two
-                                    titans of the Romanian metal scene: Akral Necrosis and Spinecrusher. This event not
-                                    only marked a monumental occasion for the Romanian underground movement but also
-                                    celebrated a significant milestone for Akral Necrosis. The band members decided to
-                                    release their first live album at the very place it was recorded, adding an extra
-                                    layer of importance to the evening.
+                                Μπαίνει ζεστά το καλοκαίρι με τον καύσωνα να αγγίζει κόκκινα και πήγαμε σε ένα μικρό live όαση στο ΙΛΙΟΝ Plus την Παρασκευή δίπλα από το Πεδίο του Άρεως στην Αθήνα, σε ένα μικρό live στο οποίο για ένα τετράωρο σχεδόν δόθηκε κατάθεση ψυχής από όλους τους συμμετέχοντες! Φτάνει 9 το βράδυ και περνάμε τις πόρτες του venue. Πρώτη παρατήρηση; Ένας χώρος μικρός και παράλληλα άνετος και με καταπληκτικό ήχο! Κόσμος; Λίγος και καλός! Μακάρι να ήταν περισσότερος, αλλά και αυτός που ήταν ήταν θερμός, δημιουργώντας έτσι με τον τρόπο του ένα οικείο και φιλόξενο κλίμα! Πάμε να δούμε την βραδιά και τους συμμετέχοντες!
                                 </p>
-                                <NavLink to="/article/Akral-Necrosis-and-Spinecrusher-Live-in-Hidden-10624"
+                                <NavLink to="https://pulse-of-the-underground.com/article/Blind-Sun-x-Rattlesquad-x-WiderSin-070624"
                                          className="btn btn-danger">Read More</NavLink>
 
                                 <hr className="bg-white"/>
@@ -137,21 +134,22 @@ const Home = () => {
                             <h3>Collabs and Sponshorships : </h3>
 
                             <div className="ReviewBox">
+                            <br/>
                                 <div className="col-md-6 m-2">
                                     <div className="card h-100 w-100">
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Funnamed%20(3)_800x800.jpg?alt=media&token=9733d2d5-54af-4b32-a0b7-1f6adba86eb4"
+                                                "https://pulse-of-the-underground.com/assets/Dark_Sky.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Μονομάχοι εναντίον Τυράννων - Gentihaa - Butcher’s Nails (single review + info)
+                                            SINGLE REVIEW: Dark Sky’s "Forgiveness" — A Soulful Cry for Justice
                                             </h4>
                                             <NavLink
-                                                to="/article/Μονομάχοι-εναντίον-Τυράννων----Gentihaa---Butchers-Nails-single-review--info"
+                                                to="https://pulse-of-the-underground.com/article/SINGLE-REVIEW:-Dark-Skys-%22Forgiveness%22--A-Soulful-Cry-for-Justice"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -191,16 +189,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/Stroszek.jpeg"
+                                                "https://pulse-of-the-underground.com/assets/a1198068602_65.jpeg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                ALBUM REVIEW: “About All the Bad Days in the World” by Stroszek — An Introspective Triumph
+                                            ALBUM REVIEW: Lilita Arndt’s “When the Darkness Comes” Delivers Unyielding Intensity
                                             </h4>
                                             <NavLink
-                                                to="/article/ALBUM-REVIEW-About-All-the-Bad-Days-in-the-World-by-Stroszek--An-Introspective-Triumph"
+                                                to="/article/ALBUM-REVIEW-Lilita-Arndts-When-the-Darkness-Comes-Delivers-Unyielding-Intensity"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -213,16 +211,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fkarkara_800x800.jpg?alt=media&token=da7278f7-cd02-4827-a45a-a3542222c70b"
+                                                "https://pulse-of-the-underground.com/assets/Necrovile.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Navigate through the inner workings of the mind in the ambiance of fuzzrock!
-                                            </h4>
+                                            ALBUM REVIEW: Necrovile’s “Engorging the Devourmental Void” — A Death Metal Masterpiece                                            </h4>
                                             <NavLink
-                                                to="/article/Navigate-through-the-inner-workings-of-the-mind-in-the-ambiance-of-fuzzrock"
+                                                to="/article/ALBUM-REVIEW-Necroviles-Engorging-the-Devourmental-Void--A-Death-Metal-Masterpiece"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -236,16 +233,16 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/GD.png"
+                                                "https://pulse-of-the-underground.com/assets/Of_the_Muses.jpeg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                SINGLE REVIEW: “Straight to Hell” by Garage Distillery — Old-School Metal for the Modern Age
+                                            ALBUM REVIEW: “Senhal” by Of the Muses Delivers an Emotional Odyssey
                                             </h4>
                                             <NavLink
-                                                to="/article/SINGLE-REVIEW-Straight-to-Hell-by-Garage-Distillery--Old-School-Metal-for-the-Modern-Age"
+                                                to="/article/ALBUM-REVIEW-Senhal-by-Of-the-Muses-Delivers-an-Emotional-Odyssey"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -268,17 +265,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/a3257823541_16.jpg"
+                                                "https://pulse-of-the-underground.com/assets/a3346669757_16.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Διασχίζοντας τις Κρύπτες του Σύμπαντος - Blasteroid - Crypts of Mind
-                                                (Album Review)
-                                            </h4>
+                                            Μαγεία και Σαγόνια - Asasara - The Jaws of Life (Single Review + band Info)                                            </h4>
                                             <NavLink
-                                                to="/article/Διασχίζοντας-τις-Κρύπτες-του-Σύμπαντος---Blasteroid---Crypts-of-Mind-Album-Review"
+                                                to="/article/-----Asasara---The-Jaws-of-Life-(Single-Review-+-band-Info)"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -294,16 +289,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa1249967617_16_800x800.jpg?alt=media&token=f1d05ccb-c017-4c1d-8c7f-7886bf986b73"
+                                                "https://pulse-of-the-underground.com/assets/a2954421661_16.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                                Ατμοσφαιρικοί Αντίλαλοι - Orsak:Oslo - Iron Echoes (EP Review +band info)
-                                            </h4>
+                                            Μελωδικά Άχθη - REZN - Burden (Album Review + band info)                                             </h4>
                                             <NavLink
-                                                to="/article/Ατμοσφαιρικοί-Αντίλαλοι---Orsak-Oslo---Iron-Echoes-EP-Review-band-info"
+                                                to="/article/----REZN---Burden-(Album-Review-+-band-info)-"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -462,6 +456,20 @@ const Home = () => {
                                 </div>
 
                             </div>
+                            <div className="col-md-12 m-2">
+                                <div className="card h-100 w-100">
+                                    <div className="card-body">
+                                        <h4 className="card-title">
+                                        Dreamer (22 years anniversary) </h4>
+                                        <NavLink to="/article/Dreamer-22-years-anniversary"
+                                                 className="btn btn-primary"
+                                        >
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <ul className="list-unstyled">
                                 <li><Socials/></li>
@@ -479,6 +487,12 @@ const Home = () => {
                                     >
                                         Donate
                                     </a>
+
+                                </li>
+                                <hr className="bg-white"/>
+
+                                <li>
+                                  <AutoMusic />
 
                                 </li>
 
@@ -506,6 +520,7 @@ const Home = () => {
                             <h3 className="text-white">Meet the team</h3>
                         </div>
                     </div>
+                   
                     <div className="testinomial">
                         <div className="row d-flex justify-content-center">
                             <div className="col-md-10 col-xl-8 text-center">
@@ -544,6 +559,7 @@ const Home = () => {
                         </div>
 
                     </div>
+                    
                 </div>
             </section>
 
