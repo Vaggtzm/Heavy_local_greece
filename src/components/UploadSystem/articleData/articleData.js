@@ -12,9 +12,16 @@ const fetchArticlesCategory = async (folder, setEarlyReleasesError, setAlreadyPu
         const limit = pLimit(concarrency); // Set concurrency limit to 10 (adjust based on your needs)
 
         const articlePromises = publishedItems.map((item) => limit(async () => {
+            let response;
+            let downloadUrl
+            try{
+                downloadUrl = await getDownloadURL(item);
+                response = await fetch(downloadUrl);
+            }catch(e){
+                console.log("error fetching file: "+e)
+                return undefined;
+            }
             try {
-                const downloadUrl = await getDownloadURL(item);
-                const response = await fetch(downloadUrl);
                 const fileContent = await response.json();
 
                 return { name: item.name, downloadUrl, fileContent };
@@ -28,6 +35,7 @@ const fetchArticlesCategory = async (folder, setEarlyReleasesError, setAlreadyPu
                     setError(errorMessage);
                 }
                 console.log(error);
+                console.log(response)
                 return null; // Return null for items with errors to filter them out later
             }
         }));
