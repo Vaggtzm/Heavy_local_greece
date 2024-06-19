@@ -1,7 +1,8 @@
-import React,{useState , useEffect} from "react";
-import BackgroundAudio from './Background.mp3'
+//import React,{useState , useEffect} from "react";
+//import BackgroundAudio from './Background.mp3'
 
 const AutoMusic =()=>{
+    /**
     const [isPlaying , setIsPlaying] = useState(true)
     useEffect(()=> {
         const Audio = document.getElementById('Background-music');
@@ -25,6 +26,8 @@ const AutoMusic =()=>{
         </>
 
     )
+        **/
+    return null;
 }
 
 export default AutoMusic

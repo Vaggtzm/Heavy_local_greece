@@ -62,16 +62,23 @@ const TranslationSystem = () => {
     const [availableLanguages, setAvailableLanguages] = useState({});
 
 
-    const fetchFiles = async () => {
+    const fetchFiles = () => {
         try {
-            const publishedFilesData = await fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError);
-            setFiles(publishedFilesData);
+            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError,20).then((publishedFilesData)=>{
+                setFiles(publishedFilesData);
+                console.log("Finished upload_from_authors");
+            })
 
-            const publishedFilesData2 = await fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError);
-            setAlreadyPublishedArticles(publishedFilesData2);
+            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData2)=>{
+                setAlreadyPublishedArticles(publishedFilesData2);
+                console.log("Finished articles");
+            })
 
-            const publishedFilesData3 = await fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError);
-            setEarlyReleasedArticles(publishedFilesData3);
+
+            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData3)=>{
+                setEarlyReleasedArticles(publishedFilesData3);
+                console.log("Finished early_releases");
+            })
         } catch (error) {
             console.error(error);
         }
@@ -102,7 +109,7 @@ const TranslationSystem = () => {
                 }
             });
 
-            await fetchFiles();
+            fetchFiles();
 
             return () => unsubscribe();
         });

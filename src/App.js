@@ -118,7 +118,6 @@ function App() {
                     <Route path='/User/home' element={<UserHome />} />
                     <Route path='/User/Saved' element={<SavedArtciles />} />
                     <Route path='/author/:authorCode' element={<ArticlesList />} />
-
                     <Route path={"/404"} element={<NotFound/>} />
                 </Routes>
             </div>
