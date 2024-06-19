@@ -265,15 +265,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100 "
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/a3346669757_16.jpg"
+                                                "https://pulse-of-the-underground.com/assets/a2851302924_16.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
-                                            <h4 className="card-title">
-                                            Μαγεία και Σαγόνια - Asasara - The Jaws of Life (Single Review + band Info)                                            </h4>
+                                            <h4 className="card-tite">
+                                            Στα Μυστικά Βάθη των Αρχαίων Θεών - Arhat - Secrets of Ancient Gods (Album Review + band info)                                           </h4>
                                             <NavLink
-                                                to="/article/-----Asasara---The-Jaws-of-Life-(Single-Review-+-band-Info)"
+                                                to="/article/--------Arhat---Secrets-of-Ancient-Gods-(Album-Review-+-band-info)"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -289,15 +289,15 @@ const Home = () => {
                                         <img
                                             className="card-img-top shadow-lg h-100"
                                             src={
-                                                "https://pulse-of-the-underground.com/assets/a2954421661_16.jpg"
+                                                "https://pulse-of-the-underground.com/assets/cover_RK9lOEtXvwY6_250px.jpg"
                                             }
                                             alt="Disimulator"
                                         ></img>
                                         <div className="card-body">
                                             <h4 className="card-title">
-                                            Μελωδικά Άχθη - REZN - Burden (Album Review + band info)                                             </h4>
+                                            Ο Πέλεκυς της Αδικίας - Bödel - Bilan Faller (single review + band info)                                            </h4>
                                             <NavLink
-                                                to="/article/----REZN---Burden-(Album-Review-+-band-info)-"
+                                                to="/article/------Bdel---Bilan-Faller-(single-review-+-band-info)"
                                                 className="btn btn-primary"
                                             >
                                                 Read More
@@ -344,10 +344,10 @@ const Home = () => {
                                         <div className="card h-100 w-100">
                                             <div className="card-body">
                                                 <h4 className="card-title">
-                                                    INTERVIEW: Häxenzijrkell on the Mystical Origins and Evolution of
-                                                    Their Black Metal Sound </h4>
+                                                INTERVIEW: Sula Bassana
+                                                 </h4>
                                                 <NavLink
-                                                    to="/article/INTERVIEW:-Häxenzijrkell-on-the-Mystical-Origins-and-Evolution-of-Their-Black-Metal-Sound"
+                                                    to="/article/Interview-Sula-Bassana"
                                                     className="btn btn-primary"
                                                 >
                                                     Read More
@@ -365,10 +365,9 @@ const Home = () => {
                                         <div className="card h-100 w-100">
                                             <div className="card-body">
                                                 <h4 className="card-title">
-                                                    INTERVIEW: Demande à la Poussière on Shaping Art from Chaos
-                                                </h4>
+                                                INTERVIEW: Burning Cross Unleashes Raw Power and Social Commentary in the Black Metal Underground                                                </h4>
                                                 <NavLink
-                                                    to="/article/Demande-à-la-Poussière’s-Journey:-An-In-Depth-Conversation-on-Evolution,-Inspiration,-and-“Kintsugi”"
+                                                    to="/article/INTERVIEW-Burning-Cross-Unleashes-Raw-Power-and-Social-Commentary-in-the-Black-Metal-Underground"
                                                     className="btn btn-primary"
                                                 >
                                                     Read More
