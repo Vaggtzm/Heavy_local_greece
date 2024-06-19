@@ -32,6 +32,7 @@ import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
+import RadioPlayer from "./components/Radio/RadioPlayer";
 
 function App() {
 
@@ -123,7 +124,8 @@ function App() {
             Ραδιόφωνο. Το πας όπου θες
             **/}
             <div className={"sticky-bottom w-75 h-25"}>
-                <div id="cstrFreePlayerDiv"></div>
+                <RadioPlayer uid={589803} theme={"purple"}/>
+                {/* uid, theme, color, coverPhoto */}
             </div>
             <Footer/>
         </div>
