@@ -33,8 +33,6 @@ import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 function App() {
 
     const saveDeviceToken = async (token) => {
@@ -121,7 +119,13 @@ function App() {
                     <Route path={"/404"} element={<NotFound/>} />
                 </Routes>
             </div>
-            <Footer />
+            {/**
+            Ραδιόφωνο. Το πας όπου θες
+            **/}
+            <div className={"sticky-bottom w-75 h-25"}>
+                <div id="cstrFreePlayerDiv"></div>
+            </div>
+            <Footer/>
         </div>
     );
 }
