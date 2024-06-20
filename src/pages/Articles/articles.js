@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {ref, listAll, getDownloadURL} from 'firebase/storage';
+import {getDownloadURL, listAll, ref} from 'firebase/storage';
 import {storage} from "../../firebase";
 import FetchedArticles from './FetchedArticles';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./../home.css";
+import {useTranslation} from 'react-i18next';
 
 const Articles = () => {
+    const { t } = useTranslation();
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
@@ -15,7 +17,7 @@ const Articles = () => {
                 const result = await listAll(storageRef);
                 const files = await Promise.all(result.items.map(async (item) => {
                     const url = await getDownloadURL(item);
-                    return {name: item.name, url};
+                    return { name: item.name, url };
                 }));
 
                 setArticles(files);
@@ -31,20 +33,19 @@ const Articles = () => {
     return (
         <>
             <div className="container">
-                <h1>Saved Articles</h1>
+                <h1>{t('savedArticles')}</h1>
                 <div className="row">
                     {articles ? (
                         articles.map((article) => (
                             <div className="col-md-4 mb-4" key={article.name}>
-                                <FetchedArticles article={article}/>
+                                <FetchedArticles article={article} />
                             </div>
                         ))
                     ) : (
-                        <p>Loading...</p>
+                        <p>{t('loadingMessage')}</p>
                     )}
                 </div>
             </div>
-
         </>
     );
 }

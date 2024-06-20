@@ -1,0 +1,125 @@
+{
+  "image": "Image",
+  "role": "Role",
+  "changeRole": "Change Role",
+  "authorUploadSystem": "Author Upload System",
+  "pasteArticleContent": "Paste Article Content from the document that you have written",
+  "title": "Title",
+  "details": "Details (Some details about the band to appear under the main picture on the right.)",
+  "socialMediaLinks": "Social Media Links (enter only those available)",
+  "facebook": "Facebook",
+  "instagram": "Instagram",
+  "spotify": "Spotify",
+  "youtube": "YouTube",
+  "language": "Language",
+  "selectLanguage": "Select Language",
+  "uploadArticle": "Upload Article",
+  "articleSubmittedSuccessfully": "Article submitted successfully!",
+  "errorSubmittingArticle": "Error submitting article. Please try again.",
+
+
+  "selectCategory": "Select a Category",
+  "Top News": "Top News",
+  "General News": "General News",
+  "Interviews": "Interviews",
+  "Collabs and Sponsorships": "Collabs and Sponsorships",
+  "Latest Reviews(ENG)": "Latest Reviews (ENG)",
+  "Latest Reviews(GRE)": "Latest Reviews (GRE)",
+  "Legends": "Legends",
+  "uploadImage": "Drag & Drop your image here or click to select a file",
+
+
+  "login": "Login",
+  "email": "Email address",
+  "enterEmail": "Enter email",
+  "password": "Password",
+  "enterPassword": "Enter password",
+  "forgotPassword": "Forgot Password?",
+  "loginWithGoogle": "Log in with Google",
+  "loginWithGithub": "Log in with Github",
+  "register": "Register",
+  "sendEmailVerification": "Send Email Verification",
+  "sendPasswordReset": "Password reset email has been sent.",
+  "verifyEmail": "Email verification has been sent. Please check your inbox.",
+
+
+  "userProfile": "User Profile",
+  "showProfilePicture": "Show profile picture on articles",
+  "displayName": "Display Name",
+  "profileImage": "Profile Image",
+  "updateProfile": "Update Profile",
+  "currentPassword": "Current Password",
+  "newPassword": "New Password",
+  "confirmNewPassword": "Confirm New Password",
+  "updatePassword": "Update Password",
+  "loading": "Loading...",
+  "profileUpdatedSuccess": "Profile updated successfully!",
+  "passwordUpdatedSuccess": "Password updated successfully!",
+  "passwordsDoNotMatch": "Passwords do not match.",
+
+
+
+  "name": "Name",
+  "registerWithGoogle": "Register with Google",
+  "successMessage": "The account was successfully created. Please check your email for verification.",
+  "googleSuccessMessage": "The account was successfully created. If you are an author, please contact the administrator so that he/she can give you access to publishing articles.",
+
+  "Translation System": "Translation System",
+  "sortByDate": "Sort by Date",
+  "uploadedFiles": "Uploaded Files",
+  "readyForPublishingInfo": "green check means ready for publishing",
+  "alreadyPublished": "Already Published",
+  "noTranslationsAvailable": "No translations available",
+  "translate": "Translate",
+  "translateFile": "Translate File",
+  "editFileData": "Edit File Data",
+  "Title": "Title",
+  "Details": "Details",
+  "ImgUrl": "Image URL",
+  "AuthorCode": "Author Code",
+  "originalLanguageLabel": "Original Language",
+  "Content": "Content",
+  "Date": "Date",
+  "translatedLanguageLabel": "Language",
+  "selectLanguagePlaceholder": "Select Language",
+
+
+  "shareToFacebook": "Share To Facebook",
+
+  "notFoundTitle": "404",
+  "notFoundSubtitle": "Oops! Page not found.",
+  "notFoundDescription": "The page you are looking for doesn't exist or another error occurred.",
+  "goBackHome": "Go Back Home",
+
+  "galleryTitle": "Art Gallery",
+  "gallerySubtitle": "Metal inspired artworks by YOU",
+  "submitArtTitle": "Submit your art at",
+  "submitArtEmail": "admin@pulse-of-the-underground.com",
+
+
+  "loadingMessage": "Loading...",
+  "earlyReleases": "Early Bird Articles",
+  "readMore": "Read More",
+  "collabsSponsorships": "Collabs and Sponsorships",
+
+
+  "savedArticles": "Saved Articles",
+
+  "favoriteCategories": "Favorite Categories",
+  "noDataAvailable": "No data available",
+  "errorFetchingArticle": "Error fetching article:",
+
+
+  "allRightsReserved": "All rights reserved",
+  "pulseOfTheUnderground": "Pulse Of The Underground 2024.",
+  "developedBy": "Developed by",
+  "helpUsToGrow": "Help us to grow",
+  "donate": "Donate",
+
+  "getInTouch": "Get In touch",
+  "tellUsYourFeedback": "Tell us your feedback!",
+  "emailHelp": "We'll never share your email with anyone else.",
+  "subjectPlaceholder": "Subject",
+  "messagePlaceholder": "Message",
+  "submit": "Submit"
+}

@@ -1,16 +1,6 @@
-import {
-    getDownloadURL,
-    ref,
-    uploadString,
-} from 'firebase/storage';
+import {getDownloadURL, ref, uploadString,} from 'firebase/storage';
 import React, {useEffect, useState} from 'react';
-import {
-    Alert,
-    Button,
-    Form,
-    ListGroup,
-    Modal,
-} from 'react-bootstrap';
+import {Alert, Button, Form, FormGroup, ListGroup, Modal,} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
@@ -19,8 +9,10 @@ import {signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {onValue, ref as databaseRef} from "firebase/database";
 import fetchArticlesCategory from "../articleData/articleData";
+import {useTranslation} from "react-i18next";
 
 const TranslationSystem = () => {
+    const { t } = useTranslation();
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
@@ -273,11 +265,11 @@ const TranslationSystem = () => {
                                     );
                                 })
                             ) : (
-                                <p>No translations available</p>
+                                <p>{t("noTranslationsAvailable")}</p>
                             )
                         }
                         <Button variant="warning" onClick={() => handleTranslate(file, isAlreadyPublished, isEarlyRelease)}>
-                            Translate
+                            {t("translate")}
                         </Button>
                     </ListGroup.Item>
                 ))}
@@ -290,31 +282,32 @@ const TranslationSystem = () => {
             <div className="container mt-4">
                 <h2 className={"row d-flex text-white"}>
                     <p className={"col-3"}>
-                        Translation System
+                        {t("Translation System")}
                     </p>
 
                     <Form className={"col-9 d-flex justify-content-end"}>
                         <Form.Check
                             type="switch"
                             id="sort-by-date-switch"
-                            label="Sort by Date"
+                            label={t("sortByDate")}
                             checked={sortByDate}
                             onChange={() => setSortByDate(!sortByDate)}
                         />
                     </Form>
                 </h2>
                 <hr className="bg-white"/>
-                <h3 className={"text-white"}>Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
+                <h3 className={"text-white"}>{t("uploadedFiles")} <span className={"text-info small"}>{t("readyForPublishingInfo")}</span>
                 </h3>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {handleShowList(files, false, false)}
 
-                <h3 className={"text-white"}>Early Releases</h3>
+                <h3 className={"text-white"}>{t("earlyReleases")}</h3>
                 {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
                 {handleShowList(earlyReleasedArticles, true, false)}
-                <h3 className={"text-white"}>Already Published</h3>
+                <h3 className={"text-white"}>{t("alreadyPublished")}</h3>
                 {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
                 {handleShowList(alreadyPublishedArticles, false, true)}
+
 
                 <Modal
                     width={'300vh'}
@@ -348,129 +341,86 @@ const TranslationSystem = () => {
                     }}
                 >
                     <Modal.Header closeButton>
-                        <Modal.Title>{isTranslating ? 'Translate File' : 'Edit File Data'}</Modal.Title>
+                        <Modal.Title>{isTranslating ? t("translateFile") : t("editFileData")}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={'d-flex justify-content-center'}>
                         <Form>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h5>Original</h5>
-                                    <Form.Group controlId="originalContent">
-                                        <Form.Label>Content</Form.Label>
-                                        <ReactQuill key={`original-${selectedFile?.name}`} theme="snow"
-                                                    value={fileData.content} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalTitle">
-                                        <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" value={fileData.title} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalDetails">
-                                        <Form.Label>Details</Form.Label>
-                                        <Form.Control type="text" value={fileData.details} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalImg01">
-                                        <Form.Label>Image URL</Form.Label>
-                                        <Form.Control type="text" value={fileData.img01} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalSub">
-                                        <Form.Label>Author Code</Form.Label>
-                                        <Form.Control type="text" value={fileData.sub} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalDate">
-                                        <Form.Label>Date</Form.Label>
-                                        <Form.Control type="text" value={fileData.date} readOnly={true}/>
-                                    </Form.Group>
-                                    <Form.Group controlId="originalLanguage">
-                                        <Form.Label>Original Language</Form.Label>
+                                    <h5>{t('original')}</h5>
+                                    <FormGroup controlId="originalContent">
+                                        <Form.Label>{t('Content')}</Form.Label>
+                                        <ReactQuill theme="snow" value={fileData.content} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalTitle">
+                                        <Form.Label>{t('Title')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.title} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalDetails">
+                                        <Form.Label>{t('Details')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.details} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalImg01">
+                                        <Form.Label>{t('ImgUrl')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.img01} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalSub">
+                                        <Form.Label>{t('AuthorCode')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.sub} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalDate">
+                                        <Form.Label>{t('Date')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.date} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="originalLanguage">
+                                        <Form.Label>{t('originalLanguageLabel')}</Form.Label>
                                         <Form.Control
                                             as="select"
                                             value={originalLanguage}
                                             onChange={(e) => setOriginalLanguage(e.target.value)}
                                             disabled={!!fileData.lang}
                                         >
-                                            <option value="">Select Language</option>
+                                            <option value="">{t('selectLanguagePlaceholder')}</option>
                                             {/* Placeholder option */}
-                                            {Object.keys(availableLanguages).map((langCode) => {
-                                                return (
-                                                    <option value={langCode}>{availableLanguages[langCode]}</option>)
-                                            })}
+                                            {/* Add dynamic language options here */}
                                         </Form.Control>
-                                    </Form.Group>
+                                    </FormGroup>
                                 </div>
                                 <div className="col-md-6">
-                                    <h5>Translation</h5>
-                                    <Form.Group controlId="translatedContent">
-                                        <Form.Label>Content</Form.Label>
-                                        <ReactQuill
-                                            key={`translation-${selectedFile?.name}`}
-                                            theme="snow"
-                                            value={translationData.content}
-                                            onChange={(value) =>
-                                                handleTranslationChange({target: {value}}, 'content')
-                                            }
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="translatedTitle">
-                                        <Form.Label>Title</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={translationData.title}
-                                            onChange={(e) => handleTranslationChange(e, 'title')}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="translatedDetails">
-                                        <Form.Label>Details</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={translationData.details}
-                                            onChange={(e) => handleTranslationChange(e, 'details')}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="translatedImg01">
-                                        <Form.Label>Image URL</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={translationData.img01}
-                                            onChange={(e) => handleTranslationChange(e, 'img01')}
-                                            readOnly={true}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="translatedSub">
-                                        <Form.Label>AuthorCode</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={translationData.sub}
-                                            onChange={(e) => handleTranslationChange(e, 'sub')}
-                                            readOnly={true}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group controlId="translatedDate">
-                                        <Form.Label>Date</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            value={translationData.date}
-                                            onChange={(e) => handleTranslationChange(e, 'date')}
-                                        />
-                                    </Form.Group>
+                                    <h5>{t('translate')}</h5>
+                                    <FormGroup controlId="translatedContent">
+                                        <Form.Label>{t('Content')}</Form.Label>
+                                        <ReactQuill theme="snow" value={fileData.content} onChange={(value) => handleTranslationChange({ target: { value } }, 'content')} />
+                                    </FormGroup>
+                                    <FormGroup controlId="translatedTitle">
+                                        <Form.Label>{t('Title')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.title} onChange={(e) => handleTranslationChange(e, 'title')} />
+                                    </FormGroup>
+                                    <FormGroup controlId="translatedDetails">
+                                        <Form.Label>{t('Details')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.details} onChange={(e) => handleTranslationChange(e, 'details')} />
+                                    </FormGroup>
+                                    <FormGroup controlId="translatedImg01">
+                                        <Form.Label>{t('ImgUrl')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.img01} onChange={(e) => handleTranslationChange(e, 'img01')} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="translatedSub">
+                                        <Form.Label>{t('AuthorCode')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.sub} onChange={(e) => handleTranslationChange(e, 'sub')} readOnly={true} />
+                                    </FormGroup>
+                                    <FormGroup controlId="translatedDate">
+                                        <Form.Label>{t('Date')}</Form.Label>
+                                        <Form.Control type="text" value={fileData.date} onChange={(e) => handleTranslationChange(e, 'date')} />
+                                    </FormGroup>
                                     {isTranslating && (
-                                        <>
-                                            <Form.Group controlId="translatedLanguage">
-                                                <Form.Label>Language</Form.Label>
-                                                <Form.Control
-                                                    as="select"
-                                                    value={newLanguage}
-                                                    onChange={(e) => setNewLanguage(e.target.value)}
-                                                >
-                                                    <option value="">Select Language</option>
-                                                    {/* Placeholder option */}
-                                                    {Object.keys(availableLanguages).map((langCode) => {
-                                                        return (<option
-                                                            value={langCode}>{availableLanguages[langCode]}</option>)
-                                                    })}
-                                                </Form.Control>
-                                            </Form.Group>
-                                        </>
-
+                                        <FormGroup controlId="translatedLanguage">
+                                            <Form.Label>{t('translatedLanguageLabel')}</Form.Label>
+                                            <Form.Control as="select" value={newLanguage} onChange={(e) => setNewLanguage(e.target.value)}>
+                                                <option value="">{t('selectLanguagePlaceholder')}</option>
+                                                {/* Placeholder option */}
+                                                {/* Add dynamic language options here */}
+                                            </Form.Control>
+                                        </FormGroup>
                                     )}
                                 </div>
                             </div>

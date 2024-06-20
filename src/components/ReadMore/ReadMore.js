@@ -1,7 +1,9 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 const ReadMore = () => {
+    const { t } = useTranslation();
     return (
         <>
             <div className="container">
@@ -50,7 +52,7 @@ const ReadMore = () => {
                                     from the timeless allure of classic rock. This album marks not only a musical
                                     evolution but a deeply personal journey for Holler, whose raw emotion and unabashed
                                     influences are palpable throughout. </p>
-                                <NavLink to="/article/Holler-archive" className="btn btn-primary">Read More</NavLink>
+                                <NavLink to="/article/Holler-archive" className="btn btn-primary">{t('readMore')}</NavLink>
                             </div>
                         </div>
                     </div>
@@ -70,7 +72,7 @@ const ReadMore = () => {
                                     listeners through a journey that oscillates between chaos and melancholy, echoing
                                     the existential ponderings of philosophers past..
                                 </p>
-                                <NavLink to="/article/ECR-archive" className="btn btn-primary">Read More</NavLink>
+                                <NavLink to="/article/ECR-archive" className="btn btn-primary">{t('readMore')}</NavLink>
                             </div>
                         </div>
                     </div>

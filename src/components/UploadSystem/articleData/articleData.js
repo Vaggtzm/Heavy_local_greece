@@ -1,8 +1,10 @@
 import {getDownloadURL, listAll, ref} from "firebase/storage";
 import {storage} from "../../../firebase";
 
-import fetch from 'node-fetch'; // Use fetch or axios as per your preference
+
 import pLimit from 'p-limit';
+import axios from "axios";
+
 
 const fetchArticlesCategory = async (folder, setEarlyReleasesError, setAlreadyPublishedError, setError, concarrency) => {
     try {
@@ -16,13 +18,13 @@ const fetchArticlesCategory = async (folder, setEarlyReleasesError, setAlreadyPu
             let downloadUrl
             try{
                 downloadUrl = await getDownloadURL(item);
-                response = await fetch(downloadUrl);
+                response = await axios.get(downloadUrl);
             }catch(e){
                 console.log("error fetching file: "+e)
                 return undefined;
             }
             try {
-                const fileContent = await response.json();
+                const fileContent = await response.data;
 
                 return { name: item.name, downloadUrl, fileContent };
             } catch (error) {

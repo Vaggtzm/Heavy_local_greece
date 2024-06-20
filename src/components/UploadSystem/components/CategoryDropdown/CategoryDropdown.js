@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useTranslation} from "react-i18next";
 
 const CategoryDropdown = ({categories, onSelectCategory, required, value}) => {
     const [selectedCategory, setSelectedCategory] = useState(value||'');
+    const { t } = useTranslation();
 
     const handleSelect = (category) => {
         setSelectedCategory(category);
@@ -22,7 +24,7 @@ const CategoryDropdown = ({categories, onSelectCategory, required, value}) => {
                     key={index}
                     onClick={() => handleSelect(category)}
                 >
-                    {category}
+                    {t(category)}
                 </Dropdown.Item>
             ))}
         </DropdownButton>

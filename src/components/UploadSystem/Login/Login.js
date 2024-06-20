@@ -1,19 +1,23 @@
 import {
-    signInWithEmailAndPassword,
-    sendEmailVerification,
     getIdTokenResult,
+    GithubAuthProvider,
+    GoogleAuthProvider,
+    sendEmailVerification,
     sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signInWithPopup,
     signOut
 } from 'firebase/auth';
 import React, {useEffect, useState} from 'react';
-import {Form, Button, Container, Row, Col, Alert} from 'react-bootstrap';
+import {Alert, Button, Col, Container, Form, Row} from 'react-bootstrap';
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
-import {GoogleAuthProvider, signInWithPopup, GithubAuthProvider} from "firebase/auth";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import {useTranslation} from 'react-i18next';
 
 const Login = (props) => {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -49,19 +53,17 @@ const Login = (props) => {
         setUser(user);
 
         if (!user.emailVerified) {
-            setError('Please verify your email before logging in.');
+            setError(t('verifyEmail'));
         } else {
-
             if (props.admin && user.email === "tzimasvaggelis02@gmail.com") {
                 navigate("/upload/admin")
             }
-
 
             // User is signed in and email is verified
             const idTokenResult = await user.getIdTokenResult(true);
 
             // Check if user has admin claims
-            if (!idTokenResult.claims||!idTokenResult.claims.admin) {
+            if (!idTokenResult.claims || !idTokenResult.claims.admin) {
                 console.log("User is not an admin");
                 navigate('/User/home');
             } else {
@@ -72,9 +74,9 @@ const Login = (props) => {
         }
     }
 
-    const handleError=async (error)=>{
+    const handleError = async (error) => {
         if (error.code === 'auth/account-exists-with-different-credential') {
-            setError("This email has logged in with a different provider");
+            setError(t("This email has logged in with a different provider"));
         } else {
             console.error(error);
             setError(error.message);
@@ -95,11 +97,10 @@ const Login = (props) => {
     const sendVerification = async () => {
         try {
             await sendEmailVerification(user);
-            setError("Email verification has been sent. Please check your inbox");
+            setError(t("verifyEmail"));
             setEmailVerification(false);
         } catch (error) {
-            setError(error);
-
+            setError(error.message);
         }
     }
 
@@ -115,7 +116,7 @@ const Login = (props) => {
 
     const signInWithGithub = async () => {
         try {
-            const provider = new GithubAuthProvider()
+            const provider = new GithubAuthProvider();
             const user = await signInWithPopup(auth, provider);
             await handleUserLoggedIn(user.user);
             console.log("Hello")
@@ -128,32 +129,31 @@ const Login = (props) => {
         <Container>
             <Row className="justify-content-center mt-5">
                 <Col md={6}>
-                    <h2 className="text-center mb-4 text-white">Login</h2>
+                    <h2 className="text-center mb-4 text-white">{t('login')}</h2>
                     {error &&
                         <Alert variant="danger" className={"d-flex justify-content-center"}>{error}{emailVerification &&
-                            <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>Send Email
-                                Verification</Button>}</Alert>}
+                            <Button onClick={sendVerification} className={"m-1 btn btn-sm btn-warning"}>{t('sendEmailVerification')}</Button>}</Alert>}
                     <Form className={"card bg-dark w-100 text-white p-4"} onSubmit={handleLogin}>
                         <Form.Group controlId="email">
-                            <Form.Label>Email address</Form.Label>
+                            <Form.Label>{t('email')}</Form.Label>
                             <Form.Control
                                 type="email"
-                                placeholder="Enter email"
+                                placeholder={t('enterEmail')}
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </Form.Group>
 
                         <Form.Group controlId="password">
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label>{t('password')}</Form.Label>
                             <div className="input-group">
                                 <Form.Control
                                     type={showPassword ? "text" : "password"}
-                                    placeholder="Password"
+                                    placeholder={t('enterPassword')}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <Button variant="outline-secondary" onClick={()=>{
+                                <Button variant="outline-secondary" onClick={() => {
                                     setShowPassword(!showPassword)
                                 }}>
                                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
@@ -161,42 +161,38 @@ const Login = (props) => {
                             </div>
                         </Form.Group>
 
-
                         <Form.Group className={"mt-4"}>
                             <Button variant={"danger"} onClick={signInWithGoogle}>
-                                Log in with Google
+                                {t('loginWithGoogle')}
                             </Button>
 
                             <Button variant={"secondary"} className={"bg-dark"} onClick={signInWithGithub}>
-                                Log in with Github
+                                {t('loginWithGithub')}
                             </Button>
-
-
                         </Form.Group>
                         <Form.Group>
                             <Button variant="link" onClick={async () => {
                                 try {
                                     await sendPasswordResetEmail(auth, email);
-                                    setError("Password reset email has been sent to your email.");
+                                    setError(t('sendPasswordReset'));
                                     setEmailVerification(false)
                                 } catch (error) {
                                     if (error.code === "auth/missing-email") {
-                                        setError("Please enter your email first.");
+                                        setError(t('enterEmail'));
                                     } else {
                                         setError(error.message);
                                     }
                                 }
                                 return false;
-                            }}>Forgot Password?</Button>
+                            }}>{t('forgotPassword')}</Button>
                         </Form.Group>
-
 
                         <Button variant={"secondary"} type={"button"} onClick={() => {
                             navigate("/upload/register")
-                        }}>Register</Button>
+                        }}>{t('register')}</Button>
 
                         <Button variant="primary" type="submit" className="w-100 mt-3">
-                            Login
+                            {t('login')}
                         </Button>
                     </Form>
                 </Col>

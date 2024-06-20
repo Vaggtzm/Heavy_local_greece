@@ -4,6 +4,7 @@ import {signOut} from "firebase/auth";
 import {useNavigate} from "react-router-dom";
 import {onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
+import {useTranslation} from "react-i18next";
 
 const AdminSystem = () => {
 
@@ -13,6 +14,7 @@ const AdminSystem = () => {
     const [authorLeader, setAuthorLeader] = useState([]);
     const [admin, setAdmin] = useState([]);
     const [roles, setRoles] = useState([]);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const userList = ref(database, 'roles');
@@ -81,10 +83,10 @@ const AdminSystem = () => {
                         <table className="table table-dark table-striped">
                             <thead>
                             <tr className={"row"} style={{marginRight: "0.1vh"}}>
-                                <th className={"col-2"}>Image</th>
-                                <th className={"col-3"}>Email</th>
-                                <th className={"col-3"}>Role</th>
-                                <th className={"col-4"}>Change Role</th>
+                                <th className={"col-2"}>{t('image')}</th>
+                                <th className={"col-3"}>{t('email')}</th>
+                                <th className={"col-3"}>{t('role')}</th>
+                                <th className={"col-4"}>{t('changeRole')}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -94,7 +96,7 @@ const AdminSystem = () => {
 
                                 return (
                                     <tr key={index} className={"row"}>
-                                        <td className={"col-2"}>{users[key].photoURL &&
+                                    <td className={"col-2"}>{users[key].photoURL &&
                                             <img className={"w-75 m-4"} alt={users[key].displayName}
                                                  src={users[key].photoURL}/>}</td>
                                         <td className={"col-3"}>{users[key].displayName} ({users[key].email})</td>

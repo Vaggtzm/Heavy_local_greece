@@ -1,0 +1,124 @@
+{
+  "image": "Εικόνα",
+  "role": "Ρόλος",
+  "changeRole": "Αλλαγή Ρόλου",
+
+
+  "authorUploadSystem": "Σύστημα Μεταφόρτωσης Συγγραφέων",
+  "pasteArticleContent": "Επικολλήστε το περιεχόμενο του άρθρου από το έγγραφο που έχετε γράψει",
+  "title": "Τίτλος",
+  "details": "Λεπτομέρειες (Μερικές λεπτομέρειες σχετικά με την μπάντα που θα εμφανίζονται κάτω από την κύρια εικόνα στα δεξιά.)",
+  "socialMediaLinks": "Σύνδεσμοι Κοινωνικών Μέσων (εισάγετε μόνο τα διαθέσιμα)",
+  "facebook": "Facebook",
+  "instagram": "Instagram",
+  "spotify": "Spotify",
+  "youtube": "YouTube",
+  "language": "Γλώσσα",
+  "selectLanguage": "Επιλέξτε Γλώσσα",
+  "uploadArticle": "Μεταφόρτωση Άρθρου",
+  "articleSubmittedSuccessfully": "Το άρθρο υποβλήθηκε με επιτυχία!",
+  "errorSubmittingArticle": "Σφάλμα κατά την υποβολή του άρθρου. Προσπαθήστε ξανά.",
+
+
+  "Top News": "Κορυφαία Νέα",
+  "General News": "Γενικά Νέα",
+  "Interviews": "Συνεντεύξεις",
+  "Collabs and Sponsorships": "Συνεργασίες και Χορηγίες",
+  "Latest Reviews(ENG)": "Τελευταίες Κριτικές (ENG)",
+  "Latest Reviews(GRE)": "Τελευταίες Κριτικές (GRE)",
+  "Legends": "Θρύλοι",
+  "uploadImage": "Σύρτε την εικόνα σας εδώ ή κάντε κλικ για να επιλέξετε αρχείο",
+
+  "login": "Σύνδεση",
+  "enterEmail": "Εισάγετε το email",
+  "password": "Κωδικός πρόσβασης",
+  "enterPassword": "Εισάγετε τον κωδικό πρόσβασης",
+  "forgotPassword": "Ξεχάσατε τον κωδικό;",
+  "loginWithGoogle": "Σύνδεση με Google",
+  "loginWithGithub": "Σύνδεση με Github",
+  "register": "Εγγραφή",
+  "sendEmailVerification": "Αποστολή επιβεβαίωσης email",
+  "sendPasswordReset": "Έχει αποσταλεί email επαναφοράς κωδικού πρόσβασης.",
+  "verifyEmail": "Η επιβεβαίωση του email έχει αποσταλεί. Παρακαλώ ελέγξτε το εισερχόμενό σας.",
+
+
+  "userProfile": "Προφίλ Χρήστη",
+  "showProfilePicture": "Εμφάνιση εικόνας προφίλ στα άρθρα",
+  "displayName": "Όνομα Εμφάνισης",
+  "profileImage": "Εικόνα Προφίλ",
+  "updateProfile": "Ενημέρωση Προφίλ",
+  "currentPassword": "Τρέχων Κωδικός",
+  "newPassword": "Νέος Κωδικός",
+  "confirmNewPassword": "Επιβεβαίωση Νέου Κωδικού",
+  "updatePassword": "Ενημέρωση Κωδικού",
+  "loading": "Φόρτωση...",
+  "profileUpdatedSuccess": "Το προφίλ ενημερώθηκε με επιτυχία!",
+  "passwordUpdatedSuccess": "Ο κωδικός ενημερώθηκε με επιτυχία!",
+  "passwordsDoNotMatch": "Οι κωδικοί δεν ταιριάζουν.",
+
+
+  "name": "Όνομα",
+  "email": "Διεύθυνση Email",
+  "registerWithGoogle": "Εγγραφή με Google",
+  "successMessage": "Ο λογαριασμός δημιουργήθηκε επιτυχώς. Παρακαλώ ελέγξτε το email σας για επιβεβαίωση.",
+  "googleSuccessMessage": "Ο λογαριασμός δημιουργήθηκε επιτυχώς. Εάν είστε συγγραφέας, παρακαλώ επικοινωνήστε με τον διαχειριστή για να σας δώσει πρόσβαση στη δημοσίευση άρθρων.",
+
+
+  "Translation System": "Σύστημα Μετάφρασης",
+  "sortByDate": "Ταξινόμηση κατά Ημερομηνία",
+  "uploadedFiles": "Μεταφορτωμένα Αρχεία",
+  "readyForPublishingInfo": "πράσινο σημαίνει έτοιμο για δημοσίευση",
+  "alreadyPublished": "Ήδη Δημοσιευμένα",
+  "noTranslationsAvailable": "Δεν υπάρχουν διαθέσιμες μεταφράσεις",
+  "translate": "Μετάφραση",
+  "translateFile": "Μετάφραση Αρχείου",
+  "editFileData": "Επεξεργασία Δεδομένων Αρχείου",
+  "Title": "Τίτλος",
+  "Details": "Λεπτομέρειες",
+  "ImgUrl": "Διεύθυνση URL Εικόνας",
+  "AuthorCode": "Κωδικός Συγγραφέα",
+  "originalLanguageLabel": "Αρχική Γλώσσα",
+  "Content": "Περιεχόμενο",
+  "Date": "Ημερομηνία",
+  "translatedLanguageLabel": "Γλώσσα",
+  "selectLanguagePlaceholder": "Επιλέξτε Γλώσσα",
+
+  "shareToFacebook": "Κοινοποίηση Στο Facebook",
+
+  "notFoundTitle": "404",
+  "notFoundSubtitle": "Ουπς! Η σελίδα δεν βρέθηκε.",
+  "notFoundDescription": "Η σελίδα που ψάχνετε δεν υπάρχει ή συνέβη κάποιο σφάλμα.",
+  "goBackHome": "Πήγαινε στην Αρχική Σελίδα",
+
+
+  "galleryTitle": "Γκαλερί",
+  "gallerySubtitle": "Eμπνευσεις από εσάς",
+  "submitArtTitle": "Υποβάλετε την τέχνη σας στο",
+  "submitArtEmail": "admin@pulse-of-the-underground.com",
+
+  "loadingMessage": "Φόρτωση...",
+  "readMore": "Διαβάστε Περισσότερα",
+  "collabsSponsorships": "Συνεργασίες και Χορηγίες",
+
+  "earlyReleases": "Άρθρα Πρώιμης Δημοσίευσης",
+
+  "savedArticles": "Αποθηκευμένα Άρθρα",
+
+  "favoriteCategories": "Αγαπημένες Κατηγορίες",
+  "noDataAvailable": "Δεν υπάρχουν διαθέσιμα δεδομένα",
+  "errorFetchingArticle": "Σφάλμα κατά τη λήψη του άρθρου:",
+
+
+  "allRightsReserved": "Όλα τα δικαιώματα διατηρούνται",
+  "pulseOfTheUnderground": "Κύματα της Υπόγειας Σκηνής 2024.",
+  "developedBy": "Αναπτύχθηκε από",
+  "helpUsToGrow": "Βοηθήστε μας να αναπτυχθούμε",
+  "donate": "Δωρεά",
+
+  "getInTouch": "Επικοινωνήστε μαζί μας",
+  "tellUsYourFeedback": "Πείτε μας τα σχόλιά σας!",
+  "emailHelp": "Δεν θα μοιραστούμε ποτέ το email σας με κανέναν άλλο.",
+  "subjectPlaceholder": "Θέμα",
+  "messagePlaceholder": "Μήνυμα",
+  "submit": "Υποβολή"
+}

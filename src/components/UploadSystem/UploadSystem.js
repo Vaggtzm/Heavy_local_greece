@@ -3,26 +3,28 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, Row} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import './quill-custom.css'
-import {useNavigate} from "react-router-dom";
-import {auth, config, storage} from '../../firebase'; // Import Firebase auth
-import {getIdTokenResult, signOut} from "firebase/auth";
-import {fetchAndActivate, getValue} from "firebase/remote-config";
-import ImageUpload from "./components/fancyImage/ImageUpload";
-import CategoryDropdown from "./components/CategoryDropdown/CategoryDropdown";
-import ImageUploader from "quill-image-uploader";
+import './quill-custom.css';
+import {useNavigate} from 'react-router-dom';
+import {auth, config, storage} from '../../firebase';
+import {getIdTokenResult, signOut} from 'firebase/auth';
+import {fetchAndActivate, getValue} from 'firebase/remote-config';
+import ImageUpload from './components/fancyImage/ImageUpload';
+import CategoryDropdown from './components/CategoryDropdown/CategoryDropdown';
+import ImageUploader from 'quill-image-uploader';
+import {useTranslation} from 'react-i18next';
 
 const ArticleUpload = () => {
+    const { t, i18n } = useTranslation();
     const [articleContent, setArticleContent] = useState('');
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
     const [image, setImage] = useState(null);
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState(null);
-    const [currentUser, setCurrentUser] = useState(null); // State to hold current user
+    const [currentUser, setCurrentUser] = useState(null);
     const [language, setLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
-    const [category, setCategory] = useState(''); // State to hold selected category
+    const [category, setCategory] = useState('');
 
     const categories = [
         "Top News",
@@ -44,40 +46,36 @@ const ArticleUpload = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-
         try {
             fetchAndActivate(config).then(() => {
-                const serverLanguages = getValue(config, "languages").asString()
-                setAvailableLanguages(JSON.parse(serverLanguages))
+                const serverLanguages = getValue(config, "languages").asString();
+                setAvailableLanguages(JSON.parse(serverLanguages));
             });
         } catch (err) {
             console.log(err);
         }
 
-        // Set up Firebase authentication listener
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in
                 getIdTokenResult(user).then((idTokenResult) => {
                     if (idTokenResult.claims && idTokenResult.claims.admin) {
                         console.log("the user is an admin");
                     } else {
                         signOut(auth).then(() => {
-                            console.log("Trying to login again")
+                            console.log("Trying to login again");
                             navigate('/upload/login');
                         });
                     }
-                })
+                });
 
                 setCurrentUser(user);
             } else {
-                // No user is signed in
                 setCurrentUser(null);
                 navigate('/upload/login');
             }
         });
 
-        return () => unsubscribe(); // Cleanup the listener on component unmount
+        return () => unsubscribe();
     }, []);
 
     const formatSocialsAsString = () => {
@@ -98,9 +96,7 @@ const ArticleUpload = () => {
     };
 
     function replaceSpecialCharsWithDashes(text) {
-        // Regular expression to match any character that Firebase Realtime Database does not support in keys
         const regex = /[.$#[\]/\u0000-\u001F\u007F-\uFFFF]/g;
-        // Replace matched characters with dashes
         return text.replace(regex, '');
     }
 
@@ -108,7 +104,7 @@ const ArticleUpload = () => {
         return new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => {
-                resolve({width: img.width, height: img.height});
+                resolve({ width: img.width, height: img.height });
             };
             img.onerror = reject;
             img.src = URL.createObjectURL(file);
@@ -143,12 +139,12 @@ const ArticleUpload = () => {
                 img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
-                lang: language,
+                lang: 'en', // Store language as English
                 translations: {},
                 category: category
             };
 
-            articleData.translations[language] = newFileName;
+            articleData.translations['en'] = newFileName;
 
             const articleDataRef = ref(storage, `upload_from_authors/${newFileName}`);
             await uploadString(articleDataRef, JSON.stringify(articleData));
@@ -177,12 +173,11 @@ const ArticleUpload = () => {
     return (
         <div>
             <div className="container mt-4">
-                <h2 className={"h2 text-white"}>Author Upload System</h2>
-                <hr className="bg-dark"/>
-                <Form className={"bg-transparent p-5"} onSubmit={handleArticleSubmit}>
+                <h2 className="h2 text-white">{t('authorUploadSystem')}</h2>
+                <hr className="bg-dark" />
+                <Form className="bg-transparent p-5" onSubmit={handleArticleSubmit}>
                     <Form.Group controlId="articleContent">
-                        <Form.Label className={"text-light"}>Paste Article Content from the document that you have
-                            written</Form.Label>
+                        <Form.Label className="text-light">{t('pasteArticleContent')}</Form.Label>
                         <ReactQuill
                             theme="snow"
                             className="text-light"
@@ -194,11 +189,10 @@ const ArticleUpload = () => {
                             modules={{
                                 toolbar: {
                                     container: [
-                                        [{'header': '1'}, {'header': '2'}, {'font': []}],
-                                        [{size: []}],
+                                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                        [{ size: [] }],
                                         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                        [{'list': 'ordered'}, {'list': 'bullet'},
-                                            {'indent': '-1'}, {'indent': '+1'}],
+                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
                                         ['link', 'image'],
                                         ['clean']
                                     ],
@@ -213,7 +207,7 @@ const ArticleUpload = () => {
                     <Row>
                         <Col>
                             <Form.Group controlId="title">
-                                <Form.Label className={"text-light"}>Title</Form.Label>
+                                <Form.Label className="text-light">{t('title')}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={title}
@@ -224,7 +218,7 @@ const ArticleUpload = () => {
                         </Col>
                         <Col>
                             <Form.Group controlId="details">
-                                <Form.Label className={"text-light"}>Details <span className={"small"}>(Some details about the band to appear under the main picture on the right.)</span></Form.Label>
+                                <Form.Label className="text-light">{t('details')}</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={details}
@@ -235,22 +229,22 @@ const ArticleUpload = () => {
                     </Row>
 
                     <Form.Group controlId="socials">
-                        <Form.Label className={"text-light"}>Social Media Links <span className={"small"}>(enter only those available)</span></Form.Label>
+                        <Form.Label className="text-light">{t('socialMediaLinks')}</Form.Label>
                         <Row>
                             <Col>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Facebook"
+                                    placeholder={t('facebook')}
                                     value={socials.facebook}
-                                    onChange={(e) => setSocials({...socials, facebook: e.target.value})}
+                                    onChange={(e) => setSocials({ ...socials, facebook: e.target.value })}
                                 />
                             </Col>
                             <Col>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Instagram"
+                                    placeholder={t('instagram')}
                                     value={socials.instagram}
-                                    onChange={(e) => setSocials({...socials, instagram: e.target.value})}
+                                    onChange={(e) => setSocials({ ...socials, instagram: e.target.value })}
                                 />
                             </Col>
                         </Row>
@@ -258,35 +252,41 @@ const ArticleUpload = () => {
                             <Col>
                                 <Form.Control
                                     type="text"
-                                    placeholder="Spotify"
+                                    placeholder={t('spotify')}
                                     value={socials.spotify}
-                                    onChange={(e) => setSocials({...socials, spotify: e.target.value})}
+                                    onChange={(e) => setSocials({ ...socials, spotify: e.target.value })}
                                 />
                             </Col>
                             <Col>
                                 <Form.Control
                                     type="text"
-                                    placeholder="YouTube"
+                                    placeholder={t('youtube')}
                                     value={socials.youtube}
-                                    onChange={(e) => setSocials({...socials, youtube: e.target.value})}
+                                    onChange={(e) => setSocials({ ...socials, youtube: e.target.value })}
                                 />
                             </Col>
                         </Row>
                     </Form.Group>
                     <Form.Group controlId="originalLanguage">
-                        <Row className={"d-flex align-items-center"}>
+                        <Row className="d-flex align-items-center">
                             <Col>
-                                <Form.Label>Original Language</Form.Label>
+                                <Form.Label className="text-light">{t('language')}</Form.Label>
                                 <Form.Control
                                     as="select"
                                     value={language}
-                                    onChange={(e) => setLanguage(e.target.value)}
+                                    onChange={(e) => {
+                                        setLanguage(e.target.value);
+                                        i18n.changeLanguage(e.target.value); // Change UI language
+                                    }}
                                     required={true}
                                 >
-                                    <option value="">Select Language</option>
-                                    {/* Placeholder option */}
+                                    <option value="">{t('selectLanguage')}</option>
                                     {Object.keys(availableLanguages).map((langCode) => {
-                                        return (<option value={langCode}>{availableLanguages[langCode]}</option>)
+                                        return (
+                                            <option value={langCode} key={langCode}>
+                                                {availableLanguages[langCode]}
+                                            </option>
+                                        );
                                     })}
                                 </Form.Control>
                             </Col>
@@ -294,24 +294,23 @@ const ArticleUpload = () => {
                                 <CategoryDropdown
                                     categories={categories}
                                     onSelectCategory={setCategory}
-                                    required ={true}
+                                    required={true}
                                 />
                             </Col>
                         </Row>
                     </Form.Group>
 
                     <Form.Group controlId="image">
-                        <ImageUpload setImage={setImage} image={image}/>
+                        <ImageUpload setImage={setImage} image={image} />
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
-                        Upload Article
+                        {t('uploadArticle')}
                     </Button>
 
-                    {/* Display success or error alert */}
                     {submitSuccess && (
                         <Alert variant="success" className="mt-3">
-                            Article submitted successfully!
+                            {t('articleSubmittedSuccessfully')}
                         </Alert>
                     )}
                     {submitError && (

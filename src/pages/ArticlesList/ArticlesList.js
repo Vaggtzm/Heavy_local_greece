@@ -1,31 +1,23 @@
 import React, {useEffect, useRef, useState} from 'react';
-import { onValue, ref } from 'firebase/database';
-import { getDownloadURL, ref as storageRef } from 'firebase/storage';
-import { auth, database, storage } from "../../firebase";
+import {onValue, ref} from 'firebase/database';
+import {getDownloadURL, ref as storageRef} from 'firebase/storage';
+import {auth, database, storage} from "../../firebase";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink, useParams} from "react-router-dom";
-import { Accordion, Nav, Spinner } from 'react-bootstrap';
+import {Accordion, Nav, Spinner} from 'react-bootstrap';
 import {Helmet} from "react-helmet";
+import {useTranslation} from 'react-i18next';
 
 const ArticlesList = () => {
+    const { t } = useTranslation();
     const [articles, setArticles] = useState({});
     const [loading, setLoading] = useState(true);
     const [activeKey, setActiveKey] = useState("Collabs and Sponsorships");
     const [loggedIn, setLoggedIn] = useState(false);
     const [author, setAuthor] = useState({});
-
     const [borderSize, setBorderSize] = useState(6);
-
     const imgRef = useRef(null);
-
     const { authorCode } = useParams();
-
-    //const  = "gbK4OvgKbyYDfYCfIjboOqjA9Yv1";
-
-    const nice_titles = {
-        "early_releases": "Early Bird Articles",
-        "articles": "All Articles",
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,32 +66,30 @@ const ArticlesList = () => {
     }, [authorCode]);
 
     const getBorderSize = () => {
-        if(!imgRef.current||imgRef.current.clientWidth===0||imgRef.current.clientHeight===0){return 6;}
+        if (!imgRef.current || imgRef.current.clientWidth === 0 || imgRef.current.clientHeight === 0) {
+            return 6;
+        }
         const width = imgRef.current.clientWidth;
         const height = imgRef.current.clientHeight;
-        console.log("height", height)
         let computerPercentage = 0.06;
         let mobilePercentage = 0.03;
-        if(author.dimentions){
-            console.log("author.dimentions", author.dimentions)
-            computerPercentage = computerPercentage*author.dimentions.computer;
-            mobilePercentage = mobilePercentage*author.dimentions.mobile;
+        if (author.dimentions) {
+            computerPercentage = computerPercentage * author.dimentions.computer;
+            mobilePercentage = mobilePercentage * author.dimentions.mobile;
         }
-        const computerValue = Math.min(width, height)*computerPercentage;
-        const mobileValue = Math.min(width, height)*mobilePercentage;
-        return (imgRef.current.clientWidth>100)?computerValue:mobileValue;
-    }
+        const computerValue = Math.min(width, height) * computerPercentage;
+        const mobileValue = Math.min(width, height) * mobilePercentage;
+        return (imgRef.current.clientWidth > 100) ? computerValue : mobileValue;
+    };
 
     const updateBorderSize = () => {
         setBorderSize(getBorderSize());
-    }
+    };
 
     useEffect(updateBorderSize, [imgRef.current, author]);
 
     const fetchArticlesWithImages = async (data) => {
         const updatedData = {};
-
-        console.log(data);
 
         for (const category in data) {
             const categoryData = data[category];
@@ -107,7 +97,7 @@ const ArticlesList = () => {
 
             for (const subCategory in categoryData) {
                 updatedData[category][subCategory] = await Promise.all(
-                    ((!authorCode)?categoryData[subCategory]:Object.keys(categoryData[subCategory])).map(async (articleKey) => {
+                    ((!authorCode) ? categoryData[subCategory] : Object.keys(categoryData[subCategory])).map(async (articleKey) => {
                         try {
                             const articleUrl = await getDownloadURL(
                                 storageRef(storage, `${category}/${articleKey}.json`)
@@ -162,7 +152,7 @@ const ArticlesList = () => {
                         <div className="card-body">
                             {article.title}
                             <div className="card-text">
-                                <NavLink to={`/article${(category === 'early_releases') ? '/early' : ''}/${article.link}`} className="btn btn-danger">Read More</NavLink>
+                                <NavLink to={`/article${(category === 'early_releases') ? '/early' : ''}/${article.link}`} className="btn btn-danger">{t('readMore')}</NavLink>
                             </div>
                         </div>
                     </div>
@@ -173,7 +163,7 @@ const ArticlesList = () => {
 
     return (
         <div className="container mt-5 mb-5 overflow-hidden" style={{ marginBottom: "11.4vh" }}>
-            {author.displayName&&(<Helmet>
+            {author.displayName && (<Helmet>
                 <title>{author.displayName} - Pulse of the Underground</title>
             </Helmet>)}
             {loading ? (
@@ -187,11 +177,11 @@ const ArticlesList = () => {
                     right: 0,
                     margin: 'auto'
                 }} animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
+                    <span className="visually-hidden">{t('loadingMessage')}</span>
                 </Spinner>
             ) : (
                 <div>
-                    {(authorCode)&& (<div className="mb-5">
+                    {(authorCode) && (<div className="mb-5">
                             <div className="row flex-column flex-md-row">
                                 <div className="col-md-4 col-12 mb-5">
                                     <div className="w-75 mx-auto">
@@ -217,20 +207,20 @@ const ArticlesList = () => {
                                 </div>
                             </div>
                         </div>
-                            )}
+                    )}
 
-                    {(articles['early_releases']||articles['articles']) &&<div className="row bg-dark p-3">
+                    {(articles['early_releases'] || articles['articles']) && <div className="row bg-dark p-3">
                         <div className="col-md-3 d-none d-md-block">
                             <Nav variant="pills" className="flex-column sticky-top" activeKey={activeKey}
                                  onSelect={(selectedKey) => setActiveKey(selectedKey)}>
                                 {loggedIn && articles['early_releases'] && (
                                     <Nav.Item>
-                                        <Nav.Link eventKey="early_releases">{nice_titles['early_releases']}</Nav.Link>
+                                        <Nav.Link eventKey="early_releases">{t('earlyReleases')}</Nav.Link>
                                     </Nav.Item>
                                 )}
                                 {Object.keys(articles['articles'] || {}).map((subCategory, subIndex) => (
                                     <Nav.Item key={subIndex}>
-                                        <Nav.Link eventKey={subCategory}>{subCategory.replace('_', ' ')}</Nav.Link>
+                                        <Nav.Link eventKey={subCategory}>{t(`${subCategory}`)}</Nav.Link>
                                     </Nav.Item>
                                 ))}
                             </Nav>
@@ -240,7 +230,7 @@ const ArticlesList = () => {
                                 {loggedIn && articles['early_releases'] && (
                                     <Accordion.Item className="bg-dark" eventKey="early_releases">
                                         <Accordion.Header
-                                            className="bg-dark">{nice_titles['early_releases']}</Accordion.Header>
+                                            className="bg-dark">{t('earlyReleases')}</Accordion.Header>
                                         <Accordion.Body className="row">
                                             {renderArticles('early_releases', articles['early_releases'] || {})}
                                         </Accordion.Body>
@@ -248,7 +238,7 @@ const ArticlesList = () => {
                                 )}
                                 {Object.keys(articles['articles'] || {}).map((subCategory, subIndex) => (
                                     <Accordion.Item className="bg-dark" eventKey={subCategory} key={subIndex}>
-                                        <Accordion.Header>{subCategory.replace('_', ' ')}</Accordion.Header>
+                                        <Accordion.Header>{t(`${subCategory}`)}</Accordion.Header>
                                         <Accordion.Body className="row">
                                             {renderArticles('articles', articles['articles'][subCategory] || {})}
                                         </Accordion.Body>

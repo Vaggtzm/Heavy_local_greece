@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Form, Container, Row, Col} from 'react-bootstrap';
+import {Col, Container, Form, Row} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './ImageUpload.css'; // Custom CSS file for additional styling
+import './ImageUpload.css';
+import {useTranslation} from "react-i18next"; // Custom CSS file for additional styling
 
 const ImageUpload = ({image, setImage}) => {
     const [preview, setPreview] = useState(null);
     const [dragging, setDragging] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         if(image) {
@@ -80,7 +82,7 @@ const ImageUpload = ({image, setImage}) => {
                             />
                             {!preview && (
                                 <div className="upload-message">
-                                    <p>Drag & Drop your image here or click to select a file</p>
+                                    <p>{t("uploadImage")}</p>
                                 </div>
                             )}
                             {preview && (
