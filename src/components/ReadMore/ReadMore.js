@@ -25,7 +25,7 @@ const ReadMore = () => {
                                     offering solace during dark times.How is it possible for someone to fluently
                                     communicate in complex languages like JavaScript while simultaneously nurturing our
                                     immune system with assurance and self-love? </p>
-                                <a href="/article/Sleep-Dealer-review" className="btn btn-primary">Read More</a>
+                                <a href="/article/Sleep-Dealer-review" className="btn btn-primary">{t('readMore')}</a>
                             </div>
                         </div>
                     </div>

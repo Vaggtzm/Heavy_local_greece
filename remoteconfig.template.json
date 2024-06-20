@@ -4,6 +4,12 @@
             "defaultValue": {
                 "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
             }
+        },
+        "languagesFlags": {
+            "defaultValue": {
+                "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
+            }
         }
     }
 }
+

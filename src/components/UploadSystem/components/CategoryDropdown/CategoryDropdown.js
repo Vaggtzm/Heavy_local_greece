@@ -15,7 +15,7 @@ const CategoryDropdown = ({categories, onSelectCategory, required, value}) => {
     return (
         <DropdownButton
             id="dropdown-basic-button"
-            title={selectedCategory || "Select a Category"}
+            title={t(selectedCategory) || "Select a Category"}
             variant={"light"}
             required={required}
         >

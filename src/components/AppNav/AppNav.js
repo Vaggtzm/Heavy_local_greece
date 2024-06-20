@@ -1,14 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { auth, database } from "../../firebase";
+import React, {useEffect, useRef, useState} from 'react';
+import {auth, config, database} from "../../firebase";
 import Container from "react-bootstrap/Container";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import InstallButton from "../PWAinstal/pwaInstall";
-import { getIdTokenResult, signOut } from "firebase/auth";
-import { Button } from "react-bootstrap";
-import { onValue, ref } from "firebase/database";
+import {getIdTokenResult, signOut} from "firebase/auth";
+import {Button} from "react-bootstrap";
+import {onValue, ref} from "firebase/database";
 import './Observer.css';
+import {useTranslation} from "react-i18next";
+import WorldFlag from 'react-world-flags';
+import {fetchAndActivate, getValue} from "firebase/remote-config";
+
 const AppNavigation = () => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isAuthor, setIsAuthor] = useState(true);
@@ -19,7 +23,27 @@ const AppNavigation = () => {
     const navigate = useNavigate();
     const placeholderRef = useRef(null);
 
+    const [languages, setLanguages] = useState([]);
+
+    const { i18n } = useTranslation();
+
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+
     useEffect(() => {
+
+        try {
+            fetchAndActivate(config).then(()=>{
+                setLanguages(JSON.parse(getValue(config, "languagesFlags").asString()));
+            })
+            console.log(i18n.language)
+        } catch (err) {
+            console.log(err);
+        }
+
+
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 const userList = ref(database, 'roles');
@@ -90,11 +114,13 @@ const AppNavigation = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="d-flex justify-content-center justify-content-evenly w-100 table-hover">
-                            <NavLink to={(loggedIn) ? "/User/home" : "/"} className='nav-link text-white '>Home</NavLink>
-                            {(loggedIn) && <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
+                            <NavLink to={(loggedIn) ? "/User/home" : "/"}
+                                     className='nav-link text-white '>Home</NavLink>
+                            {(loggedIn) &&
+                                <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
                             <NavLink to="/articles-page" className='nav-link text-white'>Articles</NavLink>
                             <NavLink to="/Art-Gallery-page" className='nav-link text-white'>Art Gallery</NavLink>
-                            <InstallButton />
+                            <InstallButton/>
                             {isAuthor && (
                                 <>
                                     <NavLink to="/upload" className='nav-link text-white'>Upload</NavLink>
@@ -110,7 +136,8 @@ const AppNavigation = () => {
                                 <NavLink to="/upload/admin" className='nav-link text-white'>Admin Dashboard</NavLink>
                             }
                             {isTranslator &&
-                                <NavLink to={"/upload/translation"} className='nav-link text-white'>Translation System</NavLink>
+                                <NavLink to={"/upload/translation"} className='nav-link text-white'>Translation
+                                    System</NavLink>
                             }
 
                             {(loggedIn) ? (
@@ -118,12 +145,30 @@ const AppNavigation = () => {
                                     signOut(auth).then(() => {
                                         navigate("/")
                                     })
-                                }} className='nav-link text-white'><Button variant="outline-danger">Sign Out</Button></Nav.Link>
+                                }} className='nav-link text-white'><Button variant="outline-danger">Sign
+                                    Out</Button></Nav.Link>
                             ) : (<>
-                                <NavLink to="/User/register" className='nav-link text-white link'>Create Account</NavLink>
-                                <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
-                            </>
+                                    <NavLink to="/User/register" className='nav-link text-white link'>Create
+                                        Account</NavLink>
+                                    <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
+                                </>
                             )}
+
+                            <div className="language-switcher">
+                                {
+                                    Object.keys(languages).map((lang, index) => {
+                                        const active= ((i18n.language===lang)?"bg-primary-subtle ":"")
+                                        return (
+                                            <button key={index} className={"btn " + active}
+                                                    onClick={() => changeLanguage(lang)}>
+                                                <WorldFlag code={languages[lang]}
+                                                           style={{width: '4vh', height: 'auto'}}/>
+                                            </button>
+                                        )
+                                    })
+                                }
+                            </div>
+
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
