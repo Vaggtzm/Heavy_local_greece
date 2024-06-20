@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./home.css";
 import Socials from "../components/SocialMedia/socials";
 import SpotifyBanner from "../components/SpotifyBanner/SpotifyBanner";
@@ -8,9 +8,11 @@ import CasterFmPlayer from "../components/Users/CasterFmPlayer";
 import Author from "./Authors/Author/Author";
 import {NavLink} from "react-router-dom";
 import AutoMusic from "../components/AutoMusic/AutoMusic";
+import {useTranslation} from "react-i18next";
 
 const Home = () => {
     const [scrolled, setScrolled] = useState(false);
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -28,7 +30,9 @@ const Home = () => {
       return () => {
         window.removeEventListener("scroll", handleScroll);
       };
-    }, [scrolled]);         return (
+    }, [scrolled]);
+
+    return (
         <>
             <header  className={scrolled ? "scrolled" : ""}>
                 <div className="container mt-4 main ">
@@ -37,13 +41,12 @@ const Home = () => {
                             <div className="jumbotron jumbotron-fluid">
                                 <div className="container-fluid">
                                     <h1 className="display-4">
-                                        Welcome to{" "}
+                                        {t("welcomeMessage")}{" "}
                                         <span className="font-1">Pulse Of The Underground</span>{" "}
                                     </h1>
                                     <PrimaryCarousel/>
                                     <p className="lead">
-                                        Stay brutal and explore the unknown metal news, reviews, and
-                                        features!
+                                        {t("subtitle")}
                                     </p>
                                     <hr className="bg-dark"/>
                                 </div>
@@ -61,7 +64,7 @@ const Home = () => {
                         {/* Main Article Section */}
                         <div className="col-md-8 ">
                             <div className="CenterSection">
-                                <h2>Top News</h2>
+                                <h2>{t("Top News")}</h2>
                                 <h3>Blind Sun x Rattlesquad x WiderSin (07/06/24)</h3>
                                 <img
                                     src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F7JuneIlion_800x800.jpg?alt=media&token=fbbceafd-78f6-4c43-a724-77b3316917f2"
@@ -70,7 +73,7 @@ const Home = () => {
                                 Μπαίνει ζεστά το καλοκαίρι με τον καύσωνα να αγγίζει κόκκινα και πήγαμε σε ένα μικρό live όαση στο ΙΛΙΟΝ Plus την Παρασκευή δίπλα από το Πεδίο του Άρεως στην Αθήνα, σε ένα μικρό live στο οποίο για ένα τετράωρο σχεδόν δόθηκε κατάθεση ψυχής από όλους τους συμμετέχοντες! Φτάνει 9 το βράδυ και περνάμε τις πόρτες του venue. Πρώτη παρατήρηση; Ένας χώρος μικρός και παράλληλα άνετος και με καταπληκτικό ήχο! Κόσμος; Λίγος και καλός! Μακάρι να ήταν περισσότερος, αλλά και αυτός που ήταν ήταν θερμός, δημιουργώντας έτσι με τον τρόπο του ένα οικείο και φιλόξενο κλίμα! Πάμε να δούμε την βραδιά και τους συμμετέχοντες!
                                 </p>
                                 <NavLink to="https://pulse-of-the-underground.com/article/Blind-Sun-x-Rattlesquad-x-WiderSin-070624"
-                                         className="btn btn-danger">Read More</NavLink>
+                                         className="btn btn-danger">{t("readMore")}</NavLink>
 
                                 <hr className="bg-white"/>
                                 <h3>2024 Mindless Sinner X Marauder 25/5/24 @ Κύτταρο, Αθήνα</h3>
@@ -101,7 +104,7 @@ const Home = () => {
                                     πρωταγωνιστές 3 underground έμπειρες μπάντες, τους Eldingar, τους Urza και τους
                                     Decemberance!</p>
                                 <NavLink to="/article/TestEldingar-x-Urza-x-Decemberance-250524"
-                                         className="btn btn-danger">Read More</NavLink>
+                                         className="btn btn-danger">{t("readMore")}</NavLink>
 
 
                                 <hr className="bg-white"/>
@@ -117,7 +120,7 @@ const Home = () => {
                                     potential.</p>
                                 <NavLink
                                     to="/article/Thomas-Libero’s-Uplifting-New-Single-“Questa-Storia-La-Scrivo-Io”-Out-Now"
-                                    className="btn btn-danger">Read More</NavLink>
+                                    className="btn btn-danger">{t("readMore")}</NavLink>
                                 <hr className="bg-white"/>
 
                                 <h3>Delve into TumulTum Project Curtains </h3>
@@ -129,9 +132,9 @@ const Home = () => {
                                     distinctive guitarist who has been honing his craft for over 19 years. It is a
                                     thrilling opportunity.
                                 </p>
-                                <NavLink to="/article/tumultum-archive" className="btn btn-danger">Read More</NavLink>
+                                <NavLink to="/article/tumultum-archive" className="btn btn-danger">{t("readMore")}</NavLink>
                             </div>
-                            <h3>Collabs and Sponshorships : </h3>
+                            <h3>{t("Collabs and Sponsorships")} : </h3>
 
                             <div className="ReviewBox">
                             <br/>
@@ -152,7 +155,7 @@ const Home = () => {
                                                 to="https://pulse-of-the-underground.com/article/SINGLE-REVIEW:-Dark-Skys-%22Forgiveness%22--A-Soulful-Cry-for-Justice"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -173,14 +176,14 @@ const Home = () => {
                                             <NavLink to="/article/SINGLE-REVIEW-Primal-Roots-Reinvents-Gangstas-Paradise-with-Explosive-Metal-Energy"
                                                      className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr/>
-                            <h3>Latest Reviews(ENG)</h3>
+                            <h3>{t("Latest Reviews(ENG)")}</h3>
                             <hr className="bg-dark"/>
 
                             <div className="ReviewBox">
@@ -201,7 +204,7 @@ const Home = () => {
                                                 to="/article/ALBUM-REVIEW-Lilita-Arndts-When-the-Darkness-Comes-Delivers-Unyielding-Intensity"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -222,7 +225,7 @@ const Home = () => {
                                                 to="/article/ALBUM-REVIEW-Necroviles-Engorging-the-Devourmental-Void--A-Death-Metal-Masterpiece"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -245,7 +248,7 @@ const Home = () => {
                                                 to="/article/ALBUM-REVIEW-Senhal-by-Of-the-Muses-Delivers-an-Emotional-Odyssey"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -255,7 +258,7 @@ const Home = () => {
                             </div>
                             <hr className="bg-dark"/>
 
-                            <h3>Latest Reviews(GRE)</h3>
+                            <h3>{t("Latest Reviews(GRE)")}</h3>
                             <hr className="bg-dark"/>
                             <div className="ReviewBox">
 
@@ -276,7 +279,7 @@ const Home = () => {
                                                 to="/article/--------Arhat---Secrets-of-Ancient-Gods-(Album-Review-+-band-info)"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -300,7 +303,7 @@ const Home = () => {
                                                 to="/article/------Bdel---Bilan-Faller-(single-review-+-band-info)"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -324,7 +327,7 @@ const Home = () => {
                                                 to="/article/ΝΕΟΑΛΜΠΟΥΜ-ΟιEvaCan-tΚυκλοφορούντο-Emisferi--μιαΜοναδικήΗμισφαιρικήΑναζήτηση--el"
                                                 className="btn btn-primary"
                                             >
-                                                Read More
+                                                {t("readMore")}
                                             </NavLink>
                                         </div>
                                     </div>
@@ -336,7 +339,7 @@ const Home = () => {
                         </div>
                         {/* Sidebar Section */}
                         <div className="col-md-4">
-                            <h3>Interviews</h3>
+                            <h3>{t("Interviews")}</h3>
                             <hr className="bg-white"/>
                             <ul className="list-unstyled">
                                 <li><a href="#">
@@ -350,7 +353,7 @@ const Home = () => {
                                                     to="/article/Interview-Sula-Bassana"
                                                     className="btn btn-primary"
                                                 >
-                                                    Read More
+                                                    {t("readMore")}
                                                 </NavLink>
                                             </div>
                                         </div>
@@ -370,7 +373,7 @@ const Home = () => {
                                                     to="/article/INTERVIEW-Burning-Cross-Unleashes-Raw-Power-and-Social-Commentary-in-the-Black-Metal-Underground"
                                                     className="btn btn-primary"
                                                 >
-                                                    Read More
+                                                    {t("readMore")}
                                                 </NavLink>
                                             </div>
                                         </div>
@@ -390,7 +393,7 @@ const Home = () => {
                                                 <NavLink to="/article/Animamortua"
                                                          className="btn btn-primary"
                                                 >
-                                                    Read More
+                                                    {t("readMore")}
                                                 </NavLink>
                                             </div>
                                         </div>
@@ -411,7 +414,7 @@ const Home = () => {
                                                     to="/article/Exclusive-Interview-with-Lethargy-UA:-Harmonizing-Resilience-and-Melodic-Might"
                                                     className="btn btn-primary"
                                                 >
-                                                    Read More
+                                                    {t("readMore")}
                                                 </NavLink>
                                             </div>
                                         </div>
@@ -430,7 +433,7 @@ const Home = () => {
                                                     to="/article/INTERVIEW -Get-to-Know-Thy-Legion"
                                                     className="btn btn-primary"
                                                 >
-                                                    Read More
+                                                    {t("readMore")}
                                                 </NavLink>
                                             </div>
                                         </div>
@@ -449,7 +452,7 @@ const Home = () => {
                                         <NavLink to="/article/Νέο-βίντεο-κλιπ-από-τους-Meden-Agan"
                                                  className="btn btn-primary"
                                         >
-                                            Read More
+                                            {t("readMore")}
                                         </NavLink>
                                     </div>
                                 </div>
@@ -463,7 +466,7 @@ const Home = () => {
                                         <NavLink to="/article/Dreamer-22-years-anniversary"
                                                  className="btn btn-primary"
                                         >
-                                            Read More
+                                            {t("readMore")}
                                         </NavLink>
                                     </div>
                                 </div>
@@ -502,30 +505,27 @@ const Home = () => {
 </section>
                 
             <section className="ExploreMore">
-                <h2 className="text-center text-white">Explore More</h2>
+                <h2 className="text-center text-white">{t("exploreMore")}</h2>
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
-                            <h3 className="text-white">Artworks Gallery</h3>
+                            <h3 className="text-white">{t("galleryTitle")}</h3>
                             <hr className="bg-white"/>
                             <SecondaryCarousel/>
                         </div>
                         <div className="col-md-12">
-                            <h3 className="text-white">Spotify Latest</h3>
+                            <h3 className="text-white">{t("spotifyLatest")}</h3>
                             <hr className="bg-white"/>
                             <SpotifyBanner/>
                         </div>
-                        <div className="col-md-12">
-                            <h3 className="text-white">Meet the team</h3>
-                        </div>
+
                     </div>
-                   
+
+                    <div className="col-md-12">
+                        <h3 className="text-white">{t("meetTheTeam")}</h3>
+                    </div>
+
                     <div className="testinomial">
-                        <div className="row d-flex justify-content-center">
-                            <div className="col-md-10 col-xl-8 text-center">
-                                <h3 className="mb-4 text-white">Testimonials</h3>
-                            </div>
-                        </div>
 
                         <div className="row text-center">
 
@@ -558,7 +558,7 @@ const Home = () => {
                         </div>
 
                     </div>
-                    
+
                 </div>
             </section>
 

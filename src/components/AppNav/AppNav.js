@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {auth, config, database} from "../../firebase";
+import {auth, database} from "../../firebase";
 import Container from "react-bootstrap/Container";
 import {Link, NavLink, useNavigate} from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
@@ -9,9 +9,7 @@ import {getIdTokenResult, signOut} from "firebase/auth";
 import {Button} from "react-bootstrap";
 import {onValue, ref} from "firebase/database";
 import './Observer.css';
-import {useTranslation} from "react-i18next";
-import WorldFlag from 'react-world-flags';
-import {fetchAndActivate, getValue} from "firebase/remote-config";
+import LanguageButtons from "./Language/LanguageButtons";
 
 const AppNavigation = () => {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -23,25 +21,14 @@ const AppNavigation = () => {
     const navigate = useNavigate();
     const placeholderRef = useRef(null);
 
-    const [languages, setLanguages] = useState([]);
-
-    const { i18n } = useTranslation();
 
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
+
+
+
+
 
     useEffect(() => {
-
-        try {
-            fetchAndActivate(config).then(()=>{
-                setLanguages(JSON.parse(getValue(config, "languagesFlags").asString()));
-            })
-            console.log(i18n.language)
-        } catch (err) {
-            console.log(err);
-        }
 
 
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -153,22 +140,7 @@ const AppNavigation = () => {
                                     <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
                                 </>
                             )}
-
-                            <div className="language-switcher">
-                                {
-                                    Object.keys(languages).map((lang, index) => {
-                                        const active= ((i18n.language===lang)?"bg-primary-subtle ":"")
-                                        return (
-                                            <button key={index} className={"btn " + active}
-                                                    onClick={() => changeLanguage(lang)}>
-                                                <WorldFlag code={languages[lang]}
-                                                           style={{width: '4vh', height: 'auto'}}/>
-                                            </button>
-                                        )
-                                    })
-                                }
-                            </div>
-
+                            <LanguageButtons/>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -120,5 +120,15 @@
   "emailHelp": "Δεν θα μοιραστούμε ποτέ το email σας με κανέναν άλλο.",
   "subjectPlaceholder": "Θέμα",
   "messagePlaceholder": "Μήνυμα",
-  "submit": "Υποβολή"
+  "submit": "Υποβολή",
+
+
+    "welcomeMessage": "Καλώς ήρθατε στο",
+    "subtitle": "Μείνετε αγριεμένοι και εξερευνήστε τα άγνωστα μέταλ νέα, κριτικές και χαρακτηριστικά!",
+
+
+    "exploreMore": "Εξερευνήστε Περισσότερα",
+    "spotifyLatest": "Τελευταία από Spotify",
+    "meetTheTeam": "Γνωρίστε την Ομάδα",
+    "testimonials": "Μαρτυρίες"
 }

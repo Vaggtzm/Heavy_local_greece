@@ -121,5 +121,16 @@
   "emailHelp": "We'll never share your email with anyone else.",
   "subjectPlaceholder": "Subject",
   "messagePlaceholder": "Message",
-  "submit": "Submit"
+  "submit": "Submit",
+
+
+  "welcomeMessage": "Welcome to",
+  "subtitle": "Stay brutal and explore the unknown metal news, reviews, and features!",
+
+  "exploreMore": "Explore More",
+  "artworksGallery": "Artworks Gallery",
+  "spotifyLatest": "Spotify Latest",
+  "meetTheTeam": "Meet the Team",
+  "testimonials": "Testimonials"
+
 }
