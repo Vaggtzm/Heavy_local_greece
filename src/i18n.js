@@ -32,7 +32,7 @@ try {
 } catch (err) {
     console.log(err);
 }
-const serverLanguages = getValue(config, "languages").asString()
+const serverLanguages = getValue(config, "languagesFlags").asString()
 
 i18n
     .use(HttpApi)
