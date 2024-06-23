@@ -7,6 +7,7 @@ import {NavLink, useParams} from "react-router-dom";
 import {Accordion, Nav, Spinner} from 'react-bootstrap';
 import {Helmet} from "react-helmet";
 import {useTranslation} from 'react-i18next';
+import Slider from "react-slick";
 
 const ArticlesList = () => {
     const { t } = useTranslation();
@@ -18,6 +19,7 @@ const ArticlesList = () => {
     const [borderSize, setBorderSize] = useState(6);
     const imgRef = useRef(null);
     const { authorCode } = useParams();
+    const [galleryItems, setGalleryItems] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -35,6 +37,7 @@ const ArticlesList = () => {
                         const articlesWithImages = await fetchArticlesWithImages(data);
                         setArticles(articlesWithImages);
                     } else {
+                        fetchImagesFromGallery().then();
                         const articlesWithImages = await fetchArticlesWithImages(data.writtenArticles);
                         setArticles(articlesWithImages);
                         let userImage = storageRef(storage, `/profile_images/${authorCode}_600x600`);
@@ -123,6 +126,31 @@ const ArticlesList = () => {
         return updatedData;
     };
 
+    const fetchImagesFromGallery = async ()=>{
+        const galleryRef = ref(database, '/gallery/uploaded');
+
+        return onValue(galleryRef, (snapshot) => {
+            let data = snapshot.val();
+            if (data) {
+                console.log(data);
+                const dataPromises = data.map(async (d) => {
+                    const userid = d.title;
+                    if(userid===authorCode){
+                        return d
+                    }else{
+                        return null;
+                    }
+                });
+                Promise.all(dataPromises).then((resolvedData) => {
+                    console.log(resolvedData);
+                    setGalleryItems(resolvedData);
+                }).catch((error) => {
+                    console.error("Error resolving data promises:", error);
+                });
+            }
+        });
+    }
+
     const renderArticles = (category, articles) => {
         const renderedTranslationGroups = new Set();
         return Object.values(articles).flat().map((article, index) => {
@@ -159,6 +187,36 @@ const ArticlesList = () => {
                 </div>
             );
         });
+    };
+
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1000,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true
+                }
+            }
+        ]
     };
 
     return (
@@ -207,6 +265,22 @@ const ArticlesList = () => {
                                 </div>
                             </div>
                         </div>
+                    )}
+
+                    {(galleryItems)&& (<div className={"mb-5"}><h2 className={"text-white mb-2 text-center"}>{t("galleryTitle")}</h2><div className="container">
+                            <Slider {...settings}>
+                                {galleryItems.map((image, index) => (
+                                    (image)&&<div key={index} className="bg-dark carousel-item">
+                                        <img
+                                            className="img-fluid image-gallery-content"
+                                            src={"https://pulse-of-the-underground.com" + image.image}
+                                            alt={`slide${index}`}
+                                            style={{maxHeight: "300px", objectFit: "cover"}} // Adjust height as needed
+                                        />
+                                    </div>
+                                ))}
+                            </Slider>
+                        </div></div>
                     )}
 
                     {(articles['early_releases'] || articles['articles']) && <div className="row bg-dark p-3">

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {auth, database, storage} from '../../../firebase';
-import { ref, push } from 'firebase/database';
-import { Form, Button, Container, Alert } from 'react-bootstrap';
+import {push, ref} from 'firebase/database';
+import {Alert, Button, Container, Form} from 'react-bootstrap';
 import ImageUpload from "../../../components/UploadSystem/components/fancyImage/ImageUpload";
-import {uploadBytes, ref as storageRef} from "firebase/storage";
+import {ref as storageRef, uploadBytes} from "firebase/storage";
 
 const UploadGalleryItem = () => {
     const [user, setUser] = useState(null);
@@ -19,7 +19,7 @@ const UploadGalleryItem = () => {
             if (user) {
                 setUser(user);
                 if (user.displayName) {
-                    setTitle(`by ${user.displayName}`);
+                    setTitle(user.uid);
                 }
             } else {
                 setUser(null);
@@ -54,7 +54,7 @@ const UploadGalleryItem = () => {
 
             const newItem = {
                 image:`/assets/gallery/review/${image.name}`,
-                title: title || `by ${user.displayName || 'unknown'}`,
+                title: user.uid,
                 descriptionEl,
                 descriptionEng
             };
@@ -109,18 +109,6 @@ const UploadGalleryItem = () => {
                         onChange={(e) => setDescriptionEng(e.target.value)}
                     />
                 </Form.Group>
-
-                {(!user || !user.displayName) && (
-                    <Form.Group className="mb-3">
-                        <Form.Label className={"text-white"}>Name(or nickname)</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter your name"
-                            value={title}
-                            onChange={(e) => setTitle(`by ${e.target.value}`)}
-                        />
-                    </Form.Group>
-                )}
 
                 <Button variant="primary" onClick={handleUpload}>
                     Upload

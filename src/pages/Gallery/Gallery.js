@@ -2,22 +2,61 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from 'react-i18next';
 import Socials from "../../components/SocialMedia/socials";
 import './gallery.css';
-import {database} from "../../firebase";
-import {onValue, ref} from "firebase/database";
+import {database, storage} from "../../firebase";
+import {get, onValue, ref} from "firebase/database";
+
+import {getDownloadURL, ref as storageRef} from "firebase/storage";
+import {NavLink} from "react-router-dom";
 
 const ArtGallery = () => {
     const { t } = useTranslation();
     const [galleryItems, setGalleryItems] = useState([]);
+
+    const getUserName = async (username)=>{
+        let snapshot = ref(database, `users/${username}`);
+        snapshot = await get(snapshot);
+        if(snapshot.exists()){
+            return {name: snapshot.val().displayName, id: username, wantToShow: snapshot.val().wantToShow}
+        }else{
+            snapshot = ref(database, `authors/${username}`);
+            snapshot = await get(snapshot);
+            if(snapshot.exists()) {
+                return {name: snapshot.val().displayName, id: username, wantToShow: snapshot.val().wantToShow};
+            }
+            else {
+                return {name: username, id:null, wantToShow: false};
+            }
+        }
+    }
 
     useEffect(() => {
         const galleryRef = ref(database, '/gallery/uploaded');
 
         // Listen for data changes
         return onValue(galleryRef, (snapshot) => {
-            const data = snapshot.val();
+            let data = snapshot.val();
             if (data) {
                 console.log(data);
-                setGalleryItems(data);
+
+                // First, create an array of promises
+                const dataPromises = data.map(async (d) => {
+                    const userData = await getUserName(d.title)
+                    return {
+                        ...d,
+                        title: userData.name,
+                        id: userData.id,
+                        userImage: userData.wantToShow? await getDownloadURL(storageRef(storage, `profile_images/${d.title}`)): null,
+                        wantToShow: userData.wantToShow
+                    };
+                });
+
+                // Use Promise.all to wait for all promises to resolve
+                Promise.all(dataPromises).then((resolvedData) => {
+                    console.log(resolvedData);
+                    setGalleryItems(resolvedData);
+                }).catch((error) => {
+                    console.error("Error resolving data promises:", error);
+                });
             }
         });
     }, []);
@@ -49,7 +88,11 @@ const ArtGallery = () => {
                                                 />
                                             </a>
                                             <div className="card-body">
-                                                <h5 className="card-title">{item.title}</h5>
+                                                <h5 className="card-title d-flex">
+                                                    {(item.wantToShow)&&<img src={item.userImage} alt={item.title} className="rounded-circle"
+                                                                             style={{width: "50px", height: "50px"}}/>}
+                                                    {(item.id)?<NavLink className={"m-2 text-info nav-link"} to={`/author/${item.id}`}>{item.title}</NavLink>:<span className={`m-2`}>{item.title}</span>}
+                                                </h5>
                                                 <p className="card-text">
                                                     {item.descriptionEl}
                                                 </p>
