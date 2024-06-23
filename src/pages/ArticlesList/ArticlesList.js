@@ -133,13 +133,9 @@ const ArticlesList = () => {
             let data = snapshot.val();
             if (data) {
                 console.log(data);
-                const dataPromises = data.map(async (d) => {
+                const dataPromises  = data.filter((d) => {
                     const userid = d.title;
-                    if(userid===authorCode){
-                        return d
-                    }else{
-                        return null;
-                    }
+                    return userid === authorCode;
                 });
                 Promise.all(dataPromises).then((resolvedData) => {
                     console.log(resolvedData);
@@ -267,17 +263,17 @@ const ArticlesList = () => {
                         </div>
                     )}
 
-                    {(galleryItems)&& (<div className={"mb-5"}><h2 className={"text-white mb-2 text-center"}>{t("galleryTitle")}</h2><div className="container">
+                    {(galleryItems.length>0)&& (<div className={"mb-5"}><h2 className={"text-white mb-2 text-center"}>{t("galleryTitle")}</h2><div className="container">
                             <Slider {...settings}>
                                 {galleryItems.map((image, index) => (
-                                    (image)&&<div key={index} className="bg-dark carousel-item">
+                                    (image)&&<NavLink to={`${image.image}?fullScale=true`} key={index} className="nav-link bg-dark carousel-item">
                                         <img
-                                            className="img-fluid image-gallery-content"
+                                            className="img-thumbnail"
                                             src={"https://pulse-of-the-underground.com" + image.image}
                                             alt={`slide${index}`}
                                             style={{maxHeight: "300px", objectFit: "cover"}} // Adjust height as needed
                                         />
-                                    </div>
+                                    </NavLink>
                                 ))}
                             </Slider>
                         </div></div>

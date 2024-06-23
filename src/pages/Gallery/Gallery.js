@@ -77,16 +77,16 @@ const ArtGallery = () => {
                                 {galleryItems.map((item, index) => (
                                     <div className="col-sm-12 col-md-4" key={index}>
                                         <div className="card mb-3">
-                                            <a
-                                                className="lightbox"
-                                                href={`${item.image}?fullScale=true`}
+                                            <NavLink
+                                                className="nav-link lightbox"
+                                                to={`${item.image}?fullScale=true`}
                                             >
                                                 <img
                                                     src={item.image}
                                                     alt={item.descriptionEng}
                                                     className="card-img-top"
                                                 />
-                                            </a>
+                                            </NavLink>
                                             <div className="card-body">
                                                 <h5 className="card-title d-flex">
                                                     {(item.wantToShow)&&<img src={item.userImage} alt={item.title} className="rounded-circle"
