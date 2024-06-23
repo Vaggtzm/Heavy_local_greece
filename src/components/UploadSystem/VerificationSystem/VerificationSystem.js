@@ -9,7 +9,6 @@ import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import fetchArticlesCategory from "../articleData/articleData";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-import EditLinks from "./EditLinks";
 
 const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
@@ -25,6 +24,7 @@ const FirebaseFileList = () => {
     const [sortByCategory, setSortByCategory] = useState(false);
     const [authorName, setAuthorName] = useState('');
     const [translatorName, setTranslatorName] = useState('');
+    const [socials, setSocials] = useState({})
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -49,18 +49,22 @@ const FirebaseFileList = () => {
 
     const fetchFiles = async () => {
         try {
-            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData) => {
-                setFiles(publishedFilesData);
-            });
+            const uploadedFilesPromise = fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError, 20)
+                .then((publishedFilesData) => {
+                    setFiles(publishedFilesData);
+                });
 
-            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 10).then((publishedFilesData) => {
-                setAlreadyPublishedArticles(publishedFilesData);
-            });
+            const publishedFilesPromise = fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 10)
+                .then((publishedFilesData) => {
+                    setAlreadyPublishedArticles(publishedFilesData);
+                });
 
-            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 100).then((publishedFilesData) => {
-                setEarlyReleasedArticles(publishedFilesData);
-            });
+            const earlyReleasedFilesPromise = fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 100)
+                .then((publishedFilesData) => {
+                    setEarlyReleasedArticles(publishedFilesData);
+                });
 
+            await Promise.all([uploadedFilesPromise, publishedFilesPromise, earlyReleasedFilesPromise]);
         } catch (e) {
             console.log(e);
         }
@@ -99,6 +103,8 @@ const FirebaseFileList = () => {
             ...file.fileContent,
         });
 
+        setSocials((file.fileContent.socials)?file.fileContent.socials:{});
+
         const authorRef = databaseRef(database, `authors/${fileData.sub}`);
         try {
             get(authorRef).then((snapshot) => {
@@ -121,7 +127,7 @@ const FirebaseFileList = () => {
                 if (snapshot.exists()) {
                     console.log(snapshot.val())
                     console.log(snapshot.val());
-                    setTranslatorName(snapshot.val().displayName||'');
+                    setTranslatorName(snapshot.val().displayName || '');
                 } else {
                     setTranslatorName("");
                     console.log()
@@ -142,22 +148,31 @@ const FirebaseFileList = () => {
         try {
             let fileRef;
             if (isAlreadyPublished) {
+                console.log('isAlreadyPublished');
                 fileRef = ref(storage, `articles/${selectedFile.name}`);
             } else if (isEarlyReleasedArticles) {
+                console.log('Early Releases');
                 fileRef = ref(storage, `early_releases/${selectedFile.name}`);
             } else {
+                console.log('Uploaded');
                 fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             }
-            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
+            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
             await uploadString(fileRef, JSON.stringify(fileData));
-            const updatedFiles = files.map((file) =>
-                file.name === selectedFile.name ? {...file, fileContent: fileData} : file
-            );
+            const updatedFiles = files.map((file) => (file.name === selectedFile.name ? {
+                ...file,
+                fileContent: fileData
+            } : file));
             setFiles(updatedFiles);
 
-            setShowModal(false);
-            setAuthorName("");
-            fetchFiles();
+
+            setAuthorName('');
+            setSocials({});
+
+            fetchFiles().then(()=>{
+                alert("The file was stored successfully");
+                setShowModal(false);
+            });
         } catch (error) {
             setError('Error saving file data: ' + error.message);
         }
@@ -166,40 +181,41 @@ const FirebaseFileList = () => {
     const handleChange = async (e, field, isObject) => {
         console.log(selectedFile);
 
-
         let {value} = e.target;
-        if (field === "category"||field==="sub"||field==="translatedBy") {
-            if(field === "category"){
+
+        if (field === 'category' || field === 'sub' || field === 'translatedBy') {
+            if (field === 'category') {
                 fileData.category = value;
             }
             const oldCategory = fileData.category;
             const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
-            const data = selectedFile.data
+            const data = selectedFile.data;
             update(articleRef, data).then();
 
-            let folder
+            let folder;
 
             if (data.isEarlyAccess) {
-                folder = "early_releases"
+                folder = 'early_releases';
             } else if (data.isPublished) {
-                folder = "articles"
+                folder = 'articles';
             } else {
-                folder = "upload_from_authors";
+                folder = 'upload_from_authors';
             }
 
-            const author = (selectedFile.fileContent.translatedBy)?selectedFile.fileContent.translatedBy:selectedFile.fileContent.sub;
+            const author = selectedFile.fileContent.translatedBy ? selectedFile.fileContent.translatedBy : selectedFile.fileContent.sub;
 
             const authorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(authorRef).then();
 
             const newAuthorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${fileData.category}/`);
             update(newAuthorRef, {[selectedFile.name.replace('.json', '')]: true});
-            console.log(`Updated: authors/${author}/writtenArticles/${folder}/${fileData.category}/`)
+            console.log(`Updated: authors/${author}/writtenArticles/${folder}/${fileData.category}/`);
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(oldArticleRef).then();
         }
         if (isObject) {
             value = JSON.parse(value);
+            console.log(value)
         }
         setFileData((prevData) => ({
             ...prevData,
@@ -214,6 +230,25 @@ const FirebaseFileList = () => {
             content: sanitizedValue,
         }));
     };
+
+
+    const handleSocialChange = (field, value) => {
+        let { value: fieldValue } = value.target; // Extract the correct value
+
+        setSocials((prevData) => ({
+            ...prevData,
+            [field]: fieldValue,
+        }));
+
+        // Updated the socials state before calling handleChange
+        const updatedSocials = {
+            ...socials,
+            [field]: fieldValue,
+        };
+
+        handleChange({ target: { value: JSON.stringify(updatedSocials) || "{}" } }, 'socials', true);
+    };
+
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete the file "${file.name}"?`);
@@ -261,7 +296,7 @@ const FirebaseFileList = () => {
                 year: 'numeric'
             };
 
-            if(!fileContent.translatedBy) {
+            if (!fileContent.translatedBy) {
                 fileContent.written_date = fileContent.date;
                 fileContent.date = new Date().toLocaleDateString('en-GB', options);
             }
@@ -277,12 +312,12 @@ const FirebaseFileList = () => {
 
                 let newRef;
                 let oldRef;
-                if(fileContent.translatedBy===undefined) {
-                    newRef = databaseRef(database,`/authors/${fileContent.sub}/writtenArticles/${folder}/${fileContent.category}`);
-                    oldRef = databaseRef(database,`/authors/${fileContent.sub}/writtenArticles/${originalfolder}/${fileContent.category}`);
-                }else {
-                    newRef = databaseRef(database,`/authors/${fileContent.translatedBy}/writtenArticles/${folder}/${fileContent.category}`);
-                    oldRef = databaseRef(database,`/authors/${fileContent.translatedBy}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                if (fileContent.translatedBy === undefined) {
+                    newRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                } else {
+                    newRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${originalfolder}/${fileContent.category}`);
                 }
 
                 update(newRef, {[filename.replace(".json", "")]: true}).then();
@@ -331,9 +366,9 @@ const FirebaseFileList = () => {
 
         if (sortByCategory) {
             sortedList.sort((a, b) => {
-                if(!a.fileContent.category || !b.fileContent.category){
+                if (!a.fileContent.category || !b.fileContent.category) {
                     return 0;
-                }else {
+                } else {
                     return a.fileContent.category.localeCompare(b.fileContent.category)
                 }
             });
@@ -363,15 +398,17 @@ const FirebaseFileList = () => {
                                     }
                                 }) : articles).map((file, index) => (
                                     <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                                        {file.fileContent.isReady && <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}
-                                        <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">
+                                        {file.fileContent.isReady && <><i
+                                            className={"text-success fa-solid fa-check"}></i><span> </span></>}
+                                        <p key={file.fileContent.date}
+                                           className="form-label badge bg-dark-subtle text-dark m-1">
                                             {file.fileContent.date}
                                         </p>
 
                                         {(isEarlyReleased || isAlreadyPublished) ? (
                                             <a
                                                 className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                                style={{ cursor: "pointer" }}
+                                                style={{cursor: "pointer"}}
                                                 href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
                                                 onClick={(e) => {
                                                     e.preventDefault();
@@ -415,7 +452,7 @@ const FirebaseFileList = () => {
 
                                         {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
                                             <>
-                                                <Button variant="success"  onClick={() => {
+                                                <Button variant="success" onClick={() => {
                                                     handlePublish(false, file.name, isEarlyReleased);
                                                 }}
                                                         className={"ms-2 justify-content-center"}>
@@ -458,7 +495,8 @@ const FirebaseFileList = () => {
             <ListGroup>
                 {sortedList.map((file, index) => (
                     <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                        {file.fileContent.isReady && <><i className={"text-success fa-solid fa-check"}></i><span> </span></>}
+                        {file.fileContent.isReady && <><i
+                            className={"text-success fa-solid fa-check"}></i><span> </span></>}
                         <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">
                             {file.fileContent.date}
                         </p>
@@ -474,7 +512,9 @@ const FirebaseFileList = () => {
                                     return false;
                                 }}
                             >
-                                {file.fileContent.title} <sbr/> {file.name}
+                                {file.fileContent.title}
+                                <sbr/>
+                                {file.name}
                             </a>
                         ) : (
                             <>{file.fileContent.title} <br/> {file.name}</>
@@ -500,11 +540,11 @@ const FirebaseFileList = () => {
                         )}
 
                         {(!isAlreadyPublished && isEarlyReleased && !leader) && (
-                                <Button variant="success" onClick={() => {
-                                    handlePublish(false, file.name, isEarlyReleased);
-                                }} className="ms-2">
-                                    Publish Normally
-                                </Button>
+                            <Button variant="success" onClick={() => {
+                                handlePublish(false, file.name, isEarlyReleased);
+                            }} className="ms-2">
+                                Publish Normally
+                            </Button>
                         )}
 
 
@@ -627,10 +667,67 @@ const FirebaseFileList = () => {
                                     onChange={(e) => handleChange(e, 'details', false)}
                                 />
                             </Form.Group>
-                            <EditLinks initialHtmlString={fileData.Socials} setOutput={(value)=>{
-                                console.log(value);
-                                handleChange({target: {value: value}}, 'Socials', false)
-                            }}/>
+
+
+                            <Form.Group controlId="socials">
+                                <Form.Label className={"text-light"}>
+                                    Social Media Links <span className={"small"}>(enter only those available)</span>
+                                </Form.Label>
+                                <Row>
+                                    <Col>
+                                        <Form.Label>Facebook:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Facebook"
+                                            value={socials.facebook}
+                                            onChange={(e) => handleSocialChange('facebook', e)}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <Form.Label>Instagram:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Instagram"
+                                            value={socials.instagram}
+                                            onChange={(e) => handleSocialChange('instagram', e)}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row className="mt-3">
+                                    <Col>
+                                        <Form.Label>Spotify:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Spotify"
+                                            value={socials.spotify}
+                                            onChange={(e) => handleSocialChange('spotify', e)}
+                                        />
+                                    </Col>
+                                    <Col>
+                                        <Form.Label>YouTube:</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="YouTube"
+                                            value={socials.youtube}
+                                            onChange={(e) => handleSocialChange('youtube', e)}
+                                        />
+                                    </Col>
+                                </Row>
+                                <Row className="mt-3">
+                                    <Col>
+                                        <Form.Label>Old Socials(Do not change, use the new):</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="OldSocials"
+                                            value={fileData.Socials}
+                                            readOnly={true}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Form.Group>
+
+
+
                             <Form.Group controlId="img01">
                                 <Form.Label>Image URL</Form.Label>
                                 <Form.Control
@@ -659,7 +756,8 @@ const FirebaseFileList = () => {
                                             console.log(e)
                                             setAuthorName("");
                                         }
-                                        handleChange(e, 'translatedBy', false).then(r => {})
+                                        handleChange(e, 'translatedBy', false).then(r => {
+                                        })
                                     }}
                                 />
                             </Form.Group>
@@ -725,10 +823,10 @@ const FirebaseFileList = () => {
                                         "Latest Reviews(GRE)",
                                         "Legends"
                                     ]}
-                                    onSelectCategory={(category)=>{
+                                    onSelectCategory={(category) => {
                                         handleChange({target: {value: category}}, 'category', false)
                                     }}
-                                    required ={true}
+                                    required={true}
                                     value={fileData.category}
                                 />
                             </Form.Group>

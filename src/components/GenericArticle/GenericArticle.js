@@ -134,6 +134,7 @@ const DefaultArticle = (props) => {
             } else {
                 setTranslations({});
             }
+            console.log(data);
             setArticles(data);
         } catch (error) {
             console.error("Error fetching data:", error.message);
@@ -265,7 +266,12 @@ const DefaultArticle = (props) => {
                             <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
                         </p>
                         <p className="lead">
-                            <span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>
+                            {(articles.Socials)?<span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>:(<p className={"lead"}>
+                                ${articles.socials.facebook ? `<a href='${articles.socials.facebook}'><i class='bi bi-facebook'></i></a>` : ''}
+                                ${articles.socials.instagram ? `<a href='${articles.socials.instagram}'><i class='bi bi-instagram'></i></a>` : ''}
+                                ${articles.socials.spotify ? `<a href='${articles.socials.spotify}'><i class='bi bi-spotify'></i></a>` : ''}
+                                ${articles.socials.youtube ? `<a href='${articles.socials.youtube}'><i class='bi bi-youtube'></i></a>` : ''}
+                            </p>)}
                         </p>
 
                         {translations && Object.keys(translations).length > 0 && (
