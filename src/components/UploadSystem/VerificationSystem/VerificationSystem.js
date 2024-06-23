@@ -379,10 +379,10 @@ const FirebaseFileList = () => {
                                                     return false;
                                                 }}
                                             >
-                                                {file.fileContent.title}
+                                                {file.fileContent.title} <br/> {file.name}
                                             </a>
                                         ) : (
-                                            <>{file.fileContent.title}</>
+                                            <>{file.fileContent.title} <br/> {file.name}</>
                                         )}
 
                                         {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
@@ -466,7 +466,7 @@ const FirebaseFileList = () => {
                         {(isEarlyReleased || isAlreadyPublished) ? (
                             <a
                                 className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                style={{ cursor: "pointer" }}
+                                style={{cursor: "pointer"}}
                                 href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -474,10 +474,10 @@ const FirebaseFileList = () => {
                                     return false;
                                 }}
                             >
-                                {file.fileContent.title} - {file.name}
+                                {file.fileContent.title} <sbr/> {file.name}
                             </a>
                         ) : (
-                            <>{file.fileContent.title}</>
+                            <>{file.fileContent.title} <br/> {file.name}</>
                         )}
 
                         {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
