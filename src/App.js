@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
-import React, {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
@@ -36,6 +36,9 @@ import RadioPlayer from "./components/Radio/RadioPlayer";
 
 function App() {
 
+    const [menuVisible, setMenuVisible] = useState(false);
+    const placeholderRef = useRef(null);
+
     const saveDeviceToken = async (token) => {
         try {
             const response = await fetch('/save_token/', {
@@ -56,6 +59,7 @@ function App() {
             console.error('Error saving device token:', error);
         }
     };
+
 
 
     async function requestPermission() {
@@ -83,51 +87,72 @@ function App() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setMenuVisible(!entry.isIntersecting);
+            },
+            { threshold: [0] }
+        );
+
+        if (placeholderRef.current) {
+            observer.observe(placeholderRef.current);
+        }
+
+        return () => {
+            if (placeholderRef.current) {
+                observer.unobserve(placeholderRef.current);
+            }
+        };
+    }, []);
+
 
     return (
         <div className="d-flex flex-column h-100">
+            <div ref={placeholderRef} style={{height: '1px'}}></div>
             <div className="flex-grow-1">
-                <NotificationToast />
-                <AppNavigation />
+                <NotificationToast/>
+                <AppNavigation menuVisible={menuVisible}/>
+
                 <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/articles-page' element={<ArticlesList />} />
-                    <Route path='/Art-Gallery-page' element={<Gallery />} />
-                    <Route path='/legends-2-archive' element={<LegendV0L2 />} />
-                    <Route path='/Falooda-interview-archive' element={<Primordial />} />
-                    <Route path='/Holler-interview-archive' element={<HollerInterview />} />
-                    <Route path='/Khavar-interview-archive' element={<KhavarInterview />} />
-                    <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth />} />
-                    <Route path='/legends-5-archive' element={<GeorgeKollias />} />
-                    <Route path='/article/:name' element={<DefaultArticle earlyAccess={false} />} />
-                    <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true} />} />
-                    <Route path='/about-us' element={<Authors />} />
-                    <Route path='/recommended' element={<RecommendationSystem />} />
-                    <Route path='/admin' element={<AdminSystem />} />
-                    <Route path='/gallery/upload' element={<UploadGalleryItem />} />
-                    <Route path='/upload' element={<ArticleUpload />} />
-                    <Route path='/upload/register' element={<Register />} />
-                    <Route path='/upload/profile' element={<UserProfile />} />
-                    <Route path='/upload/admin' element={<FirebaseFileList />} />
-                    <Route path='/upload/login' element={<Login admin={false} />} />
-                    <Route path='/upload/admin/login' element={<Login admin={true} />} />
-                    <Route path='/upload/translation' element={<TranlationSystem />} />
-                    <Route path='/User/login' element={<Login admin={false} />} />
-                    <Route path='/User/register' element={<Register />} />
-                    <Route path='/User/home' element={<UserHome />} />
-                    <Route path='/User/Saved' element={<SavedArtciles />} />
-                    <Route path='/author/:authorCode' element={<ArticlesList />} />
-                    <Route path={"/404"} element={<NotFound/>} />
+                    <Route path='/' element={<Home/>}/>
+                    <Route path='/articles-page' element={<ArticlesList/>}/>
+                    <Route path='/Art-Gallery-page' element={<Gallery/>}/>
+                    <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
+                    <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
+                    <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
+                    <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
+                    <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
+                    <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
+                    <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
+                    <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+                    <Route path='/about-us' element={<Authors/>}/>
+                    <Route path='/recommended' element={<RecommendationSystem/>}/>
+                    <Route path='/admin' element={<AdminSystem/>}/>
+                    <Route path='/gallery/upload' element={<UploadGalleryItem/>}/>
+                    <Route path='/upload' element={<ArticleUpload/>}/>
+                    <Route path='/upload/register' element={<Register/>}/>
+                    <Route path='/upload/profile' element={<UserProfile/>}/>
+                    <Route path='/upload/admin' element={<FirebaseFileList/>}/>
+                    <Route path='/upload/login' element={<Login admin={false}/>}/>
+                    <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
+                    <Route path='/upload/translation' element={<TranlationSystem/>}/>
+                    <Route path='/User/login' element={<Login admin={false}/>}/>
+                    <Route path='/User/register' element={<Register/>}/>
+                    <Route path='/User/home' element={<UserHome/>}/>
+                    <Route path='/User/Saved' element={<SavedArtciles/>}/>
+                    <Route path='/author/:authorCode' element={<ArticlesList/>}/>
+                    <Route path={"/404"} element={<NotFound/>}/>
                 </Routes>
             </div>
             {/**
-            Ραδιόφωνο. Το πας όπου θες
-            **/}
+             Ραδιόφωνο. Το πας όπου θες
+             **/}
             <div className={"sticky-bottom w-75 h-25"}>
                 <RadioPlayer uid={589803} theme={"purple"}/>
                 {/* uid, theme, color, coverPhoto */}
             </div>
-            <Footer/>
+            <Footer footerVisible={menuVisible}/>
         </div>
     );
 }

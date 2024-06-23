@@ -25,7 +25,7 @@ import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {config} from "../../../firebase";
 import WorldFlag from 'react-world-flags';
 
-const LanguageButtons = () => {
+const LanguageButtons = ({className}) => {
 
     const [languages, setLanguages] = useState([]);
     const { i18n } = useTranslation();
@@ -47,7 +47,7 @@ const LanguageButtons = () => {
     },[]);
 
     return (
-        <div className="language-switcher">
+        <div className={`language-switcher ${className}`}>
             {
                 Object.keys(languages).map((lang, index) => {
                     const active = ((i18n.language === lang) ? "bg-primary-subtle " : "")

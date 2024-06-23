@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {auth, database} from "../../firebase";
 import Container from "react-bootstrap/Container";
 import {Link, NavLink, useNavigate} from "react-router-dom";
@@ -9,17 +9,15 @@ import {getIdTokenResult, signOut} from "firebase/auth";
 import {Button} from "react-bootstrap";
 import {onValue, ref} from "firebase/database";
 import './Observer.css';
-import LanguageButtons from "./Language/LanguageButtons";
 
-const AppNavigation = () => {
+const AppNavigation = ({menuVisible}) => {
     const [loggedIn, setLoggedIn] = useState(false);
     const [isAuthor, setIsAuthor] = useState(true);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isTranslator, setIsTranslator] = useState(false);
     const [isLeader, setIsLeader] = useState(false);
-    const [menuVisible, setMenuVisible] = useState(false);
+
     const navigate = useNavigate();
-    const placeholderRef = useRef(null);
 
 
 
@@ -66,28 +64,11 @@ const AppNavigation = () => {
         return () => unsubscribe();
     }, []);
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setMenuVisible(!entry.isIntersecting);
-            },
-            { threshold: [0] }
-        );
 
-        if (placeholderRef.current) {
-            observer.observe(placeholderRef.current);
-        }
 
-        return () => {
-            if (placeholderRef.current) {
-                observer.unobserve(placeholderRef.current);
-            }
-        };
-    }, []);
 
     return (
         <>
-            <div ref={placeholderRef} style={{ height: '1px' }}></div>
             <Navbar expand="lg" className={`sticky-top overflow-hidden ${menuVisible ? 'visible' : 'hidden'}`} variant="dark" style={{ backgroundColor: "rgba(0,0,0,0.85)" }}>
                 <Container fluid>
                     <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
@@ -140,7 +121,6 @@ const AppNavigation = () => {
                                     <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
                                 </>
                             )}
-                            <LanguageButtons/>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
