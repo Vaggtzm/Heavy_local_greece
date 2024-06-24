@@ -78,23 +78,6 @@ const ArticleUpload = () => {
         return () => unsubscribe();
     }, []);
 
-    const formatSocialsAsString = () => {
-        const socialLinks = [];
-        if (socials.facebook) {
-            socialLinks.push(`<a href='${socials.facebook}'><i class='bi bi-facebook'></i></a>`);
-        }
-        if (socials.instagram) {
-            socialLinks.push(`<a href='${socials.instagram}'><i class='bi bi-instagram'></i></a>`);
-        }
-        if (socials.spotify) {
-            socialLinks.push(`<a href='${socials.spotify}'><i class='bi bi-spotify'></i></a>`);
-        }
-        if (socials.youtube) {
-            socialLinks.push(`<a href='${socials.youtube}'><i class='bi bi-youtube'></i></a>`);
-        }
-        return `<p class='lead'>${socialLinks.join(' ')}</p>`;
-    };
-
     function replaceSpecialCharsWithDashes(text) {
         const regex = /[.$#[\]/\u0000-\u001F\u007F-\uFFFF]/g;
         return text.replace(regex, '');
@@ -135,7 +118,7 @@ const ArticleUpload = () => {
                 content: articleContent.replaceAll("<p>", "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'"),
                 title,
                 details,
-                Socials: formatSocialsAsString(),
+                socials: socials,
                 img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
