@@ -6,6 +6,7 @@ import {getMessaging} from 'firebase/messaging';
 import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
 import {getRemoteConfig} from "firebase/remote-config";
+import {getFunctions} from 'firebase/functions';
 
 
 const firebaseConfig = {
@@ -39,3 +40,4 @@ export const messaging = getMessaging(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const database = getDatabase(app);
+export const functions = getFunctions(app);

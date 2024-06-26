@@ -2,13 +2,15 @@
     "parameters": {
         "languages": {
             "defaultValue": {
-                "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
-            }
+                "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\",\"it\":\"Italiano\"}"
+            },
+            "valueType": "JSON"
         },
         "languagesFlags": {
             "defaultValue": {
                 "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
-            }
+            },
+            "valueType": "STRING"
         }
     }
 }

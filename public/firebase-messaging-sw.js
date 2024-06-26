@@ -5,7 +5,7 @@ self.addEventListener('notificationclick', function(event) {
 
     event.notification.close();
 
-    const clickAction = event.notification.data.url;
+    const clickAction = event.data.url;
     console.log('Click action URL:', clickAction);
 
     if (clickAction) {

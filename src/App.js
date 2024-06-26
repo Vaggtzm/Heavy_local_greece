@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {messaging} from './firebase';
+import {database, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -33,6 +33,7 @@ import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
 import RadioPlayer from "./components/Radio/RadioPlayer";
+import {equalTo, get, orderByChild, push, query, ref} from 'firebase/database';
 
 function App() {
 
@@ -41,19 +42,15 @@ function App() {
 
     const saveDeviceToken = async (token) => {
         try {
-            const response = await fetch('/save_token/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({token}),
-            });
+            const dbRef = ref(database, 'deviceTokens');
+            const tokenQuery = query(dbRef, orderByChild('token'), equalTo(token));
+            const snapshot = await get(tokenQuery);
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.message); // Log success message from Firebase Function
+            if (snapshot.exists()) {
+                console.log('Device token already exists.');
             } else {
-                console.error('Failed to save device token');
+                await push(dbRef, { token });
+                console.log('Device token saved successfully.');
             }
         } catch (error) {
             console.error('Error saving device token:', error);
@@ -70,6 +67,16 @@ function App() {
             const token = await getToken(messaging, {
                 vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
             });
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker Registered', registration);
+                    })
+                    .catch(function(err) {
+                        console.error('Service Worker registration failed', err);
+                    });
+            }
 
             //We can send token to server
             console.log("Token generated : ", token);

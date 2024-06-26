@@ -12,6 +12,10 @@
     "articlesList": {
       ".read": true
     },
+    "deviceTokens":{
+      ".write":true,
+      ".indexOn": ["token"]
+    },
     "authors": {
       ".read": true
     },
