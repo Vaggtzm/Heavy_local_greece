@@ -4,7 +4,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../carousel/carousel.css'
 import {getDownloadURL, ref} from "firebase/storage";
-import {storage} from "../../firebase";
+import {storage} from "./../../../firebase";
 
 const PrimaryCarousel = () => {
 

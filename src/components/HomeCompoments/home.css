@@ -3,19 +3,18 @@
 /* Υφασματόστρωμα για την γραμματοσειρά */
 @font-face {
     font-family: Font-1;
-    src: url(./../assets/Font/old-english-five/OldEnglishFive.ttf);
+    src: url(./../../assets/Font/old-english-five/OldEnglishFive.ttf);
 }
 
 /* Στυλ για το header */
 header {
     color: white; /* Χρώμα κειμένου */
     padding: 50px 0; /* Ανάστροφα περιθώρια (50px πάνω, 0 κάτω) */
-    background-image: url(./../assets/MainBackground.jpg);
+    background-image: url(./../../assets/MainBackground.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     transition: transform 0.5s ease-in-out;
-    position: fixed;
     width: 100%;
     height: 100vh;
    }
@@ -24,28 +23,7 @@ header {
     transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* προσθήκη filter transition */ 
     filter: blur(0); /* αρχική τιμή για το blur */
 }
-  
-  header.scrolled {
-    transform: translateX(100%);
-    filter: blur(5px); /* τιμή blur κατά την κίνηση */
-  }
-  
-  .feed {
-    margin-top: 200px; /* Adjust according to the height of the header */
-    opacity: 0;
-    transition: opacity 0.5s ease;  }
-  
-  .feed.scrolled {
-    opacity: 1;
-  }
-  .ExploreMore{
-    background-image: url(./../assets/MainBackground.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-
-}
-/* Στυλ για τα κεντρικά στοιχεία του header */
+  /* Στυλ για τα κεντρικά στοιχεία του header */
 
 /* Στυλ για τον τίτλο */
 .font-1 {
@@ -96,5 +74,7 @@ header {
         flex-direction: column;
     }
 
-
+  .quick-access{
+    display: none;
+  }
 }

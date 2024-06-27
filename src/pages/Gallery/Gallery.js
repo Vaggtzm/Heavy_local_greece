@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useTranslation} from 'react-i18next';
-import Socials from "../../components/SocialMedia/socials";
+import { get, onValue, ref } from "firebase/database";
+import React, { useEffect, useState } from "react";
+import { useTranslation } from 'react-i18next';
+import Socials from "../../components/HomeCompoments/SocialMedia/socials";
+import { database, storage } from "../../firebase";
 import './gallery.css';
-import {database, storage} from "../../firebase";
-import {get, onValue, ref} from "firebase/database";
 
-import {getDownloadURL, ref as storageRef} from "firebase/storage";
-import {NavLink} from "react-router-dom";
+import { getDownloadURL, ref as storageRef } from "firebase/storage";
+import { NavLink } from "react-router-dom";
 
 const ArtGallery = () => {
     const { t } = useTranslation();

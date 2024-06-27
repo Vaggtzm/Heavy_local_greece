@@ -19,10 +19,10 @@
  * SOFTWARE.
  */
 
+
 .footer.visible {
     opacity: 1;
 }
-
 .footer.hidden {
     opacity: 0;
     height: 0;
@@ -37,3 +37,5 @@
     padding-left: 15px;  /* Add some padding to the remaining columns */
     padding-right: 15px;
 }
+    
+

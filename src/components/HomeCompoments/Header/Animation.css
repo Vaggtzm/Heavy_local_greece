@@ -1,0 +1,13 @@
+header {
+  transition: transform 0.5s ease;
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* προσθήκη filter transition */ 
+  filter: blur(0); /* αρχική τιμή για το blur */
+
+}
+
+
+header.scrolled {
+  transform: translateX(100%);
+  filter: blur(5px); /* τιμή blur κατά την κίνηση */
+}
+

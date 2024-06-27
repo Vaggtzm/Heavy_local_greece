@@ -1,0 +1,44 @@
+/* Για το Header */
+.header-container {
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: blur(0);
+  }
+  
+  .header-container.scrolled {
+    transform: translateX(100%);
+    filter: blur(5px);
+  }
+  
+  /* Για το ExploreMore */
+  .ExploreMore {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .ExploreMore.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .top-news-container {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.3s ease, transform 0.5s ease;
+  }
+  
+  .top-news-container.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .top-news-container .CenterSection {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .top-news-container img {
+    max-width: 100%;
+    height: auto;
+  }
+  
