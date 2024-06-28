@@ -7,7 +7,7 @@ import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
 import {getRemoteConfig} from "firebase/remote-config";
 import {getFunctions} from 'firebase/functions';
-
+import {collection, getFirestore,  addDoc, serverTimestamp} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
@@ -21,6 +21,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+
 initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
 
@@ -33,6 +34,9 @@ config.settings = {
     minimumFetchIntervalMillis: 36000, // 1 minute
     fetchTimeoutMillis: 60000, // 1 minute
 };
+
+
+export const firestore = getFirestore(app);
 
 
 export const analytics = getAnalytics(app);

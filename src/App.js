@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {messaging} from './firebase';
+import {database, firestore, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -32,6 +32,9 @@ import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
+import RadioPlayer from "./components/Radio/RadioPlayer";
+import {equalTo, get, orderByChild, push, query, ref} from 'firebase/database';
+import {addDoc, collection, serverTimestamp} from "firebase/firestore";
 
 function App() {
 
@@ -83,6 +86,20 @@ function App() {
 
     useEffect(() => {
         requestPermission().then(r => {});
+
+        const c = collection(firestore, "pulse-of-the-underground")
+        try {
+            const docRef = addDoc(c, {
+                name: "Sample Name",
+                description: "Sample Description",
+                timestamp: serverTimestamp()
+            }).then(()=>{console.log("Document written with ID: ", docRef.id);})
+
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+
+        console.log("Hello world")
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
