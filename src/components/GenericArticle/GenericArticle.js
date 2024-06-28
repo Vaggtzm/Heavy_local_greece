@@ -265,14 +265,34 @@ const DefaultArticle = (props) => {
                         <p className="lead">
                             <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
                         </p>
-                        <p className="lead">
-                            {(articles.Socials)?<span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>:(<p className={"lead"}>
-                                ${articles.socials.facebook ? `<a href='${articles.socials.facebook}'><i class='bi bi-facebook'></i></a>` : ''}
-                                ${articles.socials.instagram ? `<a href='${articles.socials.instagram}'><i class='bi bi-instagram'></i></a>` : ''}
-                                ${articles.socials.spotify ? `<a href='${articles.socials.spotify}'><i class='bi bi-spotify'></i></a>` : ''}
-                                ${articles.socials.youtube ? `<a href='${articles.socials.youtube}'><i class='bi bi-youtube'></i></a>` : ''}
-                            </p>)}
-                        </p>
+                        <div className="lead">
+                            {articles.socials ? (
+                                <div className="lead">
+                                    {articles.socials.facebook && (
+                                        <a href={articles.socials.facebook}>
+                                            <i className="bi bi-facebook"></i>
+                                        </a>
+                                    )}
+                                    {articles.socials.instagram && (
+                                        <a href={articles.socials.instagram}>
+                                            <i className="bi bi-instagram"></i>
+                                        </a>
+                                    )}
+                                    {articles.socials.spotify && (
+                                        <a href={articles.socials.spotify}>
+                                            <i className="bi bi-spotify"></i>
+                                        </a>
+                                    )}
+                                    {articles.socials.youtube && (
+                                        <a href={articles.socials.youtube}>
+                                            <i className="bi bi-youtube"></i>
+                                        </a>
+                                    )}
+                                </div>
+                            ) : (
+                                <span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>
+                            )}
+                        </div>
 
                         {translations && Object.keys(translations).length > 0 && (
                             <>

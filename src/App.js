@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {database, firestore, messaging} from './firebase';
+import {firestore, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -26,14 +26,11 @@ import UserProfile from "./components/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
 import AdminSystem from "./components/AdminSystem/AdminSystem";
-import Footer from "./components/footer/footer";
 import AppNavigation from "./components/AppNav/AppNav";
 import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
-import RadioPlayer from "./components/Radio/RadioPlayer";
-import {equalTo, get, orderByChild, push, query, ref} from 'firebase/database';
 import {addDoc, collection, serverTimestamp} from "firebase/firestore";
 
 function App() {
