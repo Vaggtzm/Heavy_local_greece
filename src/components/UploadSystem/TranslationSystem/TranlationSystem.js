@@ -244,14 +244,23 @@ const TranslationSystem = () => {
         }));
     };
 
+    const sortFilesByDate = (files) => {
+        return files.sort((a, b) => {
+            const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+            const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+            return dateB - dateA;
+        });
+    };
+
     const handleShowList = (files, isEarlyRelease, isAlreadyPublished) => {
+
+        const sortedFiles = sortByDate ? sortFilesByDate([...files]) : files;
+
+        console.log(sortByDate);
+
         return (
             <ListGroup>
-                {(sortByDate ? files.sort((a, b) => {
-                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                    return dateB - dateA;
-                }) : files).map((file, index) => (
+                {sortedFiles.map((file, index) => (
                     <ListGroup.Item key={index} className="bg-dark text-light">
                         {file.fileContent.isReady && <><i className="text-success fa-solid fa-check"></i><span> </span></>}<p
                         key={file.fileContent.date}
@@ -281,28 +290,30 @@ const TranslationSystem = () => {
     return (
         <div className="container">
             <div className="m-3 p-3 border">
-                <h1 className="h1 m-3 text-center">{t("Translation System")}</h1>
+                <h1 className="m-3 text-center text-white">{t("Translation System")}</h1>
                 <div className="row">
                     <div className="col-lg-4">
-                        <Button className="btn btn-light m-3" onClick={() => setSortByDate(!sortByDate)}>
+                        <Button className="btn btn-light m-3" onClick={() => {
+                            setSortByDate(!sortByDate);
+                        }}>
                             {sortByDate ? t("default") : t("Sort by date")}
                         </Button>
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col-lg-4">
-                        <h3 className="text-center">{t("uploadedFiles")}</h3>
+                    <div className="col-lg-12">
+                        <h3 className="text-center text-white">{t("uploadedFiles")}</h3>
                         {files.length > 0 ? handleShowList(files, false, false) :
                             <Alert>{error ? error : t("No articles in this category")}</Alert>}
                     </div>
-                    <div className="col-lg-4">
-                        <h3 className="text-center">{t("earlyReleases")}</h3>
+                    <div className="col-lg-12">
+                        <h3 className="text-center text-white">{t("earlyReleases")}</h3>
                         {earlyReleasedArticles.length > 0 ? handleShowList(earlyReleasedArticles, true, false) :
                             <Alert>{earlyReleasesError ? earlyReleasesError : t("No articles in this category")}</Alert>}
                     </div>
-                    <div className="col-lg-4">
-                        <h3 className="text-center">{t("alreadyPublished")}</h3>
+                    <div className="col-lg-12">
+                        <h3 className="text-center text-white">{t("alreadyPublished")}</h3>
                         {alreadyPublishedArticles.length > 0 ? handleShowList(alreadyPublishedArticles, false, true) :
                             <Alert>{alreadyPublishedError ? alreadyPublishedError : t("No articles in this category")}</Alert>}
                     </div>
