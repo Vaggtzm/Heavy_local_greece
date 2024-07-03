@@ -8,12 +8,14 @@ function NotificationToast() {
 
     }, []);
 
+    if(messaging) {
+        onMessage(messaging, (payload) => {
+            console.log("New message", payload.notification.body);
+            toast(payload.notification.title + "\n\n\n\n" + payload.notification.body);
+            console.log(payload);
+        });
+    }
 
-    onMessage(messaging, (payload) => {
-        console.log("New message", payload.notification.body);
-        toast(payload.notification.title + "\n\n\n\n" + payload.notification.body);
-        console.log(payload);
-    });
     return (
         <div>
             <Toaster/>

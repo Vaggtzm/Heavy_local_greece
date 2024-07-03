@@ -40,7 +40,19 @@ export const firestore = getFirestore(app);
 
 
 export const analytics = getAnalytics(app);
-export const messaging = getMessaging(app);
+
+const isServiceWorkerSupported = () => 'serviceWorker' in navigator;
+const isNotificationSupported = () => 'Notification' in window;
+
+let firebaseMessaging;
+try {
+    firebaseMessaging = isServiceWorkerSupported() && isNotificationSupported() ? getMessaging(app) : undefined;
+} catch (e) {
+    firebaseMessaging = undefined;
+}
+
+export const messaging = firebaseMessaging;
+
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 export const database = getDatabase(app);

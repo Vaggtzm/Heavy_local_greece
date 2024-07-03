@@ -62,22 +62,23 @@ function App() {
 
 
     async function requestPermission() {
-        //requesting permission using Notification API
-        const permission = await Notification.requestPermission();
+        try {
+            //requesting permission using Notification API
+            const permission = await Notification.requestPermission();
 
-        if (permission === "granted") {
-            const token = await getToken(messaging, {
-                vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
-            });
+            if (permission === "granted") {
+                const token = await getToken(messaging, {
+                    vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
+                });
 
-            //We can send token to server
-            console.log("Token generated : ", token);
+                //We can send token to server
+                console.log("Token generated : ", token);
 
-            await saveDeviceToken(token);
+                await saveDeviceToken(token);
 
-        } else if (permission === "denied") {
-            //notifications are blocked
-            alert("You denied for the notification");
+            }
+        }catch (e){
+            console.error("Error requesting permission: ", e);
         }
     }
 
