@@ -210,9 +210,13 @@ const DefaultArticle = (props) => {
                         <hr className="bg-dark"/>
                     </div>
 
-                    <div className={"col-12 row"}>
-                        <AuthorOfArticle authorCode={articles.sub}/>
-                        <AuthorOfArticle authorCode={articles.translatedBy}/>
+                    <div className="row">
+                        <div className="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
+                            <AuthorOfArticle authorCode={articles.sub}/>
+                        </div>
+                        <div className="col-12 col-md-6 d-flex align-items-center">
+                            <AuthorOfArticle authorCode={articles.translatedBy}/>
+                        </div>
                     </div>
 
                     <hr className={"mt-2 bg-dark"}/>
