@@ -31,37 +31,43 @@ const TopNews = () => {
           <div className="col-md-6">
               <h2>{t("Top News")}</h2>
               <hr className="bg-white"/>
-              <h3>Μια βραδιά σκέτου τρόμου - Sarathiel - Night of Horror (album review + project info)</h3>
+              <h3>Αποκαλύπτοντας την ιστορία πίσω από την Οργή της Μέδουσας - Συνέντευξη με τους Medusa's Wrath</h3>
               <img
-                src="https://pulse-of-the-underground.com/assets/sddefault.jpg"
+                src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FMedusas.jpg?alt=media&token=665df9dc-3b5f-4c9b-805f-a08849e08c6d"
+                className="img-fluid w-75 rounded-2 m-2"
+                alt="Top News Image"
+              />
+                
+             <p className="lead">
+             Σήμερα μαζί μας έχουμε μια μπάντα Ελληνική μπάντα η οποία παίζει έναν διαχρονικό, νοσταλγικό αλλά και παράλληλα απαράμιλλης δυναμικότητας ήχο! Χαίρετε, Medusa’s Wrath, είναι μεγάλη μας τιμή να σας έχουμε μαζί μας, έστω και γραπτώς, σήμερα στο περιοδικό! Ας μπούμε στο προκείμενο λοιπόν και να σας μάθουμε καλύτερα και εμείς αλλά και οι αναγνώστες μας! 
+
+
+Είστε μια Heavy Metal μπάντα με την όλη έννοια αυτού του κλασικού ατσαλένιου ήχου που είναι διαχρονικά αγαπημένος για εκατομμύρια αυτιά! Πώς ξεκινήσατε το μουσικό σας ταξίδι στον χώρο αυτό και πώς σχηματιστήκατε σαν μπάντα;
+              </p>
+            
+               <NavLink
+                to="/article/--------------Medusa's-Wrath"
+                className="btn btn-danger"
+              >
+                {t("readMore")}
+              </NavLink>
+              <h3>Reversed Chakra – Review “Game of Chess”!</h3>
+              <img
+                src="https://pulse-of-the-underground.com/assets/PROMO BANNER.jpg"
                 className="img-fluid w-75 rounded-2 m-2"
                 alt="Top News Image"
               />
               <p className="lead">
-              Αναμνήσεις από τους Ιταλούς Superhorror μου έρχονται όποτε ακούω αυτό το project του καλού μου φίλου Γιώργου Αρνιώτη που ακούει στο όνομα Sarathiel! Το Night of Horror το πρώτο άλμπουμ αυτού του one man project απέκτησε σάρκα και οστά 5 μέρες πριν και δεν γινόταν να μείνει στην απ’έξω! Πάμε να δούμε ποιος είναι ο Γιώργος Αρνιώτης και οι Sarathiel!              
-              </p>
+              The single showcases Reversed Chakra’s talent for crafting a rich sonic landscape, blending introspective indie rock with the moody allure of new wave and the expansive soundscapes of post-rock. This ambitious fusion creates a song that feels both familiar and refreshingly unique.              </p>
               <NavLink
-                to="/article/------Sarathiel---Night-of-Horror-(album-review-+-project-info)"
+                to="/article/Reversed-Chakra--Review-Game-of-Chess"
                 className="btn btn-danger"
               >
                 {t("readMore")}
               </NavLink>
               <hr className="bg-white"/>
-              <h3>Σκοτεινή Άνθιση- Ætheria Conscientia - The Blossoming (Album Review + Band Info)</h3>
-              <img
-                src="https://pulse-of-the-underground.com/assets/a0850474684_10.jpg"
-                className="img-fluid w-75 rounded-2 m-2"
-                alt="Top News Image"
-              />
-             <p className="lead">
-             Οι Ætheria Conscientia είναι μια μπάντα που αγάπησα από το πρώτο λεπτό ακροάσεως! Είναι ένα ενδιαφέρον σχήμα που θα ήθελα να μοιραστώ με όλους τους αναγνώστες με αφορμή την κυκλοφορία του νέου άλμπουμ τους με τίτλο The Blossoming! Πάμε να δούμε πρώτα ποιοι είναι! 
-              </p>
-              <NavLink
-                to="/article/---theria-Conscientia---The-Blossoming-(Album-Review-+-Band-Info)"
-                className="btn btn-danger"
-              >
-                {t("readMore")}
-              </NavLink>
+           
+             
               <hr className="bg-white" />
               <h3>Tunisian Metal Warriors — Znous</h3>
               <img
@@ -107,37 +113,36 @@ Welcome, Znous!
             ENG:
            </p>
            <h2>
-           Moonseeds: A Cosmic Journey Through Elemental Soundscapes
-           </h2>
+           Frédéric D. Oberland "FOUDRE" Band Review
+                                 </h2>
            <p className="lead">
-           The album opens with the track “EARTH”, a slow-burning psych odyssey that immediately transports the listener to vast, arid landscapes. Waterreus’ guitar work is mesmerizing, with languid, spacey riffs that shimmer like heat mirages across a sonic desert. The guitar tones are rich and textured, evoking the rugged beauty of our planet’s most desolate regions.
+           This exploration of improvised music delves into the realms of haunting rituals within the Martian territories of noise, drone, and ambient soundscapes. The desire to probe the invisible forces that reside within us is beautifully captured through a ceremonial approach intertwining occult sciences, forgotten landscapes, and the feverish depths of the unconscious mind.
            </p>
            <NavLink
-                to="/article/Moonseeds-A-Cosmic-Journey-Through-Elemental-Soundscapes"
+                to="https://pulse-of-the-underground.com/article/Frdric-D-Oberland-%22FOUDRE%22-Band-Review"
                 className="btn btn-danger"
               >
                 {t("readMore")}
               </NavLink>
               <hr className="bg-white m-3"/>
 
-              <h3>SINGLE REVIEW: “La Forca” by Eva Can’t — Vocal Majesty and Instrumental Intricacy</h3>
+              <h3>SINGLE REVIEW: Akhlys’ “Maze of Phobetor” — A Descent into Pure Black Metal Terror</h3>
               <p className="lead">
-              From the moment “La Forca” begins, Eva Can’t plunges you into a tumultuous journey where haunting melodies and powerful vocals dominate the musical panorama. The single’s gripping intensity and lush instrumental arrangement create an atmosphere that leaves you breathless, perfectly previewing the depth and artistry of their upcoming album, “Emisferi”.
+              Akhlys’ latest offering, “Maze of Phobetor”, sets a relentless pace into the heart of darkness. This tune, a veritable vortex of terror, showcases the band’s unwavering ability to conjure the most visceral of nightmares. Each riff, each chord, is a calculated descent into the abyss, leaving listeners teetering on the edge of sanity.
               </p>
               <NavLink
-                to="/article/SINGLE-REVIEW:-La-Forca-by-Eva-Cant--Vocal-Majesty-and-Instrumental-Intricacy"
+                to="/article/SINGLE-REVIEW-Akhlys-Maze-of-Phobetor--A-Descent-into-Pure-Black-Metal-Terror"
                 className="btn btn-danger"
               >
                 {t("readMore")}
               </NavLink>
               <hr className="bg-white m-3"/>
 
-              <h3>ALBUM REVIEW: Déhà’s “Agenesis” Delivers a Raw and Profound Experience</h3>
+              <h3>NEW ALBUM: Pantheøn Band Reveals “Upswing” — A Tribute to Rock Gods Past and Present</h3>
               <p className="lead">
-              “It was needed, so it was done”, or so the story goes for Déhà’s latest album “Agenesis”, a raw and compelling immersion into the depths of depressive suicidal black metal (DSBM). The album was meticulously crafted over two intense days of recording, showcasing Déhà’s emotional depth by blending improvised drums with hauntingly improvised guitars and bass. This release exemplifies Déhà’s exceptional ability to channel profound despair and introspection into a powerful musical creation.
-              </p>
+              ROME, June 22, 2024/ PRNewswire/ — The members of Pantheøn Band, stalwarts of Rome’s hard rock scene, have unveiled “Upswing”, their much-anticipated second album set for release on September 27th via Club Inferno Entertainment              </p>
               <NavLink
-                to="/article/ALBUM-REVIEW:-Dhs-Agenesis-Delivers-a-Raw-and-Profound-Experience"
+                to="/article/NEW-ALBUM:-Panthen-Band-Reveals-Upswing:-A-Tribute-to-Rock-Gods-Past-and-Present"
                 className="btn btn-danger"
               >
                 {t("readMore")}
@@ -147,11 +152,27 @@ Welcome, Znous!
               <p className="lead">
               GR:
            </p>
+
+
+           <h3>Ένα Σκοτεινό Πεπρωμένο - Get A Grip - Destiny (Album Review + band info)</h3>
+<p className="lead">
+Επιστροφή μετά από ένα πενθήμερο ξεκούρασης με ένα άλμπουμ έκπληξη! Σήμερα θα πιάσω μια δυναμική μπάντα με ένα ακόμη πιο δυναμικό άλμπουμ εν ονόματι Destiny των Αμερικανών Get A Grip! Πάμε να δούμε ποιοι είναι!
+
+
+Οι Get A Grip είναι μια hardcore punk μπάντα από το Τούσον της Πολιτείας Αριζόνα των ΗΠΑ η οποία αποτελείται από τους Gabriel, Alex , Ryan, Jacob και Cisco! Σχηματίστηκε το 2015 και έχει βγάλει μέχρι σήμερα 5 EPs 4 singles και το πρώτο τους άλμπουμ με τίτλο Destiny το οποίο θα μας απασχολήσει σήμερα! Πάμε να δούμε την δισκογραφία και το άλμπουμ!</p>
+             <NavLink
+                to="/article/-----Get-A-Grip---Destiny-(Album-Review-+-band-info)"
+                className="btn btn-danger"
+              >
+                {t("readMore")}
+              </NavLink>
+
+
 <h3>Απελπισία και Απομόνωση - Wroht - Beyond Salvation (single review + band info)</h3>
 <p className="lead">
 Συνεχίζουμε την περιήγησή μας στην Αμερική! Περνώντας από την Ανατολική Ακτή και τους Asasara της Μασαχουσέτης των ΗΠΑ προς την αντίθετη κατεύθυνση, την Δυτική, συναντούμε στο Όκλαντ της Καλιφόρνια μια μπάντα που δείχνει πως ανακατεύονται σωστά το death με το groove! Οι Wroht με το Beyond Salvation έρχονται να τα γκρεμίσουν όλα στο διάβα τους! Πάμε να δούμε ποιοι είναι πρώτα!
 </p>
-    <NavLink
+             <NavLink
                 to="/article/-----Wroht---Beyond-Salvation-(single-review-+-band-info)"
                 className="btn btn-danger"
               >

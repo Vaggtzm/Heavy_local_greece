@@ -17,14 +17,7 @@ const AppNavigation = ({menuVisible}) => {
     const [isTranslator, setIsTranslator] = useState(false);
     const [isLeader, setIsLeader] = useState(false);
 
-    const navigate = useNavigate();
-
-
-
-
-
-
-
+    const navigate = useNavigate()
 
     useEffect(() => {
 
