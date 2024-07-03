@@ -307,7 +307,7 @@ const DefaultArticle = (props) => {
                         </a>
                     </div>
                     <div className="col-md-6">
-                        <div dangerouslySetInnerHTML={{__html: articles.content}}></div>
+                        <div style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }} dangerouslySetInnerHTML={{__html: articles.content}}></div>
                         <SocialBar/>
                         <PageWithComments/>
                     </div>
