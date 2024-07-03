@@ -31,20 +31,27 @@ const ArticlesList = () => {
                     articlesRef = ref(database, `authors/${authorCode}`);
                 }
 
-                onValue(articlesRef, async (snapshot) => {
+                onValue(articlesRef, (snapshot) => {
                     let data = snapshot.val();
                     if (!authorCode) {
-                        const articlesWithImages = await fetchArticlesWithImages(data);
-                        setArticles(articlesWithImages);
+                        fetchArticlesWithImages(data).then((articlesWithImages)=>{
+                            setArticles(articlesWithImages);
+                            setLoading(false);
+                        })
                     } else {
-                        fetchImagesFromGallery().then();
-                        const articlesWithImages = await fetchArticlesWithImages(data.writtenArticles);
-                        setArticles(articlesWithImages);
+                        fetchImagesFromGallery();
+
+                        fetchArticlesWithImages(data.writtenArticles).then((articlesWithImages)=>{
+                            setArticles(articlesWithImages);
+                            setLoading(false);
+                        })
                         let userImage = storageRef(storage, `/profile_images/${authorCode}_600x600`);
-                        data.photoURL = await getDownloadURL(userImage);
-                        setAuthor(data);
+                        getDownloadURL(userImage).then((userImage)=>{
+                            data.photoURL = userImage;
+                            setAuthor(data);
+                        })
                     }
-                    setLoading(false);
+
                 });
 
             } catch (error) {
@@ -54,7 +61,7 @@ const ArticlesList = () => {
         };
 
         auth.onAuthStateChanged((user) => {
-            fetchData();
+            fetchData().then();
             if (!user) {
                 setLoggedIn(false);
                 setActiveKey("Collabs and Sponsorships");
@@ -63,8 +70,6 @@ const ArticlesList = () => {
                 setActiveKey("early_releases");
             }
         });
-
-        window.addEventListener('resize', updateBorderSize);
 
     }, [authorCode]);
 
@@ -89,47 +94,63 @@ const ArticlesList = () => {
         setBorderSize(getBorderSize());
     };
 
-    useEffect(updateBorderSize, [imgRef.current, author]);
+    window.addEventListener('resize', updateBorderSize);
 
     const fetchArticlesWithImages = async (data) => {
+        console.log("Starting fetch");
         const updatedData = {};
 
-        for (const category in data) {
+        const categories = Object.keys(data);
+        const fetchCategoryData = categories.map(async (category) => {
+            console.log("category", category);
             const categoryData = data[category];
-            updatedData[category] = {};
+            const subCategories = Object.keys(categoryData);
 
-            for (const subCategory in categoryData) {
-                updatedData[category][subCategory] = await Promise.all(
-                    ((!authorCode) ? categoryData[subCategory] : Object.keys(categoryData[subCategory])).map(async (articleKey) => {
-                        try {
-                            const articleUrl = await getDownloadURL(
-                                storageRef(storage, `${category}/${articleKey}.json`)
-                            );
+            const fetchSubCategoryData = subCategories.map(async (subCategory) => {
+                const articles = !authorCode
+                    ? categoryData[subCategory]
+                    : Object.keys(categoryData[subCategory]);
 
-                            const response = await fetch(articleUrl);
-                            if (!response.ok) {
-                                throw new Error(`Failed to fetch article ${articleKey}`);
-                            }
+                const fetchArticles = articles.map(async (articleKey) => {
+                    try {
+                        const articleUrl = await getDownloadURL(
+                            storageRef(storage, `${category}/${articleKey}.json`)
+                        );
 
-                            const article = await response.json();
-                            article.link = articleKey;
-                            return article;
-                        } catch (error) {
-                            console.error("Error fetching article:", error);
-                            return null;
+                        const response = await fetch(articleUrl);
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch article ${articleKey}`);
                         }
-                    })
-                );
-            }
-        }
+
+                        const article = await response.json();
+                        article.link = articleKey;
+                        return article;
+                    } catch (error) {
+                        console.error("Error fetching article:", error);
+                        return null;
+                    }
+                });
+
+                const articlesWithImages = await Promise.all(fetchArticles);
+                return { subCategory, articlesWithImages };
+            });
+
+            const subCategoryData = await Promise.all(fetchSubCategoryData);
+            updatedData[category] = subCategoryData.reduce((acc, { subCategory, articlesWithImages }) => {
+                acc[subCategory] = articlesWithImages;
+                return acc;
+            }, {});
+        });
+
+        await Promise.all(fetchCategoryData);
 
         return updatedData;
     };
 
-    const fetchImagesFromGallery = async ()=>{
+    const fetchImagesFromGallery = ()=>{
         const galleryRef = ref(database, '/gallery/uploaded');
 
-        return onValue(galleryRef, (snapshot) => {
+        onValue(galleryRef, (snapshot) => {
             let data = snapshot.val();
             if (data) {
                 console.log(data);
