@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {onValue, ref} from 'firebase/database';
+import {get, ref} from 'firebase/database';
 import {getDownloadURL, ref as storageRef} from 'firebase/storage';
 import {auth, database, storage} from "../../firebase";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,7 +31,7 @@ const ArticlesList = () => {
                     articlesRef = ref(database, `authors/${authorCode}`);
                 }
 
-                onValue(articlesRef, (snapshot) => {
+                get(articlesRef).then((snapshot) => {
                     let data = snapshot.val();
                     if (!authorCode) {
                         fetchArticlesWithImages(data).then((articlesWithImages)=>{
@@ -150,7 +150,7 @@ const ArticlesList = () => {
     const fetchImagesFromGallery = ()=>{
         const galleryRef = ref(database, '/gallery/uploaded');
 
-        onValue(galleryRef, (snapshot) => {
+        get(galleryRef).then((snapshot) => {
             let data = snapshot.val();
             if (data) {
                 console.log(data);
