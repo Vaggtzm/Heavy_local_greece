@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import {NavLink, useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
 import {getDownloadURL, getMetadata, ref, updateMetadata} from "firebase/storage";
-import {onValue, ref as databaseRef, ref as dbRef, remove, update} from "firebase/database";
+import {onValue, ref as databaseRef, remove, update} from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
 import ReadMore from "../ReadMore/ReadMore";
@@ -19,9 +19,6 @@ const DefaultArticle = (props) => {
     const [translations, setTranslations] = useState({});
     const [availableLanguages, setAvailableLanguages] = useState({});
     const [loading, setLoading] = useState(true);
-
-    const [author, setAuthor] = useState({});
-    const [translator, setTranslator] = useState({});
 
     const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
     const [imageStorageRef, setImageStorageRef] = useState(null);
@@ -49,13 +46,12 @@ const DefaultArticle = (props) => {
             setAvailableLanguages(JSON.parse(serverLanguages));
         };
 
-        fetchRemoteConfig();
-        fetchData();
+        Promise.all([fetchRemoteConfig(), fetchData()]).then(r => {});
 
         const unsubscribeAuth = auth.onAuthStateChanged((user) => {
             if (user) {
                 setEnableSaving(true);
-                fetchSavedStatus();
+                fetchSavedStatus().then(r => {});
             }
         });
 
@@ -75,73 +71,50 @@ const DefaultArticle = (props) => {
                 translations[translation] = data.translations[translation];
             }
         }
-
         return translations;
     };
 
     const fetchData = async () => {
+        setLoading(true);
+
         try {
             const articleRef = isEarlyAccess
                 ? ref(storage, `early_releases/${name}.json`)
                 : ref(storage, `articles/${name}.json`);
+
             const articleSnapshot = await getDownloadURL(articleRef);
 
-            const response = await fetch(articleSnapshot);
-            if (!response.ok) {
-                throw new Error("Failed to fetch data");
-            }
-            const data = await response.json();
-            const translatorRef = dbRef(database, `authors/${data.translatedBy}`);
-
-
-            onValue(translatorRef, async (snapshot) => {
-                if (snapshot.exists()) {
-                    const translatorData = snapshot.val();
-                    let userImage = ref(storage, `/profile_images/${data.translatedBy}_600x600`);
-                    translatorData.photoURL = await getDownloadURL(userImage);
-                    console.log(translatorData);
-
-                    setTranslator(translatorData);
-                } else {
-                    setTranslator(null)
+            const fetchArticle = fetch(articleSnapshot).then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch article data");
                 }
+                return response.json();
             });
 
+            const articleData = await fetchArticle;
 
+            // Start fetching image URL and translations concurrently
+            const fetchImageUrl = getFirebaseStorageUrl(articleData.img01);
+            const fetchTranslations = articleData.translations && Object.keys(articleData.translations).length > 0
+                ? checkTranslations(articleData)
+                : Promise.resolve({});
 
-            const usersRef = dbRef(database, `authors/${data.sub}`);
-            if (usersRef) {
-                onValue(usersRef, async (snapshot) => {
-                    if (snapshot.exists()) {
-                        const usersData = snapshot.val();
-                        let userImage = ref(storage, `/profile_images/${data.sub}_600x600`);
-                        usersData.photoURL = await getDownloadURL(userImage);
-                        console.log(usersData);
+            const [imageUrl, translationsResult] = await Promise.all([fetchImageUrl, fetchTranslations]);
 
-                        setAuthor(usersData);
-                    } else {
-                        setAuthor({
-                            displayName: data.sub
-                        })
-                    }
-                });
-                data.img01 = await getFirebaseStorageUrl(data.img01);
-            }
+            setTranslations(translationsResult);
 
-            if (data.translations && Object.keys(data.translations).length > 0) {
-                const translationsResult = await checkTranslations(data);
-                setTranslations(translationsResult);
-            } else {
-                setTranslations({});
-            }
-            console.log(data);
-            setArticles(data);
+            // Add the fetched image URL to the article data
+            articleData.img01 = imageUrl;
+
+            console.log(articleData);
+            setArticles(articleData);
         } catch (error) {
             console.error("Error fetching data:", error.message);
         } finally {
             setLoading(false);
         }
     };
+
 
     function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
         // Find the position of the last dot, which indicates the start of the extension
@@ -238,13 +211,11 @@ const DefaultArticle = (props) => {
                     </div>
 
                     <div className={"col-12 row"}>
-
-                        <AuthorOfArticle author={author} authorCode={articles.sub}/>
-
-                        <AuthorOfArticle author={translator} authorCode={articles.translatedBy}/>
+                        <AuthorOfArticle authorCode={articles.sub}/>
+                        <AuthorOfArticle authorCode={articles.translatedBy}/>
                     </div>
 
-                    <hr className={(author.wantToShow ? "mt-2 " : "") + "bg-dark"}/>
+                    <hr className={"mt-2 bg-dark"}/>
                     <div className="col-md-6 credits-box">
                         {articles.img01 && <img
                             className="img-fluid w-100"

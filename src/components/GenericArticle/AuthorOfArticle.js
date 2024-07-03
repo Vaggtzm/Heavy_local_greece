@@ -1,9 +1,38 @@
 import {NavLink} from "react-router-dom";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./profile-normal.css"
-//import "./profile-animation.css";
+import {onValue, ref as dbRef} from "firebase/database";
+import {getDownloadURL, ref} from "firebase/storage";
+import {database, storage} from "../../firebase";
 
-const AuthorOfArticle = ({author, authorCode}) => {
+const AuthorOfArticle = ({authorCode}) => {
+
+    const [author, setAuthor] = useState(null);
+
+
+    const getAuthor = async ()=>{
+        const usersRef = dbRef(database, `authors/${authorCode}`);
+        if (usersRef) {
+            onValue(usersRef, async (snapshot) => {
+                if (snapshot.exists()) {
+                    const usersData = snapshot.val();
+                    let userImage = ref(storage, `/profile_images/${authorCode}_600x600`);
+                    usersData.photoURL = await getDownloadURL(userImage);
+                    console.log(usersData);
+
+                    setAuthor(usersData);
+                } else {
+                    setAuthor({
+                        displayName: authorCode
+                    })
+                }
+            });
+        }
+    }
+
+    useEffect(()=>{
+        getAuthor().then();
+    },[authorCode]);
 
     if(!author) return null;
 
