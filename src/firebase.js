@@ -7,7 +7,7 @@ import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 import {getStorage} from 'firebase/storage';
 import {getRemoteConfig} from "firebase/remote-config";
 import {getFunctions} from 'firebase/functions';
-import {collection, getFirestore,  addDoc, serverTimestamp} from 'firebase/firestore';
+import {getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
