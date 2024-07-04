@@ -1,16 +1,23 @@
 import {deleteObject, getDownloadURL, ref, uploadString} from 'firebase/storage';
-import {child, get, onValue, ref as databaseRef, remove, update} from 'firebase/database';
+import {child, get, ref as databaseRef, remove, update} from 'firebase/database';
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
-import {auth, database, storage} from '../../../firebase';
+import {app, auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
-import fetchArticlesCategory from "../articleData/articleData";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 
+import {getFunctions, httpsCallable} from 'firebase/functions';
+
 const FirebaseFileList = () => {
+
+    const functions = getFunctions(app);
+    //connectFunctionsEmulator(functions, 'localhost', 8443);
+    const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
+
+
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
@@ -46,34 +53,46 @@ const FirebaseFileList = () => {
 
     const [showToast, setShowToast] = useState(false);
 
+    const handleResult = (result, setData, setError) => {
+        const { articles } = result.data;
+        console.log("articles",articles);
+        const errors = articles.filter(article => article.error).map(article => article.error);
+        if (errors.length > 0) {
+            setError(errors.join('\n'));
+        } else {
+            setError(null);
+        }
+        setData(articles.filter(article => !article.error));
+    };
 
-    const fetchFiles = async () => {
+
+    async function fetchFiles() {
         try {
-            const uploadedFilesPromise = fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError, 20)
-                .then((publishedFilesData) => {
-                    setFiles(publishedFilesData);
-                });
+            const pending = fetchFilesFunction({ folder: 'upload_from_authors' }).then((uploadedFilesResult)=>{
+                handleResult(uploadedFilesResult, setFiles, setError);
+            })
+            const uploaded = fetchFilesFunction({ folder: 'articles'}).then((publishedFilesResult)=>{
+                handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError);
+            });
+            const early = fetchFilesFunction({ folder: 'early_releases'}).then((earlyReleasedFilesResult)=>{
+                handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError);
+            })
 
-            const publishedFilesPromise = fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 10)
-                .then((publishedFilesData) => {
-                    setAlreadyPublishedArticles(publishedFilesData);
-                });
 
-            const earlyReleasedFilesPromise = fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 100)
-                .then((publishedFilesData) => {
-                    setEarlyReleasedArticles(publishedFilesData);
-                });
+            await Promise.all([
+                pending, uploaded, early
+            ]);
 
-            await Promise.all([uploadedFilesPromise, publishedFilesPromise, earlyReleasedFilesPromise]);
+
         } catch (e) {
             console.log(e);
         }
-    };
+    }
 
     useEffect(() => {
         const roles = databaseRef(database, "/roles");
 
-        onValue(roles, (snapshot) => {
+        get(roles).then((snapshot) => {
             const roles = snapshot.val();
 
             const userList = roles.admin;
@@ -86,7 +105,7 @@ const FirebaseFileList = () => {
                     signOut(auth).then();
                 }
             });
-            fetchFiles();
+            fetchFiles().then();
         });
     }, [navigate]);
 
@@ -158,7 +177,7 @@ const FirebaseFileList = () => {
                 fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
             }
             fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
-            await uploadString(fileRef, JSON.stringify(fileData));
+            uploadString(fileRef, JSON.stringify(fileData)).then();
             const updatedFiles = files.map((file) => (file.name === selectedFile.name ? {
                 ...file,
                 fileContent: fileData
@@ -263,8 +282,9 @@ const FirebaseFileList = () => {
                 fileRef = ref(storage, `upload_from_authors/${file.name}`);
             }
 
-            await deleteObject(fileRef);
-            fetchFiles();
+            deleteObject(fileRef).then(()=>{
+                fetchFiles().then();
+            });
         } catch (error) {
             setError('Error deleting file: ' + error.message);
         }
@@ -301,9 +321,10 @@ const FirebaseFileList = () => {
                 fileContent.date = new Date().toLocaleDateString('en-GB', options);
             }
 
-            await uploadString(destinationFileRef, JSON.stringify(fileContent));
-            alert('File published successfully to the destination folder!');
-            await deleteObject(originalFileRef);
+            uploadString(destinationFileRef, JSON.stringify(fileContent)).then(()=>{
+                alert('File published successfully to the destination folder!');
+                deleteObject(originalFileRef).then();
+            });
 
             if (isEarlyReleasedArticles) {
                 const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
@@ -330,7 +351,7 @@ const FirebaseFileList = () => {
                     snapshot.forEach((user) => {
                         user.val();
                         const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${filename.replace(".json", "")}`);
-                        onValue(savedArticlesRef, (snapshot) => {
+                        get(savedArticlesRef).then((snapshot) => {
                             const savedArticles = snapshot.val();
                             console.log(savedArticles)
                             if (savedArticles) {
@@ -756,8 +777,7 @@ const FirebaseFileList = () => {
                                             console.log(e)
                                             setAuthorName("");
                                         }
-                                        handleChange(e, 'translatedBy', false).then(r => {
-                                        })
+                                        handleChange(e, 'translatedBy', false).then();
                                     }}
                                 />
                             </Form.Group>
