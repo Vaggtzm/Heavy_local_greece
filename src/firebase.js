@@ -31,7 +31,7 @@ initializeAppCheck(app, {
 });
 export const config = getRemoteConfig(app);
 config.settings = {
-    minimumFetchIntervalMillis: 36000, // 1 minute
+    minimumFetchIntervalMillis: 3600000, // 1 hour
     fetchTimeoutMillis: 60000, // 1 minute
 };
 
