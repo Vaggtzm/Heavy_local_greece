@@ -555,45 +555,49 @@ const FirebaseFileList = () => {
     return (
         <>
             <div className="container mt-4">
-                <h2 className={"row d-flex text-white"}>
-                    <p className={"col-4"}>
-                        Admin Publish System
-                    </p>
-
-                    <Form className={"col-8 d-flex justify-content-end"}>
-                        <Form.Check
-                            type="switch"
-                            id="sort-by-date-switch"
-                            label="Sort by Date"
-                            checked={sortByDate}
-                            onChange={() => setSortByDate(!sortByDate)}
-                        />
-                        <Form.Check
-                            type="switch"
-                            id="sort-by-category-switch"
-                            label="Sort by Category"
-                            checked={sortByCategory}
-                            onChange={() => setSortByCategory(!sortByCategory)}
-                        />
-                    </Form>
-                </h2>
+                <div className="row d-flex align-items-center">
+                    <div className="col-4">
+                        <h2 className="text-white">Admin Publish System</h2>
+                    </div>
+                    <div className="col-8 d-flex justify-content-end">
+                        <Form className="d-flex align-items-center">
+                            <Form.Check
+                                type="switch"
+                                id="sort-by-date-switch"
+                                label="Sort by Date"
+                                checked={sortByDate}
+                                onChange={() => setSortByDate(!sortByDate)}
+                                className="me-3"
+                            />
+                            <Form.Check
+                                type="switch"
+                                id="sort-by-category-switch"
+                                label="Sort by Category"
+                                checked={sortByCategory}
+                                onChange={() => setSortByCategory(!sortByCategory)}
+                            />
+                        </Form>
+                    </div>
+                </div>
                 <hr className="bg-dark"/>
-                <h3 className={"text-light"}>
-                    Uploaded Files <span className={"text-info small"}>green check means ready for publishing</span>
-                </h3>
-                {error && <Alert variant="danger">{error}</Alert>}
-
-                {handleShowList(files, false, false)}
-
-                <h3 className={"text-light"}>Early Releases <small className={"small text-info"}>Click on an article to
-                    copy the link</small></h3>
-                {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
-                {handleShowList(earlyReleasedArticles, false, true)}
-                <h3 className={"text-light"}>Already Published <small className={"small text-info"}>Click on an article
-                    to copy the link</small></h3>
-                {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
-                {handleShowList(alreadyPublishedArticles, true, false)}
-
+                <div className="mb-4">
+                    <h3 className="text-light mb-3">Uploaded Files <span className="text-info small">green check means ready for publishing</span>
+                    </h3>
+                    {error && <Alert variant="danger">{error}</Alert>}
+                    {handleShowList(files, false, false)}
+                </div>
+                <div className="mb-4">
+                    <h3 className="text-light mb-3">Early Releases <small className="text-info">Click on an article to
+                        copy the link</small></h3>
+                    {earlyReleasesError && <Alert variant="danger">{earlyReleasesError}</Alert>}
+                    {handleShowList(earlyReleasedArticles, false, true)}
+                </div>
+                <div className="mb-4">
+                    <h3 className="text-light mb-3">Already Published <small className="text-info">Click on an article
+                        to copy the link</small></h3>
+                    {alreadyPublishedError && <Alert variant="danger">{alreadyPublishedError}</Alert>}
+                    {handleShowList(alreadyPublishedArticles, true, false)}
+                </div>
                 <Toast
                     onClose={() => setShowToast(false)}
                     show={showToast}
@@ -611,61 +615,63 @@ const FirebaseFileList = () => {
                     </Toast.Header>
                     <Toast.Body>The article link has been copied to the clipboard.</Toast.Body>
                 </Toast>
-
-                <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => {
-                    setFileData({})
-                    setAuthorName("");
-                    setTranslatorName("");
-                }}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Edit File Data</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group controlId="content">
-                                <Form.Label>Content</Form.Label>
-                                <ReactQuill
-                                    theme="snow"
-                                    key={selectedFile ? selectedFile.name : ''}
-                                    value={fileData.content}
-                                    onChange={handleContentChange}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="title">
-                                <Form.Label>Title</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.title}
-                                    onChange={(e) => handleChange(e, 'title', false)}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="details">
-                                <Form.Label>Details</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.details}
-                                    onChange={(e) => handleChange(e, 'details', false)}
-                                />
-                            </Form.Group>
+            </div>
 
 
-                            <Form.Group controlId="socials">
-                                <Form.Label className={"text-light"}>
-                                    Social Media Links <span className={"small"}>(enter only those available)</span>
-                                </Form.Label>
-                                <Row>
-                                    <Col>
-                                        <Form.Label>Facebook:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Facebook"
-                                            value={socials.facebook}
-                                            onChange={(e) => handleSocialChange('facebook', e)}
-                                        />
-                                    </Col>
-                                    <Col>
-                                        <Form.Label>Instagram:</Form.Label>
-                                        <Form.Control
+            <Modal show={showModal} onHide={() => setShowModal(false)} onExited={() => {
+                setFileData({})
+                setAuthorName("");
+                setTranslatorName("");
+            }}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit File Data</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group controlId="content">
+                            <Form.Label>Content</Form.Label>
+                            <ReactQuill
+                                theme="snow"
+                                key={selectedFile ? selectedFile.name : ''}
+                                value={fileData.content}
+                                onChange={handleContentChange}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="title">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.title}
+                                onChange={(e) => handleChange(e, 'title', false)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="details">
+                            <Form.Label>Details</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.details}
+                                onChange={(e) => handleChange(e, 'details', false)}
+                            />
+                        </Form.Group>
+
+
+                        <Form.Group controlId="socials">
+                            <Form.Label className={"text-light"}>
+                                Social Media Links <span className={"small"}>(enter only those available)</span>
+                            </Form.Label>
+                            <Row>
+                                <Col>
+                                    <Form.Label>Facebook:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Facebook"
+                                        value={socials.facebook}
+                                        onChange={(e) => handleSocialChange('facebook', e)}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Instagram:</Form.Label>
+                                    <Form.Control
                                             type="text"
                                             placeholder="Instagram"
                                             value={socials.instagram}
@@ -855,7 +861,6 @@ const FirebaseFileList = () => {
                         </Row>
                     </Modal.Footer>
                 </Modal>
-            </div>
         </>
     );
 };

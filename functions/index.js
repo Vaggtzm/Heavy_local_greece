@@ -602,7 +602,6 @@ const runtimeOpts = {
 exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
     try {
         const { folder, maxResults, pageToken} = data;
-        const numberOfPages = countTotalPages(folder, maxResults);
         const {articles, nextPageToken} = await fetchArticlesCategory(folder, pageToken, maxResults);
         return { articles , nextPageToken };
     } catch (error) {

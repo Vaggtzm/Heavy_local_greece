@@ -6,28 +6,39 @@ import {connectFunctionsEmulator, httpsCallable} from "firebase/functions";
 // connectFunctionsEmulator(functions, 'localhost', 8443);
 const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
 
+const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
+    try {
+        const result = await fetchFilesFunction({ maxResults: 20, folder: 'articles', pageToken: pageToken });
+        const nextPageToken = handleResult(result, setAlreadyPublishedArticles, setAlreadyPublishedError, pageToken === null);
+        console.log(nextPageToken);
+        if (!nextPageToken||nextPageToken.pageToken===pageToken) {
+            // No more pages to fetch, set loading to false
+            setLoading(false);
+        } else {
+            // Recursively fetch the next page of files
+            await fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, nextPageToken.pageToken);
+        }
+    } catch (error) {
+        console.error('Error fetching files:', error);
+        setLoading(false);
+        throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
+    }
+};
+
 export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading){
     try {
         const pending = fetchFilesFunction({ maxResults:100, folder: 'upload_from_authors', pageToken: null }).then((uploadedFilesResult)=>{
             handleResult(uploadedFilesResult, setFiles, setError, true);
         })
 
-        const uploaded = fetchFilesFunction({ maxResults:20, folder: 'articles', pageToken: null}).then(async (publishedFilesResult)=>{
-            setLoading(true);
-            let nextPageToken = handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError, true);
-            while(nextPageToken){
-                publishedFilesResult = await fetchFilesFunction({ maxResults:20, folder: 'articles', pageToken: nextPageToken});
-                handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError, false);
-            }
-            setLoading(false);
-        });
+        fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, null)
 
 
         const early = fetchFilesFunction({ maxResults:100, folder: 'early_releases', pageToken: null}).then((earlyReleasedFilesResult)=>{
             handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError, true);
         });
         await Promise.all([
-            pending, uploaded, early
+            pending, early
         ]);
     } catch (e) {
         setError(e.message);
