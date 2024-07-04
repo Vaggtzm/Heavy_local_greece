@@ -539,3 +539,45 @@ async function getDeviceTokens() {
     }
 }
 
+const axios = require('axios');
+
+
+const fetchArticlesCategory = async (folder) => {
+
+    try {
+        const [files] = await bucket.getFiles({ prefix: folder });
+        const filePromises = files.map(async (file) => {
+            try {
+                const [metadata] = await file.getMetadata();
+                const downloadUrl = metadata.mediaLink;
+
+                const response = await axios.get(downloadUrl);
+                const fileContent = response.data;
+
+                return { name: file.name, downloadUrl, fileContent };
+            } catch (error) {
+                console.error(`Error fetching file ${file.name}:`, error);
+                return { name: file.name, error: error.message };
+            }
+        });
+
+        const results = await Promise.allSettled(filePromises);
+        return results
+            .filter(result => result.status === 'fulfilled' && result.value !== null)
+            .map(result => result.value);
+    } catch (error) {
+        console.error('Error fetching files:', error);
+        throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
+    }
+};
+
+exports.fetchFiles = functions.https.onCall(async (data, context) => {
+    try {
+        const { folder, concurrency } = data;
+        const articles = await fetchArticlesCategory(folder, concurrency);
+        return { articles };
+    } catch (error) {
+        console.error('Error in fetchFiles:', error);
+        throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
+    }
+});
