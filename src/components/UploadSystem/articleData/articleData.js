@@ -4,9 +4,9 @@ import {functions, storage} from "../../../firebase";
 
 import pLimit from 'p-limit';
 import axios from "axios";
-import {connectFunctionsEmulator, httpsCallable} from "firebase/functions";
+import {httpsCallable} from "firebase/functions";
 
-connectFunctionsEmulator(functions, 'localhost', 8443);
+//connectFunctionsEmulator(functions, 'localhost', 8443);
 const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
 
 export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError){
