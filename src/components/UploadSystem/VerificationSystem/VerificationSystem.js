@@ -5,17 +5,12 @@ import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-boot
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
-import {app, auth, database, storage} from '../../../firebase';
+import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-
-import {getFunctions, httpsCallable} from 'firebase/functions';
+import {fetchFiles} from "../articleData/articleData";
 
 const FirebaseFileList = () => {
-
-    const functions = getFunctions(app);
-    //connectFunctionsEmulator(functions, 'localhost', 8443);
-    const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
 
 
     const [files, setFiles] = useState([]);
@@ -53,41 +48,6 @@ const FirebaseFileList = () => {
 
     const [showToast, setShowToast] = useState(false);
 
-    const handleResult = (result, setData, setError) => {
-        const { articles } = result.data;
-        console.log("articles",articles);
-        const errors = articles.filter(article => article.error).map(article => article.error);
-        if (errors.length > 0) {
-            setError(errors.join('\n'));
-        } else {
-            setError(null);
-        }
-        setData(articles.filter(article => !article.error));
-    };
-
-
-    async function fetchFiles() {
-        try {
-            const pending = fetchFilesFunction({ folder: 'upload_from_authors' }).then((uploadedFilesResult)=>{
-                handleResult(uploadedFilesResult, setFiles, setError);
-            })
-            const uploaded = fetchFilesFunction({ folder: 'articles'}).then((publishedFilesResult)=>{
-                handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError);
-            });
-            const early = fetchFilesFunction({ folder: 'early_releases'}).then((earlyReleasedFilesResult)=>{
-                handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError);
-            })
-
-
-            await Promise.all([
-                pending, uploaded, early
-            ]);
-
-
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     useEffect(() => {
         const roles = databaseRef(database, "/roles");
@@ -105,7 +65,7 @@ const FirebaseFileList = () => {
                     signOut(auth).then();
                 }
             });
-            fetchFiles().then();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
         });
     }, [navigate]);
 
@@ -188,7 +148,7 @@ const FirebaseFileList = () => {
             setAuthorName('');
             setSocials({});
 
-            fetchFiles().then(()=>{
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then(()=>{
                 alert("The file was stored successfully");
                 setShowModal(false);
             });
@@ -283,7 +243,7 @@ const FirebaseFileList = () => {
             }
 
             deleteObject(fileRef).then(()=>{
-                fetchFiles().then();
+                fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
             });
         } catch (error) {
             setError('Error deleting file: ' + error.message);
@@ -367,7 +327,7 @@ const FirebaseFileList = () => {
             }
 
 
-            fetchFiles();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
 
         } catch (error) {
             setError('Error publishing file: ' + error.message);

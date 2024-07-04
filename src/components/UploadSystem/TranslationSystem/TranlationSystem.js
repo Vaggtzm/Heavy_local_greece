@@ -7,10 +7,10 @@ import {auth, config, database, storage} from '../../../firebase';
 import {signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {onValue, ref as databaseRef} from "firebase/database";
-import fetchArticlesCategory from "../articleData/articleData";
 import {useTranslation} from "react-i18next";
 
 import {ref as StorageRef, uploadString} from "firebase/storage";
+import {fetchFiles} from "../articleData/articleData";
 
 const TranslationSystem = () => {
     const { t } = useTranslation();
@@ -79,32 +79,13 @@ const TranslationSystem = () => {
                 }
             });
 
-            fetchFiles();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
 
             return () => unsubscribe();
         });
     }, [navigate]);
 
-    const fetchFiles = () => {
-        try {
-            fetchArticlesCategory('upload_from_authors', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData) => {
-                setFiles(publishedFilesData);
-                console.log("Finished upload_from_authors");
-            });
 
-            fetchArticlesCategory('articles', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData2) => {
-                setAlreadyPublishedArticles(publishedFilesData2);
-                console.log("Finished articles");
-            });
-
-            fetchArticlesCategory('early_releases', setEarlyReleasesError, setAlreadyPublishedError, setError, 20).then((publishedFilesData3) => {
-                setEarlyReleasedArticles(publishedFilesData3);
-                console.log("Finished early_releases");
-            });
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const replaceSpecialCharsWithDashes = (text) => {
         const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
@@ -192,7 +173,7 @@ const TranslationSystem = () => {
         setFiles(updatedFiles);
 
         setShowModal(false);
-        fetchFiles();
+        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
 
         setTranslationData({
             content: '',
