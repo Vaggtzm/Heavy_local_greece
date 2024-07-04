@@ -260,7 +260,7 @@ exports.webApi = functions
     .https.onRequest(app);
 
 /*------------------------------------------------------------------------------------------------------------------------------------------------------
-Article Upload Hndling
+Article Upload Handling
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 const categories = {
@@ -539,25 +539,26 @@ async function getDeviceTokens() {
     }
 }
 
-const axios = require('axios');
-
-
-const fetchArticlesCategory = async (folder) => {
+const fetchArticlesCategory = async (folder, concurrency) => {
 
     try {
         const [files] = await bucket.getFiles({ prefix: folder });
         const filePromises = files.map(async (file) => {
             try {
                 const [metadata] = await file.getMetadata();
-                const downloadUrl = metadata.mediaLink;
+                const downloadUrl = await file.getSignedUrl({
+                    action: 'read',
+                    expires: '03-17-2025' // Set an appropriate expiration date
+                });
 
-                const response = await axios.get(downloadUrl);
-                const fileContent = response.data;
+                const response = await file.download();
+                const fileContent = JSON.parse(response.toString('utf8'));
 
-                return { name: file.name, downloadUrl, fileContent };
+
+                return { name: file.name, downloadUrl: downloadUrl[0], fileContent };
             } catch (error) {
                 console.error(`Error fetching file ${file.name}:`, error);
-                return { name: file.name, error: error.message };
+                return { name: file.name, error: error.message, downloadUrl: downloadUrl[0] };
             }
         });
 
