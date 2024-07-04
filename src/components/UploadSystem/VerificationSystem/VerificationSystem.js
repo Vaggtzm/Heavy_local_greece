@@ -43,10 +43,9 @@ const FirebaseFileList = () => {
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
-
     const [leader, setIsLeader] = useState(true);
-
     const [showToast, setShowToast] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
     useEffect(() => {
@@ -65,7 +64,7 @@ const FirebaseFileList = () => {
                     signOut(auth).then();
                 }
             });
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
         });
     }, [navigate]);
 
@@ -148,7 +147,7 @@ const FirebaseFileList = () => {
             setAuthorName('');
             setSocials({});
 
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then(()=>{
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then(()=>{
                 alert("The file was stored successfully");
                 setShowModal(false);
             });
@@ -243,7 +242,7 @@ const FirebaseFileList = () => {
             }
 
             deleteObject(fileRef).then(()=>{
-                fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
+                fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
             });
         } catch (error) {
             setError('Error deleting file: ' + error.message);
@@ -327,7 +326,7 @@ const FirebaseFileList = () => {
             }
 
 
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
 
         } catch (error) {
             setError('Error publishing file: ' + error.message);

@@ -55,6 +55,8 @@ const TranslationSystem = () => {
     const [originalLanguage, setOriginalLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         const roles = databaseRef(database, "/roles");
         onValue(roles, async (snapshot) => {
@@ -79,7 +81,7 @@ const TranslationSystem = () => {
                 }
             });
 
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
+            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
 
             return () => unsubscribe();
         });
@@ -184,7 +186,7 @@ const TranslationSystem = () => {
         setFiles(updatedFiles);
 
         setShowModal(false);
-        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError).then();
+        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
 
         setTranslationData({
             content: '',

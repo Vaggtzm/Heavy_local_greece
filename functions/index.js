@@ -539,48 +539,162 @@ async function getDeviceTokens() {
     }
 }
 
-const fetchArticlesCategory = async (folder, concurrency) => {
+/*------------------------------------------------------------------------------------------------------------------------------------------------------
+Handle admin show articles
+ */
 
+const countTotalPages = async (folder, pageSize) => {
     try {
-        const [files] = await bucket.getFiles({ prefix: folder });
-        const filePromises = files.map(async (file) => {
+        let pageToken = null;
+        let totalFiles = 0;
+
+        do {
+            const [files, nextPageToken] = await bucket.getFiles({
+                prefix: folder,
+                maxResults: pageSize,
+                pageToken: pageToken
+            });
+
+            totalFiles += files.length;
+            pageToken = nextPageToken;
+        } while (pageToken);
+        return Math.ceil(totalFiles / pageSize);
+    } catch (error) {
+        console.error('Error counting total pages:', error);
+        throw new functions.https.HttpsError('unknown', 'Failed to count total pages');
+    }
+};
+
+const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
+    try {
+        const [files, pageToken] = await bucket.getFiles({ prefix: folder, maxResults: maxResults, pageToken:currentPageToken});
+
+        return {articles: await files.reduce(async (accPromise, file) => {
+            const acc = await accPromise;
+
+            const nameList = file.name.split("/");
+            const fileName = nameList[nameList.length - 1];
+            if (!fileName.endsWith(".json")) {
+                return acc;
+            }
+
             try {
-                const [metadata] = await file.getMetadata();
-                const downloadUrl = await file.getSignedUrl({
-                    action: 'read',
-                    expires: '03-17-2025' // Set an appropriate expiration date
-                });
-
-                const response = await file.download();
+                const [response] = await file.download();
                 const fileContent = JSON.parse(response.toString('utf8'));
-
-                const nameList = file.name.split("/")
-
-                return { name: nameList[nameList.length-1], downloadUrl: downloadUrl[0], fileContent };
+                acc.push({name: fileName, fileContent});
             } catch (error) {
                 console.error(`Error fetching file ${file.name}:`, error);
-                const nameList = file.name.split("/")
-                return { name: nameList[nameList.length-1], error: error.message, downloadUrl: downloadUrl[0] };
             }
-        });
 
-        const results = await Promise.allSettled(filePromises);
-        return results
-            .filter(result => result.status === 'fulfilled' && result.value !== null)
-            .map(result => result.value);
+            return acc;
+        }, Promise.resolve([])), nextPageToken: pageToken};
     } catch (error) {
         console.error('Error fetching files:', error);
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
     }
 };
 
-exports.fetchFiles = functions.https.onCall(async (data, context) => {
+const runtimeOpts = {
+    timeoutSeconds: 300,
+    memory: '1GB'
+}
+
+exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
     try {
-        const { folder, concurrency } = data;
-        const articles = await fetchArticlesCategory(folder, concurrency);
-        return { articles };
+        const { folder, maxResults, pageToken} = data;
+        const numberOfPages = countTotalPages(folder, maxResults);
+        const {articles, nextPageToken} = await fetchArticlesCategory(folder, pageToken, maxResults);
+        return { articles , nextPageToken };
     } catch (error) {
         console.error('Error in fetchFiles:', error);
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
+    }
+});
+
+
+
+
+const fetchArticlesWithImages = async (authorCode) => {
+    console.log("Starting fetch");
+
+    try {
+        const articlesRef = database.ref(!authorCode ? 'articlesList' : `authors/${authorCode}`);
+        const snapshot = await articlesRef.once('value');
+        const data = snapshot.val();
+
+        if (!data) {
+            throw new Error("No articles found");
+        }
+
+        const updatedData = {};
+
+        const categories = Object.keys(data);
+        await Promise.all(categories.map(async (category) => {
+            console.log("category", category);
+            const categoryData = data[category];
+            const subCategories = Object.keys(categoryData);
+
+            await Promise.all(subCategories.map(async (subCategory) => {
+                const articles = !authorCode
+                    ? categoryData[subCategory]
+                    : Object.keys(categoryData[subCategory]);
+
+                const fetchArticles = articles.map(async (articleKey) => {
+                    try {
+                        const articleUrl = await bucket.file(`${category}/${articleKey}.json`).download();
+                        const article = JSON.parse(articleUrl.toString())
+
+
+                        article.link = articleKey;
+                        return article;
+                    } catch (error) {
+                        console.error("Error fetching article:", error);
+                        return null;
+                    }
+                });
+
+                const articlesWithImages = await Promise.all(fetchArticles);
+                updatedData[category] = updatedData[category] || {};
+                updatedData[category][subCategory] = articlesWithImages;
+            }));
+        }));
+
+        return updatedData;
+    } catch (error) {
+        console.error("Error fetching articles with images:", error);
+        throw new Error("Failed to fetch articles with images");
+    }
+};
+
+exports.fetchArticlesWithImagesFunction = functions.https.onCall(async (data, context) => {
+    const { authorCode } = data;
+
+    try {
+        const result = await fetchArticlesWithImages(authorCode);
+        return result;
+    } catch (error) {
+        console.error("Error in fetchArticlesWithImagesFunction:", error);
+        throw new functions.https.HttpsError('unknown', 'Failed to fetch articles with images');
+    }
+});
+
+
+
+exports.fetchImagesFromGalleryFunction = functions.https.onCall(async (data, context) => {
+    const { authorCode } = data;
+
+    try {
+        const galleryRef = admin.database().ref('/gallery/uploaded');
+        const snapshot = await galleryRef.once('value');
+        const data = snapshot.val();
+
+        if (!data) {
+            return null;
+        }
+
+        return data.filter(d => d.title === authorCode);
+    } catch (error) {
+        console.error("Error fetching images from gallery:", error);
+        throw new functions.https.HttpsError('unknown', 'Failed to fetch images from gallery');
     }
 });
