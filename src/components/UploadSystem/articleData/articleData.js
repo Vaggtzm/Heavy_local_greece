@@ -11,15 +11,18 @@ export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles
         const pending = fetchFilesFunction({ maxResults:100, folder: 'upload_from_authors', pageToken: null }).then((uploadedFilesResult)=>{
             handleResult(uploadedFilesResult, setFiles, setError, true);
         })
-        const uploaded = fetchFilesFunction({ maxResults:50, folder: 'articles', pageToken: null}).then(async (publishedFilesResult)=>{
+
+        const uploaded = fetchFilesFunction({ maxResults:20, folder: 'articles', pageToken: null}).then(async (publishedFilesResult)=>{
             setLoading(true);
             let nextPageToken = handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError, true);
             while(nextPageToken){
-                publishedFilesResult = await fetchFilesFunction({ maxResults:50, folder: 'articles', pageToken: nextPageToken});
+                publishedFilesResult = await fetchFilesFunction({ maxResults:20, folder: 'articles', pageToken: nextPageToken});
                 handleResult(publishedFilesResult, setAlreadyPublishedArticles, setAlreadyPublishedError, false);
             }
             setLoading(false);
         });
+
+
         const early = fetchFilesFunction({ maxResults:100, folder: 'early_releases', pageToken: null}).then((earlyReleasedFilesResult)=>{
             handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError, true);
         });
