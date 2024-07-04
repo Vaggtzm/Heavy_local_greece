@@ -554,11 +554,13 @@ const fetchArticlesCategory = async (folder, concurrency) => {
                 const response = await file.download();
                 const fileContent = JSON.parse(response.toString('utf8'));
 
+                const nameList = file.name.split("/")
 
-                return { name: file.name, downloadUrl: downloadUrl[0], fileContent };
+                return { name: nameList[nameList.length-1], downloadUrl: downloadUrl[0], fileContent };
             } catch (error) {
                 console.error(`Error fetching file ${file.name}:`, error);
-                return { name: file.name, error: error.message, downloadUrl: downloadUrl[0] };
+                const nameList = file.name.split("/")
+                return { name: nameList[nameList.length-1], error: error.message, downloadUrl: downloadUrl[0] };
             }
         });
 
