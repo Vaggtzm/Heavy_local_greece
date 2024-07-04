@@ -9,7 +9,7 @@ import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {onValue, ref as databaseRef} from "firebase/database";
 import {useTranslation} from "react-i18next";
 
-import {ref as StorageRef, uploadString} from "firebase/storage";
+import {getDownloadURL, getMetadata, ref as StorageRef, uploadString} from "firebase/storage";
 import {fetchFiles} from "../articleData/articleData";
 
 const TranslationSystem = () => {
@@ -85,12 +85,33 @@ const TranslationSystem = () => {
         });
     }, [navigate]);
 
+    const checkIfStorageRefExists = async (fileRef) => {
+
+        try {
+            await getMetadata(fileRef);
+            return true;
+        } catch (error) {
+            if (error.code === 'storage/object-not-found') {
+                return false;
+            } else {
+                throw error;
+            }
+        }
+    };
+
 
 
     const replaceSpecialCharsWithDashes = (text) => {
         const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
         return text.replace(regex, '-');
     };
+
+    const updateotherTranslations = async (relatedFileRef, newFileName)=>{
+        const downloadUrl = await getDownloadURL(relatedFileRef);
+        const fileContent = await fetch(downloadUrl).then((res) => res.json());
+        fileContent.translations[newLanguage] = newFileName;
+        await uploadString(relatedFileRef, JSON.stringify(fileContent));
+    }
 
     const handleSave = async () => {
         let originalFolder, translationFolder;
@@ -109,54 +130,44 @@ const TranslationSystem = () => {
         let newFileName = selectedFile.name;
         let fileRef;
         let translationFileRef;
-
         fileData.translatedBy = user.uid;
-
         if (!fileData.translations) {
             fileData.translations = {};
         }
-
         if (isTranslating) {
             newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, ''))}-${newLanguage}.json`;
-
             fileRef = StorageRef(storage,`${translationFolder}/${newFileName}`);
             translationFileRef = StorageRef(storage,`${originalFolder}/${selectedFile.name}`);
-
             fileData.translations[newLanguage] = newFileName;
             fileData.translations[originalLanguage] = selectedFile.name;
             fileData.lang = originalLanguage;
-
             translationData.translations = fileData.translations;
             translationData.lang = newLanguage;
             translationData.translations[originalLanguage] = selectedFile.name;
-
             await uploadString(fileRef, JSON.stringify(translationData));
-
             const relatedTranslations = { ...fileData.translations, [newLanguage]: newFileName };
-
             await Promise.all(
                 Object.keys(relatedTranslations).map(async (lang) => {
                     const relatedFileName = relatedTranslations[lang];
                     if (relatedFileName === newFileName) return;
-                    const relatedFileRef = StorageRef(storage,`${originalFolder}/${relatedFileName}`);
-
-                    try {
-                        const downloadUrl = await relatedFileRef.getDownloadURL();
-                        const fileContent = await fetch(downloadUrl).then((res) => res.json());
-                        fileContent.translations[newLanguage] = newFileName;
-                        await uploadString(relatedFileRef, JSON.stringify(fileContent));
-                    } catch (e) {
-                        console.error(`Failed to update related file ${relatedFileName}: `, e);
+                    let relatedFileRef = StorageRef(storage,`${originalFolder}/${relatedFileName}`);
+                    if(await checkIfStorageRefExists(relatedFileRef)){
+                        await updateotherTranslations(relatedFileRef, newFileName);
+                    }else{
+                        let relatedFileRef = StorageRef(storage,`upload_from_authors/${relatedFileName}`);
+                        if(await checkIfStorageRefExists(relatedFileRef)) {
+                            await updateotherTranslations(relatedFileRef, newFileName);
+                        }else{
+                            console.log("Not found")
+                        }
                     }
                 })
             );
         } else {
             fileRef = StorageRef(storage,`${originalFolder}/${selectedFile.name}`);
         }
-
         const contentToSave = isTranslating ? translationData : fileData;
         contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
-
         await uploadString(fileRef, JSON.stringify(contentToSave));
 
         if (!isTranslating) {
