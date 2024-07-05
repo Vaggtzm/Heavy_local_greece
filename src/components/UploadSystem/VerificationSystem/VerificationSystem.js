@@ -1,4 +1,4 @@
-import {deleteObject, getDownloadURL, ref, uploadString} from 'firebase/storage';
+import {deleteObject, getDownloadURL, ref as storageRef, uploadString} from 'firebase/storage';
 import {child, get, ref as databaseRef, remove, update} from 'firebase/database';
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
@@ -16,7 +16,6 @@ const FirebaseFileList = () => {
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
-
     const [isEarlyReleasedArticles, setIsEarlyReleasedArticles] = useState(false);
     const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -26,7 +25,7 @@ const FirebaseFileList = () => {
     const [sortByCategory, setSortByCategory] = useState(false);
     const [authorName, setAuthorName] = useState('');
     const [translatorName, setTranslatorName] = useState('');
-    const [socials, setSocials] = useState({})
+    const [socials, setSocials] = useState({});
     const [fileData, setFileData] = useState({
         content: '',
         title: '',
@@ -37,8 +36,7 @@ const FirebaseFileList = () => {
         date: '',
         lang: '',
         translations: {},
-        isReady: false
-
+        isReady: false,
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
@@ -47,15 +45,14 @@ const FirebaseFileList = () => {
     const [showToast, setShowToast] = useState(false);
     const [loading, setLoading] = useState(true);
 
-
     useEffect(() => {
-        const roles = databaseRef(database, "/roles");
+        const rolesRef = databaseRef(database, '/roles');
 
-        get(roles).then((snapshot) => {
+        get(rolesRef).then((snapshot) => {
             const roles = snapshot.val();
+            const userList = roles.admin || [];
+            const leaderList = roles.authorLeader || [];
 
-            const userList = roles.admin;
-            let leaderList = roles.authorLeader;
             auth.onAuthStateChanged((user) => {
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
                     setIsLeader(leaderList.includes(user.email));
@@ -64,111 +61,93 @@ const FirebaseFileList = () => {
                     signOut(auth).then();
                 }
             });
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
         });
+
+        fetchInitialData();
     }, [navigate]);
 
+    const copyLinkToClipboard = (link) => {
+
+    }
+
+
+    const fetchInitialData = async () => {
+        await fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading);
+    };
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
-
         file.data = {
             isEarlyAccess: isEarlyReleased,
-            isPublished: isAlreadyPub
-        }
+            isPublished: isAlreadyPub,
+        };
 
         setSelectedFile(file);
-        setFileData({
-            ...file.fileContent,
-        });
+        setFileData(file.fileContent);
+        setSocials(file.fileContent.socials || {});
 
-        setSocials((file.fileContent.socials)?file.fileContent.socials:{});
-
-        const authorRef = databaseRef(database, `authors/${fileData.sub}`);
-        try {
-            get(authorRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    console.log(snapshot.val())
-                    setAuthorName(snapshot.val().displayName);
-                } else {
-                    setAuthorName("");
-                }
-            });
-        } catch (e) {
-            console.log(e)
-            setAuthorName("");
-
-        }
-
-        const translatorRef = databaseRef(database, `authors/${fileData.translatedBy}`);
-        try {
-            get(translatorRef).then((snapshot) => {
-                if (snapshot.exists()) {
-                    console.log(snapshot.val())
-                    console.log(snapshot.val());
-                    setTranslatorName(snapshot.val().displayName || '');
-                } else {
-                    setTranslatorName("");
-                    console.log()
-                }
-            });
-        } catch (e) {
-            console.log(e)
-            setTranslatorName("");
-        }
-
+        fetchAuthorAndTranslatorNames(file.fileContent.sub, file.fileContent.translatedBy);
         setIsAlreadyPublished(isAlreadyPub);
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
     };
 
+    const fetchAuthorAndTranslatorNames = async (authorId, translatorId) => {
+        const authorRef = databaseRef(database, `authors/${authorId}`);
+        const translatorRef = databaseRef(database, `authors/${translatorId}`);
+
+        try {
+            const [authorSnapshot, translatorSnapshot] = await Promise.all([
+                get(authorRef),
+                get(translatorRef),
+            ]);
+
+            setAuthorName(authorSnapshot.exists() ? authorSnapshot.val().displayName || '' : '');
+            setTranslatorName(translatorSnapshot.exists() ? translatorSnapshot.val().displayName || '' : '');
+        } catch (error) {
+            console.error('Error fetching author and translator names:', error);
+            setAuthorName('');
+            setTranslatorName('');
+        }
+    };
+
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
-        try {
-            let fileRef;
-            if (isAlreadyPublished) {
-                console.log('isAlreadyPublished');
-                fileRef = ref(storage, `articles/${selectedFile.name}`);
-            } else if (isEarlyReleasedArticles) {
-                console.log('Early Releases');
-                fileRef = ref(storage, `early_releases/${selectedFile.name}`);
-            } else {
-                console.log('Uploaded');
-                fileRef = ref(storage, `upload_from_authors/${selectedFile.name}`);
-            }
-            fileData.content = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
-            uploadString(fileRef, JSON.stringify(fileData)).then();
-            const updatedFiles = files.map((file) => (file.name === selectedFile.name ? {
-                ...file,
-                fileContent: fileData
-            } : file));
-            setFiles(updatedFiles);
 
+        try {
+            const filePath = isAlreadyPublished ? 'articles' : (isEarlyReleasedArticles ? 'early_releases' : 'upload_from_authors');
+            const fileRef = storageRef(storage, `${filePath}/${selectedFile.name}`);
+
+            const updatedContent = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
+            await uploadString(fileRef, JSON.stringify({ ...fileData, content: updatedContent }));
+
+            const functionforUpdate = isAlreadyPublished ? setAlreadyPublishedArticles : (isEarlyReleasedArticles ? setEarlyReleasedArticles : setFiles);
+            functionforUpdate((files)=>{
+                return files.map((file) => (file.name === selectedFile.name ? { ...file, fileContent: fileData } : file));
+            });
 
             setAuthorName('');
             setSocials({});
+            setShowModal(false);
 
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then(()=>{
-                alert("The file was stored successfully");
-                setShowModal(false);
-            });
+            alert('Changes saved successfully!');
         } catch (error) {
             setError('Error saving file data: ' + error.message);
         }
     };
 
-    const handleChange = async (e, field, isObject) => {
-        console.log(selectedFile);
-
-        let {value} = e.target;
+    const handleChange = (e, field, isObject) => {
+        let { value } = e.target;
 
         if (field === 'category' || field === 'sub' || field === 'translatedBy') {
             if (field === 'category') {
                 fileData.category = value;
             }
+
             const oldCategory = fileData.category;
             const articleRef = databaseRef(database, `articles/${fileData.category}/${selectedFile.name.replace('.json', '')}`);
             const data = selectedFile.data;
-            update(articleRef, data).then();
+
+            update(articleRef, data);
 
             let folder;
 
@@ -180,20 +159,19 @@ const FirebaseFileList = () => {
                 folder = 'upload_from_authors';
             }
 
-            const author = selectedFile.fileContent.translatedBy ? selectedFile.fileContent.translatedBy : selectedFile.fileContent.sub;
-
+            const author = selectedFile.fileContent.translatedBy || selectedFile.fileContent.sub;
             const authorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
-            remove(authorRef).then();
+            remove(authorRef);
 
             const newAuthorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${fileData.category}/`);
-            update(newAuthorRef, {[selectedFile.name.replace('.json', '')]: true});
-            console.log(`Updated: authors/${author}/writtenArticles/${folder}/${fileData.category}/`);
+            update(newAuthorRef, { [selectedFile.name.replace('.json', '')]: true });
+
             const oldArticleRef = databaseRef(database, `articles/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
-            remove(oldArticleRef).then();
+            remove(oldArticleRef);
         }
+
         if (isObject) {
             value = JSON.parse(value);
-            console.log(value)
         }
         setFileData((prevData) => ({
             ...prevData,
@@ -209,134 +187,69 @@ const FirebaseFileList = () => {
         }));
     };
 
-
     const handleSocialChange = (field, value) => {
-        let { value: fieldValue } = value.target; // Extract the correct value
-
+        let { value: fieldValue } = value.target;
         setSocials((prevData) => ({
             ...prevData,
             [field]: fieldValue,
         }));
 
-        // Updated the socials state before calling handleChange
         const updatedSocials = {
             ...socials,
             [field]: fieldValue,
         };
 
-        handleChange({ target: { value: JSON.stringify(updatedSocials) || "{}" } }, 'socials', true);
+        handleChange({ target: { value: JSON.stringify(updatedSocials) || '{}' } }, 'socials', true);
     };
-
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
         const isConfirmed = window.confirm(`Are you sure you want to delete the file "${file.name}"?`);
         if (!isConfirmed) return;
-        try {
-            let fileRef;
-            if (isAlreadyPub) {
-                fileRef = ref(storage, `articles/${file.name}`);
-            } else if (isEarlyReleased) {
-                fileRef = ref(storage, `early_releases/${file.name}`);
-            } else {
-                fileRef = ref(storage, `upload_from_authors/${file.name}`);
-            }
 
-            deleteObject(fileRef).then(()=>{
-                fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
-            });
+        try {
+            const filePath = isAlreadyPub ? 'articles' : (isEarlyReleased ? 'early_releases' : 'upload_from_authors');
+            const fileRef = storageRef(storage, `${filePath}/${file.name}`);
+
+            await deleteObject(fileRef);
+            await fetchInitialData();
         } catch (error) {
             setError('Error deleting file: ' + error.message);
         }
     };
 
-    const handlePublish = async (to_normal_release, filename, isEarlyReleasedArticles) => {
-
+    const handlePublish = async (toNormalRelease, filename, isEarlyReleased) => {
         try {
-            let originalfolder = "upload_from_authors";
-            let folder = "early_releases";
+            let folder = isEarlyReleased ? 'articles' : 'early_releases';
+            let originalFolder = 'upload_from_authors';
 
-
-            if (to_normal_release) {
-                folder = "articles";
-            }
-            if (isEarlyReleasedArticles) {
-                folder = "articles";
-                originalfolder = "early_releases";
+            if (toNormalRelease && isEarlyReleased) {
+                folder = 'articles';
+                originalFolder = 'early_releases';
             }
 
-            const destinationFileRef = ref(storage, `${folder}/${filename}`);
-            let originalFileRef = ref(storage, `${originalfolder}/${filename}`);
+            const destinationFileRef = storageRef(storage, `${folder}/${filename}`);
+            const originalFileRef = storageRef(storage, `${originalFolder}/${filename}`);
 
             const downloadUrl = await getDownloadURL(originalFileRef);
-            const fileContent = JSON.parse(await fetch(downloadUrl).then(res => res.text()));
+            const fileContent = JSON.parse(await fetch(downloadUrl).then((res) => res.text()));
+
             const options = {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
+                method: 'PUT',
+                body: JSON.stringify(fileContent),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             };
 
-            if (!fileContent.translatedBy) {
-                fileContent.written_date = fileContent.date;
-                fileContent.date = new Date().toLocaleDateString('en-GB', options);
+            const response = await fetch(downloadUrl, options);
+            if (!response.ok) {
+                throw new Error('Failed to fetch article data.');
             }
 
-            uploadString(destinationFileRef, JSON.stringify(fileContent)).then(()=>{
-                alert('File published successfully to the destination folder!');
-                deleteObject(originalFileRef).then();
-            });
-
-            if (isEarlyReleasedArticles) {
-                const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
-                update(articleRef, {isEarlyAccess: false}).then();
-
-
-                let newRef;
-                let oldRef;
-                if (fileContent.translatedBy === undefined) {
-                    newRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${folder}/${fileContent.category}`);
-                    oldRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${originalfolder}/${fileContent.category}`);
-                } else {
-                    newRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${folder}/${fileContent.category}`);
-                    oldRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${originalfolder}/${fileContent.category}`);
-                }
-
-                update(newRef, {[filename.replace(".json", "")]: true}).then();
-                remove(oldRef).then();
-
-
-                const usersRef = databaseRef(database, 'users');
-                const snapshot = await get(child(usersRef, '/'));
-                if (snapshot.exists()) {
-                    snapshot.forEach((user) => {
-                        user.val();
-                        const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${filename.replace(".json", "")}`);
-                        get(savedArticlesRef).then((snapshot) => {
-                            const savedArticles = snapshot.val();
-                            console.log(savedArticles)
-                            if (savedArticles) {
-                                update(savedArticlesRef, {isEarlyAccess: false, isPublished: true});
-                            }
-                        });
-                    });
-                    console.log("Updated")
-                }
-            } else {
-                const articleRef = databaseRef(database, `articles/${fileContent.category}/${filename.replace('.json', '')}`);
-                update(articleRef, {isEarlyAccess: to_normal_release, isPublished: true}).then();
-            }
-
-
-            fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
-
+            setShowToast(true);
         } catch (error) {
             setError('Error publishing file: ' + error.message);
         }
-    };
-
-    const copyLinkToClipboard = (link) => {
-        navigator.clipboard.writeText(link).then(() => {
-            setShowToast(true);
-        });
     };
 
     const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
@@ -672,195 +585,194 @@ const FirebaseFileList = () => {
                                 <Col>
                                     <Form.Label>Instagram:</Form.Label>
                                     <Form.Control
-                                            type="text"
-                                            placeholder="Instagram"
-                                            value={socials.instagram}
-                                            onChange={(e) => handleSocialChange('instagram', e)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row className="mt-3">
-                                    <Col>
-                                        <Form.Label>Spotify:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Spotify"
-                                            value={socials.spotify}
-                                            onChange={(e) => handleSocialChange('spotify', e)}
-                                        />
-                                    </Col>
-                                    <Col>
-                                        <Form.Label>YouTube:</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="YouTube"
-                                            value={socials.youtube}
-                                            onChange={(e) => handleSocialChange('youtube', e)}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row className="mt-3">
-                                    <Col>
-                                        <Form.Label>Old Socials(Do not change, use the new):</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="OldSocials"
-                                            value={fileData.Socials}
-                                            readOnly={true}
-                                        />
-                                    </Col>
-                                </Row>
-                            </Form.Group>
+                                        type="text"
+                                        placeholder="Instagram"
+                                        value={socials.instagram}
+                                        onChange={(e) => handleSocialChange('instagram', e)}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                <Col>
+                                    <Form.Label>Spotify:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Spotify"
+                                        value={socials.spotify}
+                                        onChange={(e) => handleSocialChange('spotify', e)}
+                                    />
+                                </Col>
+                                <Col>
+                                    <Form.Label>YouTube:</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="YouTube"
+                                        value={socials.youtube}
+                                        onChange={(e) => handleSocialChange('youtube', e)}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="mt-3">
+                                <Col>
+                                    <Form.Label>Old Socials(Do not change, use the new):</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="OldSocials"
+                                        value={fileData.Socials}
+                                        readOnly={true}
+                                    />
+                                </Col>
+                            </Row>
+                        </Form.Group>
 
 
+                        <Form.Group controlId="img01">
+                            <Form.Label>Image URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.img01}
+                                onChange={(e) => handleChange(e, 'img01', false)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="translator">
+                            <Form.Label>Translator{translatorName && <>({translatorName})</>}</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.translatedBy}
+                                onChange={(e) => {
+                                    const authorRef = databaseRef(database, `authors/${e.target.value}`);
+                                    try {
+                                        get(authorRef).then((snapshot) => {
+                                            if (snapshot.exists()) {
+                                                console.log(snapshot.val())
+                                                setTranslatorName(snapshot.val().displayName);
+                                            } else {
+                                                setTranslatorName("");
+                                            }
+                                        });
+                                    } catch (e) {
+                                        console.log(e)
+                                        setAuthorName("");
+                                    }
+                                    handleChange(e, 'translatedBy', false).then();
+                                }}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="sub">
+                            <Form.Label>Author code{authorName && <>({authorName})</>}</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.sub}
+                                onChange={(e) => {
+                                    const authorRef = databaseRef(database, `authors/${e.target.value}`);
+                                    try {
+                                        get(authorRef).then((snapshot) => {
+                                            if (snapshot.exists()) {
+                                                console.log(snapshot.val())
+                                                setAuthorName(snapshot.val().displayName);
+                                            } else {
+                                                setAuthorName("");
+                                            }
+                                        });
+                                    } catch (e) {
+                                        console.log(e)
+                                        setAuthorName("");
+                                    }
+                                    handleChange(e, 'sub', false)
+                                }}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="date">
+                            <Form.Label>Date</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.date}
+                                onChange={(e) => handleChange(e, 'date', false)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="lang">
+                            <Form.Label>Language</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={fileData.lang}
+                                onChange={(e) => handleChange(e, 'lang', false)}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="translations">
+                            <Form.Label>Translations</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={JSON.stringify(fileData.translations)}
+                                onChange={(e) => handleChange(e, 'translations', true)}
+                            />
+                        </Form.Group>
 
-                            <Form.Group controlId="img01">
-                                <Form.Label>Image URL</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.img01}
-                                    onChange={(e) => handleChange(e, 'img01', false)}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="translator">
-                                <Form.Label>Translator{translatorName && <>({translatorName})</>}</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.translatedBy}
-                                    onChange={(e) => {
-                                        const authorRef = databaseRef(database, `authors/${e.target.value}`);
-                                        try {
-                                            get(authorRef).then((snapshot) => {
-                                                if (snapshot.exists()) {
-                                                    console.log(snapshot.val())
-                                                    setTranslatorName(snapshot.val().displayName);
-                                                } else {
-                                                    setTranslatorName("");
-                                                }
-                                            });
-                                        } catch (e) {
-                                            console.log(e)
-                                            setAuthorName("");
-                                        }
-                                        handleChange(e, 'translatedBy', false).then();
-                                    }}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="sub">
-                                <Form.Label>Author code{authorName && <>({authorName})</>}</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.sub}
-                                    onChange={(e) => {
-                                        const authorRef = databaseRef(database, `authors/${e.target.value}`);
-                                        try {
-                                            get(authorRef).then((snapshot) => {
-                                                if (snapshot.exists()) {
-                                                    console.log(snapshot.val())
-                                                    setAuthorName(snapshot.val().displayName);
-                                                } else {
-                                                    setAuthorName("");
-                                                }
-                                            });
-                                        } catch (e) {
-                                            console.log(e)
-                                            setAuthorName("");
-                                        }
-                                        handleChange(e, 'sub', false)
-                                    }}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="date">
-                                <Form.Label>Date</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.date}
-                                    onChange={(e) => handleChange(e, 'date', false)}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="lang">
-                                <Form.Label>Language</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={fileData.lang}
-                                    onChange={(e) => handleChange(e, 'lang', false)}
-                                />
-                            </Form.Group>
-                            <Form.Group controlId="translations">
-                                <Form.Label>Translations</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={JSON.stringify(fileData.translations)}
-                                    onChange={(e) => handleChange(e, 'translations', true)}
-                                />
-                            </Form.Group>
+                        <Form.Group controlId="translations">
+                            <Form.Label>Category</Form.Label>
 
-                            <Form.Group controlId="translations">
-                                <Form.Label>Category</Form.Label>
+                            <CategoryDropdown
+                                categories={[
+                                    "Top News",
+                                    "General News",
+                                    "Interviews",
+                                    "Collabs and Sponsorships",
+                                    "Latest Reviews(ENG)",
+                                    "Latest Reviews(GRE)",
+                                    "Legends"
+                                ]}
+                                onSelectCategory={(category) => {
+                                    handleChange({target: {value: category}}, 'category', false)
+                                }}
+                                required={true}
+                                value={fileData.category}
+                            />
+                        </Form.Group>
 
-                                <CategoryDropdown
-                                    categories={[
-                                        "Top News",
-                                        "General News",
-                                        "Interviews",
-                                        "Collabs and Sponsorships",
-                                        "Latest Reviews(ENG)",
-                                        "Latest Reviews(GRE)",
-                                        "Legends"
-                                    ]}
-                                    onSelectCategory={(category) => {
-                                        handleChange({target: {value: category}}, 'category', false)
-                                    }}
-                                    required={true}
-                                    value={fileData.category}
-                                />
-                            </Form.Group>
+                        <Form.Group controlId="isReady" className={"d-flex justify-content-center"}>
 
-                            <Form.Group controlId="isReady" className={"d-flex justify-content-center"}>
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Row className={"d-flex justify-content-center"}>
+                        <Col className={"col-12 d-flex justify-content-center"}>
+                            <Form.Check
+                                type="switch"
+                                id="custom-switch"
+                                label="The article is ready to be published"
+                                checked={fileData.isReady}
+                                className={"bg-warning-subtle rounded-3 justify-content-center"}
+                                onChange={() => {
+                                    console.log(fileData.isReady)
+                                    if (!fileData.isReady) {
+                                        handleChange({target: {value: true}}, 'isReady', false)
+                                    } else {
+                                        handleChange({target: {value: false}}, 'isReady', false)
+                                    }
 
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Row className={"d-flex justify-content-center"}>
-                            <Col className={"col-12 d-flex justify-content-center"}>
-                                <Form.Check
-                                    type="switch"
-                                    id="custom-switch"
-                                    label="The article is ready to be published"
-                                    checked={fileData.isReady}
-                                    className={"bg-warning-subtle rounded-3 justify-content-center"}
-                                    onChange={() => {
-                                        console.log(fileData.isReady)
-                                        if (!fileData.isReady) {
-                                            handleChange({target: {value: true}}, 'isReady', false)
-                                        } else {
-                                            handleChange({target: {value: false}}, 'isReady', false)
-                                        }
+                                }}
+                                style={{
+                                    fontSize: '1.25rem',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                            />
+                        </Col>
+                    </Row>
 
-                                    }}
-                                    style={{
-                                        fontSize: '1.25rem',
-                                        transition: 'background-color 0.3s ease'
-                                    }}
-                                />
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col className={"col-2 d-flex justify-content-center"}>
-                                <Button variant="secondary" className={"m-3"} onClick={() => setShowModal(false)}>
-                                    Close
-                                </Button>
-                            </Col>
-                            <Col className={"col-6 d-flex justify-content-center"}>
-                                <Button variant="primary" className={"m-3"} onClick={handleSave}>
-                                    Save Changes
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Modal.Footer>
-                </Modal>
+                    <Row>
+                        <Col className={"col-2 d-flex justify-content-center"}>
+                            <Button variant="secondary" className={"m-3"} onClick={() => setShowModal(false)}>
+                                Close
+                            </Button>
+                        </Col>
+                        <Col className={"col-6 d-flex justify-content-center"}>
+                            <Button variant="primary" className={"m-3"} onClick={handleSave}>
+                                Save Changes
+                            </Button>
+                        </Col>
+                    </Row>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 };

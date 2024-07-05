@@ -14,7 +14,8 @@
     },
     "deviceTokens":{
       ".read": false,
-      ".write":false
+      ".write":false,
+      ".indexOn": "token"
     },
     "authors": {
       ".read": true
