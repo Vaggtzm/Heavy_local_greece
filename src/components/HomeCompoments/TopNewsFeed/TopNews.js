@@ -113,13 +113,12 @@ Welcome, Znous!
             ENG:
            </p>
            <h2>
-           Frédéric D. Oberland "FOUDRE" Band Review
-                                 </h2>
+           Frédéric D. Oberland “What On Earth (Que Diable) OISEAUX-TEMPÊTE” Album Review
+                                            </h2>
            <p className="lead">
-           This exploration of improvised music delves into the realms of haunting rituals within the Martian territories of noise, drone, and ambient soundscapes. The desire to probe the invisible forces that reside within us is beautifully captured through a ceremonial approach intertwining occult sciences, forgotten landscapes, and the feverish depths of the unconscious mind.
-           </p>
+           For more than a decade, this band has been expanding its musical vision along the Mediterranean. Oiseaux-Tempête is known for its eclectic, cross-cultural approach to improv rock.           </p>
            <NavLink
-                to="https://pulse-of-the-underground.com/article/Frdric-D-Oberland-%22FOUDRE%22-Band-Review"
+                to="/article/Frdric-D-Oberland-What-On-Earth-(Que-Diable)-OISEAUX-TEMPTE-Album-Review"
                 className="btn btn-danger"
               >
                 {t("readMore")}
@@ -152,6 +151,17 @@ Welcome, Znous!
               <p className="lead">
               GR:
            </p>
+
+
+           <h3>Δεν Είμαστε Μηχανές - Vaara - S/T (EP review + band info)</h3>
+<p className="lead">
+Και η μέρα κλείνει με μια Σουηδική μπάντα που έρχεται με ένα σημαντικό σύνθημα “Δεν Είμαστε Μηχανές” το οποίο αποτελεί ορόσημο για ένα γεγονός της Σουηδικής ιστορίας που κλόνισε τα θεμέλια της σύγχρονης πορείας της! Οι Vaara με το EP τους με τίτλο S/T έρχονται να υπενθυμίσουν στον κόσμο πως δεν είμαστε μηχανές! Πάμε να δούμε ποιοι είναι!
+</p>             <NavLink
+                to="/article/-----Vaara---ST-(EP-review-+-band-info)"
+                className="btn btn-danger"
+              >
+                {t("readMore")}
+              </NavLink>
 
 
            <h3>Ένα Σκοτεινό Πεπρωμένο - Get A Grip - Destiny (Album Review + band info)</h3>

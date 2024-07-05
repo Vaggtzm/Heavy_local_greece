@@ -1,15 +1,17 @@
 import React from "react";
-//import { NavLink } from "react-router-dom";
-//import Socials from "../HomeCompoments/SocialMedia/socials";
-//import PrimaryCarousel from "./../PrimaryCarousel/PrimaryCarousel";
-//import SecondaryCarousel from "./../carousel/carousel";
-//import CasterFmPlayer from "./CasterFmPlayer";
-
+import { NavLink } from "react-router-dom";
+import AppNavigation from "../AppNav/AppNav";
+import Header from "../HomeCompoments/Header/Header";
+import EarlyBirds from "./EarlyBirds";
+import TopNews from "../HomeCompoments/TopNewsFeed/TopNews";
 const UserHome = () => {
 
    return (
         <>
-      <h4>Under Construction</h4>
+        <AppNavigation />
+        <Header />
+        <EarlyBirds />
+        <TopNews />
         </>
     );
 };
