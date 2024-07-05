@@ -100,7 +100,7 @@ const AdminSystem = () => {
                                         {users[key].displayName} ({users[key].email})
                                     </Card.Title>
                                     <Card.Text className={"bg-secondary text-light badge"}>
-                                        {userRoles.join(", ")}
+                                        {userRoles.length>0?userRoles.join(", "):"Author"}
                                     </Card.Text>
                                     <div className="d-flex justify-content-around mt-3">
                                         <Button
@@ -130,17 +130,6 @@ const AdminSystem = () => {
                                             }
                                         >
                                             Translator
-                                        </Button>
-                                        <Button
-                                            variant={userRoles.includes("authors") ? "secondary" : "outline-secondary"}
-                                            onClick={() => handleRoleChange("authors", email)}
-                                            disabled={
-                                                userRoles.includes("admin") &&
-                                                currentUser.email !== "pavlos@orfanidis.net.gr" &&
-                                                currentUser.email !== "tzimasvaggelis02@gmail.com"
-                                            }
-                                        >
-                                            Author
                                         </Button>
                                     </div>
                                 </Card.Body>
