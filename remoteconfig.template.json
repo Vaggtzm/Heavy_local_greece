@@ -8,7 +8,7 @@
         },
         "languagesFlags": {
             "defaultValue": {
-                "value": "{\"en\":\"English\", \"el\":\"Ελληνικά\"}"
+                "value": "{\"en\":\"US\", \"el\":\"GR\"}"
             },
             "valueType": "STRING"
         }
