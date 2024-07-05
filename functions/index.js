@@ -697,3 +697,28 @@ exports.fetchImagesFromGalleryFunction = functions.https.onCall(async (data, con
         throw new functions.https.HttpsError('unknown', 'Failed to fetch images from gallery');
     }
 });
+
+
+exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
+    try {
+        const { token } = data;
+
+        if (!token) {
+            throw new functions.https.HttpsError('invalid-argument', 'Token must be provided');
+        }
+
+        // Check if the token already exists in the database
+        const snapshot = await database.ref('deviceTokens').orderByChild('token').equalTo(token).once('value');
+        if (snapshot.exists()) {
+            console.log('Device token already exists.');
+            return { message: 'Device token already exists' };
+        }
+
+        // Save the token under the user's UID in the database
+        await database.ref('deviceTokens').push({ token });
+
+        return { message: 'Device token saved successfully' };
+    } catch (error) {
+        throw new functions.https.HttpsError('internal', 'Error saving device token', error.message);
+    }
+});

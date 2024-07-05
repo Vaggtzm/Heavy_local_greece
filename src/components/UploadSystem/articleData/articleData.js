@@ -1,9 +1,7 @@
 import {functions} from "../../../firebase";
 
 
-import {connectFunctionsEmulator, httpsCallable} from "firebase/functions";
-
-// connectFunctionsEmulator(functions, 'localhost', 8443);
+import {httpsCallable} from "firebase/functions";
 const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
 
 const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {

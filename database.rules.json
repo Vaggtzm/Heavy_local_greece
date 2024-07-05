@@ -13,8 +13,8 @@
       ".read": true
     },
     "deviceTokens":{
-      ".write":true,
-      ".indexOn": ["token"]
+      ".read": false,
+      ".write":false
     },
     "authors": {
       ".read": true

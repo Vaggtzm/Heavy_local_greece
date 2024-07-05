@@ -1,3 +1,6 @@
+emulatorMetadata/*
+BackUp/*
+make author/node_modules/*
 functions/node_modules
 *admin*
 venv

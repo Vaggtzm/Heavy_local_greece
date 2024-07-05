@@ -88,8 +88,8 @@
 
   "notFoundTitle": "404",
   "notFoundSubtitle": "Oops! Page not found.",
-  "notFoundDescription": "The page you are looking for doesn't exist or another error occurred.",
   "goBackHome": "Go Back Home",
+  "fetchExcuse": "Fetch Another Excuse",
 
   "galleryTitle": "Art Gallery",
   "gallerySubtitle": "Metal inspired artworks by YOU",

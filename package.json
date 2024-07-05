@@ -6,7 +6,8 @@
     "node": "18"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^8.2.2"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
@@ -66,11 +67,14 @@
     "web-vitals": "^3.5.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently --kill-others-on-fail \"npm run emulators\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "node modify-index.js"
+    "postbuild": "node modify-index.js",
+    "emulators": "firebase emulators:start --project heavy-local-12bc4 --import=./emulatorMetadata --export-on-exit=./emulatorMetadata",
+    "deploy": "firebase deploy --project heavy-local-12bc4",
+    "initialize-emulators": "unzip ./emulatorMetadata.zip"
   },
   "eslintConfig": {
     "extends": [

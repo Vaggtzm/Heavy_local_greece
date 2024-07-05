@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
 import React, {useEffect, useRef, useState} from "react";
-import {Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {firestore, messaging} from './firebase';
+import {messaging, functions} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -31,34 +31,24 @@ import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
 
 import NotFound from "./pages/NotFound/NotFound";
-import {addDoc, collection, serverTimestamp} from "firebase/firestore";
+
+import {httpsCallable} from "firebase/functions";
 
 function App() {
 
     const [menuVisible, setMenuVisible] = useState(false);
     const placeholderRef = useRef(null);
 
+    const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
+
     const saveDeviceToken = async (token) => {
         try {
-            const response = await fetch('/save_token/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({token}),
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.message); // Log success message from Firebase Function
-            } else {
-                console.error('Failed to save device token');
-            }
+            const result = await saveDeviceTokenFunction({token: token});
+            console.log('Token saved:', result.data);
         } catch (error) {
-            console.error('Error saving device token:', error);
+            console.error('Error saving token:', error);
         }
     };
-
 
 
     async function requestPermission() {
@@ -77,27 +67,14 @@ function App() {
                 await saveDeviceToken(token);
 
             }
-        }catch (e){
+        } catch (e) {
             console.error("Error requesting permission: ", e);
         }
     }
 
     useEffect(() => {
-        requestPermission().then(r => {});
-
-        const c = collection(firestore, "pulse-of-the-underground")
-        try {
-            const docRef = addDoc(c, {
-                name: "Sample Name",
-                description: "Sample Description",
-                timestamp: serverTimestamp()
-            }).then(()=>{console.log("Document written with ID: ", docRef.id);})
-
-        } catch (error) {
-            console.error("Error adding document: ", error);
-        }
-
-        console.log("Hello world")
+        requestPermission().then(r => {
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -106,7 +83,7 @@ function App() {
             ([entry]) => {
                 setMenuVisible(!entry.isIntersecting);
             },
-            { threshold: [0] }
+            {threshold: [0]}
         );
 
         if (placeholderRef.current) {
@@ -156,14 +133,15 @@ function App() {
                     <Route path='/User/home' element={<UserHome/>}/>
                     <Route path='/User/Saved' element={<SavedArtciles/>}/>
                     <Route path='/author/:authorCode' element={<ArticlesList/>}/>
+                    <Route path="*" element={<Navigate to="/404"/>}/>
                     <Route path={"/404"} element={<NotFound/>}/>
                 </Routes>
             </div>
             {/**
              Ραδιόφωνο. Το πας όπου θες
              **/}
-         
-          {/** <Footer footerVisible={menuVisible}/> */} 
+
+            {/** <Footer footerVisible={menuVisible}/> */}
         </div>
     );
 }

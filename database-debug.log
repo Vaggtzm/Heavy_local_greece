@@ -1,2 +1,14 @@
-02:25:11.854 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
-02:25:12.086 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9001
+14:44:18.486 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+14:44:19.026 [main] INFO com.firebase.server.forge.App$ - Listening at 127.0.0.1:9001
+14:44:19.918 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO com.firebase.core.namespace.NamespaceActor - heavy-local-12bc4-default-rtdb successfully activated FBKV (SurveyIdle(0)) wait: 437ms, init: 0ms
+14:44:50.924 [NamespaceSystem-blocking-namespace-operation-dispatcher-10] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active
+15:02:46.168 [NamespaceSystem-blocking-namespace-operation-dispatcher-35] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active
+15:04:19.372 [NamespaceSystem-blocking-namespace-operation-dispatcher-36] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active
+15:04:39.711 [NamespaceSystem-blocking-namespace-operation-dispatcher-41] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active
+15:05:20.749 [NamespaceSystem-blocking-namespace-operation-dispatcher-53] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active
+15:09:09.588 [FirebaseWorkerPool-1-4] WARN com.firebase.core.persistence.backend.dummy.EmulatorMetadataPersistence - Multiple projectIds are not recommended in single project mode. Requested 
+namespace heavy-local-12bc4, but the emulator is configured for heavy-local-12bc4-default-rtdb. To 
+opt-out of single project mode add/set the singleProjectMode: false property in 
+the firebase.json emulators config. 
+15:09:09.619 [NamespaceSystem-akka.actor.default-dispatcher-55] INFO com.firebase.core.namespace.NamespaceActor - heavy-local-12bc4 successfully activated FBKV (SurveyIdle(0)) wait: 11ms, init: 0ms
+15:16:20.507 [NamespaceSystem-blocking-namespace-operation-dispatcher-80] INFO com.firebase.core.namespace.StateManager - Namespace heavy-local-12bc4-default-rtdb status Active to Active

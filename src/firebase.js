@@ -1,13 +1,13 @@
-import {getAuth} from 'firebase/auth';
-import {initializeApp} from 'firebase/app';
-import {getAnalytics} from 'firebase/analytics';
-import {getDatabase} from 'firebase/database';
-import {getMessaging} from 'firebase/messaging';
-import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
-import {getStorage} from 'firebase/storage';
-import {getRemoteConfig} from "firebase/remote-config";
-import {getFunctions} from 'firebase/functions';
-import {getFirestore} from 'firebase/firestore';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getDatabase, connectDatabaseEmulator } from 'firebase/database';
+import { getMessaging } from 'firebase/messaging';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { getStorage, connectStorageEmulator } from 'firebase/storage';
+import { getRemoteConfig } from 'firebase/remote-config';
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
@@ -20,25 +20,25 @@ const firebaseConfig = {
     measurementId: "G-K1TR05V7PB",
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
-    // Optional argument. If true, the SDK automatically refreshes App Check
-    // tokens as needed.
     isTokenAutoRefreshEnabled: true
 });
-export const config = getRemoteConfig(app);
+
+const config = getRemoteConfig(app);
 config.settings = {
     minimumFetchIntervalMillis: 3600000, // 1 hour
     fetchTimeoutMillis: 60000, // 1 minute
 };
 
-
-export const firestore = getFirestore(app);
-
-
-export const analytics = getAnalytics(app);
+const firestore = getFirestore(app);
+const analytics = getAnalytics(app);
+const storage = getStorage(app);
+const auth = getAuth(app);
+const database = getDatabase(app);
+const functions = getFunctions(app);
 
 const isServiceWorkerSupported = () => 'serviceWorker' in navigator;
 const isNotificationSupported = () => 'Notification' in window;
@@ -50,9 +50,26 @@ try {
     firebaseMessaging = undefined;
 }
 
-export const messaging = firebaseMessaging;
+// Connect to emulators if in development mode
+const isDev = process.env.NODE_ENV === 'development';
 
-export const storage = getStorage(app);
-export const auth = getAuth(app);
-export const database = getDatabase(app);
-export const functions = getFunctions(app);
+if (isDev) {
+    console.log("Dev env");
+    connectAuthEmulator(auth, "http://localhost:9099");
+    connectDatabaseEmulator(database, "localhost", 9001);
+    connectFirestoreEmulator(firestore, "localhost", 8081);
+    connectStorageEmulator(storage, "localhost", 9199);
+    connectFunctionsEmulator(functions, "localhost", 8443);
+}
+
+export {
+    app,
+    config,
+    firestore,
+    analytics,
+    storage,
+    auth,
+    database,
+    functions,
+    firebaseMessaging as messaging
+};
