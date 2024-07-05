@@ -63,17 +63,12 @@ const FirebaseFileList = () => {
             });
         });
 
-        fetchInitialData();
+        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
     }, [navigate]);
 
     const copyLinkToClipboard = (link) => {
 
     }
-
-
-    const fetchInitialData = async () => {
-        await fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading);
-    };
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
         file.data = {
@@ -85,7 +80,7 @@ const FirebaseFileList = () => {
         setFileData(file.fileContent);
         setSocials(file.fileContent.socials || {});
 
-        fetchAuthorAndTranslatorNames(file.fileContent.sub, file.fileContent.translatedBy);
+        fetchAuthorAndTranslatorNames(file.fileContent.sub, file.fileContent.translatedBy).then();
         setIsAlreadyPublished(isAlreadyPub);
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
@@ -207,50 +202,128 @@ const FirebaseFileList = () => {
         if (!isConfirmed) return;
 
         try {
-            const filePath = isAlreadyPub ? 'articles' : (isEarlyReleased ? 'early_releases' : 'upload_from_authors');
+            let filePath;
+            let updatedList;
+            if(isAlreadyPub){
+                filePath='articles'
+                updatedList=setAlreadyPublishedArticles;
+            } else if (isEarlyReleased){
+                filePath='early_releases'
+                updatedList=setEarlyReleasedArticles;
+            }else{
+                filePath='upload_from_authors'
+                updatedList=setFiles;
+            }
             const fileRef = storageRef(storage, `${filePath}/${file.name}`);
 
             await deleteObject(fileRef);
-            await fetchInitialData();
+
+
+            updatedList((prevList) => prevList.filter(item => item.name !== file.name));
         } catch (error) {
             setError('Error deleting file: ' + error.message);
         }
     };
 
-    const handlePublish = async (toNormalRelease, filename, isEarlyReleased) => {
+    const handlePublish = async (to_normal_release, file, isEarlyReleasedArticles) => {
         try {
-            let folder = isEarlyReleased ? 'articles' : 'early_releases';
-            let originalFolder = 'upload_from_authors';
+            let originalfolder = "upload_from_authors";
+            let folder = "early_releases";
 
-            if (toNormalRelease && isEarlyReleased) {
-                folder = 'articles';
-                originalFolder = 'early_releases';
+            // Manage list updates based on conditions
+            let newList, oldList;
+            oldList = setFiles;
+            newList = setEarlyReleasedArticles;
+
+
+            if (to_normal_release) {
+                folder = "articles";
+                newList = setAlreadyPublishedArticles;
+            }
+            if (isEarlyReleasedArticles) {
+                folder = "articles";
+                originalfolder = "early_releases";
+                oldList = setEarlyReleasedArticles;
+                newList = setAlreadyPublishedArticles;
             }
 
-            const destinationFileRef = storageRef(storage, `${folder}/${filename}`);
-            const originalFileRef = storageRef(storage, `${originalFolder}/${filename}`);
+            const destinationFileRef = storageRef(storage, `${folder}/${file.name}`);
+            const originalFileRef = storageRef(storage, `${originalfolder}/${file.name}`);
 
+            // Retrieve fileContent directly if it's already available
+            let fileContent = null;
+
+            // Fetch fileContent if not already available
             const downloadUrl = await getDownloadURL(originalFileRef);
-            const fileContent = JSON.parse(await fetch(downloadUrl).then((res) => res.text()));
+            const fileText = await fetch(downloadUrl).then(res => res.text());
+            fileContent = JSON.parse(fileText);
 
             const options = {
-                method: 'PUT',
-                body: JSON.stringify(fileContent),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
             };
 
-            const response = await fetch(downloadUrl, options);
-            if (!response.ok) {
-                throw new Error('Failed to fetch article data.');
+            if (!fileContent.translatedBy) {
+                fileContent.written_date = fileContent.date;
+                fileContent.date = new Date().toLocaleDateString('en-GB', options);
             }
 
-            setShowToast(true);
+            // Upload updated fileContent to destination
+            await uploadString(destinationFileRef, JSON.stringify(fileContent));
+            alert('File published successfully to the destination folder!');
+
+            // Delete original file after successful upload
+            await deleteObject(originalFileRef);
+
+            // Update Firestore documents based on conditions
+            if (isEarlyReleasedArticles) {
+                const articleRef = databaseRef(database, `articles/${fileContent.category}/${file.name.replace('.json', '')}`);
+                await update(articleRef, { isEarlyAccess: false });
+
+                let newRef, oldRef;
+                if (fileContent.translatedBy === undefined) {
+                    newRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database, `/authors/${fileContent.sub}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                } else {
+                    newRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${folder}/${fileContent.category}`);
+                    oldRef = databaseRef(database, `/authors/${fileContent.translatedBy}/writtenArticles/${originalfolder}/${fileContent.category}`);
+                }
+
+                await update(newRef, { [file.name.replace(".json", "")]: true });
+                await remove(oldRef);
+
+                // Update users' savedArticles if necessary
+                const usersRef = databaseRef(database, 'users');
+                const snapshot = await get(child(usersRef, '/'));
+                if (snapshot.exists()) {
+                    snapshot.forEach((user) => {
+                        const savedArticlesRef = databaseRef(database, `users/${user.key}/savedArticles/${file.name.replace(".json", "")}`);
+                        get(savedArticlesRef).then((snapshot) => {
+                            const savedArticles = snapshot.val();
+                            if (savedArticles) {
+                                update(savedArticlesRef, { isEarlyAccess: false, isPublished: true });
+                            }
+                        });
+                    });
+                }
+            } else {
+                const articleRef = databaseRef(database, `articles/${fileContent.category}/${file.name.replace('.json', '')}`);
+                await update(articleRef, { isEarlyAccess: to_normal_release, isPublished: true });
+            }
+
+
+
+            // Remove from old list and add to new list
+            oldList((prevList) => prevList.filter(item => item.name !== file.name));
+            file.fileContent = fileContent
+            newList((prevList) => [...prevList, file]);
+
         } catch (error) {
             setError('Error publishing file: ' + error.message);
         }
     };
+
 
     const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
         console.log((leader) ? "User is Leader" : "User is not leader");
@@ -336,7 +409,7 @@ const FirebaseFileList = () => {
 
                                         {(!isAlreadyPublished && isEarlyReleased && !leader) && (
                                             <Button variant="success" onClick={() => {
-                                                handlePublish(false, file.name, isEarlyReleased);
+                                                handlePublish(false, file, isEarlyReleased);
                                             }} className="ms-2">
                                                 Publish Normally
                                             </Button>
@@ -346,14 +419,14 @@ const FirebaseFileList = () => {
                                         {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
                                             <>
                                                 <Button variant="success" onClick={() => {
-                                                    handlePublish(false, file.name, isEarlyReleased);
+                                                    handlePublish(false, file, isEarlyReleased);
                                                 }}
                                                         className={"ms-2 justify-content-center"}>
                                                     Publish Early
                                                 </Button>
 
                                                 <Button variant="warning" onClick={() => {
-                                                    handlePublish(true, file.name, isEarlyReleased);
+                                                    handlePublish(true, file, isEarlyReleased);
                                                 }}
                                                         className={"ms-2 justify-content-center"}>
                                                     Publish Normally
@@ -434,7 +507,7 @@ const FirebaseFileList = () => {
 
                         {(!isAlreadyPublished && isEarlyReleased && !leader) && (
                             <Button variant="success" onClick={() => {
-                                handlePublish(false, file.name, isEarlyReleased);
+                                handlePublish(false, file, isEarlyReleased);
                             }} className="ms-2">
                                 Publish Normally
                             </Button>
@@ -444,14 +517,14 @@ const FirebaseFileList = () => {
                         {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
                             <>
                                 <Button variant="success" onClick={() => {
-                                    handlePublish(false, file.name, isEarlyReleased);
+                                    handlePublish(false, file, isEarlyReleased);
                                 }}
                                         className={"ms-2 justify-content-center"}>
                                     Publish Early
                                 </Button>
 
                                 <Button variant="warning" onClick={() => {
-                                    handlePublish(true, file.name, isEarlyReleased);
+                                    handlePublish(true, file, isEarlyReleased);
                                 }}
                                         className={"ms-2 justify-content-center"}>
                                     Publish Normally
