@@ -30,3 +30,7 @@
 .ql-toolbar .ql-picker-label {
     color: #fff;
 }
+
+.form-control::placeholder {
+    color: #a9a9a9; /* Light grey color for better visibility */
+}

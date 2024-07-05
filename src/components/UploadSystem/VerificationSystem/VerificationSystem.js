@@ -1,7 +1,7 @@
 import {deleteObject, getDownloadURL, ref as storageRef, uploadString} from 'firebase/storage';
 import {child, get, ref as databaseRef, remove, update} from 'firebase/database';
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
+import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {useNavigate} from 'react-router-dom';
@@ -55,7 +55,7 @@ const FirebaseFileList = () => {
 
             auth.onAuthStateChanged((user) => {
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
-                    setIsLeader(leaderList.includes(user.email));
+                    setIsLeader(leaderList.includes(user.email)&&!userList.includes(user.email));
                 } else {
                     navigate('/upload');
                     signOut(auth).then();
@@ -67,7 +67,9 @@ const FirebaseFileList = () => {
     }, [navigate]);
 
     const copyLinkToClipboard = (link) => {
-
+        navigator.clipboard.writeText(link).then(() => {
+            setShowToast(true);
+        });
     }
 
     const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
@@ -330,14 +332,15 @@ const FirebaseFileList = () => {
 
         let sortedList = [...files];
 
+        // Sorting logic based on sortByCategory
         if (sortByCategory) {
             sortedList.sort((a, b) => {
-                if (!a.fileContent.category || !b.fileContent.category) {
-                    return 0;
-                } else {
-                    return a.fileContent.category.localeCompare(b.fileContent.category)
-                }
+                const categoryA = a.fileContent.category || 'Uncategorized';
+                const categoryB = b.fileContent.category || 'Uncategorized';
+                return categoryA.localeCompare(categoryB);
             });
+
+            // Grouping by category
             const groupedByCategory = sortedList.reduce((acc, article) => {
                 const category = article.fileContent.category || 'Uncategorized';
                 if (!acc[category]) {
@@ -351,165 +354,118 @@ const FirebaseFileList = () => {
                 <>
                     {Object.entries(groupedByCategory).map(([category, articles]) => (
                         <div key={category}>
-                            <h5 className={"text-white"}>{category}</h5>
-                            <ListGroup>
-                                {(sortByDate ? articles.sort((a, b) => {
-                                    try {
-                                        const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                                        const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                                        return dateB - dateA;
-                                    } catch (e) {
-                                        console.log(b);
-                                        return -1;
-                                    }
-                                }) : articles).map((file, index) => (
-                                    <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                                        {file.fileContent.isReady && <><i
-                                            className={"text-success fa-solid fa-check"}></i><span> </span></>}
-                                        <p key={file.fileContent.date}
-                                           className="form-label badge bg-dark-subtle text-dark m-1">
-                                            {file.fileContent.date}
-                                        </p>
-
-                                        {(isEarlyReleased || isAlreadyPublished) ? (
-                                            <a
-                                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                                style={{cursor: "pointer"}}
-                                                href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', ''));
-                                                    return false;
-                                                }}
-                                            >
-                                                {file.fileContent.title} <br/> {file.name}
-                                            </a>
-                                        ) : (
-                                            <>{file.fileContent.title} <br/> {file.name}</>
-                                        )}
-
-                                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
-                                            <Button
-                                                variant="info"
-                                                className="ms-2"
-                                                onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}
-                                            >
-                                                Edit
-                                            </Button>
-                                        )}
-                                        {(!leader) && (
-                                            <Button
-                                                variant="danger"
-                                                className="ms-2"
-                                                onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}
-                                            >
-                                                Delete
-                                            </Button>
-                                        )}
-
-                                        {(!isAlreadyPublished && isEarlyReleased && !leader) && (
-                                            <Button variant="success" onClick={() => {
-                                                handlePublish(false, file, isEarlyReleased);
-                                            }} className="ms-2">
-                                                Publish Normally
-                                            </Button>
-                                        )}
-
-
-                                        {(!isAlreadyPublished && !isEarlyReleased && !leader) && (
-                                            <>
-                                                <Button variant="success" onClick={() => {
-                                                    handlePublish(false, file, isEarlyReleased);
-                                                }}
-                                                        className={"ms-2 justify-content-center"}>
-                                                    Publish Early
-                                                </Button>
-
-                                                <Button variant="warning" onClick={() => {
-                                                    handlePublish(true, file, isEarlyReleased);
-                                                }}
-                                                        className={"ms-2 justify-content-center"}>
-                                                    Publish Normally
-                                                </Button>
-                                            </>
-                                        )}
-
-                                    </ListGroup.Item>
-                                ))}
-                            </ListGroup>
+                            <h5 className="text-white">{category}</h5>
+                            {renderCategoryCards(articles)}
                         </div>
                     ))}
                 </>
             );
         }
 
-
+        // Sorting logic based on sortByDate
         if (sortByDate) {
-            sortedList = sortedList.sort((a, b) => {
-                try {
-                    const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                    const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
-                    return dateB - dateA;
-                } catch (e) {
-                    console.log(b);
-                    return -1;
-                }
+            sortedList.sort((a, b) => {
+                const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
+                const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                return dateB - dateA;
             });
         }
 
+        // Render articles in cards
         return (
-            <ListGroup>
+            <div className="row">
                 {sortedList.map((file, index) => (
-                    <ListGroup.Item key={index} className={"bg-dark text-white"}>
-                        {file.fileContent.isReady && <><i
-                            className={"text-success fa-solid fa-check"}></i><span> </span></>}
-                        <p key={file.fileContent.date} className="form-label badge bg-dark-subtle text-dark m-1">
+                    renderArticleCard(file, isAlreadyPublished, isEarlyReleased)
+                ))}
+            </div>
+        );
+
+        // Function to render category cards
+        function renderCategoryCards(articles) {
+            return (
+                <div className="row row-cols-1 row-cols-md-3 g-4">
+                    {articles.map((file, index) => (
+                        <div key={index} className="col-auto">
+                            {renderArticleCard(file, isAlreadyPublished, isEarlyReleased)}
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+
+        // Function to render an individual article card
+        function renderArticleCard(file, isAlreadyPublished, isEarlyReleased) {
+            const articleLink = `/article/${isEarlyReleased ? 'early/' : ''}${file.name.replace('.json', '')}`;
+            const cardTitle = file.fileContent.title || 'Untitled';
+
+            return (
+                <Card className={`m-3 h-100 ${file.fileContent.isReady?"bg-success":"bg-dark"}` }>
+                    <Card.Body>
+                        <Card.Img
+                            variant="top"
+                            src={file.fileContent.img01}
+                            alt={file.fileContent.title}
+                        ></Card.Img>
+                        <Card.Title className="badge bg-dark-subtle text-dark">
                             {file.fileContent.date}
-                        </p>
+                        </Card.Title>
+                        <Card.Text>
+                            {(isEarlyReleased || isAlreadyPublished) ? (
+                                <a
+                                    className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
+                                    style={{ cursor: "pointer" }}
+                                    href={articleLink}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        copyLinkToClipboard(articleLink);
+                                        return false;
+                                    }}
+                                >
+                                    {cardTitle} <br/>
+                                    <hr className={"bg-dark text-light"}/>
+                                    <br/> {file.name}
+                                </a>
+                            ) : (
+                                <div className={"text-light"}>{cardTitle} <br /><hr className={"bg-dark text-light"}/><br/> {file.name}</div>
+                            )}
+                        </Card.Text>
+                    </Card.Body>
+                    <ListGroup className="list-group-flush">
+                        {renderActionButtons(file, isAlreadyPublished, isEarlyReleased)}
+                    </ListGroup>
+                </Card>
+            );
+        }
 
-                        {(isEarlyReleased || isAlreadyPublished) ? (
-                            <a
-                                className="link-light link-underline-opacity-0 link-underline-opacity-100-hover"
-                                style={{cursor: "pointer"}}
-                                href={'/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', '')}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    copyLinkToClipboard('/article/' + ((isEarlyReleased) ? "early/" : "") + file.name.replace('.json', ''));
-                                    return false;
-                                }}
-                            >
-                                {file.fileContent.title}
-                                <sbr/>
-                                {file.name}
-                            </a>
-                        ) : (
-                            <>{file.fileContent.title} <br/> {file.name}</>
-                        )}
+        // Function to render action buttons
+        function renderActionButtons(file, isAlreadyPublished, isEarlyReleased) {
+            const articleLink = `/article/${isEarlyReleased ? 'early/' : ''}${file.name.replace('.json', '')}`;
 
-                        {((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) && (
-                            <Button
-                                variant="info"
-                                className="ms-2"
-                                onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}
-                            >
-                                Edit
-                            </Button>
-                        )}
-                        {(!leader) && (
-                            <Button
-                                variant="danger"
-                                className="ms-2"
-                                onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}
-                            >
-                                Delete
-                            </Button>
-                        )}
+            if ((leader && !isAlreadyPublished && !isEarlyReleased) || !leader) {
+                return (
+                    <ListGroup.Item className="bg-dark text-white row d-flex justify-content-evenly">
+                        <Button
+                            variant="info"
+                            className="col-3"
+                            onClick={() => handleEdit(file, isAlreadyPublished, isEarlyReleased)}
+                        >
+                            Edit
+                        </Button>
+
+                        {!leader&&<Button
+                            className={"col-4"}
+                            variant="danger"
+                            onClick={() => handleDelete(file, isAlreadyPublished, isEarlyReleased)}
+                        >
+                            Delete
+                        </Button>}
 
                         {(!isAlreadyPublished && isEarlyReleased && !leader) && (
+
                             <Button variant="success" onClick={() => {
                                 handlePublish(false, file, isEarlyReleased);
-                            }} className="ms-2">
-                                Publish Normally
+                            }} className="col-4">
+                                Normal
                             </Button>
                         )}
 
@@ -519,22 +475,25 @@ const FirebaseFileList = () => {
                                 <Button variant="success" onClick={() => {
                                     handlePublish(false, file, isEarlyReleased);
                                 }}
-                                        className={"ms-2 justify-content-center"}>
-                                    Publish Early
+                                        className={"col-3 justify-content-center"}>
+                                    Early
                                 </Button>
 
                                 <Button variant="warning" onClick={() => {
                                     handlePublish(true, file, isEarlyReleased);
                                 }}
-                                        className={"ms-2 justify-content-center"}>
-                                    Publish Normally
+                                        className={"col-4 justify-content-center"}>
+                                    Normal
                                 </Button>
                             </>
                         )}
+
                     </ListGroup.Item>
-                ))}
-            </ListGroup>
-        );
+                );
+            } else {
+                return null;
+            }
+        }
     };
 
 
@@ -567,7 +526,7 @@ const FirebaseFileList = () => {
                 </div>
                 <hr className="bg-dark"/>
                 <div className="mb-4">
-                    <h3 className="text-light mb-3">Uploaded Files <span className="text-info small">green check means ready for publishing</span>
+                    <h3 className="text-light mb-3">Uploaded Files <span className="text-info small">green background means ready for publishing</span>
                     </h3>
                     {error && <Alert variant="danger">{error}</Alert>}
                     {handleShowList(files, false, false)}
@@ -609,13 +568,13 @@ const FirebaseFileList = () => {
                 setAuthorName("");
                 setTranslatorName("");
             }}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit File Data</Modal.Title>
+                <Modal.Header className={"bg-dark"} closeButton>
+                    <Modal.Title className={"text-light"}>Edit File Data</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={"bg-dark"}>
                     <Form>
                         <Form.Group controlId="content">
-                            <Form.Label>Content</Form.Label>
+                            <Form.Label className={"text-light"}>Content</Form.Label>
                             <ReactQuill
                                 theme="snow"
                                 key={selectedFile ? selectedFile.name : ''}
@@ -624,17 +583,19 @@ const FirebaseFileList = () => {
                             />
                         </Form.Group>
                         <Form.Group controlId="title">
-                            <Form.Label>Title</Form.Label>
+                            <Form.Label className={"text-light"}>Title</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.title}
                                 onChange={(e) => handleChange(e, 'title', false)}
                             />
                         </Form.Group>
                         <Form.Group controlId="details">
-                            <Form.Label>Details</Form.Label>
+                            <Form.Label className={"text-light"}>Details</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.details}
                                 onChange={(e) => handleChange(e, 'details', false)}
                             />
@@ -647,18 +608,20 @@ const FirebaseFileList = () => {
                             </Form.Label>
                             <Row>
                                 <Col>
-                                    <Form.Label>Facebook:</Form.Label>
+                                    <Form.Label className={"text-light"}>Facebook:</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        className={"bg-dark text-white"}
                                         placeholder="Facebook"
                                         value={socials.facebook}
                                         onChange={(e) => handleSocialChange('facebook', e)}
                                     />
                                 </Col>
                                 <Col>
-                                    <Form.Label>Instagram:</Form.Label>
+                                    <Form.Label className={"text-light"}>Instagram:</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        className={"bg-dark text-white"}
                                         placeholder="Instagram"
                                         value={socials.instagram}
                                         onChange={(e) => handleSocialChange('instagram', e)}
@@ -667,18 +630,20 @@ const FirebaseFileList = () => {
                             </Row>
                             <Row className="mt-3">
                                 <Col>
-                                    <Form.Label>Spotify:</Form.Label>
+                                    <Form.Label className={"text-light"}>Spotify:</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        className={"bg-dark text-white"}
                                         placeholder="Spotify"
                                         value={socials.spotify}
                                         onChange={(e) => handleSocialChange('spotify', e)}
                                     />
                                 </Col>
                                 <Col>
-                                    <Form.Label>YouTube:</Form.Label>
+                                    <Form.Label className={"text-light"}>YouTube:</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        className={"bg-dark text-white"}
                                         placeholder="YouTube"
                                         value={socials.youtube}
                                         onChange={(e) => handleSocialChange('youtube', e)}
@@ -687,9 +652,10 @@ const FirebaseFileList = () => {
                             </Row>
                             <Row className="mt-3">
                                 <Col>
-                                    <Form.Label>Old Socials(Do not change, use the new):</Form.Label>
+                                    <Form.Label className={"text-light"}>Old Socials(Do not change, use the new):</Form.Label>
                                     <Form.Control
                                         type="text"
+                                        className={"bg-dark text-white"}
                                         placeholder="OldSocials"
                                         value={fileData.Socials}
                                         readOnly={true}
@@ -700,17 +666,19 @@ const FirebaseFileList = () => {
 
 
                         <Form.Group controlId="img01">
-                            <Form.Label>Image URL</Form.Label>
+                            <Form.Label className={"text-light"}>Image URL</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.img01}
                                 onChange={(e) => handleChange(e, 'img01', false)}
                             />
                         </Form.Group>
                         <Form.Group controlId="translator">
-                            <Form.Label>Translator{translatorName && <>({translatorName})</>}</Form.Label>
+                            <Form.Label className={"text-light"}>Translator{translatorName && <>({translatorName})</>}</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.translatedBy}
                                 onChange={(e) => {
                                     const authorRef = databaseRef(database, `authors/${e.target.value}`);
@@ -727,15 +695,16 @@ const FirebaseFileList = () => {
                                         console.log(e)
                                         setAuthorName("");
                                     }
-                                    handleChange(e, 'translatedBy', false).then();
+                                    handleChange(e, 'translatedBy', false);
                                 }}
                             />
                         </Form.Group>
                         <Form.Group controlId="sub">
-                            <Form.Label>Author code{authorName && <>({authorName})</>}</Form.Label>
+                            <Form.Label className={"text-light"}>Author code{authorName && <>({authorName})</>}</Form.Label>
                             <Form.Control
                                 type="text"
                                 value={fileData.sub}
+                                className={"bg-dark text-white"}
                                 onChange={(e) => {
                                     const authorRef = databaseRef(database, `authors/${e.target.value}`);
                                     try {
@@ -756,32 +725,35 @@ const FirebaseFileList = () => {
                             />
                         </Form.Group>
                         <Form.Group controlId="date">
-                            <Form.Label>Date</Form.Label>
+                            <Form.Label className={"text-light"}>Date</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.date}
                                 onChange={(e) => handleChange(e, 'date', false)}
                             />
                         </Form.Group>
                         <Form.Group controlId="lang">
-                            <Form.Label>Language</Form.Label>
+                            <Form.Label className={"text-light"}>Language</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={fileData.lang}
                                 onChange={(e) => handleChange(e, 'lang', false)}
                             />
                         </Form.Group>
                         <Form.Group controlId="translations">
-                            <Form.Label>Translations</Form.Label>
+                            <Form.Label className={"text-light"}>Translations</Form.Label>
                             <Form.Control
                                 type="text"
+                                className={"bg-dark text-white"}
                                 value={JSON.stringify(fileData.translations)}
                                 onChange={(e) => handleChange(e, 'translations', true)}
                             />
                         </Form.Group>
 
                         <Form.Group controlId="translations">
-                            <Form.Label>Category</Form.Label>
+                            <Form.Label className={"text-light"}>Category</Form.Label>
 
                             <CategoryDropdown
                                 categories={[
@@ -806,7 +778,7 @@ const FirebaseFileList = () => {
                         </Form.Group>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className={"bg-dark"}>
                     <Row className={"d-flex justify-content-center"}>
                         <Col className={"col-12 d-flex justify-content-center"}>
                             <Form.Check
@@ -814,7 +786,7 @@ const FirebaseFileList = () => {
                                 id="custom-switch"
                                 label="The article is ready to be published"
                                 checked={fileData.isReady}
-                                className={"bg-warning-subtle rounded-3 justify-content-center"}
+                                className={"bg-warning rounded-3 justify-content-center"}
                                 onChange={() => {
                                     console.log(fileData.isReady)
                                     if (!fileData.isReady) {

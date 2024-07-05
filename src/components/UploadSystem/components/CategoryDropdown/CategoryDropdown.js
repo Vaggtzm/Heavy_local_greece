@@ -16,11 +16,13 @@ const CategoryDropdown = ({categories, onSelectCategory, required, value}) => {
         <DropdownButton
             id="dropdown-basic-button"
             title={t(selectedCategory) || "Select a Category"}
-            variant={"light"}
+            variant={"dark"}
             required={required}
+            className={"bg-dark text-white"}
         >
             {categories.map((category, index) => (
                 <Dropdown.Item
+                    className={"bg-dark text-white"}
                     key={index}
                     onClick={() => handleSelect(category)}
                 >

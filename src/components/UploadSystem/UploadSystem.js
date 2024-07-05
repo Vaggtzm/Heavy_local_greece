@@ -158,7 +158,7 @@ const ArticleUpload = () => {
             <div className="container mt-4">
                 <h2 className="h2 text-white">{t('authorUploadSystem')}</h2>
                 <hr className="bg-dark" />
-                <Form className="bg-transparent p-5" onSubmit={handleArticleSubmit}>
+                <Form className="card w-100 bg-dark p-5" onSubmit={handleArticleSubmit}>
                     <Form.Group controlId="articleContent">
                         <Form.Label className="text-light">{t('pasteArticleContent')}</Form.Label>
                         <ReactQuill
@@ -193,6 +193,7 @@ const ArticleUpload = () => {
                                 <Form.Label className="text-light">{t('title')}</Form.Label>
                                 <Form.Control
                                     type="text"
+                                    className={"bg-dark text-light"}
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     required={true}
@@ -204,6 +205,7 @@ const ArticleUpload = () => {
                                 <Form.Label className="text-light">{t('details')}</Form.Label>
                                 <Form.Control
                                     type="text"
+                                    className={"bg-dark text-light"}
                                     value={details}
                                     onChange={(e) => setDetails(e.target.value)}
                                 />
@@ -218,6 +220,7 @@ const ArticleUpload = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder={t('facebook')}
+                                    className={"bg-dark text-light"}
                                     value={socials.facebook}
                                     onChange={(e) => setSocials({ ...socials, facebook: e.target.value })}
                                 />
@@ -226,6 +229,7 @@ const ArticleUpload = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder={t('instagram')}
+                                    className={"bg-dark text-light"}
                                     value={socials.instagram}
                                     onChange={(e) => setSocials({ ...socials, instagram: e.target.value })}
                                 />
@@ -236,6 +240,7 @@ const ArticleUpload = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder={t('spotify')}
+                                    className={"bg-dark text-light"}
                                     value={socials.spotify}
                                     onChange={(e) => setSocials({ ...socials, spotify: e.target.value })}
                                 />
@@ -244,6 +249,7 @@ const ArticleUpload = () => {
                                 <Form.Control
                                     type="text"
                                     placeholder={t('youtube')}
+                                    className={"bg-dark text-light"}
                                     value={socials.youtube}
                                     onChange={(e) => setSocials({ ...socials, youtube: e.target.value })}
                                 />
@@ -257,6 +263,7 @@ const ArticleUpload = () => {
                                 <Form.Control
                                     as="select"
                                     value={language}
+                                    className={"form-control bg-dark text-light"}
                                     onChange={(e) => {
                                         setLanguage(e.target.value);
                                         i18n.changeLanguage(e.target.value); // Change UI language
