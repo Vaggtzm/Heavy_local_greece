@@ -80,6 +80,7 @@ const AppNavigation = ({menuVisible}) => {
                                 <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
                             <NavLink to={"/articles-page"} className='nav-link text-white'>Articles</NavLink>
                             <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
+                            <NavLink to={"/gigs"} className='nav-link text-white'>Gigs</NavLink>
                             <InstallButton/>
                             {isAuthor && (
                                 <>

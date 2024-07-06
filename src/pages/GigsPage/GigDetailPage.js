@@ -66,6 +66,7 @@ const GigDetailPage = () => {
                     <PrimaryCarousel
                         customImages={photos}
                         classNameImages={"m-3 border border-white rounded border-5 img-fluid"}
+                        shouldResize={true}
                     />
                 </>
             )}

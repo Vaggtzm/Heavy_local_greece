@@ -5,14 +5,14 @@ import 'slick-carousel/slick/slick-theme.css';
 import '../carousel/carousel.css';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../../firebase';
-import {getFirebaseStorageUrl} from "../../UploadSystem/articleData/articleData";
+import {getFirebaseStorageUrl, getFirebaseStorageUrlFull} from "../../UploadSystem/articleData/articleData";
 
-const PrimaryCarousel = ({ customSettings, customImages, classNameImages }) => {
+const PrimaryCarousel = ({ customSettings, customImages, classNameImages, shouldResize }) => {
     const [images, setImages] = useState([]);
 
     useEffect(() => {
         const fetchImages = async (imagePaths) => {
-            const imageUrls = await Promise.all(imagePaths.map(imagePath => getFirebaseStorageUrl(imagePath)));
+            const imageUrls = await Promise.all(imagePaths.map(imagePath => getFirebaseStorageUrlFull(imagePath, !shouldResize)));
             setImages(imageUrls);
         };
 

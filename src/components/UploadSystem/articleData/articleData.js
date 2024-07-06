@@ -70,6 +70,15 @@ const handleResult = (result, setData, setError, initialize) => {
     return nextPageToken;
 };
 
+export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
+
+    if(shouldBeFull){
+        return await getDownloadURL(ref(storage, fileName));
+    }else{
+        let shouldResize = await isAlmostRectangle(ref(storage, fileName));
+        return await getDownloadURL(ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)));
+    }
+}
 
 export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, setImageStorageRef) => {
     const fileName = imageUrl.split("/").pop();
