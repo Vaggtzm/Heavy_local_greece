@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {auth, database} from "../../firebase";
 import Container from "react-bootstrap/Container";
-import {Link, useNavigate} from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import InstallButton from "../PWAinstal/pwaInstall";
@@ -10,6 +9,7 @@ import {Button} from "react-bootstrap";
 import {onValue, ref} from "firebase/database";
 import './Observer.css';
 import NavLink from "../LanguageWrapper/NavLink";
+import useNavigate from "../LanguageWrapper/Navigation";
 
 const AppNavigation = ({menuVisible}) => {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -21,8 +21,6 @@ const AppNavigation = ({menuVisible}) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-
-
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
                 const userList = ref(database, 'roles');
@@ -65,14 +63,14 @@ const AppNavigation = ({menuVisible}) => {
         <>
             <Navbar expand="lg" className={`sticky-top overflow-hidden ${menuVisible ? 'visible' : 'hidden'}`} variant="dark" style={{ backgroundColor: "rgba(0,0,0,0.85)" }}>
                 <Container fluid>
-                    <Link to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
+                    <NavLink to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
                         <img
                             src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
                             className="img-fluid rounded-circle"
                             style={{ maxWidth: "100px", maxHeight: "100px" }}
                             alt="Navbar Brand"
                         />
-                    </Link>
+                    </NavLink>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="d-flex justify-content-center justify-content-evenly w-100 table-hover">
@@ -80,8 +78,8 @@ const AppNavigation = ({menuVisible}) => {
                                      className='nav-link text-white '>Home</NavLink>
                             {(loggedIn) &&
                                 <NavLink to="/User/Saved" className='nav-link text-white'>Saved Articles</NavLink>}
-                            <NavLink to="/articles-page" className='nav-link text-white'>Articles</NavLink>
-                            <NavLink to="/Art-Gallery-page" className='nav-link text-white'>Art Gallery</NavLink>
+                            <NavLink to={"/articles-page"} className='nav-link text-white'>Articles</NavLink>
+                            <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
                             <InstallButton/>
                             {isAuthor && (
                                 <>

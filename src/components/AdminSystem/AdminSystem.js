@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { auth, database, storage } from "../../firebase";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { get, onValue, ref, update } from "firebase/database";
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
-import { useTranslation } from "react-i18next";
 import { Card, Button } from "react-bootstrap";
+import useNavigate from "../LanguageWrapper/Navigation";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState({});
-    const { t } = useTranslation();
 
     useEffect(() => {
         const userList = ref(database, "roles");

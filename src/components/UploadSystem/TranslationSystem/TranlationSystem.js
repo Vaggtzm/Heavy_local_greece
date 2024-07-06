@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Form, FormGroup, ListGroup, Modal} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {useNavigate} from 'react-router-dom';
 import {auth, config, database, storage} from '../../../firebase';
 import {signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from "firebase/remote-config";
@@ -11,6 +10,7 @@ import {useTranslation} from "react-i18next";
 
 import {getDownloadURL, getMetadata, ref as StorageRef, uploadString} from "firebase/storage";
 import {fetchFiles} from "../articleData/articleData";
+import useNavigate from "../../LanguageWrapper/Navigation";
 
 const TranslationSystem = () => {
     const { t } = useTranslation();

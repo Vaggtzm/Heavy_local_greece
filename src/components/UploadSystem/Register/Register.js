@@ -9,8 +9,8 @@ import {
     updateProfile
 } from 'firebase/auth';
 import Container from 'react-bootstrap/Container';
-import {useNavigate} from "react-router-dom";
 import {useTranslation} from 'react-i18next';
+import useNavigate from "../../LanguageWrapper/Navigation";
 
 const Register = () => {
     const { t } = useTranslation();

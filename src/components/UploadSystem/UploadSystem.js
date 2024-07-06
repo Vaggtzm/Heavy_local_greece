@@ -4,7 +4,6 @@ import {Alert, Button, Col, Form, Row} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
-import {useNavigate} from 'react-router-dom';
 import {auth, config, storage} from '../../firebase';
 import {getIdTokenResult, signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from 'firebase/remote-config';
@@ -12,6 +11,7 @@ import ImageUpload from './components/fancyImage/ImageUpload';
 import CategoryDropdown from './components/CategoryDropdown/CategoryDropdown';
 import ImageUploader from 'quill-image-uploader';
 import {useTranslation} from 'react-i18next';
+import useNavigate from "../LanguageWrapper/Navigation";
 
 const ArticleUpload = () => {
     const { t, i18n } = useTranslation();

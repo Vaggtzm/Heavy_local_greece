@@ -4,7 +4,7 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './author.css';
 import { storage } from "../../../firebase";
-import { NavLink } from "react-router-dom";
+import NavLink from "../../../components/LanguageWrapper/NavLink";
 
 const Author = ({ userId, className, rating }) => {
   const [user, setUser] = useState([]);

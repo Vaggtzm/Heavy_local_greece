@@ -4,11 +4,11 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {useNavigate} from 'react-router-dom';
 import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {fetchFiles} from "../articleData/articleData";
+import useNavigate from "../../LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
 
