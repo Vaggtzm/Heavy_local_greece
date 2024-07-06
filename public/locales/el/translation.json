@@ -130,5 +130,12 @@
     "exploreMore": "Εξερευνήστε Περισσότερα",
     "spotifyLatest": "Τελευταία από Spotify",
     "meetTheTeam": "Γνωρίστε την Ομάδα",
-    "testimonials": "Μαρτυρίες"
+    "testimonials": "Μαρτυρίες",
+
+  "article-language": {
+    "changeLanguageTitle": "Αλλαγή Γλώσσας",
+    "languageMismatch": "Φαίνεται ότι η ιστοσελίδα είναι στα {{siteLanguage}} αλλά το άρθρο είναι στα {{articleLanguage}}. Θέλετε να εξερευνήσετε το περιεχόμενο στα {{siteLanguage}};",
+    "no": "Όχι",
+    "yes": "Ναι"
+  }
 }

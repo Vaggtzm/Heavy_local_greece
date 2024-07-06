@@ -131,6 +131,13 @@
   "artworksGallery": "Artworks Gallery",
   "spotifyLatest": "Spotify Latest",
   "meetTheTeam": "Meet the Team",
-  "testimonials": "Testimonials"
+  "testimonials": "Testimonials",
+
+  "article-language": {
+    "changeLanguageTitle": "Change Language",
+    "languageMismatch": "Seems like the site is in {{siteLanguage}} but the article is in {{articleLanguage}}. Are you looking to explore the content in {{siteLanguage}}?",
+    "no": "No",
+    "yes": "Yes"
+  }
 
 }

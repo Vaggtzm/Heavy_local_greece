@@ -10,9 +10,12 @@ import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {Helmet} from "react-helmet";
 import AuthorOfArticle from "./AuthorOfArticle";
 import NavLink from "../LanguageWrapper/NavLink";
+import {Spinner} from "react-bootstrap";
+import {useTranslation} from "react-i18next";
+import LanguageModal from "./LanguageModal";
 
 const DefaultArticle = (props) => {
-    const [isEarlyAccess] = useState(props.earlyAccess);
+    const isEarlyAccess = props.earlyAccess;
     const {name} = useParams();
     const [articles, setArticles] = useState({});
     const [enableSaving, setEnableSaving] = useState(false);
@@ -23,6 +26,10 @@ const DefaultArticle = (props) => {
 
     const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
     const [imageStorageRef, setImageStorageRef] = useState(null);
+
+    const { t, i18n} = useTranslation();
+    const [showModal, setShowModal] = useState(false);
+    const handleCloseModal = () => setShowModal(false);
 
     const fetchSavedStatus = async () => {
         const currentUser = auth.currentUser;
@@ -41,18 +48,27 @@ const DefaultArticle = (props) => {
     };
 
     useEffect(() => {
+        const currentLang = i18n.language;
+
+        // Ensure both articleData.lang and currentLang are defined before checking the condition
+        if (articles.lang && currentLang && articles.lang !== currentLang&&Object.keys(articles.translations).includes(currentLang)) {
+            setShowModal(true);
+        }
+    }, [articles, i18n.language]);
+
+    useEffect(() => {
         const fetchRemoteConfig = async () => {
             await fetchAndActivate(config);
             const serverLanguages = getValue(config, "languages").asString();
             setAvailableLanguages(JSON.parse(serverLanguages));
         };
 
-        Promise.all([fetchRemoteConfig(), fetchData()]).then(r => {});
+        Promise.all([fetchRemoteConfig(), fetchData()]).then();
 
         const unsubscribeAuth = auth.onAuthStateChanged((user) => {
             if (user) {
                 setEnableSaving(true);
-                fetchSavedStatus().then(r => {});
+                fetchSavedStatus().then();
             }
         });
 
@@ -79,9 +95,7 @@ const DefaultArticle = (props) => {
         setLoading(true);
 
         try {
-            const articleRef = isEarlyAccess
-                ? ref(storage, `early_releases/${name}.json`)
-                : ref(storage, `articles/${name}.json`);
+            const articleRef = ref(storage, `${isEarlyAccess?"early_releases":"articles"}/${name}.json`);
 
             const articleSnapshot = await getDownloadURL(articleRef);
 
@@ -103,6 +117,9 @@ const DefaultArticle = (props) => {
             const [imageUrl, translationsResult] = await Promise.all([fetchImageUrl, fetchTranslations]);
 
             setTranslations(translationsResult);
+            const currentLang = i18n.language;
+
+            console.log("article lang: ", articleData.lang, "current lang: ", currentLang);
 
             // Add the fetched image URL to the article data
             articleData.img01 = imageUrl;
@@ -196,11 +213,25 @@ const DefaultArticle = (props) => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return (
+            <Spinner style={{
+                width: '100px',
+                height: '100px',
+                position: 'absolute',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                margin: 'auto'
+            }} animation="border" role="status">
+                <span className="visually-hidden">{t('loadingMessage')}</span>
+            </Spinner>
+        );
     }
 
     return (
         <>
+            <LanguageModal languages={availableLanguages} articleLanguage={articles.lang} siteLanguage={i18n.language} show={showModal} handleClose={handleCloseModal} targetLink={(translations[i18n.language])?`/article${isEarlyAccess?"/early":""}/${translations[i18n.language].replace(".json", "")}`:""} />
             <Helmet>
                 <title>{articles.title}</title>
             </Helmet>
@@ -277,7 +308,7 @@ const DefaultArticle = (props) => {
                                 {Object.keys(translations).map((translation) => (
                                     <NavLink
                                         className="btn btn-dark"
-                                        to={`/article/${translations[translation].replace(".json", "")}`}
+                                        to={`/article${isEarlyAccess?"/early":""}/${translations[translation].replace(".json", "")}`}
                                         key={translation}
                                     >
                                         {availableLanguages[translation]}
