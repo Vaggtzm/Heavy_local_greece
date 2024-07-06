@@ -32,6 +32,7 @@ yarn-error.log*
 
 *.log
 
+
 functions/index.html
 
 functions/node_modules/.bin/
