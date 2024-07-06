@@ -27,11 +27,12 @@ const LanguageWrapper = () => {
     const {lang} = useParams();
 
     useEffect(() => {
-        if (lang) {
+        /*if (lang) {
             i18n.changeLanguage(lang);
         } else {
             i18n.changeLanguage('en'); // or use the current language
         }
+        */
     }, [lang, i18n]);
 
     return <Outlet />;

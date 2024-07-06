@@ -13,9 +13,7 @@ const root = ReactDOMClient.createRoot(container);
 root.render(
     <React.StrictMode>
         <HelmetProvider>
-            <BrowserRouter>
                 <App/>
-            </BrowserRouter>
         </HelmetProvider>
     </React.StrictMode>,
 );

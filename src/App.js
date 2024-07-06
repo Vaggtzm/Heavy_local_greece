@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
 import React, {useEffect, useRef, useState} from "react";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
 import {messaging, functions} from './firebase';
@@ -135,6 +135,7 @@ function App() {
 
 
     return (
+        <BrowserRouter>
         <div className="d-flex flex-column h-100">
             <div ref={placeholderRef} style={{height: '1px'}}></div>
             <div className="flex-grow-1">
@@ -153,6 +154,7 @@ function App() {
 
             {/** <Footer footerVisible={menuVisible}/> */}
         </div>
+        </BrowserRouter>
     );
 }
 
