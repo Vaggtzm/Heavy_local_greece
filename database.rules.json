@@ -1,12 +1,15 @@
 {
   "rules": {
-    ".read": "auth != null",
     "users": {
       "$uid": {
+        ".read": true,
         ".write": "auth != null && auth.uid === $uid"
       }
     },
     "gallery": {
+      ".read": true
+    },
+    "gigs": {
       ".read": true
     },
     "articlesList": {
@@ -20,6 +23,7 @@
     "authors": {
       ".read": true
     },
+    ".read": "auth != null",
     ".write": "auth.token.admin === true"
   }
 }

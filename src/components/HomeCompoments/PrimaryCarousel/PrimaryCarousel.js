@@ -1,31 +1,38 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../carousel/carousel.css'
-import {getDownloadURL, ref} from "firebase/storage";
-import {storage} from "../../../firebase";
+import '../carousel/carousel.css';
+import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../../../firebase';
+import {getFirebaseStorageUrl} from "../../UploadSystem/articleData/articleData";
 
-const PrimaryCarousel = () => {
-
-    const [images, setImages] = React.useState([]);
+const PrimaryCarousel = ({ customSettings, customImages, classNameImages }) => {
+    const [images, setImages] = useState([]);
 
     useEffect(() => {
-        Promise.all([
-            getImageSource("images/Concerts/workInProgress/DSC_0016_800x600.JPG"),
-            getImageSource("images/Concerts/workInProgress/DSC_0058_800x600.JPG"),
-            getImageSource("images/Concerts/workInProgress/DSC_0028_800x600.JPG"),
-        ]).then((imageUrls) => {
+        const fetchImages = async (imagePaths) => {
+            const imageUrls = await Promise.all(imagePaths.map(imagePath => getFirebaseStorageUrl(imagePath)));
             setImages(imageUrls);
-        })
-    }, []);
+        };
 
-    const getImageSource = async (imagepath) => {
-        const imageRef = ref(storage, imagepath);
-        return await getDownloadURL(imageRef)
-    }
+        if (customImages && customImages.length > 0) {
+            fetchImages(customImages);
+        } else {
+            fetchImages([
+                'images/Concerts/workInProgress/DSC_0016_800x600.JPG',
+                'images/Concerts/workInProgress/DSC_0058_800x600.JPG',
+                'images/Concerts/workInProgress/DSC_0028_800x600.JPG',
+            ]);
+        }
+    }, [customImages]);
 
-    const settings = {
+    const getImageSource = async (imagePath) => {
+        const imageRef = ref(storage, imagePath);
+        return await getDownloadURL(imageRef);
+    };
+
+    const defaultSettings = {
         dots: false,
         infinite: true,
         speed: 500,
@@ -40,8 +47,8 @@ const PrimaryCarousel = () => {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: true,
-                    dots: true
-                }
+                    dots: true,
+                },
             },
             {
                 breakpoint: 768,
@@ -49,20 +56,21 @@ const PrimaryCarousel = () => {
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     infinite: true,
-                    dots: true
-                }
-            }
-        ]
+                    dots: true,
+                },
+            },
+        ],
     };
 
-    return (
-        <Slider {...settings} >
+    const settings = { ...defaultSettings, ...customSettings };
 
-            {images.map((image, index) => {
-                return (<div className='bg-dark carousel-item'>
-                    <img src={image} alt={`slide${index}`}/>
-                </div>)
-            })}
+    return (
+        <Slider {...settings}>
+            {images.map((image, index) => (
+                <div key={index} className={`bg-dark carousel-item ${classNameImages}`}>
+                    <img src={image} alt={`slide${index}`} />
+                </div>
+            ))}
         </Slider>
     );
 };

@@ -14,6 +14,8 @@ import {Spinner} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import LanguageModal from "./LanguageModal";
 
+import {getFirebaseStorageUrl} from "../UploadSystem/articleData/articleData";
+
 const DefaultArticle = (props) => {
     const isEarlyAccess = props.earlyAccess;
     const {name} = useParams();
@@ -109,7 +111,7 @@ const DefaultArticle = (props) => {
             const articleData = await fetchArticle;
 
             // Start fetching image URL and translations concurrently
-            const fetchImageUrl = getFirebaseStorageUrl(articleData.img01);
+            const fetchImageUrl = getFirebaseStorageUrl(articleData.img01, setShouldStoreMetadata, setImageStorageRef);
             const fetchTranslations = articleData.translations && Object.keys(articleData.translations).length > 0
                 ? checkTranslations(articleData)
                 : Promise.resolve({});
@@ -134,53 +136,9 @@ const DefaultArticle = (props) => {
     };
 
 
-    function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
-        // Find the position of the last dot, which indicates the start of the extension
-        const dotIndex = fileName.lastIndexOf('.');
 
-        // If there's no dot, return the filename with the suffix appended
-        if (dotIndex === -1) {
-            return `${fileName}_${change_analysis ? analysis_true : analysis_false}`;
-        }
 
-        // Extract the name and extension parts
-        const name = fileName.substring(0, dotIndex);
-        const extension = fileName.substring(dotIndex);
 
-        // Construct the new filename
-        return `${name}_${change_analysis ? analysis_true : analysis_false}${extension}`;
-    }
-
-    const isAlmostRectangle = async (storageRef) => {
-        try {
-            const metadata = await getMetadata(storageRef);
-            const width = parseInt(metadata.customMetadata.width, 10);
-            const height = parseInt(metadata.customMetadata.height, 10);
-
-            // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
-            const tolerance = 0.5;
-            const aspectRatio = width / height;
-            const result = Math.abs(aspectRatio - 1) <= tolerance
-
-            return {result: result, areMetadataFound: true};
-        } catch (e) {
-            return {result: false, areMetadataFound: false};
-        }
-    };
-
-    const getFirebaseStorageUrl = async (imageUrl) => {
-        const fileName = imageUrl.split("/").pop();
-        const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
-
-        const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)}`);
-        setShouldStoreMetadata(!shouldResize.areMetadataFound)
-        setImageStorageRef(storageRef);
-        try {
-            return await getDownloadURL(storageRef);
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     const toggleSaveArticle = useCallback(() => {
         const currentUser = auth.currentUser;

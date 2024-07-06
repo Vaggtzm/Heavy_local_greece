@@ -34,6 +34,8 @@ import NotFound from "./pages/NotFound/NotFound";
 
 import {httpsCallable} from "firebase/functions";
 import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
+import GigsPage from "./pages/GigsPage/GigsPage";
+import GigDetailPage from "./pages/GigsPage/GigDetailPage";
 
 function App() {
 
@@ -129,6 +131,8 @@ function App() {
                 <Route path='User/Saved' element={<SavedArtciles/>}/>
                 <Route path='author/:authorCode' element={<ArticlesList/>}/>
                 <Route path={"404"} element={<NotFound/>}/>
+                <Route path="gigs" element={<GigsPage />} />
+                <Route path="gigs/:date" element={<GigDetailPage />} />
             </Route>
         )
     }

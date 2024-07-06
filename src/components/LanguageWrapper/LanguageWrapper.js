@@ -18,10 +18,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import React from 'react';
-import {Outlet} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import {Outlet, useParams} from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const LanguageWrapper = () => {
+    const { i18n } = useTranslation();
+    const {lang} = useParams();
+
+    useEffect(() => {
+        if (lang) {
+            i18n.changeLanguage(lang);
+        } else {
+            i18n.changeLanguage('en'); // or use the current language
+        }
+    }, [lang, i18n]);
 
     return <Outlet />;
 };

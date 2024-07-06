@@ -1,7 +1,8 @@
-import {functions} from "../../../firebase";
+import {functions, storage} from "../../../firebase";
 
 
 import {httpsCallable} from "firebase/functions";
+import {getDownloadURL, getMetadata, ref} from "firebase/storage";
 const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
 
 const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
@@ -69,3 +70,55 @@ const handleResult = (result, setData, setError, initialize) => {
     return nextPageToken;
 };
 
+
+export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, setImageStorageRef) => {
+    const fileName = imageUrl.split("/").pop();
+    const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
+
+    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)}`);
+    if(!!setShouldStoreMetadata) {
+        setShouldStoreMetadata(!shouldResize.areMetadataFound)
+    }
+    if(!!setImageStorageRef) {
+        setImageStorageRef(storageRef);
+    }
+    try {
+        return await getDownloadURL(storageRef);
+    } catch (e) {
+        console.log(e);
+    }
+};
+
+function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
+    // Find the position of the last dot, which indicates the start of the extension
+    const dotIndex = fileName.lastIndexOf('.');
+
+    // If there's no dot, return the filename with the suffix appended
+    if (dotIndex === -1) {
+        return `${fileName}_${change_analysis ? analysis_true : analysis_false}`;
+    }
+
+    // Extract the name and extension parts
+    const name = fileName.substring(0, dotIndex);
+    const extension = fileName.substring(dotIndex);
+
+    // Construct the new filename
+    return `${name}_${change_analysis ? analysis_true : analysis_false}${extension}`;
+}
+
+const isAlmostRectangle = async (storageRef) => {
+    try {
+        const metadata = await getMetadata(storageRef);
+        const width = parseInt(metadata.customMetadata.width, 10);
+        const height = parseInt(metadata.customMetadata.height, 10);
+
+        // Define the tolerance for "almost rectangular" (e.g., within 10% difference)
+        const tolerance = 0.5;
+        const aspectRatio = width / height;
+        const result = Math.abs(aspectRatio - 1) <= tolerance
+
+        return {result: result, areMetadataFound: true};
+    } catch (e) {
+        return {result: false, areMetadataFound: false};
+    }
+};
