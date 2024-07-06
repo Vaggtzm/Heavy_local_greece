@@ -26,6 +26,7 @@ import {database, storage} from '../../firebase';
 import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
 import NavLink from "../../components/LanguageWrapper/NavLink";
 import {ref as storageRef, getDownloadURL} from "firebase/storage";
+import {getFirebaseStorageUrlFull} from "../../components/UploadSystem/articleData/articleData";
 
 const GigsPage = () => {
     const [gigs, setGigs] = useState([]);
@@ -33,8 +34,7 @@ const GigsPage = () => {
 
     const getThumbnailUrl = async (gig, thumbnail) => {
         try {
-            const photoRef = storageRef(storage, `/gigs/${gig}/${thumbnail}`);
-            return await getDownloadURL(photoRef);
+            return getFirebaseStorageUrlFull(`/gigs/${gig}/${thumbnail}`, false);
         }catch (e) {
             console.log(e);
             return null;

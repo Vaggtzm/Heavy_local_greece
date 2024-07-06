@@ -24,9 +24,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ref, onValue } from 'firebase/database';
 import { database, storage } from '../../firebase';
-import { Container, Spinner } from 'react-bootstrap';
+import {Container, Row, Spinner} from 'react-bootstrap';
 import { listAll, ref as storageRef } from 'firebase/storage';
 import PrimaryCarousel from "../../components/HomeCompoments/PrimaryCarousel/PrimaryCarousel";
+import CustomNavLink from "../../components/LanguageWrapper/NavLink";
 
 const GigDetailPage = () => {
     const { date } = useParams();
@@ -44,7 +45,9 @@ const GigDetailPage = () => {
         const photosRef = storageRef(storage, `gigs/${date}`);
         listAll(photosRef)
             .then((result) => {
-                const promises = result.items.map((itemRef) => {
+                const promises = result.items
+                    .filter((itemRef) => !/_\d{3}x\d{3}\.[a-z]+$/i.test(itemRef.name))
+                    .map((itemRef) => {
                         return `gigs/${date}/${itemRef.name}`
                     }
                 );
@@ -66,8 +69,11 @@ const GigDetailPage = () => {
                     <PrimaryCarousel
                         customImages={photos}
                         classNameImages={"m-3 border border-white rounded border-5 img-fluid"}
-                        shouldResize={true}
+                        shouldBeFull={false}
                     />
+                   <Row className={"d-flex justify-content-center m-3"}>
+                       <CustomNavLink to={"/gigs"} className="btn btn-primary col-5 col-md-2">Back to All Gigs</CustomNavLink>
+                   </Row>
                 </>
             )}
         </Container>

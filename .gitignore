@@ -31,6 +31,7 @@ yarn-error.log*
 .firebase/hosting.YnVpbGQ.cache
 
 *.log
+storage/
 
 
 functions/index.html
