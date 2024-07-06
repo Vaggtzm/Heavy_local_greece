@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
 import {onValue, ref as dbRef} from "firebase/database";
 import {auth, database, storage} from "../../firebase";
-import {NavLink} from "react-router-dom";
+import NavLink from "../LanguageWrapper/NavLink";
 import {useTranslation} from 'react-i18next';
 
 const RecommendationSystem = () => {

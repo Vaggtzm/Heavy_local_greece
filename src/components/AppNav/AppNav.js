@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {auth, database} from "../../firebase";
 import Container from "react-bootstrap/Container";
-import {Link, NavLink, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import InstallButton from "../PWAinstal/pwaInstall";
@@ -9,6 +9,7 @@ import {getIdTokenResult, signOut} from "firebase/auth";
 import {Button} from "react-bootstrap";
 import {onValue, ref} from "firebase/database";
 import './Observer.css';
+import NavLink from "../LanguageWrapper/NavLink";
 
 const AppNavigation = ({menuVisible}) => {
     const [loggedIn, setLoggedIn] = useState(false);

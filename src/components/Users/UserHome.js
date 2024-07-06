@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import AppNavigation from "../AppNav/AppNav";
 import Header from "../HomeCompoments/Header/Header";
 import EarlyBirds from "./EarlyBirds";

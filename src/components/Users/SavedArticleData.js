@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {getDownloadURL, ref} from "firebase/storage";
 import {storage} from "../../firebase";
-import {NavLink} from "react-router-dom";
+import NavLink from "../LanguageWrapper/NavLink";
 
 
 const SavedArticleData = (props) => {

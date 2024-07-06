@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {NavLink, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
 import {getDownloadURL, getMetadata, ref, updateMetadata} from "firebase/storage";
 import {onValue, ref as databaseRef, remove, update} from "firebase/database";
@@ -9,6 +9,7 @@ import ReadMore from "../ReadMore/ReadMore";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {Helmet} from "react-helmet";
 import AuthorOfArticle from "./AuthorOfArticle";
+import NavLink from "../LanguageWrapper/NavLink";
 
 const DefaultArticle = (props) => {
     const [isEarlyAccess] = useState(props.earlyAccess);

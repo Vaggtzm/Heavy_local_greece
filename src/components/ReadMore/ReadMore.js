@@ -1,5 +1,5 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
+import NavLink from "../LanguageWrapper/NavLink";
 import {useTranslation} from "react-i18next";
 
 const ReadMore = () => {
@@ -25,7 +25,7 @@ const ReadMore = () => {
                                     offering solace during dark times.How is it possible for someone to fluently
                                     communicate in complex languages like JavaScript while simultaneously nurturing our
                                     immune system with assurance and self-love? </p>
-                                <a href="/article/Sleep-Dealer-review" className="btn btn-primary">{t('readMore')}</a>
+                                <NavLink to="/article/Sleep-Dealer-review" className="btn btn-primary">{t('readMore')}</NavLink>
                             </div>
                         </div>
                     </div>

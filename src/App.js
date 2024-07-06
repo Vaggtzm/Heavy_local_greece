@@ -33,6 +33,7 @@ import ArticlesList from "./pages/ArticlesList/ArticlesList";
 import NotFound from "./pages/NotFound/NotFound";
 
 import {httpsCallable} from "firebase/functions";
+import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 
 function App() {
 
@@ -97,6 +98,41 @@ function App() {
         };
     }, []);
 
+    const getRoutes= (langPathShouldExist)=>{
+        return(
+            <Route path={langPathShouldExist?"/:lang":"/"} element={<LanguageWrapper />}>
+                <Route path='' element={<Home/>}/>
+                <Route path='articles-page' element={<ArticlesList/>}/>
+                <Route path='Art-Gallery-page' element={<Gallery/>}/>
+                <Route path='legends-2-archive' element={<LegendV0L2/>}/>
+                <Route path='Falooda-interview-archive' element={<Primordial/>}/>
+                <Route path='Holler-interview-archive' element={<HollerInterview/>}/>
+                <Route path='Khavar-interview-archive' element={<KhavarInterview/>}/>
+                <Route path='Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
+                <Route path='legends-5-archive' element={<GeorgeKollias/>}/>
+                <Route path='article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
+                <Route path='article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
+                <Route path='about-us' element={<Authors/>}/>
+                <Route path='recommended' element={<RecommendationSystem/>}/>
+                <Route path='admin' element={<AdminSystem/>}/>
+                <Route path='gallery/upload' element={<UploadGalleryItem/>}/>
+                <Route path='upload' element={<ArticleUpload/>}/>
+                <Route path='upload/register' element={<Register/>}/>
+                <Route path='upload/profile' element={<UserProfile/>}/>
+                <Route path='upload/admin' element={<FirebaseFileList/>}/>
+                <Route path='upload/login' element={<Login admin={false}/>}/>
+                <Route path='upload/admin/login' element={<Login admin={true}/>}/>
+                <Route path='upload/translation' element={<TranlationSystem/>}/>
+                <Route path='User/login' element={<Login admin={false}/>}/>
+                <Route path='User/register' element={<Register/>}/>
+                <Route path='User/home' element={<UserHome/>}/>
+                <Route path='User/Saved' element={<SavedArtciles/>}/>
+                <Route path='author/:authorCode' element={<ArticlesList/>}/>
+                <Route path={"404"} element={<NotFound/>}/>
+            </Route>
+        )
+    }
+
 
     return (
         <div className="d-flex flex-column h-100">
@@ -106,35 +142,9 @@ function App() {
                 <AppNavigation menuVisible={menuVisible}/>
 
                 <Routes>
-                    <Route path='/' element={<Home/>}/>
-                    <Route path='/articles-page' element={<ArticlesList/>}/>
-                    <Route path='/Art-Gallery-page' element={<Gallery/>}/>
-                    <Route path='/legends-2-archive' element={<LegendV0L2/>}/>
-                    <Route path='/Falooda-interview-archive' element={<Primordial/>}/>
-                    <Route path='/Holler-interview-archive' element={<HollerInterview/>}/>
-                    <Route path='/Khavar-interview-archive' element={<KhavarInterview/>}/>
-                    <Route path='/Acid-Mammoth-interview-archive' element={<AcidMamoth/>}/>
-                    <Route path='/legends-5-archive' element={<GeorgeKollias/>}/>
-                    <Route path='/article/:name' element={<DefaultArticle earlyAccess={false}/>}/>
-                    <Route path='/article/early/:name' element={<DefaultArticle earlyAccess={true}/>}/>
-                    <Route path='/about-us' element={<Authors/>}/>
-                    <Route path='/recommended' element={<RecommendationSystem/>}/>
-                    <Route path='/admin' element={<AdminSystem/>}/>
-                    <Route path='/gallery/upload' element={<UploadGalleryItem/>}/>
-                    <Route path='/upload' element={<ArticleUpload/>}/>
-                    <Route path='/upload/register' element={<Register/>}/>
-                    <Route path='/upload/profile' element={<UserProfile/>}/>
-                    <Route path='/upload/admin' element={<FirebaseFileList/>}/>
-                    <Route path='/upload/login' element={<Login admin={false}/>}/>
-                    <Route path='/upload/admin/login' element={<Login admin={true}/>}/>
-                    <Route path='/upload/translation' element={<TranlationSystem/>}/>
-                    <Route path='/User/login' element={<Login admin={false}/>}/>
-                    <Route path='/User/register' element={<Register/>}/>
-                    <Route path='/User/home' element={<UserHome/>}/>
-                    <Route path='/User/Saved' element={<SavedArtciles/>}/>
-                    <Route path='/author/:authorCode' element={<ArticlesList/>}/>
+                    {getRoutes(true)}
+                    {getRoutes(false)}
                     <Route path="*" element={<Navigate to="/404"/>}/>
-                    <Route path={"/404"} element={<NotFound/>}/>
                 </Routes>
             </div>
             {/**

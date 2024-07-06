@@ -11,10 +11,10 @@ import {
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Container, Form, Row} from 'react-bootstrap';
 import {auth} from '../../../firebase';
-import {useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {useTranslation} from 'react-i18next';
+import {useNavigate} from "react-router-dom";
 
 const Login = (props) => {
     const { t } = useTranslation();

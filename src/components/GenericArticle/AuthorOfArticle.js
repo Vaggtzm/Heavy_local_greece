@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import NavLink from "../LanguageWrapper/NavLink";
 import React, {useEffect, useState} from "react";
 import "./profile-normal.css"
 import {onValue, ref as dbRef} from "firebase/database";

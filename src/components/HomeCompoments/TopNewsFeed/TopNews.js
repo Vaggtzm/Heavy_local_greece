@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
 import "./Animation.css";
+import NavLink from "../../LanguageWrapper/NavLink";
 
 
 const TopNews = () => {
