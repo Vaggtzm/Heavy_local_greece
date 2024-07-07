@@ -19,9 +19,10 @@ const GigsPage = () => {
     };
 
     useEffect(() => {
-        const gigsRef = ref(database, 'gigs');
+        const gigsRef = ref(database, '/gigs');
         console.log("Waiting for gigs");
         get(gigsRef).then(async (snapshot) => {
+            console.log("data downloaded")
             const data = snapshot.val();
             if (data) {
                 const gigsList = await Promise.all(Object.keys(data).map(async (key) => {

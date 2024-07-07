@@ -85,7 +85,7 @@ const TranslationSystem = () => {
 
             return () => unsubscribe();
         });
-    }, [navigate]);
+    }, []);
 
     const checkIfStorageRefExists = async (fileRef) => {
 

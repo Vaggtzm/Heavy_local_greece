@@ -32,22 +32,20 @@ const AdView = () => {
 
     useEffect(() => {
         const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                window.location.href = '/User/login';
-                return;
-            }
-            setCurrentUser(user);
+            if (!!user) {
+                setCurrentUser(user);
 
-            // Check if user is admin
-            const adminRef = ref(database, 'roles/ads');
-            const snapshot = await get(adminRef);
-            if (snapshot.exists()) {
-                let admins = snapshot.val();
-                if(!admins){
-                    admins = [];
-                }
-                if (admins.includes(user.email)) {
-                    setIsAdmin(true);
+                // Check if user is admin
+                const adminRef = ref(database, 'roles/ads');
+                const snapshot = await get(adminRef);
+                if (snapshot.exists()) {
+                    let admins = snapshot.val();
+                    if (!admins) {
+                        admins = [];
+                    }
+                    if (admins.includes(user.email)) {
+                        setIsAdmin(true);
+                    }
                 }
             }
         });

@@ -16,24 +16,25 @@ const AdUpload = () => {
     const db = getDatabase();
     const storage = getStorage();
     const [currentUser, setCurrentUser] = useState(null);
+    const [disabled, setDisabled] = useState(false);
 
     const [t] = useTranslation();
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (!user) {
-                window.location.href = '/User/login';
-                return;
-            }
-            setCurrentUser(user);
+                setDisabled(true);
+            }else {
+                setCurrentUser(user);
 
-            // Check if user is admin
-            const adminRef = ref(db, 'roles/admin');
-            const snapshot = await get(adminRef);
-            if (snapshot.exists()) {
-                const admins = snapshot.val();
-                if (admins.includes(user.email)) {
-                    setIsAdmin(true);
+                // Check if user is admin
+                const adminRef = ref(db, 'roles/admin');
+                const snapshot = await get(adminRef);
+                if (snapshot.exists()) {
+                    const admins = snapshot.val();
+                    if (admins.includes(user.email)) {
+                        setIsAdmin(true);
+                    }
                 }
             }
         });
@@ -44,6 +45,10 @@ const AdUpload = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(disabled){
+            setMessage("You need to be logged in to submit an advertisement.");
+        }
 
         if (image) {
             const imageRef = storageRef(storage, `ads/${image.name}`);
@@ -71,7 +76,7 @@ const AdUpload = () => {
         <Container className={"mb-5"}>
 
             {message && <div className={"d-flex justify-content-center"}><Alert className={"mt-4 mb-4 w-50 text-center"}
-                                                                                variant="info">{message}</Alert></div>}
+                                                                                variant={disabled?"danger":"info"}>{message}</Alert></div>}
             <div className={"d-flex justify-content-center"}>
                 <Form className={"card bg-dark p-4 w-75"} onSubmit={handleSubmit}>
                     <Form.Group controlId="formAdTitle">

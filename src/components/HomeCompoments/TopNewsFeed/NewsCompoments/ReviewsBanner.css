@@ -18,7 +18,7 @@
 
 
 .ReviewsBanner{
-    background-image: url(./../../../../assets/BlackBackground/ReviewsBannerBackground.jpg);
+    background-image: url('../../../../assets/BlackBackground/ReviewsBannerBackground.jpg');
     background-position: center;
     background-size: cover;
     background-attachment: fixed;

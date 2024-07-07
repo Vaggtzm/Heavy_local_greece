@@ -7,7 +7,7 @@ import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
 const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
     try {
         const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
-        const result = await fetchFilesFunction({ maxResults: 20, folder: 'articles', pageToken: pageToken });
+        const result = await fetchFilesFunction({ maxResults: 70, folder: 'articles', pageToken: pageToken });
         const nextPageToken = handleResult(result, setAlreadyPublishedArticles, setAlreadyPublishedError, pageToken === null);
         if (!nextPageToken||nextPageToken.pageToken===pageToken) {
             // No more pages to fetch, set loading to false
