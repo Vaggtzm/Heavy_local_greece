@@ -2,14 +2,13 @@ import {functions, storage} from "../../../firebase";
 
 
 import {httpsCallable} from "firebase/functions";
-import {getDownloadURL, getMetadata, ref} from "firebase/storage";
-const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
+import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
 
 const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
     try {
+        const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
         const result = await fetchFilesFunction({ maxResults: 20, folder: 'articles', pageToken: pageToken });
         const nextPageToken = handleResult(result, setAlreadyPublishedArticles, setAlreadyPublishedError, pageToken === null);
-        console.log(nextPageToken);
         if (!nextPageToken||nextPageToken.pageToken===pageToken) {
             // No more pages to fetch, set loading to false
             setLoading(false);
@@ -20,11 +19,11 @@ const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedErr
     } catch (error) {
         console.error('Error fetching files:', error);
         setLoading(false);
-        throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
     }
 };
 
 export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading){
+    const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
     try {
         const pending = fetchFilesFunction({ maxResults:100, folder: 'upload_from_authors', pageToken: null }).then((uploadedFilesResult)=>{
             handleResult(uploadedFilesResult, setFiles, setError, true);
@@ -80,11 +79,30 @@ export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
     }
 }
 
-export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, setImageStorageRef) => {
-    const fileName = imageUrl.split("/").pop();
-    const shouldResize = await isAlmostRectangle(ref(storage, `images/${fileName}`));
+export function getRef(imageUrl, isFolderIncluded){
+    const imagePath = imageUrl.split("/");
+    const fileName = imagePath.pop();
+    const folder = isFolderIncluded?imagePath.join("/"):"images";
 
-    const storageRef = ref(storage, `images/${changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)}`);
+    return `${folder}/${fileName}`;
+}
+
+export const getFirebaseStorageUrlFromPath=async (imageUrl, isFolderIncluded)=>{
+    const shouldResize = await isAlmostRectangle(ref(storage, imageUrl));
+    const fileName = getRef(imageUrl, isFolderIncluded);
+    const storageRef = ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result));
+
+    try {
+        return await getDownloadURL(storageRef);
+    } catch (e) {
+        return await getDownloadURL(ref(storage, fileName));
+    }
+}
+
+export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, setImageStorageRef) => {
+    const fileName = getRef(imageUrl, false);
+    const shouldResize = await isAlmostRectangle(ref(storage, fileName));
+    const storageRef = ref(storage, `${changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)}`);
     if(!!setShouldStoreMetadata) {
         setShouldStoreMetadata(!shouldResize.areMetadataFound)
     }
@@ -97,6 +115,28 @@ export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, se
         console.log(e);
     }
 };
+
+export function deleteImage(imageName){
+    getAllImageNames(imageName).map((imageName)=> {
+        const storageRef = ref(storage, imageName);
+        try {
+            return deleteObject(storageRef);
+        }catch (e) {
+            return new Promise(null);
+        }
+    });
+}
+
+export function getAllImageNames(imageName){
+    const dotIndex = imageName.lastIndexOf('.');
+    const extensions = ["600x300", "600x600", "800x400", "800x600", "800x800"];
+    if (dotIndex === -1) {
+        return extensions.map((extension)=>`${imageName}_${extension}`);
+    }
+    const name = imageName.substring(0, dotIndex);
+    const imageExtension = imageName.substring(dotIndex);
+    return extensions.map((extension)=>`${name}_${extension}${imageExtension}`);
+}
 
 function changeAnalysis(fileName, analysis_true, analysis_false, change_analysis) {
     // Find the position of the last dot, which indicates the start of the extension
@@ -130,4 +170,17 @@ const isAlmostRectangle = async (storageRef) => {
     } catch (e) {
         return {result: false, areMetadataFound: false};
     }
+};
+
+
+
+export const getImageDimensions = (file) => {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+            resolve({ width: img.width, height: img.height });
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+    });
 };

@@ -26,10 +26,10 @@ const useNavigate = () => {
     const navigate = useNav();
     const { i18n } = useTranslation();
 
-    return (to, options) => {
+    return to => {
         const language = i18n.language;
         const newPath = `/${language}${to}`;
-        navigate(newPath, options);
+        navigate(newPath);
     };
 };
 

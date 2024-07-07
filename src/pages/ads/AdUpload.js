@@ -41,11 +41,6 @@ const AdUpload = () => {
         return () => unsubscribe();
     }, [db]);
 
-    const handleImageChange = (e) => {
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,12 +48,11 @@ const AdUpload = () => {
         if (image) {
             const imageRef = storageRef(storage, `ads/${image.name}`);
             await uploadBytes(imageRef, image);
-            const imageURL = await getDownloadURL(imageRef);
 
             const adData = {
                 title,
                 description,
-                imageURL,
+                imageURL:`ads/${image.name}`,
                 userId: currentUser.uid,
                 status: 'pending' // Set status to pending approval
             };

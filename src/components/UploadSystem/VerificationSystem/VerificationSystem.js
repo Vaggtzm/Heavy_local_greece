@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import {auth, database, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-import {fetchFiles} from "../articleData/articleData";
+import {deleteImage, fetchFiles, getRef} from "../articleData/articleData";
 import useNavigate from "../../LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
@@ -218,12 +218,19 @@ const FirebaseFileList = () => {
             }
             const fileRef = storageRef(storage, `${filePath}/${file.name}`);
 
+            if(Object.keys(file.fileContent.translations).length<2){
+                const image = getRef(file.fileContent.img01, false)
+                deleteImage(image);
+                console.log("The image was deleted", image);
+            }
+            console.log("deleteImage: ", file.fileContent.img01);
+
             await deleteObject(fileRef);
 
 
             updatedList((prevList) => prevList.filter(item => item.name !== file.name));
         } catch (error) {
-            setError('Error deleting file: ' + error.message);
+            setError('Error deleting file: ' + error.message+ " "+JSON.stringify(file));
         }
     };
 
@@ -328,8 +335,6 @@ const FirebaseFileList = () => {
 
 
     const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
-        console.log((leader) ? "User is Leader" : "User is not leader");
-
         let sortedList = [...files];
 
         // Sorting logic based on sortByCategory

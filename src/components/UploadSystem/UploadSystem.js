@@ -12,6 +12,7 @@ import CategoryDropdown from './components/CategoryDropdown/CategoryDropdown';
 import ImageUploader from 'quill-image-uploader';
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../LanguageWrapper/Navigation";
+import {getImageDimensions} from "./articleData/articleData";
 
 const ArticleUpload = () => {
     const { t, i18n } = useTranslation();
@@ -83,16 +84,7 @@ const ArticleUpload = () => {
         return text.replace(regex, '');
     }
 
-    const getImageDimensions = (file) => {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => {
-                resolve({ width: img.width, height: img.height });
-            };
-            img.onerror = reject;
-            img.src = URL.createObjectURL(file);
-        });
-    };
+
 
     const handleArticleSubmit = async (e) => {
         e.preventDefault();

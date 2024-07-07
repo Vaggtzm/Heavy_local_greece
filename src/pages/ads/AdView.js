@@ -23,6 +23,7 @@ import {get, onValue, ref, remove, update} from 'firebase/database';
 import {deleteObject, getStorage, ref as storageRef} from 'firebase/storage';
 import {Button, Card, Col, Container, Row} from 'react-bootstrap';
 import {auth, database} from "../../firebase";
+import {deleteImage, getFirebaseStorageUrlFromPath} from "../../components/UploadSystem/articleData/articleData";
 
 const AdView = () => {
     const [ads, setAds] = useState([]);
@@ -53,13 +54,14 @@ const AdView = () => {
 
         const adsRef = ref(database, 'ads');
 
-        const unsubscribeAds = onValue(adsRef, (snapshot) => {
+        const unsubscribeAds = onValue(adsRef, async (snapshot) => {
             const adsData = snapshot.val();
             const adsList = [];
 
             for (let key in adsData) {
                 const ad = adsData[key];
                 const adWithKey = { ...ad, key };
+                adWithKey.imageURL = await getFirebaseStorageUrlFromPath(ad.imageURL, true);
                 adsList.push(adWithKey);
             }
 
@@ -80,9 +82,7 @@ const AdView = () => {
         } else {
             // Delete the ad and its associated image if rejected
             const ad = ads.find(ad => ad.key === id);
-            const storage = getStorage();
-            const imageRef = storageRef(storage, ad.imageURL);
-            await deleteObject(imageRef);
+            deleteImage(ad.imageURL)
             await remove(adRef);
             setAds(ads.filter(ad => ad.key !== id));
         }
