@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { auth, database, storage } from "../../firebase";
-import { signOut } from "firebase/auth";
-import { get, onValue, ref, update } from "firebase/database";
-import { getDownloadURL, ref as storageRef } from "firebase/storage";
-import { Card, Button } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {auth, database, storage} from "../../firebase";
+import {signOut} from "firebase/auth";
+import {get, onValue, ref, update} from "firebase/database";
+import {getDownloadURL, ref as storageRef} from "firebase/storage";
+import {Button, Card} from "react-bootstrap";
 import useNavigate from "../LanguageWrapper/Navigation";
 
 const AdminSystem = () => {
@@ -11,46 +11,48 @@ const AdminSystem = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [roles, setRoles] = useState({});
+    const userList = ref(database, "roles");
 
-    useEffect(() => {
-        const userList = ref(database, "roles");
-        get(userList).then((snapshot) => { console.log(snapshot.exists()) });
-        onValue(userList, (snapshot) => {
-            const rolesData = snapshot.val();
-            setRoles(rolesData);
+    useEffect(()=>{
+        return auth.onAuthStateChanged(async (user) => {
 
-            const usersRef = ref(database, "authors");
 
-            auth.onAuthStateChanged((user) => {
-                if (user && (rolesData.admin.includes(user.email) || user.email === "pavlos@orfanidis.net.gr")) {
-                    setCurrentUser(user);
-                    onValue(usersRef, async (users) => {
-                        users = users.val();
-                        console.log("Hello", users);
-                        await Promise.all(
-                            Object.keys(users).map(async (key) => {
-                                const photoUrlRef = storageRef(storage, `profile_images/${key}_600x600`);
-                                try {
-                                    users[key].photoURL = await getDownloadURL(photoUrlRef);
-                                } catch (e) {
-                                    console.error(e);
-                                }
-                            })
-                        );
+            const rolesSnapshot = await get(userList);
+            const roles = rolesSnapshot.val();
+            setRoles(roles);
 
-                        setUsers(users);
-                    });
-                } else {
-                    setCurrentUser(null);
-                    navigate("/upload");
-                    signOut(auth).then();
-                }
-            });
+            if (user && (roles.admin.includes(user.email) || user.email === "pavlos@orfanidis.net.gr")) {
+                setCurrentUser(user);
+                const usersRef = ref(database, "authors");
+                onValue(usersRef, async (users) => {
+                    users = users.val();
+                    await Promise.all(
+                        Object.keys(users).map(async (key) => {
+                            const photoUrlRef = storageRef(storage, `profile_images/${key}_600x600`);
+                            try {
+                                users[key].photoURL = await getDownloadURL(photoUrlRef);
+                            } catch (e) {
+                                console.error(e);
+                            }
+                        })
+                    );
+
+                    setUsers(users);
+                });
+            } else {
+                setCurrentUser(null);
+                navigate("/upload");
+                signOut(auth).then();
+            }
         });
-    }, [navigate]);
+    }, [])
 
     const handleRoleChange = (role, email) => {
         const updatedRoles = { ...roles };
+
+        if(!updatedRoles[role]){
+            updatedRoles[role] = [];
+        }
 
         if (updatedRoles[role].includes(email)) {
             updatedRoles[role] = updatedRoles[role].filter(userEmail => userEmail !== email);
@@ -59,17 +61,22 @@ const AdminSystem = () => {
         }
 
         // Update the roles in the database
-        update(ref(database, "roles"), updatedRoles);
+        update(ref(database, "roles"), updatedRoles).then();
         setRoles(updatedRoles);
     };
 
     const getUserRoles = (email) => {
         const userRoles = [];
-        for (const [role, emails] of Object.entries(roles)) {
+
+        console.log("roles",roles)
+
+        Object.keys(roles).forEach((role)=>{
+            const emails = roles[role];
+            console.log("Emails",emails);
             if (emails.includes(email)) {
                 userRoles.push(role);
             }
-        }
+        });
         return userRoles;
     };
 
@@ -104,28 +111,29 @@ const AdminSystem = () => {
                                         <Button
                                             variant={userRoles.includes("admin") ? "danger" : "outline-danger"}
                                             onClick={() => handleRoleChange("admin", email)}
-                                        >
-                                            Admin
-                                        </Button>
-                                        <Button
-                                            variant={userRoles.includes("authorLeader") ? "warning" : "outline-warning"}
-                                            onClick={() => handleRoleChange("authorLeader", email)}
                                             disabled={
                                                 userRoles.includes("admin") &&
                                                 currentUser.email !== "pavlos@orfanidis.net.gr" &&
                                                 currentUser.email !== "tzimasvaggelis02@gmail.com"
                                             }
+                                        >
+                                            Admin
+                                        </Button>
+                                        <Button
+                                            variant={userRoles.includes("ads") ? "success" : "outline-success"}
+                                            onClick={() => handleRoleChange("ads", email)}
+                                        >
+                                            Ads
+                                        </Button>
+                                        <Button
+                                            variant={userRoles.includes("authorLeader") ? "warning" : "outline-warning"}
+                                            onClick={() => handleRoleChange("authorLeader", email)}
                                         >
                                             Author Leader
                                         </Button>
                                         <Button
                                             variant={userRoles.includes("translationSystem") ? "info" : "outline-info"}
                                             onClick={() => handleRoleChange("translationSystem", email)}
-                                            disabled={
-                                                userRoles.includes("admin") &&
-                                                currentUser.email !== "pavlos@orfanidis.net.gr" &&
-                                                currentUser.email !== "tzimasvaggelis02@gmail.com"
-                                            }
                                         >
                                             Translator
                                         </Button>

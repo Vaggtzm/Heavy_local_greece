@@ -18,11 +18,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import React, { useEffect, useState } from 'react';
-import { ref, onValue, update, get, remove } from 'firebase/database';
-import { getStorage, ref as storageRef, deleteObject } from 'firebase/storage';
-import { Container, Card, Row, Col, Button } from 'react-bootstrap';
-import { auth, database } from "../../firebase";
+import React, {useEffect, useState} from 'react';
+import {get, onValue, ref, remove, update} from 'firebase/database';
+import {deleteObject, getStorage, ref as storageRef} from 'firebase/storage';
+import {Button, Card, Col, Container, Row} from 'react-bootstrap';
+import {auth, database} from "../../firebase";
 
 const AdView = () => {
     const [ads, setAds] = useState([]);
@@ -38,10 +38,13 @@ const AdView = () => {
             setCurrentUser(user);
 
             // Check if user is admin
-            const adminRef = ref(database, 'roles/admin');
+            const adminRef = ref(database, 'roles/ads');
             const snapshot = await get(adminRef);
             if (snapshot.exists()) {
-                const admins = snapshot.val();
+                let admins = snapshot.val();
+                if(!admins){
+                    admins = [];
+                }
                 if (admins.includes(user.email)) {
                     setIsAdmin(true);
                 }
