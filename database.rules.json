@@ -23,6 +23,10 @@
     "authors": {
       ".read": true
     },
+    "ads": {
+      ".read": true,
+      ".write": "auth != null"
+    },
     ".read": "auth != null",
     ".write": "auth.token.admin === true"
   }

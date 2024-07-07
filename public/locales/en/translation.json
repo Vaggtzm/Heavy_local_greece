@@ -138,6 +138,8 @@
     "languageMismatch": "Seems like the site is in {{siteLanguage}} but the article is in {{articleLanguage}}. Are you looking to explore the content in {{siteLanguage}}?",
     "no": "No",
     "yes": "Yes"
-  }
+  },
 
+  "ads": "Advertisements for Bands",
+  "description": "Description"
 }

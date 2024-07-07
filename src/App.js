@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {messaging, functions} from './firebase';
+import {functions, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -36,6 +36,7 @@ import {httpsCallable} from "firebase/functions";
 import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 import GigsPage from "./pages/GigsPage/GigsPage";
 import GigDetailPage from "./pages/GigsPage/GigDetailPage";
+import AdsPage from "./pages/ads/AdsPage";
 
 function App() {
 
@@ -76,8 +77,7 @@ function App() {
     }
 
     useEffect(() => {
-        requestPermission().then(r => {
-        });
+        requestPermission().then();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -89,13 +89,15 @@ function App() {
             {threshold: [0]}
         );
 
+        const currentPlaceholder = placeholderRef.current;
+
         if (placeholderRef.current) {
-            observer.observe(placeholderRef.current);
+            observer.observe(currentPlaceholder);
         }
 
         return () => {
-            if (placeholderRef.current) {
-                observer.unobserve(placeholderRef.current);
+            if (currentPlaceholder) {
+                observer.unobserve(currentPlaceholder);
             }
         };
     }, []);
@@ -133,6 +135,7 @@ function App() {
                 <Route path={"404"} element={<NotFound/>}/>
                 <Route path="gigs" element={<GigsPage />} />
                 <Route path="gigs/:date" element={<GigDetailPage />} />
+                <Route path="ads" element={<AdsPage/>} />
             </Route>
         )
     }

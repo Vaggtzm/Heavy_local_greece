@@ -81,6 +81,7 @@ const AppNavigation = ({menuVisible}) => {
                             <NavLink to={"/articles-page"} className='nav-link text-white'>Articles</NavLink>
                             <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
                             <NavLink to={"/gigs"} className='nav-link text-white'>Gigs</NavLink>
+                            <NavLink to={"/ads"} className='nav-link text-white'>Search for bands</NavLink>
                             <InstallButton/>
                             {isAuthor && (
                                 <>
