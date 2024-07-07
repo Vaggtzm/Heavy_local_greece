@@ -1,32 +1,9 @@
-/*
- * Copyright (c) 2024. MIT License
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-// src/components/GigsPage.js
 import React, { useEffect, useState } from 'react';
-import {ref, onValue, get} from 'firebase/database';
-import {database, storage} from '../../firebase';
-import { Container, Row, Col, Card, Spinner } from 'react-bootstrap';
+import { ref, get } from 'firebase/database';
+import { database } from '../../firebase';
 import NavLink from "../../components/LanguageWrapper/NavLink";
-import {ref as storageRef, getDownloadURL} from "firebase/storage";
-import {getFirebaseStorageUrlFull} from "../../components/UploadSystem/articleData/articleData";
+import { getFirebaseStorageUrlFull } from "../../components/UploadSystem/articleData/articleData";
+import "./Gigs.css";
 
 const GigsPage = () => {
     const [gigs, setGigs] = useState([]);
@@ -35,11 +12,11 @@ const GigsPage = () => {
     const getThumbnailUrl = async (gig, thumbnail) => {
         try {
             return getFirebaseStorageUrlFull(`/gigs/${gig}/${thumbnail}`, false);
-        }catch (e) {
+        } catch (e) {
             console.log(e);
             return null;
         }
-    }
+    };
 
     useEffect(() => {
         const gigsRef = ref(database, 'gigs');
@@ -61,34 +38,52 @@ const GigsPage = () => {
     }, []);
 
     return (
-        <Container className="mt-5">
-            <h1 className="text-center mb-5 text-white">Gigs</h1>
-            {loading ? (
-                <Spinner animation="border" className="d-block mx-auto" />
-            ) : (
-                <Row className={"d-flex justify-content-evenly"}>
-                    {gigs.map((gig) => (
-                        <Col key={gig.date} className="mb-4">
-                            <Card className={"m-4"}>
-                                <Card.Img
-                                    variant="top"
-                                    src={gig.thumbnailURL || 'placeholder.jpg'}
-                                />
-                                <Card.Body >
-                                    <Card.Title className={"text-center"}>{gig.title}</Card.Title>
-                                    <Card.Text>{gig.description}</Card.Text>
-                                    <div className={"d-flex justify-content-center"}>
-                                    <NavLink to={`/gigs/${gig.date}`} className="btn text-white" style={{backgroundColor:"#05021f"}}>
-                                        View Gig
-                                    </NavLink>
+        <section className='gigs'>
+            <div className="container">
+                <h1 className="text-center mb-5 text-white">Gigs</h1>
+                {loading ? (
+                    <div className="d-flex justify-content-center">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="row">
+                        {gigs.map((gig) => (
+                            <div key={gig.date} className="col-md-6">
+                                <div className="card w-100  rounded-2">
+                                    <div className="card-inner">
+                                        <div className="card-front">
+                                            <img
+                                                className="img-fluid h-75"
+                                                src={gig.thumbnailURL || 'placeholder.jpg'}
+                                                alt={gig.title}
+                                            />
+                                            <div className="hover-message">
+                                                Hover me
+                                            </div>
+                                            <div className="card-body">
+                                                <h5 className="card-title text-center">{gig.title}</h5>
+                                            </div>
+                                        </div>
+                                        <div className="card-back">
+                                            <div className="card-details">
+                                                {gig.description}
+                                                <NavLink to={`/gigs/${gig.date}`} className="btn text-white" style={{ backgroundColor: "#05021f" }}>
+                                                    View Gig
+                                                </NavLink>
+
+                                            </div>
+                                           
+                                        </div>
                                     </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
-            )}
-        </Container>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </section>
     );
 };
 

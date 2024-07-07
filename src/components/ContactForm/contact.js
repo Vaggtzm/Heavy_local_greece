@@ -8,12 +8,12 @@ const Contact = () => {
         <>
             <form action="https://formspree.io/f/xnqejvjp" method="POST">
                 <h4>{t('getInTouch')}</h4>
-                <div className="form-group m-1">
+                <div className="form-group m-1 text-center text-white">
                     <label htmlFor="exampleInputEmail1">{t('tellUsYourFeedback')}</label>
                     <input
                         type="text"
                         name="Subject"
-                        className="form-control m-1 p-2"
+                        className="form-control m-1 p-2 text-center text-white"
                         id="exampleInputEmail1"
                         aria-describedby="emailHelp"
                         placeholder={t('subjectPlaceholder')}
@@ -22,7 +22,7 @@ const Contact = () => {
                         {t('emailHelp')}
                     </small>
                 </div>
-                <div className="form-group">
+                <div className="form-group text-center text-white">
                     <input
                         type="text"
                         className="form-control m-1 p-2"

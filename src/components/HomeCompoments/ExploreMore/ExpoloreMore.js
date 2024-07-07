@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SecondaryCarousel from "./../carousel/carousel";
-import SpotifyBanner from "./../SpotifyBanner/SpotifyBanner";
 import Author from "../../../pages/Authors/Author/Author";
 import Footer from "../../footer/footer";
 import "./Animation.css";
@@ -41,11 +40,7 @@ const ExploreMore = () => {
             <hr className="bg-white" />
             <SecondaryCarousel />
           </div>
-          <div className="col-md-12">
-            <h3 className="text-white">{t("spotifyLatest")}</h3>
-            <hr className="bg-white" />
-            <SpotifyBanner />
-          </div>
+       
         </div>
         <div className="col-md-12">
           <h3 className="text-white">{t("meetTheTeam")}</h3>
@@ -93,7 +88,6 @@ const ExploreMore = () => {
         </div>
       </div>
     </section>
-    <Footer/>
     </>
     
   );
