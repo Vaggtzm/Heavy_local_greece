@@ -102,7 +102,15 @@ const AdView = () => {
         if (isAdmin) {
             return a.status === 'pending' ? -1 : 1;
         } else {
-            return a.userId === currentUser.uid ? -1 : 1;
+            if(a.userId === currentUser.uid){
+                return -1
+            }else{
+                if(b.userId === currentUser.uid){
+                    return 1
+                }else{
+                    return 0;
+                }
+            }
         }
     });
 
