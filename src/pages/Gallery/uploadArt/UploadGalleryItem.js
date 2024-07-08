@@ -88,9 +88,6 @@ const UploadGalleryItem = () => {
 
     return (
         <Container className={"mb-5 mt-5 pb-5"}>
-            <div className={"d-flex justify-content-center"}>
-                <Alert className={"text-center w-75"} variant={"warning"}>Please make sure that you have updated your profile, otherwise your name will not be shown</Alert>
-            </div>
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form>
