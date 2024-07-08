@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {auth, database, storage} from '../../../firebase';
-import {push, ref} from 'firebase/database';
+import {push, ref, update} from 'firebase/database';
 import {Alert, Button, Container, Form} from 'react-bootstrap';
 import ImageUpload from "../../../components/UploadSystem/components/fancyImage/ImageUpload";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 import {getImageDimensions} from "../../../components/UploadSystem/articleData/articleData";
 import NavLink from "../../../components/LanguageWrapper/NavLink";
+import {getIdTokenResult} from "firebase/auth";
 
 const UploadGalleryItem = () => {
     const [user, setUser] = useState(null);
@@ -33,6 +34,23 @@ const UploadGalleryItem = () => {
 
     const handleUpload = async () => {
         if (user) {
+
+            const idTokenResult =  await getIdTokenResult(user);
+            let userFolder;
+            if (idTokenResult.claims && idTokenResult.claims.admin) {
+                userFolder = 'authors';
+            } else {
+                userFolder = 'users';
+            }
+
+            const userRef = ref(database, `${userFolder}/${user.uid}`);
+
+            await update(userRef, {
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL || ''
+            });
+
             const imageRef = storageRef(storage, `images/gallery/review/${image.name}`);
             const dimensions = await getImageDimensions(image);
             const metadata = {
