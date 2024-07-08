@@ -64,7 +64,7 @@ const FirebaseFileList = () => {
         });
 
         fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
-    }, [navigate]);
+    }, []);
 
     const copyLinkToClipboard = (link) => {
         navigator.clipboard.writeText(link).then(() => {

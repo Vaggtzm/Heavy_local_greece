@@ -32,22 +32,20 @@ const AdView = () => {
 
     useEffect(() => {
         const unsubscribeAuth = auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                window.location.href = '/User/login';
-                return;
-            }
-            setCurrentUser(user);
+            if (!!user) {
+                setCurrentUser(user);
 
-            // Check if user is admin
-            const adminRef = ref(database, 'roles/ads');
-            const snapshot = await get(adminRef);
-            if (snapshot.exists()) {
-                let admins = snapshot.val();
-                if(!admins){
-                    admins = [];
-                }
-                if (admins.includes(user.email)) {
-                    setIsAdmin(true);
+                // Check if user is admin
+                const adminRef = ref(database, 'roles/ads');
+                const snapshot = await get(adminRef);
+                if (snapshot.exists()) {
+                    let admins = snapshot.val();
+                    if (!admins) {
+                        admins = [];
+                    }
+                    if (admins.includes(user.email)) {
+                        setIsAdmin(true);
+                    }
                 }
             }
         });
@@ -61,7 +59,9 @@ const AdView = () => {
             for (let key in adsData) {
                 const ad = adsData[key];
                 const adWithKey = { ...ad, key };
-                adWithKey.imageURL = await getFirebaseStorageUrlFromPath(ad.imageURL, true);
+                if(adWithKey.imageURL) {
+                    adWithKey.imageURL = await getFirebaseStorageUrlFromPath(ad.imageURL, true);
+                }
                 adsList.push(adWithKey);
             }
 
@@ -92,8 +92,10 @@ const AdView = () => {
         const ad = ads.find(ad => ad.key === id);
         const adRef = ref(database, `ads/${id}`);
         const storage = getStorage();
-        const imageRef = storageRef(storage, ad.imageURL);
-        await deleteObject(imageRef);
+        if(ad.imageURL) {
+            const imageRef = storageRef(storage, ad.imageURL);
+            await deleteObject(imageRef);
+        }
         await remove(adRef);
         setAds(ads.filter(ad => ad.key !== id));
     };

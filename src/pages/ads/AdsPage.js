@@ -31,7 +31,9 @@ const AdsPage = () => {
 
     return (
         <Container className={"m-5"}>
-            <h1 className={"text-white text-center"}>{t("ads")}</h1>
+            <div className={"d-flex justify-content-evenly w-100"}>
+            <h1 className={"text-white text-center w-75"}>{t("ads")}</h1>
+            </div>
             <AdUpload />
             <AdView />
         </Container>

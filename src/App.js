@@ -122,7 +122,7 @@ function App() {
                 <Route path='gallery/upload' element={<UploadGalleryItem/>}/>
                 <Route path='upload' element={<ArticleUpload/>}/>
                 <Route path='upload/register' element={<Register/>}/>
-                <Route path='upload/profile' element={<UserProfile/>}/>
+                <Route path='profile' element={<UserProfile/>}/>
                 <Route path='upload/admin' element={<FirebaseFileList/>}/>
                 <Route path='upload/login' element={<Login admin={false}/>}/>
                 <Route path='upload/admin/login' element={<Login admin={true}/>}/>

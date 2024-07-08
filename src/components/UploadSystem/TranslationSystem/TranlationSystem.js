@@ -85,7 +85,7 @@ const TranslationSystem = () => {
 
             return () => unsubscribe();
         });
-    }, [navigate]);
+    }, []);
 
     const checkIfStorageRefExists = async (fileRef) => {
 
@@ -170,6 +170,7 @@ const TranslationSystem = () => {
         }
         const contentToSave = isTranslating ? translationData : fileData;
         contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
+        contentToSave.isReady = false;
         await uploadString(fileRef, JSON.stringify(contentToSave));
 
         if (!isTranslating) {
@@ -183,10 +184,16 @@ const TranslationSystem = () => {
         const updatedFiles = files.map((file) =>
             file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
         );
+
+        console.log("UpdatedFiles",updatedFiles);
+
+        updatedFiles.push({
+            name: newFileName,
+            fileContent: contentToSave
+        })
         setFiles(updatedFiles);
 
         setShowModal(false);
-        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
 
         setTranslationData({
             content: '',
