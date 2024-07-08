@@ -59,7 +59,9 @@ const AdView = () => {
             for (let key in adsData) {
                 const ad = adsData[key];
                 const adWithKey = { ...ad, key };
-                adWithKey.imageURL = await getFirebaseStorageUrlFromPath(ad.imageURL, true);
+                if(adWithKey.imageURL) {
+                    adWithKey.imageURL = await getFirebaseStorageUrlFromPath(ad.imageURL, true);
+                }
                 adsList.push(adWithKey);
             }
 
@@ -90,8 +92,10 @@ const AdView = () => {
         const ad = ads.find(ad => ad.key === id);
         const adRef = ref(database, `ads/${id}`);
         const storage = getStorage();
-        const imageRef = storageRef(storage, ad.imageURL);
-        await deleteObject(imageRef);
+        if(ad.imageURL) {
+            const imageRef = storageRef(storage, ad.imageURL);
+            await deleteObject(imageRef);
+        }
         await remove(adRef);
         setAds(ads.filter(ad => ad.key !== id));
     };

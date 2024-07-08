@@ -46,30 +46,32 @@ const AdUpload = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        console.log("running");
+
         if(disabled){
             setMessage("You need to be logged in to submit an advertisement.");
         }
 
+        const adData = {
+            title,
+            description,
+            userId: currentUser.uid,
+            status: 'pending' // Set status to pending approval
+        };
+
         if (image) {
             const imageRef = storageRef(storage, `ads/${image.name}`);
             await uploadBytes(imageRef, image);
-
-            const adData = {
-                title,
-                description,
-                imageURL:`ads/${image.name}`,
-                userId: currentUser.uid,
-                status: 'pending' // Set status to pending approval
-            };
-
-            const adsRef = ref(db, 'ads');
-            await push(adsRef, adData);
-
-            setTitle('');
-            setDescription('');
-            setImage(null);
-            setMessage('Your ad has been submitted and is pending approval.');
+            adData.imageURL=`ads/${image.name}`;
         }
+
+        const adsRef = ref(db, 'ads');
+        await push(adsRef, adData);
+
+        setTitle('');
+        setDescription('');
+        setImage(null);
+        setMessage('Your ad has been submitted and is pending approval.');
     };
 
     return (
