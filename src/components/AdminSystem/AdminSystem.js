@@ -126,6 +126,14 @@ const AdminSystem = () => {
                                             Ads
                                         </Button>
                                         <Button
+                                            variant={userRoles.includes("galleryAdmin") ? "secondary" : "outline-secondary"}
+                                            onClick={() => handleRoleChange("galleryAdmin", email)}
+                                        >
+                                            Gallery
+                                        </Button>
+                                    </div>
+                                    <div className="d-flex justify-content-around mt-3">
+                                        <Button
                                             variant={userRoles.includes("authorLeader") ? "warning" : "outline-warning"}
                                             onClick={() => handleRoleChange("authorLeader", email)}
                                         >

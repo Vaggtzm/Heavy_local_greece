@@ -117,14 +117,16 @@ export const getFirebaseStorageUrl = async (imageUrl, setShouldStoreMetadata, se
 };
 
 export function deleteImage(imageName){
-    getAllImageNames(imageName).map((imageName)=> {
+    return Promise.all(getAllImageNames(imageName).map(async (imageName)=> {
         const storageRef = ref(storage, imageName);
+
         try {
-            return deleteObject(storageRef);
-        }catch (e) {
-            return new Promise(null);
+            deleteObject(storageRef).then().catch(console.log);
+            console.log(`Image ${imageName} deleted successfully from storage.`);
+        } catch (e) {
+            console.error(`Error deleting image ${imageName}:`, e);
         }
-    });
+    }));
 }
 
 export function getAllImageNames(imageName){
