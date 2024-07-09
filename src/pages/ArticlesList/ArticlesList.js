@@ -152,7 +152,7 @@ const ArticlesList = () => {
             let data = snapshot.val();
             if (data) {
                 console.log(data);
-                const dataPromises  = data.filter((d) => {
+                const dataPromises  = Object.values(data).filter((d) => {
                     const userid = d.title;
                     return userid === authorCode;
                 });
