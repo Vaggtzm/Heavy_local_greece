@@ -361,17 +361,26 @@ const ArticlesList = () => {
                         </div>
                     )}
 
-                    <div className="d-flex justify-content-center mb-4">
-                        <Form.Control
+                    <div className="d-flex justify-content-center mb-5 h-100 p-4">
+                        {(!authorCode)?<Form.Control
                             type="text"
-                            className={"bg-dark text-white w-50 rounded-5"}
+                            className={"bg-dark text-white w-75 rounded-5 h-100 p-3"}
                             placeholder="Search articles"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value)
                                 handleSearch(e.target.value);
                             }}
-                        />
+                        />:<Form.Control // TODO: Αυτό πείραξε
+                            type="text"
+                            className={"bg-dark text-white w-75 rounded-5 h-100 p-3"}
+                            placeholder="Search articles"
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value)
+                                handleSearch(e.target.value);
+                            }}
+                        />}
                     </div>
 
                     {(articles['early_releases'] || Object.keys(articles['articles'] || {}).length > 0) && (
