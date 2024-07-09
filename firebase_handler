@@ -10,7 +10,7 @@ if git diff-index --quiet HEAD --; then
 fi
 
 # Prompt the user for a commit message
-read -p "Enter your commit message: " commit_message
+read -p "Τί έκανες; : " commit_message
 
 # Add changes to staging
 git add .
