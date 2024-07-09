@@ -189,7 +189,7 @@ const ArticlesList = () => {
                 renderedTranslationGroups.add(translationGroup);
 
                 return (
-                    <div className="col-auto" key={index}>
+                    <div className="col-auto d-flex justify-content-evenly" key={index}>
                         <div className="card mb-4">
                             <div className="card-header">
                                 {article.img01 && (
@@ -406,7 +406,7 @@ const ArticlesList = () => {
                                         <Accordion.Item className="bg-dark" eventKey="early_releases">
                                             <Accordion.Header
                                                 className="bg-dark">{t('earlyReleases')}</Accordion.Header>
-                                            <Accordion.Body className="row">
+                                            <Accordion.Body className="row w-100 d-flex justify-content-evenly">
                                                 {renderArticles('early_releases', articles['early_releases'] || {})}
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -414,7 +414,7 @@ const ArticlesList = () => {
                                     {Object.keys(articles['articles'] || {}).map((subCategory, subIndex) => (
                                         <Accordion.Item className="bg-dark" eventKey={subCategory} key={subIndex}>
                                             <Accordion.Header>{t(`${subCategory}`)}</Accordion.Header>
-                                            <Accordion.Body className="row">
+                                            <Accordion.Body className="row w-100 d-flex justify-content-evenly">
                                                 {renderArticles('articles', articles['articles'][subCategory] || {})}
                                             </Accordion.Body>
                                         </Accordion.Item>
