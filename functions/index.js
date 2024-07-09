@@ -306,9 +306,11 @@ const handle_single_dir = async (directory) =>{
 
         categories.forEach(category => {
             if (!articles[category]) {
-                articles[category] = [];
+                articles[category] = {};
             }
-            articles[category].push(newArticle);
+            articles[category][newArticle]={
+                "date": content.date.split('/').reverse().join('-')
+            };
         });
 
         // Collect all articles with their metadata

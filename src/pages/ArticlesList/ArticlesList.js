@@ -107,9 +107,7 @@ const ArticlesList = () => {
             const subCategories = Object.keys(categoryData);
 
             const fetchSubCategoryData = subCategories.map(async (subCategory) => {
-                const articles = !authorCode
-                    ? categoryData[subCategory]
-                    : Object.keys(categoryData[subCategory]);
+                const articles =Object.keys(categoryData[subCategory]);
 
                 const fetchArticles = articles.map(async (articleKey) => {
                     try {

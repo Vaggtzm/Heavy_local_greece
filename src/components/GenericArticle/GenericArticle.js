@@ -301,7 +301,7 @@ const DefaultArticle = (props) => {
                         <SocialBar/>
                         <PageWithComments/>
                     </div>
-                    <ReadMore/>
+                    <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>
                 </div>
             </div>
         </>
