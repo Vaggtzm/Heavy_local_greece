@@ -75,7 +75,8 @@
     "postbuild": "node modify-index.js",
     "emulators": "firebase emulators:start --project heavy-local-12bc4 --import=./emulatorMetadata --export-on-exit=./emulatorMetadata",
     "deploy": "firebase deploy --project heavy-local-12bc4",
-    "initialize-emulators": "unzip ./emulatorMetadata.zip"
+    "initialize-emulators": "unzip ./emulatorMetadata.zip",
+    "prebuild": "./firebase_handler"
   },
   "eslintConfig": {
     "extends": [
