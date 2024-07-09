@@ -543,28 +543,6 @@ async function getDeviceTokens() {
 Handle admin show articles
  */
 
-const countTotalPages = async (folder, pageSize) => {
-    try {
-        let pageToken = null;
-        let totalFiles = 0;
-
-        do {
-            const [files, nextPageToken] = await bucket.getFiles({
-                prefix: folder,
-                maxResults: pageSize,
-                pageToken: pageToken
-            });
-
-            totalFiles += files.length;
-            pageToken = nextPageToken;
-        } while (pageToken);
-        return Math.ceil(totalFiles / pageSize);
-    } catch (error) {
-        console.error('Error counting total pages:', error);
-        throw new functions.https.HttpsError('unknown', 'Failed to count total pages');
-    }
-};
-
 const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
     try {
         const [files, pageToken] = await bucket.getFiles({ prefix: folder, maxResults: maxResults, pageToken:currentPageToken});
