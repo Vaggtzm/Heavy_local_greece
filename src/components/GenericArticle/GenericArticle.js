@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
-import {getDownloadURL, getMetadata, ref, updateMetadata} from "firebase/storage";
+import {getDownloadURL, ref, updateMetadata} from "firebase/storage";
 import {onValue, ref as databaseRef, remove, update} from "firebase/database";
 import SocialBar from "../ShareBtns/SocialMediaBar";
 import PageWithComments from "../Comments/comment";
@@ -29,17 +29,14 @@ const DefaultArticle = (props) => {
     const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
     const [imageStorageRef, setImageStorageRef] = useState(null);
 
-    const { t, i18n} = useTranslation();
+    const {t, i18n} = useTranslation();
     const [showModal, setShowModal] = useState(false);
     const handleCloseModal = () => setShowModal(false);
 
     const fetchSavedStatus = async () => {
         const currentUser = auth.currentUser;
         if (currentUser) {
-            const savedArticlesRef = databaseRef(
-                database,
-                `users/${currentUser.uid}/savedArticles`
-            );
+            const savedArticlesRef = databaseRef(database, `users/${currentUser.uid}/savedArticles`);
             console.log(`users/${currentUser.uid}/savedArticles`);
             onValue(savedArticlesRef, (snapshot) => {
                 const savedArticles = snapshot.val() || {};
@@ -53,7 +50,7 @@ const DefaultArticle = (props) => {
         const currentLang = i18n.language;
 
         // Ensure both articleData.lang and currentLang are defined before checking the condition
-        if (articles.lang && currentLang && articles.lang !== currentLang&&Object.keys(articles.translations).includes(currentLang)) {
+        if (articles.lang && currentLang && articles.lang !== currentLang && Object.keys(articles.translations).includes(currentLang)) {
             setShowModal(true);
         }
     }, [articles, i18n.language]);
@@ -83,9 +80,7 @@ const DefaultArticle = (props) => {
         const translations = {};
 
         for (const translation of Object.keys(data.translations)) {
-            const translationExists = await checkIfTranslationExists(
-                data.translations[translation]
-            );
+            const translationExists = await checkIfTranslationExists(data.translations[translation]);
             if (translationExists) {
                 translations[translation] = data.translations[translation];
             }
@@ -97,7 +92,7 @@ const DefaultArticle = (props) => {
         setLoading(true);
 
         try {
-            const articleRef = ref(storage, `${isEarlyAccess?"early_releases":"articles"}/${name}.json`);
+            const articleRef = ref(storage, `${isEarlyAccess ? "early_releases" : "articles"}/${name}.json`);
 
             const articleSnapshot = await getDownloadURL(articleRef);
 
@@ -112,9 +107,7 @@ const DefaultArticle = (props) => {
 
             // Start fetching image URL and translations concurrently
             const fetchImageUrl = getFirebaseStorageUrl(articleData.img01, setShouldStoreMetadata, setImageStorageRef);
-            const fetchTranslations = articleData.translations && Object.keys(articleData.translations).length > 0
-                ? checkTranslations(articleData)
-                : Promise.resolve({});
+            const fetchTranslations = articleData.translations && Object.keys(articleData.translations).length > 0 ? checkTranslations(articleData) : Promise.resolve({});
 
             const [imageUrl, translationsResult] = await Promise.all([fetchImageUrl, fetchTranslations]);
 
@@ -136,17 +129,10 @@ const DefaultArticle = (props) => {
     };
 
 
-
-
-
-
     const toggleSaveArticle = useCallback(() => {
         const currentUser = auth.currentUser;
         if (currentUser) {
-            const savedArticlesRef = databaseRef(
-                database,
-                `users/${currentUser.uid}/savedArticles/${name}`
-            );
+            const savedArticlesRef = databaseRef(database, `users/${currentUser.uid}/savedArticles/${name}`);
             if (isSaved) {
                 remove(savedArticlesRef).then();
                 setIsSaved(false);
@@ -171,8 +157,7 @@ const DefaultArticle = (props) => {
     };
 
     if (loading) {
-        return (
-            <Spinner style={{
+        return (<Spinner style={{
                 width: '100px',
                 height: '100px',
                 position: 'absolute',
@@ -183,129 +168,113 @@ const DefaultArticle = (props) => {
                 margin: 'auto'
             }} animation="border" role="status">
                 <span className="visually-hidden">{t('loadingMessage')}</span>
-            </Spinner>
-        );
+            </Spinner>);
     }
 
-    return (
-        <>
-            <LanguageModal languages={availableLanguages} articleLanguage={articles.lang} siteLanguage={i18n.language} show={showModal} handleClose={handleCloseModal} targetLink={(translations[i18n.language])?`/article${isEarlyAccess?"/early":""}/${translations[i18n.language].replace(".json", "")}`:""} />
+    return (<>
+            <LanguageModal languages={availableLanguages} articleLanguage={articles.lang} siteLanguage={i18n.language}
+                           show={showModal} handleClose={handleCloseModal}
+                           targetLink={(translations[i18n.language]) ? `/article${isEarlyAccess ? "/early" : ""}/${translations[i18n.language].replace(".json", "")}` : ""}/>
             <Helmet>
                 <title>{articles.title}</title>
             </Helmet>
-            <div className="container">
-                <div className="row text-white">
-                    <div className="col-md-12 d-flex justify-content-evenly">
-                        <h3>{articles.title}</h3>
-                        <hr className="bg-dark"/>
-                    </div>
+            <div className="container text-white">
 
-                    <div className="row">
-                        <div className="col-12 col-md-6 mb-3 mb-md-0 d-flex align-items-center">
-                            <AuthorOfArticle authorCode={articles.sub}/>
-                        </div>
-                        <div className="col-12 col-md-6 d-flex align-items-center">
-                            <AuthorOfArticle authorCode={articles.translatedBy}/>
-                        </div>
-                    </div>
-
-                    <hr className={"mt-2 bg-dark"}/>
-                    <div className="col-md-6 credits-box">
-                        {articles.img01 && <img
-                            className="img-fluid w-100"
-                            src={articles.img01}
-                            alt={articles.title}
-                            onLoad={async (image) => {
-                                if (shouldStoreMetadata) {
-                                    const metadata = {
-                                        customMetadata: {
-                                            width: image.target.width,
-                                            height: image.target.height
-                                        }
-                                    };
-                                    await updateMetadata(imageStorageRef, metadata);
-                                }
-                            }}
-                        />}
-                        <p className="lead">
-                            <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
-                        </p>
-                        <div className="lead">
-                            {articles.socials ? (
-                                <div className="lead">
-                                    {articles.socials.facebook && (
-                                        <a href={articles.socials.facebook}>
-                                            <i className="bi bi-facebook"></i>
-                                        </a>
-                                    )}
-                                    {articles.socials.instagram && (
-                                        <a href={articles.socials.instagram}>
-                                            <i className="bi bi-instagram"></i>
-                                        </a>
-                                    )}
-                                    {articles.socials.spotify && (
-                                        <a href={articles.socials.spotify}>
-                                            <i className="bi bi-spotify"></i>
-                                        </a>
-                                    )}
-                                    {articles.socials.youtube && (
-                                        <a href={articles.socials.youtube}>
-                                            <i className="bi bi-youtube"></i>
-                                        </a>
-                                    )}
-                                </div>
-                            ) : (
-                                <span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>
-                            )}
-                        </div>
-
-                        {translations && Object.keys(translations).length > 0 && (
-                            <>
-                                <hr className="bg-dark"/>
-                                <h5>Translations</h5>
-                                {Object.keys(translations).map((translation) => (
-                                    <NavLink
-                                        className="btn btn-dark"
-                                        to={`/article${isEarlyAccess?"/early":""}/${translations[translation].replace(".json", "")}`}
-                                        key={translation}
-                                    >
-                                        {availableLanguages[translation]}
-                                    </NavLink>
-                                ))}
-                            </>
-                        )}
-
-                        <hr className="bg-dark"/>
-                        {enableSaving && (
-                            <span
-                                className="btn btn-danger w-25 rounded-4"
-                                onClick={toggleSaveArticle}
-                                style={{cursor: "pointer"}}
-                            >
-                {isSaved ? (
-                    <i className="fas fa-heart" style={{color: "red"}}></i>
-                ) : (
-                    <i className="far fa-heart"></i>
-                )}
-              </span>
-                        )}
-                        <a
-                            href="https://buymeacoffee.com/tzimasvagg7"
-                            className="btn btn-danger 25 m-2 rounded-4"
-                        >
-                            Say Thanks
-                        </a>
-                    </div>
-                    <div className="col-md-6">
-                        <div style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }} dangerouslySetInnerHTML={{__html: articles.content}}></div>
-                        <SocialBar/>
-                        <PageWithComments/>
-                    </div>
-                    <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>
+                <div className={"col-12 col-md-2"}>
+                    <span className={"badge bg-light text-dark"}>
+                            {articles.date}
+                    </span>
                 </div>
+                <div className={"col-12 col-md-10"}>
+                    <h3>{articles.title}</h3>
+                    <hr className="bg-dark w-100"/>
+                </div>
+
+
+                <div className="row h-100">
+                    <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">
+                        <AuthorOfArticle authorCode={articles.sub}/>
+                    </div>
+
+                    <div className="col-10 col-md-5 d-flex align-items-center">
+                        <AuthorOfArticle authorCode={articles.translatedBy}/>
+                    </div>
+                </div>
+
+                <hr className={"mt-2 bg-dark"}/>
+                <div className="col-md-6 credits-box">
+                    {articles.img01 && <img
+                        className="img-fluid w-100"
+                        src={articles.img01}
+                        alt={articles.title}
+                        onLoad={async (image) => {
+                            if (shouldStoreMetadata) {
+                                const metadata = {
+                                    customMetadata: {
+                                        width: image.target.width, height: image.target.height
+                                    }
+                                };
+                                await updateMetadata(imageStorageRef, metadata);
+                            }
+                        }}
+                    />}
+                    <p className="lead">
+                        <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
+                    </p>
+                    <div className="lead">
+                        {articles.socials ? (<div className="lead">
+                                {articles.socials.facebook && (<a href={articles.socials.facebook}>
+                                        <i className="bi bi-facebook"></i>
+                                    </a>)}
+                                {articles.socials.instagram && (<a href={articles.socials.instagram}>
+                                        <i className="bi bi-instagram"></i>
+                                    </a>)}
+                                {articles.socials.spotify && (<a href={articles.socials.spotify}>
+                                        <i className="bi bi-spotify"></i>
+                                    </a>)}
+                                {articles.socials.youtube && (<a href={articles.socials.youtube}>
+                                        <i className="bi bi-youtube"></i>
+                                    </a>)}
+                            </div>) : (<span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>)}
+                    </div>
+
+                    {translations && Object.keys(translations).length > 0 && (<>
+                            <hr className="bg-dark"/>
+                            <h5>Translations</h5>
+                            {Object.keys(translations).map((translation) => (<NavLink
+                                    className="btn btn-dark"
+                                    to={`/article${isEarlyAccess ? "/early" : ""}/${translations[translation].replace(".json", "")}`}
+                                    key={translation}
+                                >
+                                    {availableLanguages[translation]}
+                                </NavLink>))}
+                        </>)}
+
+                    <hr className="bg-dark"/>
+                    {enableSaving && (<span
+                            className="btn btn-danger w-25 rounded-4"
+                            onClick={toggleSaveArticle}
+                            style={{cursor: "pointer"}}
+                        >
+                {isSaved ? (<i className="fas fa-heart" style={{color: "red"}}></i>) : (
+                    <i className="far fa-heart"></i>)}
+              </span>)}
+                    <a
+                        href="https://buymeacoffee.com/tzimasvagg7"
+                        className="btn btn-danger 25 m-2 rounded-4"
+                    >
+                        Say Thanks
+                    </a>
+                </div>
+                <div className="col-md-6">
+                    <div style={{wordWrap: 'break-word', overflowWrap: 'break-word'}}
+                         dangerouslySetInnerHTML={{__html: articles.content}}></div>
+                    <SocialBar/>
+                    <PageWithComments/>
+                </div>
+                <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>
             </div>
-        </>
-    );
+        </>);
 };
 
 export default DefaultArticle;

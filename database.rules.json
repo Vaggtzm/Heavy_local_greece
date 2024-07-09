@@ -13,7 +13,8 @@
       ".read": true
     },
     "articlesList": {
-      ".read": true
+      ".read": true,
+      ".indexOn": "date"
     },
     "deviceTokens":{
       ".read": false,
