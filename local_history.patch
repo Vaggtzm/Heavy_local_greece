@@ -1,0 +1,149 @@
+Index: src/App.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.js b/src/App.js
+--- a/src/App.js	
++++ b/src/App.js	(date 1720180079277)
+@@ -1,10 +1,10 @@
+ import 'bootstrap/dist/css/bootstrap.min.css';
+ import {getToken} from "firebase/messaging";
+ import React, {useEffect, useRef, useState} from "react";
+-import {Route, Routes} from 'react-router-dom';
++import {Route, Routes, Navigate} from 'react-router-dom';
+ import DefaultArticle from './components/GenericArticle/GenericArticle';
+ import NotificationToast from "./components/messaging/Message";
+-import {database, firestore, messaging} from './firebase';
++import {firestore, messaging} from './firebase';
+ import Gallery from './pages/Gallery/Gallery';
+ import Home from './pages/Home';
+ import LegendV0L2 from './pages/articles/Aleah';
+@@ -26,14 +26,11 @@
+ import Authors from "./pages/Authors/Authors";
+ import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
+ import AdminSystem from "./components/AdminSystem/AdminSystem";
+-import Footer from "./components/footer/footer";
+ import AppNavigation from "./components/AppNav/AppNav";
+ import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
+ import ArticlesList from "./pages/ArticlesList/ArticlesList";
+ 
+ import NotFound from "./pages/NotFound/NotFound";
+-import RadioPlayer from "./components/Radio/RadioPlayer";
+-import {equalTo, get, orderByChild, push, query, ref} from 'firebase/database';
+ import {addDoc, collection, serverTimestamp} from "firebase/firestore";
+ 
+ function App() {
+@@ -43,15 +40,19 @@
+ 
+     const saveDeviceToken = async (token) => {
+         try {
+-            const dbRef = ref(database, 'deviceTokens');
+-            const tokenQuery = query(dbRef, orderByChild('token'), equalTo(token));
+-            const snapshot = await get(tokenQuery);
++            const response = await fetch('/save_token/', {
++                method: 'POST',
++                headers: {
++                    'Content-Type': 'application/json',
++                },
++                body: JSON.stringify({token}),
++            });
+ 
+-            if (snapshot.exists()) {
+-                console.log('Device token already exists.');
++            if (response.ok) {
++                const data = await response.json();
++                console.log(data.message); // Log success message from Firebase Function
+             } else {
+-                await push(dbRef, { token });
+-                console.log('Device token saved successfully.');
++                console.error('Failed to save device token');
+             }
+         } catch (error) {
+             console.error('Error saving device token:', error);
+@@ -61,51 +62,28 @@
+ 
+ 
+     async function requestPermission() {
+-        //requesting permission using Notification API
+-        const permission = await Notification.requestPermission();
++        try {
++            //requesting permission using Notification API
++            const permission = await Notification.requestPermission();
+ 
+-        if (permission === "granted") {
+-            const token = await getToken(messaging, {
+-                vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
+-            });
++            if (permission === "granted") {
++                const token = await getToken(messaging, {
++                    vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
++                });
+ 
+-            if ('serviceWorker' in navigator) {
+-                navigator.serviceWorker.register('/firebase-messaging-sw.js')
+-                    .then(function(registration) {
+-                        console.log('Service Worker Registered', registration);
+-                    })
+-                    .catch(function(err) {
+-                        console.error('Service Worker registration failed', err);
+-                    });
+-            }
+-
+-            //We can send token to server
+-            console.log("Token generated : ", token);
++                //We can send token to server
++                console.log("Token generated : ", token);
+ 
+-            await saveDeviceToken(token);
++                await saveDeviceToken(token);
+ 
+-        } else if (permission === "denied") {
+-            //notifications are blocked
+-            alert("You denied for the notification");
++            }
++        }catch (e){
++            console.error("Error requesting permission: ", e);
+         }
+     }
+ 
+     useEffect(() => {
+         requestPermission().then(r => {});
+-
+-        const c = collection(firestore, "pulse-of-the-underground")
+-        try {
+-            const docRef = addDoc(c, {
+-                name: "Sample Name",
+-                description: "Sample Description",
+-                timestamp: serverTimestamp()
+-            }).then(()=>{console.log("Document written with ID: ", docRef.id);})
+-
+-        } catch (error) {
+-            console.error("Error adding document: ", error);
+-        }
+-
+-        console.log("Hello world")
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+     }, []);
+ 
+@@ -164,17 +142,15 @@
+                     <Route path='/User/home' element={<UserHome/>}/>
+                     <Route path='/User/Saved' element={<SavedArtciles/>}/>
+                     <Route path='/author/:authorCode' element={<ArticlesList/>}/>
++                    <Route path="*" element={<Navigate to="/404" />} />
+                     <Route path={"/404"} element={<NotFound/>}/>
+                 </Routes>
+             </div>
+             {/**
+              Ραδιόφωνο. Το πας όπου θες
+              **/}
+-            <div className={"sticky-bottom w-75 h-25"}>
+-                <RadioPlayer uid={589803} theme={"purple"}/>
+-                {/* uid, theme, color, coverPhoto */}
+-            </div>
+-            <Footer footerVisible={menuVisible}/>
++         
++          {/** <Footer footerVisible={menuVisible}/> */} 
+         </div>
+     );
+ }

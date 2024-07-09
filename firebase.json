@@ -2,7 +2,7 @@
   "hosting": [{
     "site": "heavy-local-12bc4",
     "predeploy": "npm run build",
-    "postdeploy":"clear&&echo '\n\n\n\n\n\n\n\n\nΚάνε push ΜΑΛΑΚΑ\n\n\n\n\n\n\n'",
+    "postdeploy":"clear&&echo '\n\n\n\n\n\n\n\n\nΚάνε push ΜΑΛΑΚΑ ΓΤΧΣ\n\n\n\n\n\n\n'",
     "public": "build",
     "ignore": [
       "firebase.json",
