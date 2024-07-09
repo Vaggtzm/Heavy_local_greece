@@ -364,7 +364,7 @@ const ArticlesList = () => {
                     <div className="d-flex justify-content-center mb-4">
                         <Form.Control
                             type="text"
-                            className={"bg-dark text-white w-50"}
+                            className={"bg-dark text-white w-50 rounded-5"}
                             placeholder="Search articles"
                             value={searchQuery}
                             onChange={(e) => {
