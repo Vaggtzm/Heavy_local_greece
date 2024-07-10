@@ -84,10 +84,8 @@ const TopNews = () => {
                             {/**Interviews END */}
 
 
-
-
                             {/**Reviews Start  (ENG FIRST) */}
-                            
+
 
                             <div className="row">
                                 <div className="col-md-6">
@@ -132,17 +130,38 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa3147365781_16_800x800.jpg?alt=media&token=c7ab4457-6477-4f6f-b9e9-6bac0c0f2e52"
+                                        src="https://pulse-of-the-underground.com/assets/Sirius-1068x801.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                            Get A Grip - Destiny (Album Review + band info):Ένα Σκοτεινό Πεπρωμένο
+                                            Single Review + info - Μια πορεία δικαίωσης και εξιλέωσης - Sirius - Desdichado
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/-----Get-A-Grip---Destiny-(Album-Review-+-band-info)"}>
+                                                 to={"/article/Single-Review-+-info----------Sirius---Desdichado"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/450259163_461419796829012_4244951595615502782_n.jpg"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                            Single Review - Ενώπιον της Αγνότητας - Silent Cries - Face The Innocence
+                                        </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/Single-Review--------Silent-Cries---Face-The-Innocence"}>
                                             Read More
                                         </NavLink>
                                     </div>
