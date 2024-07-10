@@ -1,46 +1,57 @@
-import {functions, storage} from "../../../firebase";
+import {database,  storage} from "../../../firebase";
 
 
-import {httpsCallable} from "firebase/functions";
 import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
+import {get, onValue, ref as databaseRef} from "firebase/database";
 
-const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
-    try {
-        const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
-        const result = await fetchFilesFunction({ maxResults: 70, folder: 'articles', pageToken: pageToken });
-        const nextPageToken = handleResult(result, setAlreadyPublishedArticles, setAlreadyPublishedError, pageToken === null);
-        if (!nextPageToken||nextPageToken.pageToken===pageToken) {
-            // No more pages to fetch, set loading to false
+
+const fetchAllFiles = (setArticlesByCategory, setLoading, pageToken) => {
+    const articlesRef = databaseRef(database, 'articlesList');
+    return onValue(articlesRef, async (snapshot)=> {
+        try {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const folders = Object.keys(data);
+                const articles = {};
+
+                // Fetch articles for each folder
+                for (const folder of folders) {
+                    const folderRef = databaseRef(database, `articlesList/${folder}`);
+                    const folderSnapshot = await get(folderRef);
+
+                    if (folderSnapshot.exists()) {
+                        const articlesByCategory = [];
+                        const categoryData = folderSnapshot.val();
+
+                        // Iterate over articles in the category
+                        Object.keys(categoryData).forEach(articleKey => {
+                            const articleCategory = categoryData[articleKey];
+                            Object.keys(articleCategory).forEach((articleTitle) => {
+                                const temp = articleCategory[articleTitle];
+
+                                temp.name = articleTitle;
+                                temp.category = articleKey || 'uncategorized';
+                                temp.folder = folder;
+
+                                articlesByCategory.push(temp);
+                            })
+                        });
+                        articles[folder] = articlesByCategory;
+                    }
+                }
+                setArticlesByCategory(articles);
+            }
+
             setLoading(false);
-        } else {
-            // Recursively fetch the next page of files
-            await fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, nextPageToken.pageToken);
+        } catch (error) {
+            console.error('Error fetching files:', error);
+            setLoading(false);
         }
-    } catch (error) {
-        console.error('Error fetching files:', error);
-        setLoading(false);
-    }
+    });
 };
 
 export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading){
-    const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
-    try {
-        const pending = fetchFilesFunction({ maxResults:100, folder: 'upload_from_authors', pageToken: null }).then((uploadedFilesResult)=>{
-            handleResult(uploadedFilesResult, setFiles, setError, true);
-        })
-
-        fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, null)
-
-
-        const early = fetchFilesFunction({ maxResults:100, folder: 'early_releases', pageToken: null}).then((earlyReleasedFilesResult)=>{
-            handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError, true);
-        });
-        await Promise.all([
-            pending, early
-        ]);
-    } catch (e) {
-        setError(e.message);
-    }
+    return fetchAllFiles(setFiles, setAlreadyPublishedError, setLoading, null)
 }
 
 

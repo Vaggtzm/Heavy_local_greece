@@ -333,7 +333,8 @@ const handle_single_dir = async (directory) =>{
                 "translations": content.translations
                     ? filterUndefinedValues(content.translations)
                     : {},
-                "lang": content.lang?content.lang:""
+                "lang": content.lang?content.lang:"",
+                "isReady":!!content.isReady
             };
         });
 
@@ -554,6 +555,11 @@ function getImageDimensionsBuffer(buffer) {
         });
     });
 }
+
+exports.handleDeleteArticle = functions.storage
+    .object().onDelete(async (object)=>{
+        await Promise.all([handleArticleCategories(object)])
+    })
 
 
 exports.handleNewArticle = functions.storage
