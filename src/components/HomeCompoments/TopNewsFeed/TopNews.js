@@ -87,6 +87,7 @@ const TopNews = () => {
 
 
                             {/**Reviews Start  (ENG FIRST) */}
+                            
 
                             <div className="row">
                                 <div className="col-md-6">
@@ -128,7 +129,25 @@ const TopNews = () => {
                                 </div>
                             </div>
 
-
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa3147365781_16_800x800.jpg?alt=media&token=c7ab4457-6477-4f6f-b9e9-6bac0c0f2e52"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                            Get A Grip - Destiny (Album Review + band info):Ένα Σκοτεινό Πεπρωμένο
+                                        </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/-----Get-A-Grip---Destiny-(Album-Review-+-band-info)"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
                             {/**Reviews End */}
                         </div>
 
