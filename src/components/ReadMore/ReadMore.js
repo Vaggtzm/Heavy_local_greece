@@ -97,28 +97,10 @@ const ReadMore = ({category, isEarlyAccess}) => {
         const latestArticlesQuery = query(latestCategoryRef, orderByChild('date'), limitToLast(3));
         return onValue(latestArticlesQuery, async (snapshot) => {
             setLatestArticlesOnCategory([]);
-            const data = Object.keys(snapshot.val());
+            const data = snapshot.val();
             if(data){
-                const folder = isEarlyAccess?"early_releases":"articles";
-                const articlesPromises = data.map(async (article)=>{
-                    const articleStorageRef = storageRef(storage, `${folder}/${article}.json`);
-                    const article_data_url = await getDownloadURL(articleStorageRef);
-                    const article_data_string = await fetch(article_data_url);
-
-                    const main_article = await article_data_string.json();
-                    main_article.content = truncateHTML(main_article.content, 20);
-                    const early_releases = (isEarlyAccess)?"/early":""
-                    main_article.link = `/article${early_releases}/${article}`
-                    return main_article;
-                });
-
-                const articles = await Promise.all(articlesPromises);
-
-                setLatestArticlesOnCategory((previousData)=> {
-                    const newData = [...previousData, ...articles]
-                    console.log(newData);
-                    return newData
-                });
+                console.log(data);
+                setLatestArticlesOnCategory(data);
             }
         })
     }
@@ -142,18 +124,17 @@ const ReadMore = ({category, isEarlyAccess}) => {
             <div className="container">
                 <h4>Pulse Of The Undeground</h4>
                 <div className="row mt-4 mb-5 text-center">
-                    {latestArticlesOnCategory.map((article)=>{
+                    {Object.keys(latestArticlesOnCategory).map((articleLink)=>{
+                        const article = latestArticlesOnCategory[articleLink];
+                        article.link = `/article${isEarlyAccess?"/early":""}/${articleLink}`;
                         return(<div className="col-md-4 mb-4">
                         <div className="card h-100 w-100 bg-dark text-white">
-                            <img className="card-img-top shadow-lg img-fluid" src={article.img01}
+                            <img className="card-img-top shadow-lg img-fluid" src={article.image}
                                  alt={article.title}></img>
                             <div className={"card-header"}>
                                 <h3 className="card-title fw-bold">{article.title} </h3>
                             </div>
                             <div className="card-body">
-
-                                <p className="card-text lead" dangerouslySetInnerHTML={{__html: article.content}}>
-                                </p>
                                 <NavLink to={article.link}
                                          className="btn btn-primary">{t('readMore')}</NavLink>
                             </div>

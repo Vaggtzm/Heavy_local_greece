@@ -158,28 +158,28 @@ const DefaultArticle = (props) => {
 
     if (loading) {
         return (<Spinner style={{
-                width: '100px',
-                height: '100px',
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                margin: 'auto'
-            }} animation="border" role="status">
-                <span className="visually-hidden">{t('loadingMessage')}</span>
-            </Spinner>);
+            width: '100px',
+            height: '100px',
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            margin: 'auto'
+        }} animation="border" role="status">
+            <span className="visually-hidden">{t('loadingMessage')}</span>
+        </Spinner>);
     }
 
     return (<>
-            <LanguageModal languages={availableLanguages} articleLanguage={articles.lang} siteLanguage={i18n.language}
-                           show={showModal} handleClose={handleCloseModal}
-                           targetLink={(translations[i18n.language]) ? `/article${isEarlyAccess ? "/early" : ""}/${translations[i18n.language].replace(".json", "")}` : ""}/>
-            <Helmet>
-                <title>{articles.title}</title>
-            </Helmet>
-            <div className="container text-white">
-
+        <LanguageModal languages={availableLanguages} articleLanguage={articles.lang} siteLanguage={i18n.language}
+                       show={showModal} handleClose={handleCloseModal}
+                       targetLink={(translations[i18n.language]) ? `/article${isEarlyAccess ? "/early" : ""}/${translations[i18n.language].replace(".json", "")}` : ""}/>
+        <Helmet>
+            <title>{articles.title}</title>
+        </Helmet>
+        <div className="container text-white">
+            <div className={"row"}>
                 <div className={"col-12 col-md-2"}>
                     <span className={"badge bg-light text-dark"}>
                             {articles.date}
@@ -187,21 +187,19 @@ const DefaultArticle = (props) => {
                 </div>
                 <div className={"col-12 col-md-10"}>
                     <h3>{articles.title}</h3>
-                    <hr className="bg-dark w-100"/>
+                </div>
+                <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">
+                    <AuthorOfArticle authorCode={articles.sub}/>
                 </div>
 
-
-                <div className="row h-100">
-                    <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">
-                        <AuthorOfArticle authorCode={articles.sub}/>
-                    </div>
-
-                    <div className="col-10 col-md-5 d-flex align-items-center">
-                        <AuthorOfArticle authorCode={articles.translatedBy}/>
-                    </div>
+                <div className="col-10 col-md-5 d-flex align-items-center">
+                    <AuthorOfArticle authorCode={articles.translatedBy}/>
                 </div>
+            </div>
 
-                <hr className={"mt-2 bg-dark"}/>
+
+            <hr className={"mt-2 bg-dark"}/>
+            <div className={"row"}>
                 <div className="col-md-6 credits-box">
                     {articles.img01 && <img
                         className="img-fluid w-100"
@@ -223,39 +221,39 @@ const DefaultArticle = (props) => {
                     </p>
                     <div className="lead">
                         {articles.socials ? (<div className="lead">
-                                {articles.socials.facebook && (<a href={articles.socials.facebook}>
-                                        <i className="bi bi-facebook"></i>
-                                    </a>)}
-                                {articles.socials.instagram && (<a href={articles.socials.instagram}>
-                                        <i className="bi bi-instagram"></i>
-                                    </a>)}
-                                {articles.socials.spotify && (<a href={articles.socials.spotify}>
-                                        <i className="bi bi-spotify"></i>
-                                    </a>)}
-                                {articles.socials.youtube && (<a href={articles.socials.youtube}>
-                                        <i className="bi bi-youtube"></i>
-                                    </a>)}
-                            </div>) : (<span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>)}
+                            {articles.socials.facebook && (<a href={articles.socials.facebook}>
+                                <i className="bi bi-facebook"></i>
+                            </a>)}
+                            {articles.socials.instagram && (<a href={articles.socials.instagram}>
+                                <i className="bi bi-instagram"></i>
+                            </a>)}
+                            {articles.socials.spotify && (<a href={articles.socials.spotify}>
+                                <i className="bi bi-spotify"></i>
+                            </a>)}
+                            {articles.socials.youtube && (<a href={articles.socials.youtube}>
+                                <i className="bi bi-youtube"></i>
+                            </a>)}
+                        </div>) : (<span dangerouslySetInnerHTML={{__html: articles.Socials}}></span>)}
                     </div>
 
                     {translations && Object.keys(translations).length > 0 && (<>
-                            <hr className="bg-dark"/>
-                            <h5>Translations</h5>
-                            {Object.keys(translations).map((translation) => (<NavLink
-                                    className="btn btn-dark"
-                                    to={`/article${isEarlyAccess ? "/early" : ""}/${translations[translation].replace(".json", "")}`}
-                                    key={translation}
-                                >
-                                    {availableLanguages[translation]}
-                                </NavLink>))}
-                        </>)}
+                        <hr className="bg-dark"/>
+                        <h5>Translations</h5>
+                        {Object.keys(translations).map((translation) => (<NavLink
+                            className="btn btn-dark"
+                            to={`/article${isEarlyAccess ? "/early" : ""}/${translations[translation].replace(".json", "")}`}
+                            key={translation}
+                        >
+                            {availableLanguages[translation]}
+                        </NavLink>))}
+                    </>)}
 
                     <hr className="bg-dark"/>
                     {enableSaving && (<span
-                            className="btn btn-danger w-25 rounded-4"
-                            onClick={toggleSaveArticle}
-                            style={{cursor: "pointer"}}
-                        >
+                        className="btn btn-danger w-25 rounded-4"
+                        onClick={toggleSaveArticle}
+                        style={{cursor: "pointer"}}
+                    >
                 {isSaved ? (<i className="fas fa-heart" style={{color: "red"}}></i>) : (
                     <i className="far fa-heart"></i>)}
               </span>)}
@@ -272,9 +270,10 @@ const DefaultArticle = (props) => {
                     <SocialBar/>
                     <PageWithComments/>
                 </div>
-                <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>
             </div>
-        </>);
+            <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>
+        </div>
+    </>);
 };
 
 export default DefaultArticle;

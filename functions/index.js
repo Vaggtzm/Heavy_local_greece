@@ -284,6 +284,24 @@ const handleArticleCategories = async (object) => {
     await Promise.all(directories.map(async (dir) => {return handle_single_dir(dir)}));
 }
 
+const sanitizeKey = (key) => {
+    return key
+        .replaceAll(".", "/39")
+        .replaceAll("#", "/40")
+        .replaceAll("$", "/41")
+        .replaceAll("/", "/42")
+        .replaceAll("[", "/43")
+        .replaceAll("]", "/44");
+};
+
+const filterUndefinedValues = (obj) => {
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+        if (!!value && !!key) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+};
 
 const handle_single_dir = async (directory) =>{
 
@@ -309,7 +327,13 @@ const handle_single_dir = async (directory) =>{
                 articles[category] = {};
             }
             articles[category][newArticle]={
-                "date": content.date.split('/').reverse().join('-')
+                "date": content.date.split('/').reverse().join('-'),
+                "title": content.title,
+                "image": content.img01,
+                "translations": content.translations
+                    ? filterUndefinedValues(content.translations)
+                    : {},
+                "lang": content.lang?content.lang:""
             };
         });
 
@@ -317,7 +341,8 @@ const handle_single_dir = async (directory) =>{
         allArticles.push({
             filename: newArticle,
             date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
-            categories
+            category: categories,
+            "lang": content.lang?content.lang:""
         });
 
         // Update author's written articles
@@ -327,7 +352,17 @@ const handle_single_dir = async (directory) =>{
         } else {
             ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${categories[0]}`);
         }
-        ref.child(newArticle).set(true).then(()=>{});
+        try {
+            ref.child(sanitizeKey(newArticle)).set({
+                "date": content.date.split('/').reverse().join('-'),
+                "title": content.title,
+                "image": content.img01,
+                "lang": content.lang ? content.lang : ""
+            }).then(() => {
+            }).catch((e)=>{});
+        }catch(e){
+            console.log(e);
+        }
     }
 
     // Save articles in `articlesList` as lists of filenames
@@ -345,12 +380,19 @@ const handle_single_dir = async (directory) =>{
     // Group all articles by category
     const articlesByCategory = {};
     allArticles.forEach(article => {
-        article.categories.forEach(category => {
-            if (!articlesByCategory[category]) {
-                articlesByCategory[category] = [];
+        if(!article.categories){
+            if(!articlesByCategory["undefined"]){
+                articlesByCategory["undefined"] = [];
             }
-            articlesByCategory[category].push(article);
-        });
+            articlesByCategory["undefined"].push(article);
+        }else{
+            article.categories.forEach(category => {
+                if (!articlesByCategory[category]) {
+                    articlesByCategory[category] = [];
+                }
+                articlesByCategory[category].push(article);
+            })
+        }
     });
 
     // Find the latest articles for each category

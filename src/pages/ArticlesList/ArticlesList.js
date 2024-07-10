@@ -4,17 +4,16 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage';
 import { auth, database, storage } from '../../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink, useParams } from 'react-router-dom';
-import { Accordion, Button, Form, Nav, Spinner } from 'react-bootstrap';
+import {Form, Nav, Spinner } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import Slider from 'react-slick';
+import {AccordionComponent} from "./AccordionComponent";
 
 const ArticlesList = () => {
     const { t } = useTranslation();
     const [articles, setArticles] = useState({});
     const [loading, setLoading] = useState(true);
-    const [activeKey, setActiveKey] = useState('Collabs and Sponsorships');
-    const [loggedIn, setLoggedIn] = useState(false);
     const [author, setAuthor] = useState({});
     const [borderSize, setBorderSize] = useState(6);
     const imgRef = useRef(null);
@@ -22,11 +21,10 @@ const ArticlesList = () => {
     const [galleryItems, setGalleryItems] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [batchSize, setBatchSize] = useState(20);
-    const [lastArticleKey, setLastArticleKey] = useState(null); // To track the last article key for pagination
     const [allArticles, setAllArticles] = useState([]); // To store all articles for pagination
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async (loggedIn) => {
             try {
                 let articlesRef;
                 if (!authorCode) {
@@ -38,26 +36,33 @@ const ArticlesList = () => {
 
                 get(articlesRef).then((snapshot) => {
                     let data = snapshot.val();
-                    if (!authorCode) {
-                        fetchArticlesWithImages(data).then((articlesWithImages) => {
-                            setAllArticles(articlesWithImages);
-                            setArticles(articlesWithImages);
-                            setLoading(false);
-                        });
-                    } else {
+                    let articles;
+                    if(!authorCode){
+                        articles = data
+                    }else{
+                        articles = data.writtenArticles;
                         fetchImagesFromGallery();
-
-                        fetchArticlesWithImages(data.writtenArticles).then((articlesWithImages) => {
-                            setAllArticles(articlesWithImages);
-                            setArticles(articlesWithImages);
-                            setLoading(false);
-                        });
                         let userImage = storageRef(storage, `/profile_images/${authorCode}_600x600`);
                         getDownloadURL(userImage).then((userImage) => {
                             data.photoURL = userImage;
                             setAuthor(data);
                         });
                     }
+
+                    console.log("articles",articles);
+
+                    if(loggedIn&&articles["early_releases"]) {
+                        const allEarly = articles["early_releases"];
+                        let mergedEarlyReleases = {};
+                        Object.values(allEarly).forEach((category) => {
+                            mergedEarlyReleases = {...mergedEarlyReleases, ...category};
+                        });
+                        articles["articles"]["earlyReleases"] = mergedEarlyReleases;
+                    }
+
+                    setAllArticles(articles);
+                    setArticles(articles);
+                    setLoading(false);
                 });
             } catch (error) {
                 console.error('Error fetching articles:', error);
@@ -66,14 +71,7 @@ const ArticlesList = () => {
         };
 
         auth.onAuthStateChanged((user) => {
-            fetchData().then();
-            if (!user) {
-                setLoggedIn(false);
-                setActiveKey('Collabs and Sponsorships');
-            } else {
-                setLoggedIn(true);
-                setActiveKey('early_releases');
-            }
+            fetchData(!!user).then();
         });
     }, [authorCode, batchSize]);
 
@@ -103,53 +101,6 @@ const ArticlesList = () => {
         return () => window.removeEventListener('resize', updateBorderSize);
     }, []);
 
-    const fetchArticlesWithImages = async (data) => {
-        console.log('Starting fetch');
-        const updatedData = {};
-
-        const categories = Object.keys(data);
-        const fetchCategoryData = categories.map(async (category) => {
-            console.log('category', category);
-            const categoryData = data[category];
-            const subCategories = Object.keys(categoryData);
-
-            const fetchSubCategoryData = subCategories.map(async (subCategory) => {
-                const articles = authorCode?Object.keys(categoryData[subCategory]):Object.values(categoryData[subCategory]);
-                console.log('articles', articles);
-                const fetchArticles = Object.values(articles).map(async (articleKey) => {
-                    try {
-                        const articleUrl = await getDownloadURL(storageRef(storage, `${category}/${articleKey}.json`));
-
-                        const response = await fetch(articleUrl);
-                        if (!response.ok) {
-                            throw new Error(`Failed to fetch article ${articleKey}`);
-                        }
-
-                        const article = await response.json();
-                        article.link = articleKey;
-                        return article;
-                    } catch (error) {
-                        console.error('Error fetching article:', error);
-                        return null;
-                    }
-                });
-
-                const articlesWithImages = await Promise.all(fetchArticles);
-                return { subCategory, articlesWithImages };
-            });
-
-            const subCategoryData = await Promise.all(fetchSubCategoryData);
-            updatedData[category] = subCategoryData.reduce((acc, { subCategory, articlesWithImages }) => {
-                acc[subCategory] = articlesWithImages;
-                return acc;
-            }, {});
-        });
-
-        await Promise.all(fetchCategoryData);
-
-        return updatedData;
-    };
-
     const fetchImagesFromGallery = () => {
         const galleryRef = ref(database, '/gallery/uploaded');
 
@@ -171,51 +122,6 @@ const ArticlesList = () => {
                     });
             }
         });
-    };
-
-    const renderArticles = (category, articles) => {
-        const renderedTranslationGroups = new Set();
-        return Object.values(articles)
-            .flat()
-            .map((article, index) => {
-                if (!article) return null;
-
-                const translationGroup = article.translations ? Object.values(article.translations).sort().join('-') : '';
-
-                if (renderedTranslationGroups.has(translationGroup)) {
-                    return null;
-                }
-
-                renderedTranslationGroups.add(translationGroup);
-
-                return (
-                    <div className="col-auto d-flex justify-content-evenly" key={index}>
-                        <div className="card mb-4">
-                            <div className="card-header">
-                                {article.img01 && (
-                                    <img
-                                        src={article.img01}
-                                        alt={article.title}
-                                        className="card-img-top mb-2"
-                                        style={{ maxHeight: '200px', objectFit: 'cover' }}
-                                    />
-                                )}
-                            </div>
-                            <div className="card-body">
-                                {article.title}
-                                <div className="card-text">
-                                    <NavLink
-                                        to={`/article${category === 'early_releases' ? '/early' : ''}/${article.link}`}
-                                        className="btn btn-danger"
-                                    >
-                                        {t('readMore')}
-                                    </NavLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-            });
     };
 
     const settings = {
@@ -252,29 +158,26 @@ const ArticlesList = () => {
         // Perform search logic here based on searchQuery
         // Filter articles based on search query in title or content
 
-        const filteredArticles = {};
-        Object.keys(allArticles).forEach((category) => {
-            const filteredSubCategories = {};
-            console.log(allArticles[category]);
-            console.log(searchQuery)
-            Object.keys(allArticles[category]).forEach((subCategory) => {
-                const filteredSubCategoryArticles = allArticles[category][subCategory].filter((article) =>
-                    (article)&&(article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        const filteredArticles = { articles: {} };
+
+        // Ensure allArticles is defined
+        if (!allArticles.articles) return;
+
+        // Iterate over each sub-category in articles
+        Object.keys(allArticles.articles).forEach((subCategory) => {
+            const filteredSubCategoryArticles = Object.values(allArticles.articles[subCategory]).filter((article) =>
+                (article) && (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     (article.content && article.content.toLowerCase().includes(searchQuery.toLowerCase())))
-                );
-                if (filteredSubCategoryArticles.length > 0) {
-                    filteredSubCategories[subCategory] = filteredSubCategoryArticles;
-                }
-            });
-            if (Object.keys(filteredSubCategories).length > 0) {
-                filteredArticles[category] = filteredSubCategories;
+            );
+
+            // If there are matching articles, add them to the filtered result
+            if (filteredSubCategoryArticles.length > 0) {
+                filteredArticles.articles[subCategory] = filteredSubCategoryArticles;
             }
         });
-        setArticles(filteredArticles);
-    };
 
-    const loadMoreArticles = () => {
-        setBatchSize(batchSize + 20);
+        console.log(filteredArticles);
+        setArticles(filteredArticles);
     };
 
     return (
@@ -364,7 +267,7 @@ const ArticlesList = () => {
                     <div className="d-flex justify-content-center mb-5 h-100 p-4">
                         {(!authorCode)?<Form.Control
                             type="text"
-                            className={"bg-dark text-white w-75 rounded-5 h-100 p-3"}
+                            className={"bg-dark text-white w-75 rounded-3 h-100 p-3"}
                             placeholder="Search articles"
                             value={searchQuery}
                             onChange={(e) => {
@@ -373,7 +276,7 @@ const ArticlesList = () => {
                             }}
                         />:<Form.Control // TODO: Αυτό πείραξε
                             type="text"
-                            className={"bg-dark text-white w-75 rounded-5 h-100 p-3"}
+                            className={"bg-dark text-white w-75 rounded-3 h-100 p-3"}
                             placeholder="Search articles"
                             value={searchQuery}
                             onChange={(e) => {
@@ -383,51 +286,7 @@ const ArticlesList = () => {
                         />}
                     </div>
 
-                    {(articles['early_releases'] || Object.keys(articles['articles'] || {}).length > 0) && (
-                        <div className="row bg-dark p-3">
-                            <div className="col-md-3 d-none d-md-block">
-                                <Nav variant="pills" className="flex-column sticky-top" activeKey={activeKey}
-                                     onSelect={(selectedKey) => setActiveKey(selectedKey)}>
-                                    {loggedIn && articles['early_releases'] && (
-                                        <Nav.Item>
-                                            <Nav.Link eventKey="early_releases">{t('earlyReleases')}</Nav.Link>
-                                        </Nav.Item>
-                                    )}
-                                    {Object.keys(articles['articles'] || {}).map((subCategory, subIndex) => (
-                                        <Nav.Item key={subIndex}>
-                                            <Nav.Link eventKey={subCategory}>{t(`${subCategory}`)}</Nav.Link>
-                                        </Nav.Item>
-                                    ))}
-                                </Nav>
-                            </div>
-                            <div className="col-md-9">
-                                <Accordion className="bg-dark" activeKey={activeKey} onSelect={(e) => setActiveKey(e)}>
-                                    {loggedIn && articles['early_releases'] && (
-                                        <Accordion.Item className="bg-dark" eventKey="early_releases">
-                                            <Accordion.Header
-                                                className="bg-dark">{t('earlyReleases')}</Accordion.Header>
-                                            <Accordion.Body className="row w-100 d-flex justify-content-evenly">
-                                                {renderArticles('early_releases', articles['early_releases'] || {})}
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    )}
-                                    {Object.keys(articles['articles'] || {}).map((subCategory, subIndex) => (
-                                        <Accordion.Item className="bg-dark" eventKey={subCategory} key={subIndex}>
-                                            <Accordion.Header>{t(`${subCategory}`)}</Accordion.Header>
-                                            <Accordion.Body className="row w-100 d-flex justify-content-evenly">
-                                                {renderArticles('articles', articles['articles'][subCategory] || {})}
-                                            </Accordion.Body>
-                                        </Accordion.Item>
-                                    ))}
-                                </Accordion>
-                                <div className="d-flex justify-content-center mt-3">
-                                    <Button variant="secondary" onClick={loadMoreArticles}>
-                                        Load More
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    <AccordionComponent articles={articles["articles"]}/>
                 </div>
             )}
         </div>
