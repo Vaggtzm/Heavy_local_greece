@@ -49,8 +49,6 @@ const ArticlesList = () => {
                         });
                     }
 
-                    console.log("articles",articles);
-
                     if(loggedIn&&articles["early_releases"]) {
                         const allEarly = articles["early_releases"];
                         let mergedEarlyReleases = {};
@@ -60,6 +58,12 @@ const ArticlesList = () => {
                         articles["articles"]["earlyReleases"] = mergedEarlyReleases;
                     }
 
+                    console.log("articles",articles);
+
+
+
+
+                    console.log("articles",articles);
                     setAllArticles(articles);
                     setArticles(articles);
                     setLoading(false);
@@ -286,7 +290,7 @@ const ArticlesList = () => {
                         />}
                     </div>
 
-                    <AccordionComponent articles={articles["articles"]}/>
+                    {articles&&<AccordionComponent articles={articles["articles"]}/>}
                 </div>
             )}
         </div>

@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 
 export function AccordionComponent({articles, loggedIn, isEarlyAccess}) {
     const { t } = useTranslation();
-    const [activeKey, setActiveKey] = useState(Object.keys(articles).includes('earlyReleases')?'earlyReleases':'Collabs and Sponsorships');
+    const [activeKey, setActiveKey] = useState((articles?Object.keys(articles):[]).includes('earlyReleases')?'earlyReleases':'Collabs and Sponsorships');
     console.log(articles);
 
     const renderArticles = (articles, subCategory) => {
@@ -45,14 +45,14 @@ export function AccordionComponent({articles, loggedIn, isEarlyAccess}) {
             })
     };
 
-    const sortedKeys = Object.keys(articles).sort();
+    const sortedKeys = articles?Object.keys(articles).sort():[];
     if (sortedKeys.includes('earlyReleases')) {
         sortedKeys.splice(sortedKeys.indexOf('earlyReleases'), 1);
         sortedKeys.unshift('earlyReleases');
     }
 
     return (
-        (Object.keys(articles).length > 0) ? (
+        (articles) ? (
             <div className="row bg-dark p-3">
                 <div className="col-md-3 d-none d-md-block">
                     <Nav variant="pills" className="flex-column sticky-top" activeKey={activeKey}
