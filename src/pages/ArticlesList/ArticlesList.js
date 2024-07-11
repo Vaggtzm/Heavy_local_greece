@@ -161,19 +161,28 @@ const ArticlesList = () => {
         if (!allArticles.articles) return;
 
         // Iterate over each sub-category in articles
+        // Iterate over each sub-category in articles
         Object.keys(allArticles.articles).forEach((subCategory) => {
-            const filteredSubCategoryArticles = Object.values(allArticles.articles[subCategory]).filter((article) =>
-                (article&&article.title) && (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    (article.content && article.content.toLowerCase().includes(searchQuery.toLowerCase())))
-            );
+            const subCategoryArticles = allArticles.articles[subCategory];
+
+            const filteredSubCategoryArticles = Object.keys(subCategoryArticles)
+                .filter(articleLink => {
+                    const article = subCategoryArticles[articleLink];
+                    return (article && article.title && article.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
+                        (article && article.content && article.content.toLowerCase().includes(searchQuery.toLowerCase()));
+                })
+                .reduce((result, articleLink) => {
+                    result[articleLink] = subCategoryArticles[articleLink];
+                    return result;
+                }, {});
 
             // If there are matching articles, add them to the filtered result
-            if (filteredSubCategoryArticles.length > 0) {
+            if (Object.keys(filteredSubCategoryArticles).length > 0) {
                 filteredArticles.articles[subCategory] = filteredSubCategoryArticles;
             }
         });
-
         console.log(filteredArticles);
+        console.log(allArticles);
         setArticles(filteredArticles);
     };
 
