@@ -1,8 +1,19 @@
-import {database,  storage} from "../../../firebase";
+import {database, functions, storage} from "../../../firebase";
 
 
 import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
 import {get, onValue, ref as databaseRef} from "firebase/database";
+import {httpsCallable} from "firebase/functions";
+
+export const setAuthor = async (id, isEmail, isAuthor)=> {
+    const adminFunction = httpsCallable(functions, 'setCustomClaim');
+    try {
+        return await adminFunction({id: id, isEmail: isEmail, adminClaim: isAuthor})
+    }catch (e) {
+        throw e;
+    }
+}
+
 
 
 const fetchAllFiles = (setArticlesByCategory, setLoading, pageToken) => {
@@ -55,30 +66,6 @@ export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles
 }
 
 
-
-const handleResult = (result, setData, setError, initialize) => {
-    const { articles, nextPageToken } = result.data;
-    const errors = articles.filter(article => article.error).map(article => article.error);
-
-    if (errors.length > 0) {
-        setError(errors.join('\n'));
-    } else {
-        setError(null);
-    }
-
-    // When initialize is true, set data directly
-    if (initialize) {
-        setData(articles.filter(article => !article.error));
-    } else {
-        // When initialize is false, append to the previous data
-        setData(prevData => [
-            ...prevData,
-            ...articles.filter(article => !article.error)
-        ]);
-    }
-
-    return nextPageToken;
-};
 
 export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
 

@@ -754,3 +754,96 @@ exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'Error saving device token', error.message);
     }
 });
+
+
+async function getUser(id, isEmail){
+    let user;
+    if(isEmail) {
+        user = await admin.auth().getUserByEmail(id);
+    }else{
+        user = await admin.auth().getUser(id)
+    }
+    return user;
+}
+
+
+exports.setCustomClaim = functions.https.onCall(async (data, context) => {
+    // Check if request is made by an authenticated user with admin privileges
+    if (!context.auth || !context.auth.token.admin) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
+    }
+
+    const { id, adminClaim, isEmail } = data;
+
+    let user;
+    try {
+        user = await getUser(id, isEmail);
+    }catch (e) {
+        throw new functions.https.HttpsError('failed-precondition', e.message);
+    }
+
+    if (!id || typeof adminClaim !== 'boolean') {
+        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email and adminClaim.');
+    }
+
+    try {
+        // Get user by email
+
+        // Set custom user claims
+        await admin.auth().setCustomUserClaims(user.uid, { admin: adminClaim });
+
+        // Write user info to Firestore (or Realtime Database)
+        if(adminClaim) {
+            const userDoc = database.ref("/authors/" + user.uid) // Use Firestore
+            await userDoc.set({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+            });
+        }else{
+            const adminDoc = database.ref("/authors/" + user.uid)
+            await adminDoc.remove();
+            const userDoc = database.ref("/users/" + user.uid) // Use Firestore
+            await userDoc.update({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+            });
+        }
+
+        return { message: `Successfully set admin claims for user ${user.uid}` };
+    } catch (error) {
+        console.error('Error setting custom claims:', error);
+        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data.');
+    }
+});
+
+
+// Function to disable a user
+exports.disableUser = functions.https.onCall(async (data, context) => {
+    // Check if request is made by an authenticated user with admin privileges
+    if (!context.auth || !context.auth.token.admin) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
+    }
+
+    const { id, isEmail } = data;
+
+    if (!email) {
+        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email.');
+    }
+
+    try {
+        // Get user by email
+        const user = await getUser(id, isEmail);
+
+        // Disable user
+        await admin.auth().updateUser(user.uid, { disabled: true });
+
+        return { message: `Successfully disabled user ${user.uid}` };
+    } catch (error) {
+        console.error('Error disabling user:', error);
+        throw new functions.https.HttpsError('internal', 'Unable to disable user.');
+    }
+});
