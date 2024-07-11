@@ -111,7 +111,7 @@ const CommentSystem = ({ articleName }) => {
         return Object.keys(comments).map((key) => {
             const comment = comments[key];
             return (
-                <Card key={key} className="mb-3 bg-dark text-white w-100">
+                <Card key={key} className={`mb-3 w-100 rounded-4 bg-dark text-white ${(!parent)?"":"shadow-lg border border-light"}`}>
                     <Card.Body>
                         <Card.Title>
                             <CommentAuthor authorCode={comment.displayName} />
@@ -165,7 +165,7 @@ const CommentSystem = ({ articleName }) => {
 
     return (
         <div className="container mt-4">
-            <Card className="mb-3 bg-dark text-white w-100">
+            <Card className="mb-3 bg-dark text-white w-100 rounded-4">
                 <Card.Body>
                     <Form.Control
                         placeholder="Write a comment..."
