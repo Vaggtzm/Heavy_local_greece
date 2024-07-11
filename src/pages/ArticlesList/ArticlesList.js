@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { get, limitToLast, orderByChild, query, ref } from 'firebase/database';
-import { getDownloadURL, ref as storageRef } from 'firebase/storage';
-import { auth, database, storage } from '../../firebase';
+import React, {useEffect, useRef, useState} from 'react';
+import {get, limitToLast, orderByChild, query, ref} from 'firebase/database';
+import {getDownloadURL, ref as storageRef} from 'firebase/storage';
+import {auth, database, storage} from '../../firebase';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavLink, useParams } from 'react-router-dom';
-import {Form, Nav, Spinner } from 'react-bootstrap';
-import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
+import {NavLink, useParams} from 'react-router-dom';
+import {Form, Spinner} from 'react-bootstrap';
+import {Helmet} from 'react-helmet';
+import {useTranslation} from 'react-i18next';
 import Slider from 'react-slick';
 import {AccordionComponent} from "./AccordionComponent";
 
@@ -34,7 +34,7 @@ const ArticlesList = () => {
                     articlesRef = ref(database, `authors/${authorCode}`);
                 }
 
-                get(articlesRef).then((snapshot) => {
+                get(articlesRef).then(async (snapshot) => {
                     let data = snapshot.val();
                     let articles;
                     if(!authorCode){
@@ -42,11 +42,9 @@ const ArticlesList = () => {
                     }else{
                         articles = data.writtenArticles;
                         fetchImagesFromGallery();
-                        let userImage = storageRef(storage, `/profile_images/${authorCode}_600x600`);
-                        getDownloadURL(userImage).then((userImage) => {
-                            data.photoURL = userImage;
-                            setAuthor(data);
-                        });
+                        let userImageRef = storageRef(storage, `/profile_images/${authorCode}_600x600`);
+                        data.photoURL = await getDownloadURL(userImageRef);
+                        setAuthor(data);
                     }
 
                     if(loggedIn&&articles["early_releases"]) {
