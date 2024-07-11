@@ -71,7 +71,10 @@ const AdminSystem = () => {
         console.log("roles",roles)
 
         Object.keys(roles).forEach((role)=>{
-            const emails = roles[role];
+            let emails = roles[role];
+            if(!emails){
+                emails = [];
+            }
             console.log("Emails",emails);
             if (emails.includes(email)) {
                 userRoles.push(role);
