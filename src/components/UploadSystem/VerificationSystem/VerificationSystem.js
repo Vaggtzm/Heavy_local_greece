@@ -63,7 +63,7 @@ const FirebaseFileList = () => {
             });
         });
 
-        return fetchFiles((files)=>{
+        fetchFiles((files)=>{
             console.log(files);
             setFiles(files["upload_from_authors"]);
             setEarlyReleasedArticles(!files["early_releases"]?[]:files["early_releases"]);

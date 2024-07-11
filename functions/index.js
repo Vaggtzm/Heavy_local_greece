@@ -358,7 +358,11 @@ const handle_single_dir = async (directory) =>{
                 "date": content.date.split('/').reverse().join('-'),
                 "title": content.title,
                 "image": content.img01,
-                "lang": content.lang ? content.lang : ""
+                "translations": content.translations
+                    ? filterUndefinedValues(content.translations)
+                    : {},
+                "lang": content.lang?content.lang:"",
+                "isReady":!!content.isReady
             }).then(() => {
             }).catch((e)=>{});
         }catch(e){

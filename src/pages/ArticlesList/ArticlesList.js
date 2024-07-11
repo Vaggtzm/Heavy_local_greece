@@ -55,12 +55,7 @@ const ArticlesList = () => {
                         });
                         articles["articles"]["earlyReleases"] = mergedEarlyReleases;
                     }
-
                     console.log("articles",articles);
-
-
-
-
                     console.log("articles",articles);
                     setAllArticles(articles);
                     setArticles(articles);
@@ -168,7 +163,7 @@ const ArticlesList = () => {
         // Iterate over each sub-category in articles
         Object.keys(allArticles.articles).forEach((subCategory) => {
             const filteredSubCategoryArticles = Object.values(allArticles.articles[subCategory]).filter((article) =>
-                (article) && (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                (article&&article.title) && (article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     (article.content && article.content.toLowerCase().includes(searchQuery.toLowerCase())))
             );
 
