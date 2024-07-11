@@ -171,7 +171,7 @@ const DefaultArticle = (props) => {
         <Helmet>
             <title>{articles.title}</title>
         </Helmet>
-        <div className="container text-white position-fixed">
+        <div className="container text-white">
             <div className={"row"}>
                 <div className={"col-12 col-md-2"}>
                     <span className={"badge bg-light text-dark"}>
