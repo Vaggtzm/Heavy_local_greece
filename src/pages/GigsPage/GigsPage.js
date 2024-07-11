@@ -35,6 +35,8 @@ const GigsPage = () => {
                 setGigs(gigsList);
             }
             setLoading(false);
+        }).catch((error)=>{
+            console.log(error);
         });
     }, []);
 

@@ -86,7 +86,13 @@ export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
         return await getDownloadURL(ref(storage, fileName));
     }else{
         let shouldResize = await isAlmostRectangle(ref(storage, fileName));
-        return await getDownloadURL(ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)));
+        const imageRef = ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result));
+        try{
+            await getMetadata(imageRef);
+            return await getDownloadURL(imageRef);
+        }catch (e) {
+            return await getDownloadURL(ref(storage, fileName));
+        }
     }
 }
 
