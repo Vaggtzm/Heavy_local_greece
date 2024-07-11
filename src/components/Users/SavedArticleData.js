@@ -54,7 +54,6 @@ const SavedArticleData = (props) => {
                     <img className=" img-fluid" src={data.img01}/>
                     <div className="card-body">
                         <h5 className="card-title">{data.title}</h5>
-                        <p className="card-text">This article is saved</p>
                         <NavLink className="btn btn-danger" to={`/article/${props.article}`}>Read More</NavLink>
                     </div>
 
