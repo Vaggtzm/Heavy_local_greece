@@ -107,11 +107,11 @@ const CommentSystem = ({ articleName }) => {
         }
     };
 
-    const renderComments = (comments, parent) => {
+    const renderComments = (comments, parent, shouldLeaveMargin) => {
         return Object.keys(comments).map((key) => {
             const comment = comments[key];
             return (
-                <Card key={key} className={`mb-3 w-100 rounded-4 bg-dark text-white ${(!parent)?"":"shadow-lg border border-light"}`}>
+                <Card key={key} className={`w-100 rounded-4 bg-dark text-white ${shouldLeaveMargin?"mb-3":""}`}>
                     <Card.Body>
                         <Card.Title>
                             <CommentAuthor authorCode={comment.displayName} />
@@ -156,9 +156,11 @@ const CommentSystem = ({ articleName }) => {
                                 </div>
                             </InputGroup>
                             )}
-                        {comment.replies && <div className="ml-4">{renderComments(comment.replies, key)}</div>}
-                    </Card.Body>
-                </Card>
+                        {comment.replies &&
+                            <div className="ml-4 shadow-lg border border-secondary pt-3 p-1">{renderComments(comment.replies, key, true)}</div>
+                            }
+                        </Card.Body>
+                            </Card>
             );
         });
     };
@@ -182,11 +184,12 @@ const CommentSystem = ({ articleName }) => {
                     </Button>
                 </Card.Body>
             </Card>
-            {Object.keys(comments).length > 0 ? (
-                renderComments(comments, null)
-            ) : (
-                <p>No comments yet.</p>
-            )}
+
+                {Object.keys(comments).length > 0 ? (
+                    renderComments(comments, null, false)
+                ) : (
+                    <p>No comments yet.</p>
+                )}
         </div>
     );
 };
