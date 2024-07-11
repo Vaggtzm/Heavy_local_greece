@@ -15,6 +15,7 @@ import {useTranslation} from "react-i18next";
 import LanguageModal from "./LanguageModal";
 
 import {getFirebaseStorageUrl} from "../UploadSystem/articleData/articleData";
+import CommentSystem from "./Comments/CommentSystem";
 
 const DefaultArticle = (props) => {
     const isEarlyAccess = props.earlyAccess;
@@ -268,7 +269,15 @@ const DefaultArticle = (props) => {
                     <div style={{wordWrap: 'break-word', overflowWrap: 'break-word'}}
                          dangerouslySetInnerHTML={{__html: articles.content}}></div>
                     <SocialBar/>
-                    <PageWithComments/>
+
+                    <div className='container'>
+                        <div className='row'>
+                            <div className='col-md-12'>
+                                <CommentSystem articleName={name}/>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <ReadMore category={articles.category} isEarlyAccess={isEarlyAccess}/>

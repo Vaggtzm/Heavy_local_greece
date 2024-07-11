@@ -12,6 +12,9 @@
     "gigs": {
       ".read": true
     },
+    "comments": {
+      ".read": true
+    },
     "articlesList": {
       ".read": true,
       ".indexOn": "date"
