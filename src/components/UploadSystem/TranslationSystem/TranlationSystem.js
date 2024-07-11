@@ -13,19 +13,16 @@ import {fetchFiles} from "../articleData/articleData";
 import useNavigate from "../../LanguageWrapper/Navigation";
 
 const TranslationSystem = () => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [files, setFiles] = useState([]);
     const [alreadyPublishedArticles, setAlreadyPublishedArticles] = useState([]);
     const [earlyReleasedArticles, setEarlyReleasedArticles] = useState([]);
-    const [isEarlyReleasedArticles, setIsEarlyReleasedArticles] = useState([]);
-    const [isAlreadyPublished, setIsAlreadyPublished] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
     const [earlyReleasesError, setEarlyReleasesError] = useState('');
-    const [isTranslating, setIsTranslating] = useState(true);
     const [sortByDate, setSortByDate] = useState(false);
     const [user, setUser] = useState(null);
     const [fileData, setFileData] = useState({
@@ -81,10 +78,10 @@ const TranslationSystem = () => {
                 }
             });
 
-            fetchFiles((files)=>{
+            fetchFiles((files) => {
                 console.log(files);
                 setFiles(files["upload_from_authors"]);
-                setEarlyReleasedArticles(!files["early_releases"]?[]:files["early_releases"]);
+                setEarlyReleasedArticles(!files["early_releases"] ? [] : files["early_releases"]);
                 setAlreadyPublishedArticles(files["articles"])
             }, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
 
@@ -107,13 +104,12 @@ const TranslationSystem = () => {
     };
 
 
-
     const replaceSpecialCharsWithDashes = (text) => {
         const regex = /[^a-zA-Z0-9-\u0370-\u03FF\u1F00-\u1FFF]/g;
         return text.replace(regex, '-');
     };
 
-    const updateotherTranslations = async (relatedFileRef, newFileName)=>{
+    const updateotherTranslations = async (relatedFileRef, newFileName) => {
         const downloadUrl = await getDownloadURL(relatedFileRef);
         const fileContent = await fetch(downloadUrl).then((res) => res.json());
         fileContent.translations[newLanguage] = newFileName;
@@ -136,8 +132,8 @@ const TranslationSystem = () => {
         }
 
         newFileName = `${replaceSpecialCharsWithDashes(translationData.title.replace(/\s+/g, ''))}-${newLanguage}.json`;
-        fileRef = StorageRef(storage,`${translationFolder}/${newFileName}`);
-        translationFileRef = StorageRef(storage,`${originalFolder}/${selectedFile.name}.json`);
+        fileRef = StorageRef(storage, `${translationFolder}/${newFileName}`);
+        translationFileRef = StorageRef(storage, `${originalFolder}/${selectedFile.name}.json`);
         fileData.translations[newLanguage] = newFileName;
         fileData.translations[originalLanguage] = selectedFile.name;
         fileData.lang = originalLanguage;
@@ -145,23 +141,23 @@ const TranslationSystem = () => {
         translationData.lang = newLanguage;
         translationData.translations[originalLanguage] = selectedFile.name;
         await uploadString(fileRef, JSON.stringify(translationData));
-        const relatedTranslations = { ...fileData.translations, [newLanguage]: newFileName };
+        const relatedTranslations = {...fileData.translations, [newLanguage]: newFileName};
         await Promise.all(
             Object.keys(relatedTranslations).map(async (lang) => {
                 const relatedFileName = relatedTranslations[lang];
                 if (relatedFileName === newFileName) return;
-                let relatedFileRef = StorageRef(storage,`upload_from_authors/${relatedFileName}.json`);
-                if(await checkIfStorageRefExists(relatedFileRef)){
+                let relatedFileRef = StorageRef(storage, `upload_from_authors/${relatedFileName}.json`);
+                if (await checkIfStorageRefExists(relatedFileRef)) {
                     await updateotherTranslations(relatedFileRef, newFileName);
-                }else{
-                    relatedFileRef = StorageRef(storage,`articles/${relatedFileName}.json`);
-                    if(await checkIfStorageRefExists(relatedFileRef)) {
+                } else {
+                    relatedFileRef = StorageRef(storage, `articles/${relatedFileName}.json`);
+                    if (await checkIfStorageRefExists(relatedFileRef)) {
                         await updateotherTranslations(relatedFileRef, newFileName);
-                    }else{
-                        relatedFileRef = StorageRef(storage,`early_releases/${relatedFileName}.json`);
-                        if(await checkIfStorageRefExists(relatedFileRef)) {
+                    } else {
+                        relatedFileRef = StorageRef(storage, `early_releases/${relatedFileName}.json`);
+                        if (await checkIfStorageRefExists(relatedFileRef)) {
                             await updateotherTranslations(relatedFileRef, newFileName);
-                        }else {
+                        } else {
                             console.log("Not found")
                         }
                     }
@@ -169,20 +165,19 @@ const TranslationSystem = () => {
             })
         );
 
-        const contentToSave = isTranslating ? translationData : fileData;
+        const contentToSave = translationData;
         contentToSave.content = contentToSave.content.replaceAll('<p>', "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'");
         contentToSave.isReady = false;
         await uploadString(fileRef, JSON.stringify(contentToSave));
 
-        if (isTranslating) {
-            await uploadString(translationFileRef, JSON.stringify(fileData));
-        }
+
+        await uploadString(translationFileRef, JSON.stringify(fileData));
 
         const updatedFiles = files.map((file) =>
-            file.name === selectedFile.name ? { ...file, fileContent: fileData } : file
+            file.name === selectedFile.name ? {...file, fileContent: fileData} : file
         );
 
-        console.log("UpdatedFiles",updatedFiles);
+        console.log("UpdatedFiles", updatedFiles);
 
         updatedFiles.push({
             name: newFileName,
@@ -213,17 +208,14 @@ const TranslationSystem = () => {
 
 
         setSelectedFile(file);
-        setFileData({ ...fileData });
-        setIsAlreadyPublished(isAlreadyPub);
-        setIsEarlyReleasedArticles(isEarlyReleased);
+        setFileData({...fileData});
         setShowModal(true);
-        setTranslationData({ ...fileData });
-        setIsTranslating(true);
+        setTranslationData({...fileData});
         setOriginalLanguage(file.lang);
 
         // Fetch author name based on 'sub' from database
         if (fileData.sub) {
-            const authorRef = databaseRef(database,`authors/${fileData.sub}`);
+            const authorRef = databaseRef(database, `authors/${fileData.sub}`);
             console.log("Hello", `authors/${fileData.sub}`);
             onValue(authorRef, (snapshot) => {
                 const authorData = snapshot.val();
@@ -273,7 +265,8 @@ const TranslationSystem = () => {
                             (file.translations && Object.keys(file.translations).length > 0) ? (
                                 <div>
                                     {Object.keys(file.translations).map((lang) => (
-                                        <p key={lang} className={`form-label badge text-dark m-1 ${lang === file.lang ? 'bg-warning-subtle' : 'bg-dark-subtle'}`}>
+                                        <p key={lang}
+                                           className={`form-label badge text-dark m-1 ${lang === file.lang ? 'bg-warning-subtle' : 'bg-dark-subtle'}`}>
                                             {availableLanguages[lang]}
                                         </p>
                                     ))}
@@ -282,7 +275,8 @@ const TranslationSystem = () => {
                                 <p>{t("noTranslationsAvailable")}</p>
                             )
                         }
-                        <Button variant="warning" onClick={() => handleTranslate(file, isAlreadyPublished, isEarlyRelease)}>
+                        <Button variant="warning"
+                                onClick={() => handleTranslate(file, isAlreadyPublished, isEarlyRelease)}>
                             {t("translate")}
                         </Button>
                     </ListGroup.Item>
@@ -334,22 +328,23 @@ const TranslationSystem = () => {
                             <FormGroup controlId="translatedContent">
                                 <Form.Label>{t('Content')}</Form.Label>
                                 <ReactQuill theme="snow" value={translationData.content}
-                                            onChange={(value) => handleTranslationChange(value, 'content')} readOnly={!isTranslating}/>
+                                            onChange={(value) => handleTranslationChange(value, 'content')}/>
                             </FormGroup>
                             <FormGroup controlId="translatedTitle">
                                 <Form.Label>{t('Title')}</Form.Label>
                                 <Form.Control type="text" value={translationData.title}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'title')} readOnly={!isTranslating}/>
+                                              onChange={(e) => handleTranslationChange(e.target.value, 'title')}/>
                             </FormGroup>
                             <FormGroup controlId="translatedDetails">
                                 <Form.Label>{t('Details')}</Form.Label>
                                 <Form.Control type="text" value={translationData.details}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'details')} readOnly={!isTranslating}/>
+                                              onChange={(e) => handleTranslationChange(e.target.value, 'details')}/>
                             </FormGroup>
                             <FormGroup controlId="translatedImg01">
                                 <Form.Label>{t('ImgUrl')}</Form.Label>
                                 <Form.Control type="text" value={translationData.img01}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'img01')} readOnly={true}/>
+                                              onChange={(e) => handleTranslationChange(e.target.value, 'img01')}
+                                              readOnly={true}/>
                             </FormGroup>
                             <FormGroup controlId="translatedSub">
                                 <Form.Label>{t('AuthorCode')} {fileData.authorName}</Form.Label>
@@ -358,20 +353,19 @@ const TranslationSystem = () => {
                             <FormGroup controlId="translatedDate">
                                 <Form.Label>{t('Date')}</Form.Label>
                                 <Form.Control type="text" value={translationData.date}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'date')} readOnly={true}/>
+                                              onChange={(e) => handleTranslationChange(e.target.value, 'date')}
+                                              readOnly={true}/>
                             </FormGroup>
-                            {isTranslating && (
-                                <FormGroup controlId="translatedLanguage">
-                                    <Form.Label>{t('translatedLanguageLabel')}</Form.Label>
-                                    <Form.Control as="select" value={newLanguage}
-                                                  onChange={(e) => setNewLanguage(e.target.value)}>
-                                        <option value="">{t('selectLanguagePlaceholder')}</option>
-                                        {Object.keys(availableLanguages).map((lang) => (
-                                            <option key={lang} value={lang}>{availableLanguages[lang]}</option>
-                                        ))}
-                                    </Form.Control>
-                                </FormGroup>
-                            )}
+                            <FormGroup controlId="translatedLanguage">
+                                <Form.Label>{t('translatedLanguageLabel')}</Form.Label>
+                                <Form.Control as="select" value={newLanguage}
+                                              onChange={(e) => setNewLanguage(e.target.value)}>
+                                    <option value="">{t('selectLanguagePlaceholder')}</option>
+                                    {Object.keys(availableLanguages).map((lang) => (
+                                        <option key={lang} value={lang}>{availableLanguages[lang]}</option>
+                                    ))}
+                                </Form.Control>
+                            </FormGroup>
                         </div>
                         <Button className="btn btn-dark m-3" onClick={handleSave}>{t("Save")}</Button>
                     </Form>
