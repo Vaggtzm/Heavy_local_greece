@@ -207,6 +207,12 @@ const AdminSystem = () => {
                                         >
                                             Translator
                                         </Button>
+                                        <Button
+                                            variant={userRoles.includes("comments") ? "success" : "outline-success"}
+                                            onClick={() => handleRoleChange("comments", email)}
+                                        >
+                                            Comments Admin
+                                        </Button>
                                     </div>
                                     <div className="d-flex justify-content-around mt-3">
                                         <Button variant="danger" onClick={()=>handleShow(email, setAuthor, `Do you really want to remove ${email} from the authors?`)}>

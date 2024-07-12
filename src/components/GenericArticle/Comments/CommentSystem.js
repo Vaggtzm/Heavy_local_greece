@@ -1,41 +1,23 @@
-/*
- * Copyright (c) 2024. MIT License
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
 // CommentSystem.js
-import React, { useEffect, useState, useRef } from 'react';
-import { onValue, push, ref, set, update } from 'firebase/database';
-import { auth } from '../../../firebase'; // Import Firebase auth
-import { Button, Card, Form, InputGroup } from 'react-bootstrap';
+import React, {useEffect, useRef, useState} from 'react';
+import {get, onValue, push, ref, remove, set, update} from 'firebase/database';
+import {auth, database} from '../../../firebase'; // Import Firebase auth
+import {Button, Card, Form, InputGroup} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { database } from '../../../firebase';
-import { CommentAuthor } from "./CommentAuthor";
-import { getIdTokenResult } from "firebase/auth";
+import {CommentAuthor} from "./CommentAuthor";
+import {getIdTokenResult} from "firebase/auth";
 
-const CommentSystem = ({ articleName }) => {
+const CommentSystem = ({articleName}) => {
     const [comments, setComments] = useState({});
     const [newComment, setNewComment] = useState('');
     const [replyComment, setReplyComment] = useState('');
     const [replyTo, setReplyTo] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editedComment, setEditedComment] = useState('');
     const replyInputRef = useRef(null);
+
+    const [isAdmin, setIsAdmin] = useState(false);
 
     useEffect(() => {
         const commentsRef = ref(database, `comments/${articleName}`);
@@ -48,6 +30,17 @@ const CommentSystem = ({ articleName }) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
+                const commentAdminRef = ref(database, `roles/comments`);
+                get(commentAdminRef).then((snapshot) => {
+                    let commentAdmins;
+                    if (!snapshot.exists()) {
+                        commentAdmins = []
+                    } else {
+                        commentAdmins = snapshot.val();
+                    }
+
+                    setIsAdmin(commentAdmins.includes(user.email));
+                })
                 const idTokenResult = await getIdTokenResult(user);
 
                 let userFolder;
@@ -86,7 +79,7 @@ const CommentSystem = ({ articleName }) => {
                 displayName: currentUser.displayName,
                 timestamp: Date.now(),
                 replies: {},
-            });
+            }).then();
             setNewComment('');
         }
     };
@@ -107,20 +100,69 @@ const CommentSystem = ({ articleName }) => {
         }
     };
 
+    const handleDeleteComment = async (commentId) => {
+        const commentRef = ref(database, `comments/${articleName}/${commentId}`);
+        await remove(commentRef);
+    };
+
+    const handleEditComment = (commentId, currentText) => {
+        setEditingCommentId(commentId);
+        setEditedComment(currentText);
+    };
+
+    const handleSaveEditedComment = async (commentId) => {
+        console.log(`comments/${articleName}/${commentId}`);
+        const commentRef = ref(database, `comments/${articleName}/${commentId}`);
+        await update(commentRef, {text: editedComment});
+        setEditingCommentId(null);
+        setEditedComment('');
+    };
+
     const renderComments = (comments, parent, shouldLeaveMargin) => {
         return Object.keys(comments).map((key) => {
             const comment = comments[key];
+            const isAuthor = currentUser && comment.user === currentUser.uid;
+
             return (
-                <Card key={key} className={`w-100 rounded-4 bg-dark text-white ${shouldLeaveMargin?"mb-3":""}`}>
+                <Card key={key} className={`w-100 rounded-4 bg-dark text-white ${shouldLeaveMargin ? "mb-3" : ""}`}>
                     <Card.Body>
                         <Card.Title>
-                            <CommentAuthor authorCode={comment.displayName} />
+                            <CommentAuthor authorCode={comment.displayName}/>
                         </Card.Title>
-                        <Card.Text>{comment.text}</Card.Text>
+                        {editingCommentId === (!parent ? key : `${parent}/replies/${key}`) ? (
+                            <InputGroup className="mb-3">
+                                <Form.Control
+                                    className={"bg-dark text-white"}
+                                    value={editedComment}
+                                    onChange={(e) => setEditedComment(e.target.value)}
+                                />
+                                <Button variant="outline-secondary"
+                                        onClick={() => handleSaveEditedComment(!parent ? key : `${parent}/replies/${key}`)}>
+                                    Save
+                                </Button>
+                                <Button variant="outline-secondary" onClick={() => setEditingCommentId(null)}>
+                                    Cancel
+                                </Button>
+                            </InputGroup>
+                        ) : (
+                            <Card.Text>{comment.text}</Card.Text>
+                        )}
+                        {isAuthor && (
+                            <Button variant="link" className="text-warning"
+                                    onClick={() => handleEditComment(!parent ? key : `${parent}/replies/${key}`, comment.text)}>
+                                Edit
+                            </Button>
+                        )}
+                        {(isAuthor||isAdmin) && (
+                            <Button variant="link" className="text-danger"
+                                    onClick={() => handleDeleteComment(!parent ? key : `${parent}/replies/${key}`)}>
+                                Delete
+                            </Button>
+                        )}
                         {currentUser ? (
                             <Button
                                 variant="link"
-                                className={`rounded-5 ${(!currentUser)?"disabled":""}`}
+                                className={`rounded-5 ${(!currentUser) ? "disabled" : ""}`}
                                 onClick={() => {
                                     setReplyTo(parent ? parent : key);
                                     setTimeout(() => {
@@ -155,12 +197,14 @@ const CommentSystem = ({ articleName }) => {
                                     </Button>
                                 </div>
                             </InputGroup>
-                            )}
+                        )}
                         {comment.replies &&
-                            <div className="ml-4 shadow-lg border border-secondary pt-3 p-1">{renderComments(comment.replies, key, true)}</div>
-                            }
-                        </Card.Body>
-                            </Card>
+                            <div className="ml-4 shadow-lg border border-secondary pt-3 p-1">
+                                {renderComments(comment.replies, key, true)}
+                            </div>
+                        }
+                    </Card.Body>
+                </Card>
             );
         });
     };
@@ -180,16 +224,16 @@ const CommentSystem = ({ articleName }) => {
                         onClick={handlePostComment}
                         disabled={!currentUser}
                     >
-                        {(!currentUser)?"Log In to Post":"Post Comment"}
+                        {(!currentUser) ? "Log In to Post" : "Post Comment"}
                     </Button>
                 </Card.Body>
             </Card>
 
-                {Object.keys(comments).length > 0 ? (
-                    renderComments(comments, null, false)
-                ) : (
-                    <p>No comments yet.</p>
-                )}
+            {Object.keys(comments).length > 0 ? (
+                renderComments(comments, null, false)
+            ) : (
+                <p>No comments yet.</p>
+            )}
         </div>
     );
 };
