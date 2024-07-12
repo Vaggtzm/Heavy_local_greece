@@ -16,6 +16,7 @@ const AdminSystem = () => {
     const userList = ref(database, "roles");
     const [functionToRun, setFunctionToRun] = useState(null);
     const [functionArguments, setFunctionArguments] = useState(null);
+    const [popupMessage, setPopupMessage] = useState("");
 
     const toggleDisableUser = async (user) => {
         const userRef = ref(database, `authors/${user.uid}`);
@@ -32,8 +33,9 @@ const AdminSystem = () => {
      */
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = (args, functionToRun) => {
+    const handleShow = (args, functionToRun, message) => {
         setFunctionArguments(args);
+        setPopupMessage(message);
         console.log(functionToRun);
         console.log(args);
         setFunctionToRun((prevValue)=>{return functionToRun});
@@ -205,25 +207,26 @@ const AdminSystem = () => {
                                         >
                                             Translator
                                         </Button>
-                                        <Button variant="danger" onClick={()=>handleShow(email, setAuthor)}>
+                                    </div>
+                                    <div className="d-flex justify-content-around mt-3">
+                                        <Button variant="danger" onClick={()=>handleShow(email, setAuthor, `Do you really want to remove ${email} from the authors?`)}>
                                             Remove
                                         </Button>
-
-                                        <Button variant={!users[key].disabled?"danger":"outline-danger"} onClick={()=>handleShow(users[key], toggleDisableUser)}>
+                                        <Button variant={!users[key].disabled?"danger":"outline-danger"} onClick={()=>handleShow(users[key], toggleDisableUser, `Do you really want to ${!users[key].disabled?"disable":"dnable"} ${email}`)}>
                                             {!users[key].disabled?"Disable":"Enable"}
                                         </Button>
 
                                         <Modal size={"md"} className={"bg-transparent"} show={show} onHide={handleClose}>
                                             <Modal.Header closeButton>
-                                                <Modal.Title>Confirm Removal</Modal.Title>
+                                                <Modal.Title>Confirm</Modal.Title>
                                             </Modal.Header>
-                                            <Modal.Body>Are you sure you want to remove this user from the authors?</Modal.Body>
+                                            <Modal.Body>{popupMessage}</Modal.Body>
                                             <Modal.Footer>
                                                 <Button variant="secondary" onClick={handleClose}>
-                                                    Cancel
+                                                    No
                                                 </Button>
                                                 <Button variant="danger" onClick={handleConfirm}>
-                                                    Remove
+                                                    Yes
                                                 </Button>
                                             </Modal.Footer>
                                         </Modal>
