@@ -5,7 +5,7 @@ import {get, onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
 import {Button, Card, Form, Modal} from "react-bootstrap";
 import useNavigate from "../LanguageWrapper/Navigation";
-import {setAuthor} from "../UploadSystem/articleData/articleData";
+import {disableUser, setAuthor} from "../UploadSystem/articleData/articleData";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -14,23 +14,48 @@ const AdminSystem = () => {
     const [roles, setRoles] = useState({});
     const [newUserEmail, setNewUserEmail] = useState("");
     const userList = ref(database, "roles");
+    const [functionToRun, setFunctionToRun] = useState(null);
+    const [functionArguments, setFunctionArguments] = useState(null);
+
+    const toggleDisableUser = async (user) => {
+        const userRef = ref(database, `authors/${user.uid}`);
+        const userSnapshot = await get(userRef);
+        const userData = userSnapshot.val();
+        userData.disabled = !userData.disabled;
+        await update(userRef, userData);
+        await disableUser(user.email, true, userData.disabled)
+        alert(`The user has been ${userData.disabled?"disabled":"enabled"} successfully!`);
+    }
 
     /**
      * Code for the remove User
      */
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = (email) => {
-        setNewUserEmail(email);
+    const handleShow = (args, functionToRun) => {
+        setFunctionArguments(args);
+        console.log(functionToRun);
+        console.log(args);
+        setFunctionToRun((prevValue)=>{return functionToRun});
         setShow(true);
     }
     const handleConfirm = () => {
-        console.log(newUserEmail);
-        setAuthor(newUserEmail, true, false).then(()=>{
-            handleClose();
-        }).catch((e)=>{
-            alert(e.message)
-        });
+        console.log(functionToRun);
+        if(!functionArguments.email) {
+            functionToRun(functionArguments, true, false).then(() => {
+                handleClose();
+            }).catch((e) => {
+                alert(e.message)
+            });
+        }
+        else{
+            console.log(functionArguments)
+            functionToRun(functionArguments).then(() => {
+                handleClose();
+            }).catch((e) => {
+                alert(e.message)
+            });
+        }
     };
 
 
@@ -180,8 +205,12 @@ const AdminSystem = () => {
                                         >
                                             Translator
                                         </Button>
-                                        <Button variant="danger" onClick={()=>handleShow(email)}>
+                                        <Button variant="danger" onClick={()=>handleShow(email, setAuthor)}>
                                             Remove
+                                        </Button>
+
+                                        <Button variant={!users[key].disabled?"danger":"outline-danger"} onClick={()=>handleShow(users[key], toggleDisableUser)}>
+                                            {!users[key].disabled?"Disable":"Enable"}
                                         </Button>
 
                                         <Modal size={"md"} className={"bg-transparent"} show={show} onHide={handleClose}>
@@ -198,7 +227,6 @@ const AdminSystem = () => {
                                                 </Button>
                                             </Modal.Footer>
                                         </Modal>
-
                                     </div>
                                 </Card.Body>
                             </Card>
@@ -208,6 +236,6 @@ const AdminSystem = () => {
             </div>
         </div>
     );
-};
+}  ;
 
 export default AdminSystem;

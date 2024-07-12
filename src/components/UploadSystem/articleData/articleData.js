@@ -14,6 +14,16 @@ export const setAuthor = async (id, isEmail, isAuthor)=> {
     }
 }
 
+// disableUser
+
+export const disableUser = async (id, isEmail, disabled)=> {
+    const adminFunction = httpsCallable(functions, 'disableUser');
+    try {
+        return await adminFunction({id: id, isEmail: isEmail, disabled:disabled})
+    }catch (e) {
+        throw e;
+    }
+}
 
 
 const fetchAllFiles = (setArticlesByCategory, setLoading, pageToken) => {
