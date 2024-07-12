@@ -2,7 +2,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {get, onValue, push, ref, remove, set, update} from 'firebase/database';
 import {auth, database} from '../../../firebase'; // Import Firebase auth
-import {Button, Card, Form, InputGroup} from 'react-bootstrap';
+import {Button, Card, Form, InputGroup, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {CommentAuthor} from "./CommentAuthor";
 import {getIdTokenResult} from "firebase/auth";
@@ -18,6 +18,8 @@ const CommentSystem = ({articleName}) => {
     const replyInputRef = useRef(null);
 
     const [isAdmin, setIsAdmin] = useState(false);
+
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const commentsRef = ref(database, `comments/${articleName}`);
@@ -118,6 +120,13 @@ const CommentSystem = ({articleName}) => {
         setEditedComment('');
     };
 
+    const handleClose = () => setShow(false);
+    const handleReportComment = async (commentId, parent) => {
+        const reportRef = ref(database, `reported_comments/${articleName}/${commentId}`);
+        await set(reportRef, {reportedAt: Date.now(), reportedBy: currentUser.uid, parent: parent});
+        setShow(true);
+    };
+
     const renderComments = (comments, parent, shouldLeaveMargin) => {
         return Object.keys(comments).map((key) => {
             const comment = comments[key];
@@ -176,6 +185,26 @@ const CommentSystem = ({articleName}) => {
                         ) : (
                             <p className="text-secondary">You need to be logged in to reply</p>
                         )}
+
+                        {currentUser && (
+                            <Button variant="link" className="text-danger"
+                                    onClick={() => handleReportComment(key, parent)}>
+                                Report
+                            </Button>
+                        )}
+
+                        <Modal size={"md"} className={"bg-transparent"} show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Confirm</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>The comment has been reported successfully</Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="primary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
+
                         {replyTo === key && (
                             <InputGroup className="mb-3 row w-100">
                                 <div className={"col-12 col-md-8"}>

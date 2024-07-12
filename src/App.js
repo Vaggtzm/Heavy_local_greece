@@ -37,6 +37,7 @@ import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 import GigsPage from "./pages/GigsPage/GigsPage";
 import GigDetailPage from "./pages/GigsPage/GigDetailPage";
 import AdsPage from "./pages/ads/AdsPage";
+import ReportedCommentsContainer from "./pages/CommentReportSystem/ReportedCommentsContainer";
 
 function App() {
 
@@ -136,6 +137,7 @@ function App() {
                 <Route path="gigs" element={<GigsPage />} />
                 <Route path="gigs/:date" element={<GigDetailPage />} />
                 <Route path="ads" element={<AdsPage/>} />
+                <Route path="admin/comments" element={<ReportedCommentsContainer/>} />
             </Route>
         )
     }
