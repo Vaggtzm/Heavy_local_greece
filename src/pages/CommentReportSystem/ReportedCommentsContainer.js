@@ -97,7 +97,7 @@ const ReportedCommentsContainer = () => {
     }
 
     return (
-        <Container className="mt-4">
+        <Container className="mt-4 text-white">
             <h3>Reported Comments</h3>
             {loading ? (
                 <Spinner animation="border" />

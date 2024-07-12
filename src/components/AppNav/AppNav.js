@@ -17,6 +17,7 @@ const AppNavigation = ({menuVisible}) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [isTranslator, setIsTranslator] = useState(false);
     const [isLeader, setIsLeader] = useState(false);
+    const [isCommentAdmin, setIsCommentAdmin] = useState(false);
 
     const navigate = useNavigate()
 
@@ -33,6 +34,10 @@ const AppNavigation = ({menuVisible}) => {
                     setIsLeader(leaderList.includes(user.email));
                     const adminList = roles.admin;
                     setIsAdmin(adminList.includes(user.email));
+
+                    const commentAdminList = roles.comments;
+                    setIsCommentAdmin(commentAdminList.includes(user.email));
+
                     setLoggedIn(true);
                     try {
                         const idTokenResult = await getIdTokenResult(user);
@@ -61,7 +66,7 @@ const AppNavigation = ({menuVisible}) => {
 
     return (
         <>
-            <Navbar expand="lg" className={`sticky-top overflow-hidden ${menuVisible ? 'visible' : 'hidden'}`} variant="dark" style={{ backgroundColor: "rgba(0,0,0,0.85)" }}>
+            <Navbar expand="lg" className={`sticky-top overflow-hidden ${menuVisible ? 'visible' : 'hidden'}`} variant="dark" style={{ backgroundColor: "rgba(0,0,0,0.85)", zIndex:99999 }}>
                 <Container fluid>
                     <NavLink to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
                         <img
@@ -85,9 +90,11 @@ const AppNavigation = ({menuVisible}) => {
                             <NavLink to="/profile" className='nav-link text-white'>Profile</NavLink>
                             <InstallButton/>
                             {isAuthor && (
-                                <>
                                     <NavLink to="/upload" className='nav-link text-white'>Upload</NavLink>
-                                </>
+                            )}
+
+                            {isCommentAdmin && (
+                                <NavLink to="/admin/comments" className='nav-link text-white'>Reported Comments</NavLink>
                             )}
 
                             {(isAdmin) &&
