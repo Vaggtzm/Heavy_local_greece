@@ -5,10 +5,19 @@ import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
 import {get, onValue, ref as databaseRef} from "firebase/database";
 import {httpsCallable} from "firebase/functions";
 
-export const setAuthor = async (id, isEmail, isAuthor)=> {
+export const setClaims = async (id, isEmail, claim)=> {
     const adminFunction = httpsCallable(functions, 'setCustomClaim');
     try {
-        return await adminFunction({id: id, isEmail: isEmail, adminClaim: isAuthor})
+        return await adminFunction({id: id, isEmail: isEmail, claim: claim})
+    }catch (e) {
+        throw e;
+    }
+}
+
+export const setAuthor = async (id, isEmail, isAuthor)=>{
+    const claim = {admin: isAuthor};
+    try {
+        return await setClaims(id, isEmail, claim);
     }catch (e) {
         throw e;
     }

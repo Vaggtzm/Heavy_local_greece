@@ -3,9 +3,9 @@ import {auth, database, storage} from "../../firebase";
 import {signOut} from "firebase/auth";
 import {get, onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
-import {Button, Card, Form, Modal} from "react-bootstrap";
+import {Button, Card, DropdownButton, Form, Modal, Dropdown} from "react-bootstrap";
 import useNavigate from "../LanguageWrapper/Navigation";
-import {disableUser, setAuthor} from "../UploadSystem/articleData/articleData";
+import {disableUser, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -14,8 +14,17 @@ const AdminSystem = () => {
     const [roles, setRoles] = useState({});
     const [newUserEmail, setNewUserEmail] = useState("");
     const userList = ref(database, "roles");
+
+    const [role, setRole] = useState('admin');
+
+    const roleMapping = {
+        Author: "admin",
+        Band: "band"
+    };
+
     const [functionToRun, setFunctionToRun] = useState(null);
     const [functionArguments, setFunctionArguments] = useState(null);
+
     const [popupMessage, setPopupMessage] = useState("");
 
     const toggleDisableUser = async (user) => {
@@ -133,17 +142,43 @@ const AdminSystem = () => {
         <div className="container mt-4">
             <h2 className={"h2 text-white"}>User Admin System</h2>
             <hr className="bg-white" />
-            <div className={"row d-flex justify-content-center mb-4"}>
-                <div className={"col-6 d-flex  justify-content-between"}>
-                    <Form.Control className={"bg-dark text-white m-1 "} type={"text"} value={newUserEmail} onChange={(event)=>{setNewUserEmail(event.target.value)}} placeholder={"Enter the email for the new author"}/>
-                    <Button className={"m-1"} variant={"primary"} onClick={async ()=>{
+            <div className={"row d-flex justify-content-center"}>
+                <div className={"row col-8 col-md-12 d-flex  justify-content-center"}>
+                    <div className={"col-12 col-md-6 m-1 m-md-4"}>
+                    <Form.Control className={"bg-dark text-white"} type={"text"} value={newUserEmail} onChange={(event)=>{setNewUserEmail(event.target.value)}} placeholder={"Enter the email for the new author"}/>
+                    </div>
+                    <div className={"m-1 col-3 col-md-1 m-md-4"}>
+                    <DropdownButton
+                        id="dropdown-role-selector"
+                        title={role}
+                        className={"w-100"}
+                        onSelect={(selectedRole) => {
+                            console.log(selectedRole);
+                            setRole(selectedRole)
+                        }}
+                    >
+                        {Object.keys(roleMapping).map((roleName) => (
+                            <Dropdown.Item key={roleName} eventKey={roleName} id={roleMapping[roleName]}>
+                                {roleName}
+                            </Dropdown.Item>
+                        ))}
+                    </DropdownButton>
+                    </div>
+                    <div className={"m-1 col-6 col-md-2 m-md-4"}>
+                    <Button variant={"primary"} onClick={async ()=>{
                         try {
-                            const result = await setAuthor(newUserEmail, true, true).then()
+                            const claims = {}
+                            claims[roleMapping[role]] = true;
+                            console.log(claims)
+                            const result = await setClaims(newUserEmail, true, claims).then()
                             alert(result.data.message);
                         }catch (e) {
                             alert(e.message)
                         }
-                    }}>Make Author</Button>
+                    }}>
+                        Set Role
+                    </Button>
+                    </div>
                 </div>
             </div>
             <hr className={"bg-dark text-white"}/>

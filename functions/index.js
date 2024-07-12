@@ -770,35 +770,10 @@ async function getUser(id, isEmail) {
     return user;
 }
 
-
-exports.setCustomClaim = functions.https.onCall(async (data, context) => {
-    // Check if request is made by an authenticated user with admin privileges
-    if (!context.auth || !context.auth.token.admin) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
-    }
-
-    const {id, adminClaim, isEmail} = data;
-
-    let user;
-    try {
-        user = await getUser(id, isEmail);
-    } catch (e) {
-        throw new functions.https.HttpsError('failed-precondition', e.message);
-    }
-
-    if (!id || typeof adminClaim !== 'boolean') {
-        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email and adminClaim.');
-    }
-
-    try {
-        // Get user by email
-
-        // Set custom user claims
-        await admin.auth().setCustomUserClaims(user.uid, {admin: adminClaim});
-
-        // Write user info to Firestore (or Realtime Database)
-        if (adminClaim) {
-            const userDoc = database.ref("/authors/" + user.uid) // Use Firestore
+async function setDatabase(claim, table, user){
+    if(claim) {
+        if (claim) {
+            const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
             await userDoc.set({
                 uid: user.uid,
                 email: user.email,
@@ -816,8 +791,42 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
                 photoURL: user.photoURL,
             });
         }
+    }
+}
 
-        return {message: `Successfully set admin claims for user ${user.uid}`};
+
+exports.setCustomClaim = functions.https.onCall(async (data, context) => {
+    // Check if request is made by an authenticated user with admin privileges
+    if (!context.auth || !context.auth.token.admin) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
+    }
+
+    const {id, isEmail, claim} = data;
+
+    let user;
+    try {
+        user = await getUser(id, isEmail);
+    } catch (e) {
+        throw new functions.https.HttpsError('failed-precondition', e.message);
+    }
+
+    if (!id) {
+        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email.');
+    }
+
+    try {
+        // Get user by email
+        // Set custom user claims
+        await admin.auth().setCustomUserClaims(user.uid, {
+            ...user.customClaims,
+            ...claim
+        });
+        // Write user info to Firestore (or Realtime Database)
+
+        await setDatabase(claim.admin, "author", user);
+        await setDatabase(claim.band, "band", user);
+
+        return {message: `Successfully set the role for user ${user.uid}`};
     } catch (error) {
         console.error('Error setting custom claims:', error);
         throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data.');
