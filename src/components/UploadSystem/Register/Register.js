@@ -11,6 +11,7 @@ import {
 import Container from 'react-bootstrap/Container';
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../../LanguageWrapper/Navigation";
+import {setClaims} from "../articleData/articleData";
 
 const Register = () => {
     const { t } = useTranslation();
@@ -21,12 +22,17 @@ const Register = () => {
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
+    const [isBand, setIsBand] = useState(false);
+
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             await updateProfile(user, { displayName: name });
+            if(isBand) {
+                await setClaims(email, true, {band: true})
+            }
             await sendEmailVerification(user);
             setSuccess(t('successMessage'));
         } catch (error) {
@@ -88,18 +94,25 @@ const Register = () => {
                             />
                         </Form.Group>
 
-                        <Form.Group className={"row mt-4"} controlId="buttons">
-                            <Button className={"col-4"} variant="danger" type="button" onClick={registerWithGoogle}>
-                                {t('registerWithGoogle')}
-                            </Button>
+                        <Form.Group className={"m-3 d-flex align-items-center justify-content-center"} controlId={"Band"}>
+                            <Form.Check
+                                type="switch"
+                                id="sort-by-date-switch"
+                                label={t("band")}
+                                checked={isBand}
+                                onChange={() => setIsBand(!isBand)}
+                                className="me-3"
+                            />
+                        </Form.Group>
 
-                            <Button className={"col-3"} style={{ marginRight: "3vh", marginLeft: "3vh" }} variant="secondary" type="button" onClick={() => {
+                        <Form.Group className={"mt-4 d-flex justify-content-evenly"} controlId="buttons">
+                            <Button style={{ marginRight: "3vh", marginLeft: "3vh" }} variant="secondary" type="button" onClick={() => {
                                 navigate("/upload/login")
                             }}>
                                 {t('login')}
                             </Button>
 
-                            <Button className={"col-3"} variant="primary" type="submit">
+                            <Button variant="primary" type="submit">
                                 {t('register')}
                             </Button>
                         </Form.Group>

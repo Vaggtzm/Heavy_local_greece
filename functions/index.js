@@ -778,7 +778,7 @@ async function setDatabase(claim, table, user){
                 uid: user.uid,
                 email: user.email,
                 displayName: user.displayName,
-                photoURL: user.photoURL,
+                photoURL: user.photoURL?user.photoURL:"",
             });
         } else {
             const adminDoc = database.ref("/authors/" + user.uid)
@@ -788,7 +788,7 @@ async function setDatabase(claim, table, user){
                 uid: user.uid,
                 email: user.email,
                 displayName: user.displayName,
-                photoURL: user.photoURL,
+                photoURL: user.photoURL?user.photoURL:"",
             });
         }
     }
@@ -796,13 +796,15 @@ async function setDatabase(claim, table, user){
 
 
 exports.setCustomClaim = functions.https.onCall(async (data, context) => {
-    // Check if request is made by an authenticated user with admin privileges
-    if (!context.auth || !context.auth.token.admin) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
-    }
+
 
     const {id, isEmail, claim} = data;
-
+    const isAdmin = context.auth && context.auth.token.admin
+    const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
+    // Check if request is made by an authenticated user with admin privileges
+    if (!isAdmin&&!registeringAsBand) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.'+JSON.stringify(claim));
+    }
     let user;
     try {
         user = await getUser(id, isEmail);

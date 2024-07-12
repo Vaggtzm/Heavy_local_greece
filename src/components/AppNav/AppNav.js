@@ -19,6 +19,8 @@ const AppNavigation = ({menuVisible}) => {
     const [isLeader, setIsLeader] = useState(false);
     const [isCommentAdmin, setIsCommentAdmin] = useState(false);
 
+    const [isBand, setIsBand] = useState(false);
+
     const [displayName, setDisplayName] = useState("");
 
     const navigate = useNavigate()
@@ -26,6 +28,14 @@ const AppNavigation = ({menuVisible}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
+
+                getIdTokenResult(user).then((idTokenResult) => {
+                    if (idTokenResult.claims && idTokenResult.claims.band) {
+                        setIsBand(true);
+                    }
+                })
+
+
                 setDisplayName(user.displayName?user.displayName:"Unknown");
                 const userList = ref(database, 'roles');
                 onValue(userList, async (snapshot) => {
@@ -38,7 +48,7 @@ const AppNavigation = ({menuVisible}) => {
                     const adminList = roles.admin;
                     setIsAdmin(adminList.includes(user.email));
 
-                    const commentAdminList = roles.comments;
+                    const commentAdminList = roles.comments?roles.comments:[];
                     setIsCommentAdmin(commentAdminList.includes(user.email));
 
                     setLoggedIn(true);
