@@ -6,8 +6,9 @@ import {Button, Card, Form, InputGroup, Modal} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {CommentAuthor} from "./CommentAuthor";
 import {getIdTokenResult} from "firebase/auth";
+import {useLocation} from "react-router-dom";
 
-const CommentSystem = ({articleName}) => {
+const CommentSystem = ({articleName, commentId}) => {
     const [comments, setComments] = useState({});
     const [newComment, setNewComment] = useState('');
     const [replyComment, setReplyComment] = useState('');
@@ -20,6 +21,23 @@ const CommentSystem = ({articleName}) => {
     const [isAdmin, setIsAdmin] = useState(false);
 
     const [show, setShow] = useState(false);
+
+
+
+    useEffect(() => {
+        if (commentId) {
+            const commentElement = document.getElementById(commentId);
+            if (commentElement) {
+                console.log("Element was found", commentElement);
+                commentElement.scrollIntoView({behavior: 'smooth'});
+                commentElement.classList.add('highlight');
+            }else{
+                console.log("no Element was found")
+            }
+        }else{
+            console.log("no commentId")
+        }
+    }, [comments]);
 
     useEffect(() => {
         const commentsRef = ref(database, `comments/${articleName}`);
@@ -133,7 +151,7 @@ const CommentSystem = ({articleName}) => {
             const isAuthor = currentUser && comment.user === currentUser.uid;
 
             return (
-                <Card key={key} className={`w-100 rounded-4 bg-dark text-white ${shouldLeaveMargin ? "mb-3" : ""}`}>
+                <Card id={key} key={key} className={`w-100 rounded-4 bg-dark text-white ${shouldLeaveMargin ? "mb-3" : ""}`}>
                     <Card.Body>
                         <Card.Title>
                             <CommentAuthor authorCode={comment.displayName}/>

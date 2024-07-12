@@ -21,7 +21,7 @@
 // ReportedCommentsContainer.js
 import React, {useEffect, useState} from 'react';
 import {get, ref, remove} from 'firebase/database';
-import {Card, Button, Container, Row, Col, Spinner} from 'react-bootstrap';
+import {Button, Card, Col, Container, Row, Spinner} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {auth, database} from "../../firebase";
@@ -39,7 +39,7 @@ const ReportedCommentsContainer = () => {
             const snapshot = await get(commentAdminRef);
             if (snapshot.exists() && snapshot.val().includes(user.email)) {
                 setIsAdmin(true);
-            }else{
+            } else {
                 navigate("/");
             }
         };
@@ -86,6 +86,10 @@ const ReportedCommentsContainer = () => {
         setLoading(false);
     };
 
+    const handleCardClick = (articleName, commentId) => {
+        navigate(`/article/${articleName}?commentId=${commentId}`);
+    };
+
     const handleRemoveComment = async (commentPath, commentId) => {
         await remove(ref(database, commentPath));
         await remove(ref(database, `reported_comments/${commentPath.split('/')[1]}/${commentId}`));
@@ -100,7 +104,7 @@ const ReportedCommentsContainer = () => {
         <Container className="mt-4 text-white">
             <h3>Reported Comments</h3>
             {loading ? (
-                <Spinner animation="border" />
+                <Spinner animation="border"/>
             ) : reportedComments.length === 0 ? (
                 <p>No reported comments.</p>
             ) : (
@@ -111,12 +115,21 @@ const ReportedCommentsContainer = () => {
                                 <Card.Body>
                                     <Card.Title>{comment.displayName}</Card.Title>
                                     <Card.Text>{comment.text}</Card.Text>
-                                    <Button
-                                        variant="danger"
-                                        onClick={() => handleRemoveComment(comment.commentPath, comment.id)}
-                                    >
-                                        Remove Comment
-                                    </Button>
+                                    <div className={"d-flex justify-content-between"}>
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => handleRemoveComment(comment.commentPath, comment.id)}
+                                        >
+                                            Remove Comment
+                                        </Button>
+
+                                        <Button
+                                            variant="info"
+                                            onClick={() => handleCardClick(comment.articleName, comment.id)}
+                                        >
+                                            View Comment
+                                        </Button>
+                                    </div>
                                 </Card.Body>
                             </Card>
                         </Col>

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
 import {getDownloadURL, ref, updateMetadata} from "firebase/storage";
 import {onValue, ref as databaseRef, remove, update} from "firebase/database";
@@ -12,6 +12,7 @@ import NavLink from "../LanguageWrapper/NavLink";
 import {Spinner} from "react-bootstrap";
 import {useTranslation} from "react-i18next";
 import LanguageModal from "./LanguageModal";
+import "./comments.css";
 
 import {getFirebaseStorageUrl} from "../UploadSystem/articleData/articleData";
 import CommentSystem from "./Comments/CommentSystem";
@@ -32,6 +33,9 @@ const DefaultArticle = (props) => {
     const {t, i18n} = useTranslation();
     const [showModal, setShowModal] = useState(false);
     const handleCloseModal = () => setShowModal(false);
+
+    const {search} = useLocation();
+    const commentId = new URLSearchParams(search).get('commentId');
 
     const fetchSavedStatus = async () => {
         const currentUser = auth.currentUser;
@@ -292,7 +296,7 @@ const DefaultArticle = (props) => {
                     <div className='container'>
                         <div className='row'>
                             <div className='col-md-12'>
-                                <CommentSystem articleName={name}/>
+                                <CommentSystem commentId={commentId} articleName={name}/>
                             </div>
                         </div>
                     </div>
