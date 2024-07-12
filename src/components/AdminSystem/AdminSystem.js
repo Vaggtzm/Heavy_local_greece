@@ -183,11 +183,11 @@ const AdminSystem = () => {
             </div>
             <hr className={"bg-dark text-white"}/>
             <div className="row">
-                {users && roles && Object.keys(users).map((key, index) => {
+                {users && roles && Object.keys(users).map((key) => {
                     const email = users[key].email;
                     const userRoles = getUserRoles(email);
                     return (
-                        <div key={index} className="col-lg-4 col-md-6 mb-4">
+                        <div key={key} className="col-lg-4 col-md-6 mb-4">
                             <Card className="text-center bg-dark">
                                 <Card.Body>
                                     {users[key].photoURL && (
