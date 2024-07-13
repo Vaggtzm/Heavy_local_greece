@@ -45,7 +45,14 @@ export function CommentAuthor({authorCode}) {
             if(!snapshot.exists()){
                 userRef = ref(database, `users/${authorCode}`);
                 get(userRef).then((snapshot) => {
-                    setUser(snapshot.val());
+                    if(!snapshot.exists()){
+                        userRef = ref(database, `bands/${authorCode}`);
+                        get(userRef).then((snapshot) => {
+                            setUser(snapshot.val());
+                        });
+                    }else {
+                        setUser(snapshot.val());
+                    }
                 });
             }else {
                 setUser(snapshot.val());
