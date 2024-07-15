@@ -38,6 +38,8 @@ import GigsPage from "./pages/GigsPage/GigsPage";
 import GigDetailPage from "./pages/GigsPage/GigDetailPage";
 import AdsPage from "./pages/ads/AdsPage";
 import ReportedCommentsContainer from "./pages/CommentReportSystem/ReportedCommentsContainer";
+import PartyAnnouncement from "./pages/party/PartyAnnouncement";
+import PartyModal from "./pages/party/PartyModal";
 
 function App() {
 
@@ -138,6 +140,7 @@ function App() {
                 <Route path="gigs/:date" element={<GigDetailPage />} />
                 <Route path="ads" element={<AdsPage/>} />
                 <Route path="admin/comments" element={<ReportedCommentsContainer/>} />
+                <Route path="party" element={<PartyAnnouncement/>} />
             </Route>
         )
     }
@@ -146,6 +149,7 @@ function App() {
     return (
         <BrowserRouter>
         <div className="d-flex flex-column h-100">
+            <PartyModal/>
             <div ref={placeholderRef} style={{height: '1px'}}></div>
             <div className="flex-grow-1">
                 <NotificationToast/>

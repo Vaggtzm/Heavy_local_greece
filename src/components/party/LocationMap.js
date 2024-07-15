@@ -99,7 +99,7 @@ const LocationMap = ({className, style}) => {
             <APIProvider apiKey={'AIzaSyAZiqQqQcYDgbZ3VO2QKaMfiUgEmT0B-5c'} libraries={['marker']}>
                 <Map
                     mapId={'7503eb0b645b149'}
-                    defaultZoom={7}
+                    defaultZoom={6}
                     defaultCenter={centerCoordinate}
                 >
                     {allCoordinates.map((coordinates, index) => (
