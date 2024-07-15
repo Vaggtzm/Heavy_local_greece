@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {functions, messaging} from './firebase';
+import {config, functions, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -40,11 +40,13 @@ import AdsPage from "./pages/ads/AdsPage";
 import ReportedCommentsContainer from "./pages/CommentReportSystem/ReportedCommentsContainer";
 import PartyAnnouncement from "./pages/party/PartyAnnouncement";
 import PartyModal from "./pages/party/PartyModal";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 function App() {
 
     const [menuVisible, setMenuVisible] = useState(false);
     const placeholderRef = useRef(null);
+    const [shouldShowModal, setShouldShowModal] = useState(false);
 
     const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
 
@@ -79,8 +81,24 @@ function App() {
         }
     }
 
+
+
+
     useEffect(() => {
         requestPermission().then();
+
+
+        fetchAndActivate(config).then(()=>{
+            try {
+                const serverLanguages = getValue(config, "showModal").asString();
+                console.log(serverLanguages)
+                setShouldShowModal(JSON.parse(serverLanguages).party);
+            }catch (e) {
+                console.log(e);
+            }
+        })
+
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -149,7 +167,7 @@ function App() {
     return (
         <BrowserRouter>
         <div className="d-flex flex-column h-100">
-            <PartyModal/>
+            {shouldShowModal&&<PartyModal/>}
             <div ref={placeholderRef} style={{height: '1px'}}></div>
             <div className="flex-grow-1">
                 <NotificationToast/>
