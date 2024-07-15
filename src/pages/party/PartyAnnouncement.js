@@ -24,6 +24,7 @@ import AthensImage from './assets/athens.jpg';
 import IoanninaImage from './assets/ioannina.jpg';
 import LocationMap from "../../components/party/LocationMap";
 import {FaFacebook} from "react-icons/fa";
+import "./PartyAnnouncement.css"
 
 const PartyAnnouncement = () => {
     return (
@@ -47,8 +48,8 @@ const PartyAnnouncement = () => {
                 Dragon in Athens in 13 days to celebrate this success together that without all of you would not exist
                 today!
             </p>
-            <div className="row d-flex justify-content-evenly p-3">
-                <div className="col-12 col-md-6 m-2">
+            <div className="row d-flex justify-content-evenly">
+                <div className="col-12 col-md-6">
                     <h2 className={"text-center"}>Ioannina</h2>
                     <a className={"d-flex align-items-center"}
                        href={"https://www.facebook.com/events/493657453116865/"}>
