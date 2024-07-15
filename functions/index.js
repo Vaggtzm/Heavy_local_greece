@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const admin = require("firebase-admin");
 const RSS = require("rss");
-const { google } = require('googleapis');
 
 const path = require("path");
 const fs = require("fs");
