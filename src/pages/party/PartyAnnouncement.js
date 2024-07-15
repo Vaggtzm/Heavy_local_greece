@@ -47,13 +47,13 @@ const PartyAnnouncement = () => {
                 Dragon in Athens in 13 days to celebrate this success together that without all of you would not exist
                 today!
             </p>
-            <div className="d-flex justify-content-evenly">
-                <div className="m-3">
-                    <h2>Θυμωμένο Πορτραίτο - (Ιωάννινα - Ioannina)</h2>
+            <div className="row d-flex justify-content-evenly">
+                <div className="col-12 col-md-6 m-2">
+                    <h2 className={"text-center"}>Ioannina</h2>
                     <img className={"img-fluid"} src={IoanninaImage} alt="Ioannina Venue" />
                 </div>
-                <div className="m-3">
-                    <h2>Rock Dragon (Αθήνα - Athens)</h2>
+                <div className="col-12 col-md-5 m-2">
+                    <h2 className={"text-center"}>Athens</h2>
                     <img className={"img-fluid"} src={AthensImage} alt="Athens Venue" />
                 </div>
             </div>
