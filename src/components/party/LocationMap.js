@@ -14,7 +14,7 @@ const defaultCenter = {
     lng: 0,
 };
 
-const LocationMap = ({className}) => {
+const LocationMap = ({className, style}) => {
     const [allCoordinates, setAllCoordinates] = useState([]);
     const [centerCoordinate, setCenterCoordinate] = useState(defaultCenter);
 
@@ -88,14 +88,14 @@ const LocationMap = ({className}) => {
         return { lat: avgLat, lng: avgLng };
     }, []);
 
-    if(allCoordinates<1){
+    if(allCoordinates.length<1){
         return(
             <div>Loading...</div>
         )
     }
 
     return (
-        <div className={className}>
+        <div style={style} className={className}>
             <APIProvider apiKey={'AIzaSyAZiqQqQcYDgbZ3VO2QKaMfiUgEmT0B-5c'} libraries={['marker']}>
                 <Map
                     mapId={'7503eb0b645b149'}
@@ -107,6 +107,10 @@ const LocationMap = ({className}) => {
                             key={index}
                             position={coordinates}
                             title={`Marker ${index + 1}`}
+                            onClick={() => {
+                                const googleMapsUrl = `https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}`;
+                                window.open(googleMapsUrl, '_blank');
+                            }}
                         >
                             <Pin
                                 background={'#22ccff'}
