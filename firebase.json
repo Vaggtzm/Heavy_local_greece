@@ -85,9 +85,5 @@
   },
   "remoteconfig": {
     "template": "remoteconfig.template.json"
-  },
-  "extensions": {
-    "storage-googledrive-export": "mark/storage-googledrive-export@0.1.5",
-    "storage-resize-images": "firebase/storage-resize-images@0.2.5"
   }
 }
