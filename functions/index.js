@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const admin = require("firebase-admin");
 const RSS = require("rss");
+const { google } = require('googleapis');
 
 const path = require("path");
 const fs = require("fs");
@@ -865,5 +866,38 @@ exports.disableUser = functions.https.onCall(async (data, context) => {
     } catch (error) {
         console.error('Error disabling user:', error);
         throw new functions.https.HttpsError('internal', 'Unable to disable user.');
+    }
+});
+
+const { exec } = require('child_process');
+const util = require('util');
+
+const execPromise = util.promisify(exec);
+
+exports.getDnsLoc = functions.https.onCall(async (data, context) => {
+    // Check if the user is authenticated
+    if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'You must be authenticated to call this function.');
+    }
+
+    const url = data.url;
+    if (!url) {
+        throw new functions.https.HttpsError('invalid-argument', 'URL parameter is required.');
+    }
+
+    try {
+        // Execute the dig command
+        const { stdout, stderr } = await execPromise(`dig -t loc ${url} +short`);
+
+        console.log(stderr);
+        console.log(`dig -t loc ${url} +short`)
+
+        if (stderr) {
+            throw new functions.https.HttpsError('internal', `Error executing dig command: ${stderr}`);
+        }
+
+        return stdout.trim(); // Return the trimmed output
+    } catch (error) {
+        throw new functions.https.HttpsError('internal', `Error executing dig command: ${error.message}`);
     }
 });

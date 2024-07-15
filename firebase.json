@@ -1,47 +1,49 @@
 {
-  "hosting": [{
-    "site": "heavy-local-12bc4",
-    "predeploy": "npm run build",
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/feed",
-        "function": "webApi"
-      },
-      {
-        "source": "/save_token/",
-        "function": "saveDeviceToken"
-      },
-      {
-        "source": "/article/**",
-        "function": "webApi"
-      },
-      {
-        "source": "/assets/**",
-        "function": "webApi"
-      },
-      {
-        "source": "/author/**",
-        "function": "webApi"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  },
+  "hosting": [
+    {
+      "site": "heavy-local-12bc4",
+      "predeploy": "npm run build",
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "/feed",
+          "function": "webApi"
+        },
+        {
+          "source": "/save_token/",
+          "function": "saveDeviceToken"
+        },
+        {
+          "source": "/article/**",
+          "function": "webApi"
+        },
+        {
+          "source": "/assets/**",
+          "function": "webApi"
+        },
+        {
+          "source": "/author/**",
+          "function": "webApi"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
     {
       "site": "heavy-local-author",
       "rewrites": [
         {
           "source": "**",
           "function": "proxySubdomains"
-        }]
+        }
+      ]
     }
   ],
   "functions": {
@@ -83,5 +85,9 @@
   },
   "remoteconfig": {
     "template": "remoteconfig.template.json"
+  },
+  "extensions": {
+    "storage-googledrive-export": "mark/storage-googledrive-export@0.1.5",
+    "storage-resize-images": "firebase/storage-resize-images@0.2.5"
   }
 }
