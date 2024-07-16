@@ -147,15 +147,15 @@ const TranslationSystem = () => {
                 let relatedFileName = relatedTranslations[lang];
                 relatedFileName = relatedFileName.endsWith('.json') ? relatedFileName : `${relatedFileName}.json`;
                 if (relatedFileName === newFileName) return;
-                let relatedFileRef = StorageRef(storage, `upload_from_authors/${relatedFileName}.json`);
+                let relatedFileRef = StorageRef(storage, `upload_from_authors/${relatedFileName}`);
                 if (await checkIfStorageRefExists(relatedFileRef)) {
                     await updateotherTranslations(relatedFileRef, newFileName);
                 } else {
-                    relatedFileRef = StorageRef(storage, `articles/${relatedFileName}.json`);
+                    relatedFileRef = StorageRef(storage, `articles/${relatedFileName}`);
                     if (await checkIfStorageRefExists(relatedFileRef)) {
                         await updateotherTranslations(relatedFileRef, newFileName);
                     } else {
-                        relatedFileRef = StorageRef(storage, `early_releases/${relatedFileName}.json`);
+                        relatedFileRef = StorageRef(storage, `early_releases/${relatedFileName}`);
                         if (await checkIfStorageRefExists(relatedFileRef)) {
                             await updateotherTranslations(relatedFileRef, newFileName);
                         } else {
