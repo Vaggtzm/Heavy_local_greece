@@ -118,8 +118,8 @@ const getArticle = async (req, res, folder) => {
         //jsonData.img01 = await getFirebaseStorageUrl(jsonData.img01);
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
-        htmlData = htmlData.replace(/_TITLE_/g, encodeURIComponent(jsonData.title));
-        htmlData = htmlData.replace(/_THUMB_/g, encodeURIComponent(jsonData.img01));
+        htmlData = htmlData.replace(/_TITLE_/g, jsonData.title.replaceAll("'", "\\'"));
+        htmlData = htmlData.replace(/_THUMB_/g, jsonData.img01);
 
         res.send(htmlData);
     } catch (error) {
