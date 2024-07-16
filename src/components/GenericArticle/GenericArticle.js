@@ -86,7 +86,7 @@ const DefaultArticle = (props) => {
         for (const translation of Object.keys(data.translations)) {
             const translationExists = await checkIfTranslationExists(data.translations[translation]);
             if (translationExists) {
-                translations[translation] = data.translations[translation];
+                translations[translation] = data.translations[translation].replaceAll(".json", "");
             }
         }
         return translations;

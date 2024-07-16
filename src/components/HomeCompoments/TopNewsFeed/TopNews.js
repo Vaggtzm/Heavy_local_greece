@@ -83,21 +83,20 @@ const TopNews = () => {
 
                             {/**Reviews Start  (ENG FIRST) */}
 
-
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/1.jpg"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fab67616d0000b2731220a6ff8a929cd4743d1729_800x800.jpeg?alt=media&token=3d634d3c-4aa6-4b3a-87e1-f7cc737a83df"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            SINGLE REVIEW: “Silent Disco” by Senses – A Healing Dance of Freedom
+                                            ALBUM REVIEW: “As All Light Leaves Her” by Advent Sorrow — Of Somber Voices, Introspection and Death
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/SINGLE-REVIEW:-Silent-Disco-by-Senses--A-Healing-Dance-of-Freedom"}>
+                                                 to={"/article/ALBUM-REVIEW:-As-All-Light-Leaves-Her-by-Advent-Sorrow--Of-Somber-Voices,-Introspections-and-Death"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -107,17 +106,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/R-16062496-1602771752-6382.jpg"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa1941378762_16_800x800.jpg?alt=media&token=ad9fd32a-260b-4a99-a7b9-e6689dd836e9"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                            Single Review + News - Μια Δυσοίωνη Βραδιά - Piranha - Eternal Night
+                                            Album Review + info - Μια Αποτυχημένη Επιτόπια Επέμβαση - Pythagoras - Botched Field Surgery
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review-+-News--------Piranha---Eternal-Night"}>
+                                                 to={"/article/Album-Review-+-info---------Pythagoras---Botched-Field-Surgery"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -127,17 +126,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/Sirius-1068x801.jpg"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa3686591661_10_800x800.jpg?alt=media&token=955c5b54-5f5b-4267-95ba-97f5f485635e"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            Single Review + info - Μια πορεία δικαίωσης και εξιλέωσης - Sirius - Desdichado
+                                            ALBUM REVIEW: “Krijtland” by Wurgilnõ — A Must-Have Piece of Work
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review-+-info----------Sirius---Desdichado"}>
+                                                 to={"/article/ALBUM-REVIEW:-Krijtland-by-Wurgiln--A-Must-Have-Piece-of-Work"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -148,17 +147,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/450259163_461419796829012_4244951595615502782_n.jpg"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F4_800x800.jpg?alt=media&token=2fe8c5ff-08f0-4adf-98a4-a4bc0410af46"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                            Single Review - Ενώπιον της Αγνότητας - Silent Cries - Face The Innocence
+                                            Single Review + info - Περιθωριακός Αγώνας - Nobody - Stronger Than Dead
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review--------Silent-Cries---Face-The-Innocence"}>
+                                                 to={"/article/Single-Review-+-info--------Nobody---Stronger-Than-Dead"}>
                                             Read More
                                         </NavLink>
                                     </div>
