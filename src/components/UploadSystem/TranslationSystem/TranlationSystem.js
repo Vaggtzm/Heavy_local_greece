@@ -126,7 +126,7 @@ const TranslationSystem = () => {
         let newFileName = selectedFile.name;
         let fileRef;
         let translationFileRef;
-        fileData.translatedBy = user.uid;
+        translationData.translatedBy = user.uid;
         if (!fileData.translations) {
             fileData.translations = {};
         }
@@ -174,7 +174,7 @@ const TranslationSystem = () => {
 
         await uploadString(translationFileRef, JSON.stringify(fileData));
 
-        const updatedFiles = files.map((file) =>
+        const updatedFiles = (files?files:[]).map((file) =>
             file.name === selectedFile.name ? {...file, fileContent: fileData} : file
         );
 
@@ -303,7 +303,7 @@ const TranslationSystem = () => {
                 <div className="row">
                     <div className="col-lg-12">
                         <h3 className="text-center text-white">{t("uploadedFiles")}</h3>
-                        {files.length > 0 ? handleShowList(files, false, false) :
+                        {(files&&files.length > 0) ? handleShowList(files, false, false) :
                             <Alert>{error ? error : t("No articles in this category")}</Alert>}
                     </div>
                     <div className="col-lg-12">
