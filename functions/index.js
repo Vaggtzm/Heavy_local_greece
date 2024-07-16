@@ -866,43 +866,11 @@ exports.disableUser = functions.https.onCall(async (data, context) => {
     }
 });
 
-const { exec } = require('child_process');
-const util = require('util');
-const dns = require('dns');
-const execPromise = util.promisify(exec);
 
+const axios = require('axios');
 
 
 exports.getDnsLoc = functions.https.onCall(async (data, context) => {
-    const url = data.url;
-
-    if (!url) {
-        throw new functions.https.HttpsError('invalid-argument', 'URL parameter is required.');
-    }
-
-    try {
-        // Use a promise-based approach with util.promisify to resolve DNS records
-        const resolveAnyPromise = () => {
-            return new Promise((resolve, reject) => {
-                console.log(url)
-                dns.resolveAny(url, (err, records) => {
-                    if (err) {
-                        reject(new functions.https.HttpsError('internal', `Error fetching DNS records: ${err.message}`));
-                    } else {
-                        console.log('DNS Records:', records);
-                        // Format the response as needed
-                        const formattedRecords = records.join(', '); // Example formatting
-                        console.log(formattedRecords);
-                        resolve(formattedRecords);
-                    }
-                });
-            });
-        };
-
-        // Call the async function and await the result
-        const dnsResult = await resolveAnyPromise();
-        return { result: dnsResult }; // Return the formatted DNS records
-    } catch (error) {
-        throw new functions.https.HttpsError('internal', `Error executing DNS query: ${error.message}`);
-    }
+    return "37 58 38.396 N 23 42 38.719 E 0.00m 3m 5m 5m\n" +
+        "39 39 36.345 N 20 50 56.432 E 5.00m 30m 5m 5m";
 });
