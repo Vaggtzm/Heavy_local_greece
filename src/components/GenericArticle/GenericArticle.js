@@ -148,6 +148,7 @@ const DefaultArticle = (props) => {
     }, [isSaved, name]);
 
     const checkIfTranslationExists = async (translationFile) => {
+        translationFile = translationFile.endsWith('.json') ? translationFile : `${translationFile}.json`;
         const folder = isEarlyAccess ? "early_releases" : "articles";
         const filePath = `${folder}/${translationFile}`;
         const fileRef = ref(storage, filePath);

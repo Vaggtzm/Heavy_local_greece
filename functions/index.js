@@ -868,34 +868,41 @@ exports.disableUser = functions.https.onCall(async (data, context) => {
 
 const { exec } = require('child_process');
 const util = require('util');
-
+const dns = require('dns');
 const execPromise = util.promisify(exec);
 
+
+
 exports.getDnsLoc = functions.https.onCall(async (data, context) => {
-
-    const host = context.rawRequest.headers['host'];
-
-    // Log the host
-    console.log('Request Host:', host);
-
     const url = data.url;
+
     if (!url) {
         throw new functions.https.HttpsError('invalid-argument', 'URL parameter is required.');
     }
 
     try {
-        // Execute the dig command
-        const { stdout, stderr } = await execPromise(`dig -t loc ${url} +short`);
+        // Use a promise-based approach with util.promisify to resolve DNS records
+        const resolveAnyPromise = () => {
+            return new Promise((resolve, reject) => {
+                console.log(url)
+                dns.resolveAny(url, (err, records) => {
+                    if (err) {
+                        reject(new functions.https.HttpsError('internal', `Error fetching DNS records: ${err.message}`));
+                    } else {
+                        console.log('DNS Records:', records);
+                        // Format the response as needed
+                        const formattedRecords = records.join(', '); // Example formatting
+                        console.log(formattedRecords);
+                        resolve(formattedRecords);
+                    }
+                });
+            });
+        };
 
-        console.log(stderr);
-        console.log(`dig -t loc ${url} +short`)
-
-        if (stderr) {
-            throw new functions.https.HttpsError('internal', `Error executing dig command: ${stderr}`);
-        }
-
-        return stdout.trim(); // Return the trimmed output
+        // Call the async function and await the result
+        const dnsResult = await resolveAnyPromise();
+        return { result: dnsResult }; // Return the formatted DNS records
     } catch (error) {
-        throw new functions.https.HttpsError('internal', `Error executing dig command: ${error.message}`);
+        throw new functions.https.HttpsError('internal', `Error executing DNS query: ${error.message}`);
     }
 });
