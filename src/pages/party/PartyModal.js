@@ -5,28 +5,29 @@ import IoanninaImage from './assets/ioannina.jpg';
 import useNavigate from "../../components/LanguageWrapper/Navigation";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const calculateTimeLeft = () => {
+    const difference = +new Date('2024-07-26') - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+        timeLeft = {
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+            minutes: Math.floor((difference / 1000 / 60) % 60),
+            seconds: Math.floor((difference / 1000) % 60),
+        };
+    }
+
+    return timeLeft;
+};
+
+
 const PartyModal = () => {
     const navigate = useNavigate();
     const [isOpen, setIsModalOpen] = useState(true);
     const onRequestClose = () => {
         setIsModalOpen(false);
     }
-
-    const calculateTimeLeft = () => {
-        const difference = +new Date('2024-07-26') - +new Date();
-        let timeLeft = {};
-
-        if (difference > 0) {
-            timeLeft = {
-                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                minutes: Math.floor((difference / 1000 / 60) % 60),
-                seconds: Math.floor((difference / 1000) % 60),
-            };
-        }
-
-        return timeLeft;
-    };
 
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 

@@ -25,8 +25,12 @@ import IoanninaImage from './assets/ioannina.jpg';
 import LocationMap from "../../components/party/LocationMap";
 import {FaFacebook} from "react-icons/fa";
 import "./PartyAnnouncement.css"
+import {calculateTimeLeft} from "./PartyModal";
 
 const PartyAnnouncement = () => {
+
+    const daysLeft = calculateTimeLeft().days;
+
     return (
         <div className="party-announcement bg-dark text-white">
             <h1>Πάρτι Επέτειος - Anniversary Party!</h1>
@@ -36,7 +40,7 @@ const PartyAnnouncement = () => {
                 και τους καλλιτέχνες που βρήκαμε αλλά και μας βρήκαν από μόνοι τους και είχαμε και έχουμε μια αγαστή
                 συνεργασία η οποία μας βοήθησε σε ένα τόσο σύντομο χρονικό διάστημα να βρεθούμε εδώ που είμαστε σήμερα!
                 Σας περιμένουμε λοιπόν, καλλιτέχνες, μπάντες, συνεργάτες και αναγνώστες στο Θυμωμένο Πορτραίτο στα
-                Γιάννενα και στο Θρυλικό Rock Dragon στην Αθήνα σε 13 μέρες για να γιορτάσουμε όλοι μαζί αυτή την
+                Γιάννενα και στο Θρυλικό Rock Dragon στην Αθήνα σε {daysLeft} μέρες για να γιορτάσουμε όλοι μαζί αυτή την
                 επιτυχία που χωρίς όλους εσάς δεν θα υπήρχε σήμερα!
             </p>
             <p>
@@ -45,7 +49,7 @@ const PartyAnnouncement = () => {
                 all the people and artists that we found but also found us on their own and we had and have a lovely
                 collaboration that helped us in such a short time to be where we are today! So we are waiting for you,
                 artists, bands, collaborators and readers at the Angry Portrait in Ioannina and at the Legendary Rock
-                Dragon in Athens in 13 days to celebrate this success together that without all of you would not exist
+                Dragon in Athens in {daysLeft} days to celebrate this success together that without all of you would not exist
                 today!
             </p>
             <div className="row d-flex justify-content-evenly">
