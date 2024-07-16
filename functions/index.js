@@ -388,13 +388,13 @@ const handle_single_dir = async (directory) => {
     // Group all articles by category
     const articlesByCategory = {};
     allArticles.forEach(article => {
-        if (!article.categories) {
+        if (!article.category) {
             if (!articlesByCategory["undefined"]) {
                 articlesByCategory["undefined"] = [];
             }
             articlesByCategory["undefined"].push(article);
         } else {
-            article.categories.forEach(category => {
+            article.category.forEach(category => {
                 if (!articlesByCategory[category]) {
                     articlesByCategory[category] = [];
                 }
