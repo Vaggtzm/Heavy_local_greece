@@ -23,6 +23,8 @@ ARTICLE HANDLING
 const bucket = admin.storage().bucket("heavy-local-12bc4.appspot.com");
 const database = admin.database();
 
+
+
 app.get("/feed", async (req, res) => {
     const feed = new RSS({
         title: "Pulse Of The Underground",
@@ -380,7 +382,7 @@ const handle_single_dir = async (directory) => {
     }
 
     // Save `articlesList` in Firebase
-    await admin.database().ref(`/articlesList/${directory}`).set(articlesList);
+    await database.ref(`/articlesList/${directory}`).set(articlesList);
 
     // Prepare to store latest articles for each category
     const latestArticlesByCategory = {};
@@ -426,7 +428,7 @@ const handle_single_dir = async (directory) => {
     }
 
     // Save `latestArticlesByCategory` in Firebase under `articlesListLatestTest`
-    await admin.database().ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
+    await database.ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
 
     console.log('Articles organized and stored in the database successfully.');
     return null;
@@ -719,7 +721,7 @@ exports.fetchImagesFromGalleryFunction = functions.https.onCall(async (data, con
     const {authorCode} = data;
 
     try {
-        const galleryRef = admin.database().ref('/gallery/uploaded');
+        const galleryRef = database.ref('/gallery/uploaded');
         const snapshot = await galleryRef.once('value');
         const data = snapshot.val();
 

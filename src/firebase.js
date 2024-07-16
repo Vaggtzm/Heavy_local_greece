@@ -51,7 +51,7 @@ try {
 }
 
 // Connect to emulators if in development mode
-const isDev = process.env.NODE_ENV === 'development';
+export const isDev = process.env.NODE_ENV === 'development';
 
 if (isDev) {
     console.log("Dev env");

@@ -4,7 +4,7 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {auth, database, storage} from '../../../firebase';
+import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {deleteImage, fetchFiles, getRef} from "../articleData/articleData";
@@ -391,11 +391,11 @@ const FirebaseFileList = () => {
             return (
                 <Card className={`m-3 h-100 ${file.isReady?"bg-success":"bg-dark"}` }>
                     <Card.Body>
-                        <Card.Img
+                        {(!isDev)&&<Card.Img
                             variant="top"
                             src={file.image}
                             alt={file.title}
-                        ></Card.Img>
+                        ></Card.Img>}
                         <Card.Title className="badge bg-dark-subtle text-dark">
                             {file.date}
                         </Card.Title>
