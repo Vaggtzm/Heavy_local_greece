@@ -31,6 +31,10 @@
           "function": "webApi"
         },
         {
+          "source": "/api/**",
+          "function": "getDnsLoc"
+        },
+        {
           "source": "**",
           "destination": "/index.html"
         }
