@@ -13,7 +13,7 @@ const PartyModal = () => {
     }
 
     const calculateTimeLeft = () => {
-        const difference = +new Date('2024-07-28') - +new Date();
+        const difference = +new Date('2024-07-26') - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
