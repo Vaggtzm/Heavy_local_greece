@@ -144,7 +144,8 @@ const TranslationSystem = () => {
         const relatedTranslations = {...fileData.translations, [newLanguage]: newFileName};
         await Promise.all(
             Object.keys(relatedTranslations).map(async (lang) => {
-                const relatedFileName = relatedTranslations[lang];
+                let relatedFileName = relatedTranslations[lang];
+                relatedFileName = relatedFileName.endsWith('.json') ? relatedFileName : `${relatedFileName}.json`;
                 if (relatedFileName === newFileName) return;
                 let relatedFileRef = StorageRef(storage, `upload_from_authors/${relatedFileName}.json`);
                 if (await checkIfStorageRefExists(relatedFileRef)) {

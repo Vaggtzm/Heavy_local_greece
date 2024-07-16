@@ -44,19 +44,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F241755542_342487367665042_8867841272429406816_n_800x800.jpg?alt=media&token=6d7eae80-83c8-4fa7-a343-13d23b1384ec"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa0248265050_10_800x800.jpg?alt=media&token=9de31b7c-4d5c-46d7-9378-3af889a32085"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">INTERVIEW(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                            An Interview with Znous
-                                            <br/>
-                                            The Sound of Dissent: Tunisian Metalcore's Post-Revolution Roar
+                                            Συνέντευξη με τους Meden Agan
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/The-Sound-of-Dissent-Tunisian-Metalcores-Post-Revolution-Roar"}>
+                                                 to={"/article/---Meden-Agan"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -66,16 +64,15 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FMedusas_800x600.jpg?alt=media&token=dc4ff73d-ddb0-433e-8d62-db9a4c692c93"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F1_800x600.png?alt=media&token=40f90fa7-bc07-45ba-95a2-fe9f28cf0f05"
                                         className="img-fluid m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
-                                        <p className="lead text-white">Αποκαλύπτοντας την ιστορία πίσω από την Οργή της
-                                            Μέδουσας - Συνέντευξη με τους Medusa's Wrath</p>
+                                        <p className="lead text-white">Συνέντευξη εφ'όλης της ύλης με τους death/thrashers Piranha</p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/--------------Medusa's-Wrath"}>
+                                                 to={"/article/-'-----deaththrashers-Piranha"}>
                                             Read More
                                         </NavLink>
                                     </div>
