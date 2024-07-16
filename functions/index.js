@@ -796,8 +796,6 @@ async function setDatabase(claim, table, user){
 
 
 exports.setCustomClaim = functions.https.onCall(async (data, context) => {
-
-
     const {id, isEmail, claim} = data;
     const isAdmin = context.auth && context.auth.token.admin
     const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
@@ -874,6 +872,11 @@ const util = require('util');
 const execPromise = util.promisify(exec);
 
 exports.getDnsLoc = functions.https.onCall(async (data, context) => {
+
+    const host = context.rawRequest.headers['host'];
+
+    // Log the host
+    console.log('Request Host:', host);
 
     const url = data.url;
     if (!url) {
