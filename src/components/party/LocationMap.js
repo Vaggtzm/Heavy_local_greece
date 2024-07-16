@@ -20,19 +20,26 @@ const LocationMap = ({className, style}) => {
 
     useEffect(() => {
         const getDnsLoc = httpsCallable(functions, 'getDnsLoc');
-
-        getDnsLoc({ url: 'party.pulse-of-the-underground.com' })
-            .then(result => {
-                console.log(result.data);
-                const dnsData = result.data.split("\n");
+        const data={ url: 'party.pulse-of-the-underground.com' }
+        fetch(
+            '/getDNSLoc',
+            {
+                method: 'post',
+                body: JSON.stringify({ data })
+            }
+        ).then((response)=>{
+            response.text().then((data)=>{
+                console.log('DNS LOC Data:', data);
+                const dnsData = data.split("\n");
                 //const dnsData = "37 58 38.396 N"
                 const coordinates = dnsData.map(data => parseLOC(data));
                 console.log('Parsed Coordinates:', coordinates);
                 setAllCoordinates(coordinates);
             })
-            .catch(error => {
-                console.error('Error fetching DNS LOC:', error.message);
-            });
+        }).catch(error => {
+            console.error('Error fetching DNS LOC:', error.message);
+        });
+
     }, []);
 
     useEffect(() => {
