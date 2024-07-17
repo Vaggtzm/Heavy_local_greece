@@ -14,7 +14,7 @@ import {useTranslation} from "react-i18next";
 import LanguageModal from "./LanguageModal";
 import "./comments.css";
 
-import {getFirebaseStorageUrl} from "../UploadSystem/articleData/articleData";
+import {getFirebaseStorageUrl} from "../../systems/UploadSystem/articleData/articleData";
 import CommentSystem from "./Comments/CommentSystem";
 
 const DefaultArticle = (props) => {
@@ -57,7 +57,7 @@ const DefaultArticle = (props) => {
         if (articles.lang && currentLang && articles.lang !== currentLang && Object.keys(articles.translations).includes(currentLang)) {
             setShowModal(true);
         }
-    }, [articles, i18n.language]);
+    }, [i18n.language]);
 
     useEffect(() => {
         const fetchRemoteConfig = async () => {

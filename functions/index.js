@@ -338,7 +338,8 @@ const handle_single_dir = async (directory) => {
                     ? filterUndefinedValues(content.translations)
                     : {},
                 "lang": content.lang ? content.lang : "",
-                "isReady": !!content.isReady
+                "isReady": !!content.isReady,
+                "sponsor": content.sponsor?content.sponsor:""
             };
         });
 
@@ -366,7 +367,8 @@ const handle_single_dir = async (directory) => {
                     ? filterUndefinedValues(content.translations)
                     : {},
                 "lang": content.lang ? content.lang : "",
-                "isReady": !!content.isReady
+                "isReady": !!content.isReady,
+                "sponsor": content.sponsor?content.sponsor:""
             }).then(() => {
             }).catch((e) => {
             });
