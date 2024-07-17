@@ -10,7 +10,7 @@ import {useTranslation} from "react-i18next";
 
 import {getDownloadURL, getMetadata, ref as storageRef, ref as StorageRef, uploadString} from "firebase/storage";
 import {fetchFiles} from "../articleData/articleData";
-import useNavigate from "../../LanguageWrapper/Navigation";
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const TranslationSystem = () => {
     const {t} = useTranslation();

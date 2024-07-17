@@ -10,7 +10,7 @@ import {
 } from 'firebase/auth';
 import Container from 'react-bootstrap/Container';
 import {useTranslation} from 'react-i18next';
-import useNavigate from "../../LanguageWrapper/Navigation";
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 import {setClaims} from "../articleData/articleData";
 
 const Register = () => {

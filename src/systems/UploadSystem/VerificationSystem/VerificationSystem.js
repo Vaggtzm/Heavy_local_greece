@@ -8,7 +8,7 @@ import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {deleteImage, fetchFiles, getRef} from "../articleData/articleData";
-import useNavigate from "../../LanguageWrapper/Navigation";
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
 
@@ -723,6 +723,17 @@ const FirebaseFileList = () => {
                                 onChange={(e) => handleChange(e, 'date', false)}
                             />
                         </Form.Group>
+
+                        <Form.Group controlId="sponsored">
+                            <Form.Label className={"text-light"}>Sponsored</Form.Label>
+                            <Form.Control
+                                type="text"
+                                className={"bg-dark text-white"}
+                                value={fileData.sponsor}
+                                onChange={(e) => handleChange(e, 'sponsor', false)}
+                            />
+                        </Form.Group>
+
                         <Form.Group controlId="lang">
                             <Form.Label className={"text-light"}>Language</Form.Label>
                             <Form.Control

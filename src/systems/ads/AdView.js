@@ -23,7 +23,7 @@ import {get, onValue, ref, remove, update} from 'firebase/database';
 import {deleteObject, getStorage, ref as storageRef} from 'firebase/storage';
 import {Button, Card, Col, Container, Row} from 'react-bootstrap';
 import {auth, database} from "../../firebase";
-import {deleteImage, getFirebaseStorageUrlFromPath} from "../../components/UploadSystem/articleData/articleData";
+import {deleteImage, getFirebaseStorageUrlFromPath} from "../UploadSystem/articleData/articleData";
 
 const AdView = () => {
     const [ads, setAds] = useState([]);

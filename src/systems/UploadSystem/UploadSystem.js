@@ -11,7 +11,7 @@ import ImageUpload from './components/fancyImage/ImageUpload';
 import CategoryDropdown from './components/CategoryDropdown/CategoryDropdown';
 import ImageUploader from 'quill-image-uploader';
 import {useTranslation} from 'react-i18next';
-import useNavigate from "../LanguageWrapper/Navigation";
+import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {getImageDimensions} from "./articleData/articleData";
 
 const ArticleUpload = () => {
@@ -26,6 +26,7 @@ const ArticleUpload = () => {
     const [language, setLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
     const [category, setCategory] = useState('');
+    const [sponsor, setSponsor] = useState('');
 
     const categories = [
         "Top News",
@@ -36,6 +37,11 @@ const ArticleUpload = () => {
         "Latest Reviews(GRE)",
         "Legends"
     ];
+
+    const collaborators=[
+        "AngelsPr",
+        "amea"
+    ]
 
     const [socials, setSocials] = useState({
         facebook: '',
@@ -116,7 +122,8 @@ const ArticleUpload = () => {
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: 'en', // Store language as English
                 translations: {},
-                category: category
+                category: category,
+                sponsor
             };
 
             articleData.translations['en'] = newFileName;
@@ -272,13 +279,28 @@ const ArticleUpload = () => {
                                     })}
                                 </Form.Control>
                             </Col>
+                            <Row className={"col-6 d-flex justify-content-evenly"}>
                             <Col className="">
                                 <CategoryDropdown
                                     categories={categories}
                                     onSelectCategory={setCategory}
                                     required={true}
+                                    name={"Select a Category"}
                                 />
                             </Col>
+                            <Col className="">
+                                <CategoryDropdown
+                                    categories={collaborators}
+                                    onSelectCategory={(sponsor)=> {
+                                        setSponsor(sponsor);
+                                        console.log(sponsor)
+                                    }}
+                                    required={true}
+                                    name={"Select a Sponsor"}
+                                    defaultChoice={"Not Sponsored"}
+                                />
+                            </Col>
+                            </Row>
                         </Row>
                     </Form.Group>
 
