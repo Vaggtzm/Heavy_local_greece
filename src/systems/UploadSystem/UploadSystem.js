@@ -324,6 +324,7 @@ const ArticleUpload = () => {
                         </Alert>
                     )}
                 </Form>
+                <button onCLick={()=>{throw new Exception("test")}}>Test Button to cause error</button>
             </div>
         </div>
     );
