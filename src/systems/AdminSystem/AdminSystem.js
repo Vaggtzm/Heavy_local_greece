@@ -4,7 +4,7 @@ import {signOut} from "firebase/auth";
 import {get, onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
 import {Button, Card, DropdownButton, Form, Modal, Dropdown} from "react-bootstrap";
-import useNavigate from "../LanguageWrapper/Navigation";
+import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {disableUser, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
 
 const AdminSystem = () => {

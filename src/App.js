@@ -25,7 +25,7 @@ import './App.css'
 import UserProfile from "./systems/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
-import AdminSystem from "./components/AdminSystem/AdminSystem";
+import AdminSystem from "./systems/AdminSystem/AdminSystem";
 import AppNavigation from "./components/AppNav/AppNav";
 import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
