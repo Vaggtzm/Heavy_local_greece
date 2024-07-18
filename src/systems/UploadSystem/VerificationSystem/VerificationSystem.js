@@ -37,6 +37,7 @@ const FirebaseFileList = () => {
         lang: '',
         translations: {},
         isReady: false,
+        sponsor:""
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
@@ -729,7 +730,7 @@ const FirebaseFileList = () => {
                             <Form.Control
                                 type="text"
                                 className={"bg-dark text-white"}
-                                value={fileData.sponsor}
+                                value={fileData.sponsor?fileData.sponsor:""}
                                 onChange={(e) => handleChange(e, 'sponsor', false)}
                             />
                         </Form.Group>

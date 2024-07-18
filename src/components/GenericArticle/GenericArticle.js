@@ -26,6 +26,7 @@ const DefaultArticle = (props) => {
     const [translations, setTranslations] = useState({});
     const [availableLanguages, setAvailableLanguages] = useState({});
     const [loading, setLoading] = useState(true);
+    const [sponsoredImage, setSponsoredImage] = useState(null);
 
     const [shouldStoreMetadata, setShouldStoreMetadata] = useState(false);
     const [imageStorageRef, setImageStorageRef] = useState(null);
@@ -111,11 +112,17 @@ const DefaultArticle = (props) => {
 
             // Start fetching image URL and translations concurrently
             const fetchImageUrl = getFirebaseStorageUrl(articleData.img01, setShouldStoreMetadata, setImageStorageRef);
+
             const fetchTranslations = articleData.translations && Object.keys(articleData.translations).length > 0 ? checkTranslations(articleData) : Promise.resolve({});
 
-            const [imageUrl, translationsResult] = await Promise.all([fetchImageUrl, fetchTranslations]);
+            const fetchSponsoredImage = articleData.sponsor ? getDownloadURL(ref(storage, `sponsors/${articleData.sponsor}`)) : Promise.resolve(null);
 
+            const [imageUrl, translationsResult, sponsoredImage] = await Promise.all([fetchImageUrl, fetchTranslations, fetchSponsoredImage]);
+
+            console.log(sponsoredImage)
+            console.log(`sponsors/${articleData.sponsor}`)
             setTranslations(translationsResult);
+            setSponsoredImage(sponsoredImage);
             const currentLang = i18n.language;
 
             console.log("article lang: ", articleData.lang, "current lang: ", currentLang);
@@ -178,12 +185,16 @@ const DefaultArticle = (props) => {
         </Helmet>
         <div className="container text-white">
             <div className={"row"}>
+                {//articles.sponsor&&<div className="position-absolute rotated-triangle p-3 d-flex justify-content-center">
+                 //   <img className={"position-absolute img-fluid rotated-image"} src={sponsoredImage}></img>
+                //</div>
+                }
                 <div className={"col-12 col-md-2"}>
                     <span className={"badge bg-light text-dark"}>
                             {articles.date}
                     </span>
                 </div>
-                <div className={"col-12 col-md-10"}>
+                <div className={"col-10 col-md-9"}>
                     <h3>{articles.title}</h3>
                 </div>
                 <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">

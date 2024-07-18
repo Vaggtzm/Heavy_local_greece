@@ -22,3 +22,23 @@
     border: 2px solid yellow;
     background-color: rgba(255, 255, 0, 0.2);
 }
+
+.rotated-triangle {
+    top: 0;
+    right: 0;
+    width: 200px; /* Adjust as needed */
+    height: 200px; /* Adjust as needed */
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    clip-path: polygon(100% 0%, 100% 100%, 0% 0%);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    transform: rotate(0deg);
+    z-index: 10000;
+}
+
+.rotated-image {
+    transform: rotate(45deg);
+    top:-5%;
+    left:10%;
+}
