@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {auth, database, storage} from '../../../firebase';
 import {push, ref, update} from 'firebase/database';
 import {Alert, Button, Container, Form} from 'react-bootstrap';
-import ImageUpload from "../../../components/UploadSystem/components/fancyImage/ImageUpload";
 import {ref as storageRef, uploadBytes} from "firebase/storage";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
-import {getImageDimensions} from "../../../components/UploadSystem/articleData/articleData";
 import NavLink from "../../../components/LanguageWrapper/NavLink";
 import {getIdTokenResult} from "firebase/auth";
+import {getImageDimensions} from "../../../systems/UploadSystem/articleData/articleData";
+import ImageUpload from "../../../systems/UploadSystem/components/fancyImage/ImageUpload";
 
 const UploadGalleryItem = () => {
     const [user, setUser] = useState(null);
