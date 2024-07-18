@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { ref, get } from 'firebase/database';
 import { database } from '../../firebase';
 import NavLink from "../../components/LanguageWrapper/NavLink";
-import { getFirebaseStorageUrlFull } from "../../components/UploadSystem/articleData/articleData";
 import "./Gigs.css";
+import {getFirebaseStorageUrlFull} from "../../systems/UploadSystem/articleData/articleData";
 
 const GigsPage = () => {
     const [gigs, setGigs] = useState([]);
