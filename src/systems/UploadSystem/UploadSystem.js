@@ -288,18 +288,19 @@ const ArticleUpload = () => {
                                     name={"Select a Category"}
                                 />
                             </Col>
-                            <Col className="">
-                                <CategoryDropdown
-                                    categories={collaborators}
-                                    onSelectCategory={(sponsor)=> {
-                                        setSponsor(sponsor);
-                                        console.log(sponsor)
-                                    }}
-                                    required={true}
-                                    name={"Select a Sponsor"}
-                                    defaultChoice={"Not Sponsored"}
-                                />
-                            </Col>
+                                {/**<Col className="">
+                                    <CategoryDropdown
+                                        categories={collaborators}
+                                        onSelectCategory={(sponsor) => {
+                                            setSponsor(sponsor);
+                                            console.log(sponsor)
+                                        }}
+                                        required={true}
+                                        name={"Select a Sponsor"}
+                                        defaultChoice={"Not Sponsored"}
+                                    />
+                                </Col>
+                                */}
                             </Row>
                         </Row>
                     </Form.Group>
