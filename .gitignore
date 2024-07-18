@@ -39,3 +39,6 @@ functions/index.html
 functions/node_modules/.bin/
 
 emulatorMetadata.zip
+
+# Sentry Config File
+.sentryclirc

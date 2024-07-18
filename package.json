@@ -15,6 +15,8 @@
     "@paypal/paypal-js": "^8.1.0",
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-google-maps/api": "^2.19.3",
+    "@sentry/cli": "^2.32.2",
+    "@sentry/react": "^8.18.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -72,14 +74,15 @@
   },
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run emulators\" \"react-scripts start\"",
-    "build": "react-scripts build",
+    "build": "react-scripts build && npm run sentry:sourcemaps",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "postbuild": "node modify-index.js",
     "emulators": "firebase emulators:start --project heavy-local-12bc4 --import=./emulatorMetadata --export-on-exit=./emulatorMetadata",
     "deploy": "firebase deploy --project heavy-local-12bc4",
     "initialize-emulators": "unzip ./emulatorMetadata.zip",
-    "prebuild": "./firebase_handler"
+    "prebuild": "./firebase_handler",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org orfanidis-q5 --project javascript-react ./build && sentry-cli sourcemaps upload --org orfanidis-q5 --project javascript-react ./build"
   },
   "eslintConfig": {
     "extends": [
