@@ -2,11 +2,10 @@ import React, {useEffect, useState} from "react";
 import NavLink from "../LanguageWrapper/NavLink";
 import {useTranslation} from "react-i18next";
 import {limitToLast, onValue, orderByChild, query, ref} from "firebase/database";
-import {getDownloadURL, ref as storageRef} from "firebase/storage";
-import {database, storage} from "../../firebase";
+import {database} from "../../firebase";
 
 const ReadMore = ({category, isEarlyAccess}) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const [latestArticlesOnCategory, setLatestArticlesOnCategory] = useState([]);
 
     const cleanUpHTML = (html) => {
@@ -40,7 +39,9 @@ const ReadMore = ({category, isEarlyAccess}) => {
         div.childNodes.forEach(child => processNode(child));
 
         // Return cleaned HTML content
-        div.querySelectorAll("*:empty").forEach((x)=>{x.remove()})
+        div.querySelectorAll("*:empty").forEach((x) => {
+            x.remove()
+        })
         return div.innerHTML;
     };
 
@@ -93,53 +94,55 @@ const ReadMore = ({category, isEarlyAccess}) => {
     };
 
     const setListener = (category, isEarlyAccess) => {
-        const latestCategoryRef = ref(database, `articlesList/${isEarlyAccess?"early_releases":"articles"}/${category}`);
+        const latestCategoryRef = ref(database, `articlesList/${isEarlyAccess ? "early_releases" : "articles"}/${category}`);
         const latestArticlesQuery = query(latestCategoryRef, orderByChild('date'), limitToLast(3));
         return onValue(latestArticlesQuery, async (snapshot) => {
             setLatestArticlesOnCategory([]);
             const data = snapshot.val();
-            if(data){
+            if (data) {
                 console.log(data);
                 setLatestArticlesOnCategory(data);
             }
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(category);
         const unsubscribe = [];
 
         unsubscribe.push(setListener(category, false));
-        if(isEarlyAccess){
+        if (isEarlyAccess) {
             unsubscribe.push(setListener(category, true));
         }
 
-        return ()=>{
-            unsubscribe.forEach((unsub)=>unsub());
+        return () => {
+            unsubscribe.forEach((unsub) => unsub());
         }
-    },[])
+    }, [])
 
     return (
         <>
             <div className="container">
                 <h4>Pulse Of The Undeground</h4>
                 <div className="row mt-4 mb-5 text-center">
-                    {Object.keys(latestArticlesOnCategory).map((articleLink)=>{
+                    {Object.keys(latestArticlesOnCategory).map((articleLink) => {
                         const article = latestArticlesOnCategory[articleLink];
-                        article.link = `/article${isEarlyAccess?"/early":""}/${articleLink}`;
-                        return(<div className="col-md-4 mb-4">
-                        <div className="card h-100 w-100 bg-dark text-white">
-                            <img className="card-img-top shadow-lg img-fluid" src={article.image}
-                                 alt={article.title}></img>
-                            <div className={"card-header"}>
-                                <h3 className="card-title fw-bold">{article.title} </h3>
-                            </div>
-                            <div className="card-body">
-                                <NavLink to={article.link}
-                                         className="btn btn-primary">{t('readMore')}</NavLink>
-                            </div>
-                        </div>
-                    </div>)})}
+                        article.link = `/article${isEarlyAccess ? "/early" : ""}/${articleLink}`;
+                        return (
+                            <div key={articleLink} className="col-md-4 mb-4">
+                                <div className="card h-100 w-100 bg-dark text-white">
+                                    <img className="card-img-top shadow-lg img-fluid" src={article.image}
+                                         alt={article.title}></img>
+                                    <div className={"card-header"}>
+                                        <h3 className="card-title fw-bold">{article.title} </h3>
+                                    </div>
+                                    <div className="card-body">
+                                        <NavLink to={article.link}
+                                                 className="btn btn-primary">{t('readMore')}</NavLink>
+                                    </div>
+                                </div>
+                            </div>)
+                    })}
 
 
                 </div>
