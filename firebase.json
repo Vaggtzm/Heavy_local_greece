@@ -39,15 +39,6 @@
           "destination": "/index.html"
         }
       ]
-    },
-    {
-      "site": "heavy-local-author",
-      "rewrites": [
-        {
-          "source": "**",
-          "function": "proxySubdomains"
-        }
-      ]
     }
   ],
   "functions": {
