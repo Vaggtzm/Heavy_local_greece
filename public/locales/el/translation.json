@@ -37,6 +37,7 @@
   "loginWithGoogle": "Σύνδεση με Google",
   "loginWithGithub": "Σύνδεση με Github",
   "register": "Εγγραφή",
+  "band": "Εκπροσωπώ μπάντα",
   "sendEmailVerification": "Αποστολή επιβεβαίωσης email",
   "sendPasswordReset": "Έχει αποσταλεί email επαναφοράς κωδικού πρόσβασης.",
   "verifyEmail": "Η επιβεβαίωση του email έχει αποσταλεί. Παρακαλώ ελέγξτε το εισερχόμενό σας.",
@@ -139,6 +140,6 @@
     "yes": "Ναι"
   },
 
-  "ads": "Αγγελίες για Μπάντες",
+  "ads": "Αγγελίες",
   "description": "Περιγραφή"
 }

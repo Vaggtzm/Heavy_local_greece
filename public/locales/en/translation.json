@@ -38,6 +38,7 @@
   "loginWithGoogle": "Log in with Google",
   "loginWithGithub": "Log in with Github",
   "register": "Register",
+  "band": "I represent a band",
   "sendEmailVerification": "Send Email Verification",
   "sendPasswordReset": "Password reset email has been sent.",
   "verifyEmail": "Email verification has been sent. Please check your inbox.",
@@ -140,6 +141,6 @@
     "yes": "Yes"
   },
 
-  "ads": "Advertisements for Bands",
+  "ads": "Advertisements",
   "description": "Description"
 }

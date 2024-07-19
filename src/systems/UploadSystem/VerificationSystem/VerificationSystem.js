@@ -4,11 +4,11 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {auth, database, storage} from '../../../firebase';
+import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {deleteImage, fetchFiles, getRef} from "../articleData/articleData";
-import useNavigate from "../../LanguageWrapper/Navigation";
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
 
@@ -37,6 +37,7 @@ const FirebaseFileList = () => {
         lang: '',
         translations: {},
         isReady: false,
+        sponsor:""
     });
     const [error, setError] = useState('');
     const [alreadyPublishedError, setAlreadyPublishedError] = useState('');
@@ -63,7 +64,12 @@ const FirebaseFileList = () => {
             });
         });
 
-        fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
+            fetchFiles((files)=>{
+            console.log(files);
+            setFiles(files["upload_from_authors"]);
+            setEarlyReleasedArticles(!files["early_releases"]?[]:files["early_releases"]);
+            setAlreadyPublishedArticles(files["articles"])
+        }, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading).then();
     }, []);
 
     const copyLinkToClipboard = (link) => {
@@ -72,17 +78,23 @@ const FirebaseFileList = () => {
         });
     }
 
-    const handleEdit = (file, isAlreadyPub, isEarlyReleased) => {
+    const handleEdit = async (file, isAlreadyPub, isEarlyReleased) => {
         file.data = {
             isEarlyAccess: isEarlyReleased,
             isPublished: isAlreadyPub,
         };
+        console.log(file)
+
+        const articleRef = storageRef(storage, `${file.folder}/${file.name}.json`);
+        const articleDownloadLink = await getDownloadURL(articleRef);
+        const articleDataString = await fetch(articleDownloadLink);
+        const fileData = await articleDataString.json();
 
         setSelectedFile(file);
-        setFileData(file.fileContent);
-        setSocials(file.fileContent.socials || {});
+        setFileData(fileData);
+        setSocials(fileData.socials || {});
 
-        fetchAuthorAndTranslatorNames(file.fileContent.sub, file.fileContent.translatedBy).then();
+        fetchAuthorAndTranslatorNames(fileData.sub, fileData.translatedBy).then();
         setIsAlreadyPublished(isAlreadyPub);
         setIsEarlyReleasedArticles(isEarlyReleased);
         setShowModal(true);
@@ -111,16 +123,11 @@ const FirebaseFileList = () => {
         if (!selectedFile || !fileData) return;
 
         try {
-            const filePath = isAlreadyPublished ? 'articles' : (isEarlyReleasedArticles ? 'early_releases' : 'upload_from_authors');
-            const fileRef = storageRef(storage, `${filePath}/${selectedFile.name}`);
-
+            const fileRef = storageRef(storage, `${selectedFile.folder}/${selectedFile.name}.json`);
+            console.log(`${selectedFile.folder}/${selectedFile.name}`)
             const updatedContent = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
+            console.log(fileData);
             await uploadString(fileRef, JSON.stringify({ ...fileData, content: updatedContent }));
-
-            const functionforUpdate = isAlreadyPublished ? setAlreadyPublishedArticles : (isEarlyReleasedArticles ? setEarlyReleasedArticles : setFiles);
-            functionforUpdate((files)=>{
-                return files.map((file) => (file.name === selectedFile.name ? { ...file, fileContent: fileData } : file));
-            });
 
             setAuthorName('');
             setSocials({});
@@ -156,7 +163,7 @@ const FirebaseFileList = () => {
                 folder = 'upload_from_authors';
             }
 
-            const author = selectedFile.fileContent.translatedBy || selectedFile.fileContent.sub;
+            const author = fileData.translatedBy || fileData.sub;
             const authorRef = databaseRef(database, `authors/${author}/writtenArticles/${folder}/${oldCategory}/${selectedFile.name.replace('.json', '')}`);
             remove(authorRef);
 
@@ -200,36 +207,28 @@ const FirebaseFileList = () => {
     };
 
     const handleDelete = async (file, isAlreadyPub, isEarlyReleased) => {
+        const articleRef = storageRef(storage, `${file.folder}/${file.name}.json`);
+        const articleDownloadLink = await getDownloadURL(articleRef);
+        const articleDataString = await fetch(articleDownloadLink);
+        const fileData = await articleDataString.json();
+
         const isConfirmed = window.confirm(`Are you sure you want to delete the file "${file.name}"?`);
         if (!isConfirmed) return;
 
         try {
-            let filePath;
-            let updatedList;
-            if(isAlreadyPub){
-                filePath='articles'
-                updatedList=setAlreadyPublishedArticles;
-            } else if (isEarlyReleased){
-                filePath='early_releases'
-                updatedList=setEarlyReleasedArticles;
-            }else{
-                filePath='upload_from_authors'
-                updatedList=setFiles;
-            }
-            const fileRef = storageRef(storage, `${filePath}/${file.name}`);
+            const fileRef = storageRef(storage, `${file.folder}/${file.name}.json`);
 
-            if(Object.keys(file.fileContent.translations).length<2){
-                const image = getRef(file.fileContent.img01, false)
+            if(fileData.translations&&Object.keys(fileData.translations).length<2){
+                const image = getRef(fileData.img01, false)
                 deleteImage(image);
                 console.log("The image was deleted", image);
             }
-            console.log("deleteImage: ", file.fileContent.img01);
+            console.log("deleteImage: ", `${file.folder}/${file.name}.json`);
 
             await deleteObject(fileRef);
-
-
-            updatedList((prevList) => prevList.filter(item => item.name !== file.name));
+            console.log("The article was deleted successfully");
         } catch (error) {
+            console.log(error)
             setError('Error deleting file: ' + error.message+ " "+JSON.stringify(file));
         }
     };
@@ -239,33 +238,24 @@ const FirebaseFileList = () => {
             let originalfolder = "upload_from_authors";
             let folder = "early_releases";
 
-            // Manage list updates based on conditions
-            let newList, oldList;
-            oldList = setFiles;
-            newList = setEarlyReleasedArticles;
-
 
             if (to_normal_release) {
                 folder = "articles";
-                newList = setAlreadyPublishedArticles;
             }
             if (isEarlyReleasedArticles) {
                 folder = "articles";
                 originalfolder = "early_releases";
-                oldList = setEarlyReleasedArticles;
-                newList = setAlreadyPublishedArticles;
             }
 
-            const destinationFileRef = storageRef(storage, `${folder}/${file.name}`);
-            const originalFileRef = storageRef(storage, `${originalfolder}/${file.name}`);
+            const destinationFileRef = storageRef(storage, `${folder}/${file.name}.json`);
+            const originalFileRef = storageRef(storage, `${originalfolder}/${file.name}.json`);
 
             // Retrieve fileContent directly if it's already available
-            let fileContent = null;
 
             // Fetch fileContent if not already available
             const downloadUrl = await getDownloadURL(originalFileRef);
             const fileText = await fetch(downloadUrl).then(res => res.text());
-            fileContent = JSON.parse(fileText);
+            const fileContent = JSON.parse(fileText);
 
             const options = {
                 day: '2-digit',
@@ -321,33 +311,29 @@ const FirebaseFileList = () => {
                 await update(articleRef, { isEarlyAccess: to_normal_release, isPublished: true });
             }
 
-
-
-            // Remove from old list and add to new list
-            oldList((prevList) => prevList.filter(item => item.name !== file.name));
-            file.fileContent = fileContent
-            newList((prevList) => [...prevList, file]);
-
         } catch (error) {
+            console.log(error);
             setError('Error publishing file: ' + error.message);
         }
     };
 
 
     const handleShowList = (files, isAlreadyPublished, isEarlyReleased) => {
-        let sortedList = [...files];
+
+        console.log(files)
+        let sortedList = !files?[]:[...files];
 
         // Sorting logic based on sortByCategory
         if (sortByCategory) {
             sortedList.sort((a, b) => {
-                const categoryA = a.fileContent.category || 'Uncategorized';
-                const categoryB = b.fileContent.category || 'Uncategorized';
+                const categoryA = a.category || 'Uncategorized';
+                const categoryB = b.category || 'Uncategorized';
                 return categoryA.localeCompare(categoryB);
             });
 
             // Grouping by category
             const groupedByCategory = sortedList.reduce((acc, article) => {
-                const category = article.fileContent.category || 'Uncategorized';
+                const category = article.category || 'Uncategorized';
                 if (!acc[category]) {
                     acc[category] = [];
                 }
@@ -370,8 +356,8 @@ const FirebaseFileList = () => {
         // Sorting logic based on sortByDate
         if (sortByDate) {
             sortedList.sort((a, b) => {
-                const dateA = new Date(a.fileContent.date.split('/').reverse().join('-'));
-                const dateB = new Date(b.fileContent.date.split('/').reverse().join('-'));
+                const dateA = new Date(a.date.split('/').reverse().join('-'));
+                const dateB = new Date(b.date.split('/').reverse().join('-'));
                 return dateB - dateA;
             });
         }
@@ -401,18 +387,18 @@ const FirebaseFileList = () => {
         // Function to render an individual article card
         function renderArticleCard(file, isAlreadyPublished, isEarlyReleased) {
             const articleLink = `/article/${isEarlyReleased ? 'early/' : ''}${file.name.replace('.json', '')}`;
-            const cardTitle = file.fileContent.title || 'Untitled';
+            const cardTitle = file.title || 'Untitled';
 
             return (
-                <Card className={`m-3 h-100 ${file.fileContent.isReady?"bg-success":"bg-dark"}` }>
+                <Card className={`m-3 h-100 ${file.isReady?"bg-success":"bg-dark"}` }>
                     <Card.Body>
-                        <Card.Img
+                        {(!isDev)&&<Card.Img
                             variant="top"
-                            src={file.fileContent.img01}
-                            alt={file.fileContent.title}
-                        ></Card.Img>
+                            src={file.image}
+                            alt={file.title}
+                        ></Card.Img>}
                         <Card.Title className="badge bg-dark-subtle text-dark">
-                            {file.fileContent.date}
+                            {file.date}
                         </Card.Title>
                         <Card.Text>
                             {(isEarlyReleased || isAlreadyPublished) ? (
@@ -738,6 +724,17 @@ const FirebaseFileList = () => {
                                 onChange={(e) => handleChange(e, 'date', false)}
                             />
                         </Form.Group>
+
+                        <Form.Group controlId="sponsored">
+                            <Form.Label className={"text-light"}>Sponsored</Form.Label>
+                            <Form.Control
+                                type="text"
+                                className={"bg-dark text-white"}
+                                value={fileData.sponsor?fileData.sponsor:""}
+                                onChange={(e) => handleChange(e, 'sponsor', false)}
+                            />
+                        </Form.Group>
+
                         <Form.Group controlId="lang">
                             <Form.Label className={"text-light"}>Language</Form.Label>
                             <Form.Control

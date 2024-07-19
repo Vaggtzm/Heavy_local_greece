@@ -5,8 +5,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import '../carousel/carousel.css';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { storage } from '../../../firebase';
-import {getFirebaseStorageUrl, getFirebaseStorageUrlFull} from "../../UploadSystem/articleData/articleData";
 import {Button, Modal} from "react-bootstrap";
+import {getFirebaseStorageUrlFull} from "../../../systems/UploadSystem/articleData/articleData";
 
 const PrimaryCarousel = ({ customSettings, customImages, classNameImages, shouldBeFull }) => {
     const [images, setImages] = useState([]);

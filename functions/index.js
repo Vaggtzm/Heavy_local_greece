@@ -23,6 +23,8 @@ ARTICLE HANDLING
 const bucket = admin.storage().bucket("heavy-local-12bc4.appspot.com");
 const database = admin.database();
 
+
+
 app.get("/feed", async (req, res) => {
     const feed = new RSS({
         title: "Pulse Of The Underground",
@@ -116,7 +118,7 @@ const getArticle = async (req, res, folder) => {
         //jsonData.img01 = await getFirebaseStorageUrl(jsonData.img01);
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
-        htmlData = htmlData.replace(/_TITLE_/g, jsonData.title);
+        htmlData = htmlData.replace(/_TITLE_/g, jsonData.title.replaceAll("'", "&apos;"));
         htmlData = htmlData.replace(/_THUMB_/g, jsonData.img01);
 
         res.send(htmlData);
@@ -165,10 +167,10 @@ app.get("/article/early/:article", (req, res) => {
     getArticle(req, res, "early_releases").then();
 });
 
-app.get("/author/*",async (req, res)=>{
+app.get("/author/*", async (req, res) => {
     const authorCode = req.params[0];
     let author = await database.ref(`/authors/${authorCode}`).get();
-    if(!author.exists()){
+    if (!author.exists()) {
         return res.status(404).send("Author not found");
     }
 
@@ -189,7 +191,7 @@ app.get("/author/*",async (req, res)=>{
     try {
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
-        htmlData = htmlData.replace(/_TITLE_/g, author.displayName.replaceAll("'",'"'));
+        htmlData = htmlData.replace(/_TITLE_/g, author.displayName.replaceAll("'", '"'));
         htmlData = htmlData.replace(/_THUMB_/g, url);
 
         res.send(htmlData);
@@ -223,11 +225,11 @@ app.get("/assets/*", async (req, res) => {
             metadata.metadata = newMetadata.metadata;
         }
 
-        const { width, height } = metadata.metadata;
+        const {width, height} = metadata.metadata;
         const aspectRatio = width / height;
         const tolerance = 0.5;
 
-        if(fullScale!=="true") {
+        if (fullScale !== "true") {
             filePath = changeAnalysis(
                 filePath,
                 "800x800",
@@ -264,13 +266,13 @@ Article Upload Handling
 ------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 const categories = {
-    "Top News":5,
-    "General News":1,
-    "Interviews":5,
-    "Collabs and Sponsorships":2,
-    "Latest Reviews(ENG)":3,
-    "Latest Reviews(GRE)":3,
-    "Legends":1
+    "Top News": 5,
+    "General News": 1,
+    "Interviews": 5,
+    "Collabs and Sponsorships": 2,
+    "Latest Reviews(ENG)": 3,
+    "Latest Reviews(GRE)": 3,
+    "Legends": 1
 };
 
 const handleArticleCategories = async (object) => {
@@ -281,13 +283,33 @@ const handleArticleCategories = async (object) => {
         return null;
     }
     const directories = ['articles', 'early_releases', 'upload_from_authors'];
-    await Promise.all(directories.map(async (dir) => {return handle_single_dir(dir)}));
+    await Promise.all(directories.map(async (dir) => {
+        return handle_single_dir(dir)
+    }));
 }
 
+const sanitizeKey = (key) => {
+    return key
+        .replaceAll(".", "/39")
+        .replaceAll("#", "/40")
+        .replaceAll("$", "/41")
+        .replaceAll("/", "/42")
+        .replaceAll("[", "/43")
+        .replaceAll("]", "/44");
+};
 
-const handle_single_dir = async (directory) =>{
+const filterUndefinedValues = (obj) => {
+    return Object.entries(obj).reduce((acc, [key, value]) => {
+        if (!!value && !!key) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
+};
 
-    const [files] = await bucket.getFiles({ prefix: directory });
+const handle_single_dir = async (directory) => {
+
+    const [files] = await bucket.getFiles({prefix: directory});
     const articles = {};
     const allArticles = [];
 
@@ -306,16 +328,27 @@ const handle_single_dir = async (directory) =>{
 
         categories.forEach(category => {
             if (!articles[category]) {
-                articles[category] = [];
+                articles[category] = {};
             }
-            articles[category].push(newArticle);
+            articles[category][newArticle] = {
+                "date": content.date.split('/').reverse().join('-'),
+                "title": content.title,
+                "image": content.img01,
+                "translations": content.translations
+                    ? filterUndefinedValues(content.translations)
+                    : {},
+                "lang": content.lang ? content.lang : "",
+                "isReady": !!content.isReady,
+                "sponsor": content.sponsor?content.sponsor:""
+            };
         });
 
         // Collect all articles with their metadata
         allArticles.push({
             filename: newArticle,
             date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
-            categories
+            category: categories,
+            "lang": content.lang ? content.lang : ""
         });
 
         // Update author's written articles
@@ -325,7 +358,23 @@ const handle_single_dir = async (directory) =>{
         } else {
             ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${categories[0]}`);
         }
-        ref.child(newArticle).set(true).then(()=>{});
+        try {
+            ref.child(sanitizeKey(newArticle)).set({
+                "date": content.date.split('/').reverse().join('-'),
+                "title": content.title,
+                "image": content.img01,
+                "translations": content.translations
+                    ? filterUndefinedValues(content.translations)
+                    : {},
+                "lang": content.lang ? content.lang : "",
+                "isReady": !!content.isReady,
+                "sponsor": content.sponsor?content.sponsor:""
+            }).then(() => {
+            }).catch((e) => {
+            });
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     // Save articles in `articlesList` as lists of filenames
@@ -335,7 +384,7 @@ const handle_single_dir = async (directory) =>{
     }
 
     // Save `articlesList` in Firebase
-    await admin.database().ref(`/articlesList/${directory}`).set(articlesList);
+    await database.ref(`/articlesList/${directory}`).set(articlesList);
 
     // Prepare to store latest articles for each category
     const latestArticlesByCategory = {};
@@ -343,12 +392,19 @@ const handle_single_dir = async (directory) =>{
     // Group all articles by category
     const articlesByCategory = {};
     allArticles.forEach(article => {
-        article.categories.forEach(category => {
-            if (!articlesByCategory[category]) {
-                articlesByCategory[category] = [];
+        if (!article.category) {
+            if (!articlesByCategory["undefined"]) {
+                articlesByCategory["undefined"] = [];
             }
-            articlesByCategory[category].push(article);
-        });
+            articlesByCategory["undefined"].push(article);
+        } else {
+            article.category.forEach(category => {
+                if (!articlesByCategory[category]) {
+                    articlesByCategory[category] = [];
+                }
+                articlesByCategory[category].push(article);
+            })
+        }
     });
 
     // Find the latest articles for each category
@@ -374,13 +430,11 @@ const handle_single_dir = async (directory) =>{
     }
 
     // Save `latestArticlesByCategory` in Firebase under `articlesListLatestTest`
-    await admin.database().ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
+    await database.ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
 
     console.log('Articles organized and stored in the database successfully.');
     return null;
 };
-
-
 
 
 const getImageDimensions = async (object) => {
@@ -420,7 +474,7 @@ const getImageDimensions = async (object) => {
 }
 
 const sendNotofication = async (object) => {
-        
+
     try {
         // Check if the uploaded file is under the 'articles' directory
         const filePath = object.name; // Full path of the uploaded file in Firebase Storage
@@ -511,10 +565,15 @@ function getImageDimensionsBuffer(buffer) {
     });
 }
 
+exports.handleDeleteArticle = functions.storage
+    .object().onDelete(async (object) => {
+        await Promise.all([handleArticleCategories(object)])
+    })
+
 
 exports.handleNewArticle = functions.storage
     .object()
-    .onFinalize(async (object)=>{
+    .onFinalize(async (object) => {
         await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
     });
 
@@ -543,51 +602,35 @@ async function getDeviceTokens() {
 Handle admin show articles
  */
 
-const countTotalPages = async (folder, pageSize) => {
-    try {
-        let pageToken = null;
-        let totalFiles = 0;
-
-        do {
-            const [files, nextPageToken] = await bucket.getFiles({
-                prefix: folder,
-                maxResults: pageSize,
-                pageToken: pageToken
-            });
-
-            totalFiles += files.length;
-            pageToken = nextPageToken;
-        } while (pageToken);
-        return Math.ceil(totalFiles / pageSize);
-    } catch (error) {
-        console.error('Error counting total pages:', error);
-        throw new functions.https.HttpsError('unknown', 'Failed to count total pages');
-    }
-};
-
 const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
     try {
-        const [files, pageToken] = await bucket.getFiles({ prefix: folder, maxResults: maxResults, pageToken:currentPageToken});
+        const [files, pageToken] = await bucket.getFiles({
+            prefix: folder,
+            maxResults: maxResults,
+            pageToken: currentPageToken
+        });
 
-        return {articles: await files.reduce(async (accPromise, file) => {
-            const acc = await accPromise;
+        return {
+            articles: await files.reduce(async (accPromise, file) => {
+                const acc = await accPromise;
 
-            const nameList = file.name.split("/");
-            const fileName = nameList[nameList.length - 1];
-            if (!fileName.endsWith(".json")) {
+                const nameList = file.name.split("/");
+                const fileName = nameList[nameList.length - 1];
+                if (!fileName.endsWith(".json")) {
+                    return acc;
+                }
+
+                try {
+                    const [response] = await file.download();
+                    const fileContent = JSON.parse(response.toString('utf8'));
+                    acc.push({name: fileName, fileContent});
+                } catch (error) {
+                    console.error(`Error fetching file ${file.name}:`, error);
+                }
+
                 return acc;
-            }
-
-            try {
-                const [response] = await file.download();
-                const fileContent = JSON.parse(response.toString('utf8'));
-                acc.push({name: fileName, fileContent});
-            } catch (error) {
-                console.error(`Error fetching file ${file.name}:`, error);
-            }
-
-            return acc;
-        }, Promise.resolve([])), nextPageToken: pageToken};
+            }, Promise.resolve([])), nextPageToken: pageToken
+        };
     } catch (error) {
         console.error('Error fetching files:', error);
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
@@ -601,16 +644,14 @@ const runtimeOpts = {
 
 exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
     try {
-        const { folder, maxResults, pageToken} = data;
+        const {folder, maxResults, pageToken} = data;
         const {articles, nextPageToken} = await fetchArticlesCategory(folder, pageToken, maxResults);
-        return { articles , nextPageToken };
+        return {articles, nextPageToken};
     } catch (error) {
         console.error('Error in fetchFiles:', error);
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
     }
 });
-
-
 
 
 const fetchArticlesWithImages = async (authorCode) => {
@@ -666,7 +707,7 @@ const fetchArticlesWithImages = async (authorCode) => {
 };
 
 exports.fetchArticlesWithImagesFunction = functions.https.onCall(async (data, context) => {
-    const { authorCode } = data;
+    const {authorCode} = data;
 
     try {
         const result = await fetchArticlesWithImages(authorCode);
@@ -678,12 +719,11 @@ exports.fetchArticlesWithImagesFunction = functions.https.onCall(async (data, co
 });
 
 
-
 exports.fetchImagesFromGalleryFunction = functions.https.onCall(async (data, context) => {
-    const { authorCode } = data;
+    const {authorCode} = data;
 
     try {
-        const galleryRef = admin.database().ref('/gallery/uploaded');
+        const galleryRef = database.ref('/gallery/uploaded');
         const snapshot = await galleryRef.once('value');
         const data = snapshot.val();
 
@@ -701,7 +741,7 @@ exports.fetchImagesFromGalleryFunction = functions.https.onCall(async (data, con
 
 exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
     try {
-        const { token } = data;
+        const {token} = data;
 
         if (!token) {
             throw new functions.https.HttpsError('invalid-argument', 'Token must be provided');
@@ -711,14 +751,130 @@ exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
         const snapshot = await database.ref('deviceTokens').orderByChild('token').equalTo(token).once('value');
         if (snapshot.exists()) {
             console.log('Device token already exists.');
-            return { message: 'Device token already exists' };
+            return {message: 'Device token already exists'};
         }
 
         // Save the token under the user's UID in the database
-        await database.ref('deviceTokens').push({ token });
+        await database.ref('deviceTokens').push({token});
 
-        return { message: 'Device token saved successfully' };
+        return {message: 'Device token saved successfully'};
     } catch (error) {
         throw new functions.https.HttpsError('internal', 'Error saving device token', error.message);
     }
+});
+
+
+async function getUser(id, isEmail) {
+    let user;
+    if (isEmail) {
+        user = await admin.auth().getUserByEmail(id);
+    } else {
+        user = await admin.auth().getUser(id)
+    }
+    return user;
+}
+
+async function setDatabase(claim, table, user){
+    if(claim) {
+        if (claim) {
+            const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
+            await userDoc.set({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL?user.photoURL:"",
+            });
+        } else {
+            const adminDoc = database.ref("/authors/" + user.uid)
+            await adminDoc.remove();
+            const userDoc = database.ref("/users/" + user.uid) // Use Firestore
+            await userDoc.update({
+                uid: user.uid,
+                email: user.email,
+                displayName: user.displayName,
+                photoURL: user.photoURL?user.photoURL:"",
+            });
+        }
+    }
+}
+
+
+exports.setCustomClaim = functions.https.onCall(async (data, context) => {
+    const {id, isEmail, claim} = data;
+    const isAdmin = context.auth && context.auth.token.admin
+    const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
+    // Check if request is made by an authenticated user with admin privileges
+    if (!isAdmin&&!registeringAsBand) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.'+JSON.stringify(claim));
+    }
+    let user;
+    try {
+        user = await getUser(id, isEmail);
+    } catch (e) {
+        throw new functions.https.HttpsError('failed-precondition', e.message);
+    }
+
+    if (!id) {
+        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email.');
+    }
+
+    try {
+        // Get user by email
+        // Set custom user claims
+        await admin.auth().setCustomUserClaims(user.uid, {
+            ...user.customClaims,
+            ...claim
+        });
+        // Write user info to Firestore (or Realtime Database)
+
+        await setDatabase(claim.admin, "author", user);
+        await setDatabase(claim.band, "band", user);
+
+        return {message: `Successfully set the role for user ${user.uid}`};
+    } catch (error) {
+        console.error('Error setting custom claims:', error);
+        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data.');
+    }
+});
+
+
+// Function to disable a user
+exports.disableUser = functions.https.onCall(async (data, context) => {
+    // Check if request is made by an authenticated user with admin privileges
+    if (!context.auth || !context.auth.token.admin) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.');
+    }
+
+    const {id, isEmail, disabled} = data;
+
+    if (!id) {
+        throw new functions.https.HttpsError('invalid-argument', 'The function must be called with a valid email.');
+    }
+
+    try {
+        // Get user by email
+        const user = await getUser(id, isEmail);
+
+        // Disable user
+        await admin.auth().updateUser(user.uid, {disabled: disabled});
+        const adminClaims = user.customClaims.admin;
+
+        const userFolder = database.ref(`/${adminClaims ? "authors" : "users"}/${user.uid}`)
+        await userFolder.update({
+            disabled: disabled
+        })
+        return {message: `Successfully disabled user ${user.uid}`};
+    } catch (error) {
+        console.error('Error disabling user:', error);
+        throw new functions.https.HttpsError('internal', 'Unable to disable user.');
+    }
+});
+
+
+const axios = require('axios');
+
+
+exports.getDnsLoc = functions.https.onCall(async (data, context) => {
+    return "37 58 38.396 N 23 42 38.719 E 0.00m 3m 5m 5m\n" +
+        "39 39 36.345 N 20 50 56.432 E 5.00m 30m 5m 5m";
 });

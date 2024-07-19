@@ -12,8 +12,12 @@
     "gigs": {
       ".read": true
     },
-    "articlesList": {
+    "comments": {
       ".read": true
+    },
+    "articlesList": {
+      ".read": true,
+      ".indexOn": "date"
     },
     "deviceTokens":{
       ".read": false,

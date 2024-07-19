@@ -1,13 +1,13 @@
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { getDatabase, connectDatabaseEmulator } from 'firebase/database';
-import { getMessaging } from 'firebase/messaging';
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
-import { getStorage, connectStorageEmulator } from 'firebase/storage';
-import { getRemoteConfig } from 'firebase/remote-config';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import {connectAuthEmulator, getAuth} from 'firebase/auth';
+import {initializeApp} from 'firebase/app';
+import {getAnalytics} from 'firebase/analytics';
+import {connectDatabaseEmulator, getDatabase} from 'firebase/database';
+import {getMessaging} from 'firebase/messaging';
+import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
+import {connectStorageEmulator, getStorage} from 'firebase/storage';
+import {getRemoteConfig} from 'firebase/remote-config';
+import {connectFunctionsEmulator, getFunctions} from 'firebase/functions';
+import {connectFirestoreEmulator, getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvKorfS7r3u8PVcq4O3jWf_yF--mYsZ6c",
@@ -22,10 +22,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
-    isTokenAutoRefreshEnabled: true
-});
+
+
+// Initialize App Check
+if (!window._firebaseAppCheckInitialized) {
+    initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
+        isTokenAutoRefreshEnabled: true
+    });
+    console.log("test");
+    window._firebaseAppCheckInitialized = true; // Set a flag to prevent reinitialization
+    console.log(window._firebaseAppCheckInitialized)
+}
 
 const config = getRemoteConfig(app);
 config.settings = {
@@ -51,7 +59,7 @@ try {
 }
 
 // Connect to emulators if in development mode
-const isDev = process.env.NODE_ENV === 'development';
+export const isDev = process.env.NODE_ENV === 'development';
 
 if (isDev) {
     console.log("Dev env");

@@ -14,7 +14,7 @@ import {auth} from '../../../firebase';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 import {useTranslation} from 'react-i18next';
-import useNavigate from "../../LanguageWrapper/Navigation";
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const Login = (props) => {
     const { t } = useTranslation();

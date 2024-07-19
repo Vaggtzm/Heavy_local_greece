@@ -1,18 +1,19 @@
+import React, {lazy, Suspense, useCallback, useEffect, useMemo, useState} from 'react';
+import {Alert, Button, Col, Form, Row, Spinner} from 'react-bootstrap';
 import {ref, uploadBytes, uploadString} from 'firebase/storage';
-import React, {useEffect, useState} from 'react';
-import {Alert, Button, Col, Form, Row} from 'react-bootstrap';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import './quill-custom.css';
 import {auth, config, storage} from '../../firebase';
 import {getIdTokenResult, signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from 'firebase/remote-config';
-import ImageUpload from './components/fancyImage/ImageUpload';
-import CategoryDropdown from './components/CategoryDropdown/CategoryDropdown';
-import ImageUploader from 'quill-image-uploader';
 import {useTranslation} from 'react-i18next';
-import useNavigate from "../LanguageWrapper/Navigation";
+import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {getImageDimensions} from "./articleData/articleData";
+import 'react-quill/dist/quill.snow.css';
+import './quill-custom.css';
+import ImageUploader from 'quill-image-uploader';
+
+const ReactQuill = lazy(() => import('react-quill'));
+const ImageUpload = lazy(() => import('./components/fancyImage/ImageUpload'));
+const CategoryDropdown = lazy(() => import('./components/CategoryDropdown/CategoryDropdown'));
 
 const ArticleUpload = () => {
     const { t, i18n } = useTranslation();
@@ -26,8 +27,15 @@ const ArticleUpload = () => {
     const [language, setLanguage] = useState('');
     const [availableLanguages, setAvailableLanguages] = useState({});
     const [category, setCategory] = useState('');
+    const [sponsor, setSponsor] = useState('');
+    const [socials, setSocials] = useState({
+        facebook: '',
+        instagram: '',
+        spotify: '',
+        youtube: ''
+    });
 
-    const categories = [
+    const categories = useMemo(() => [
         "Top News",
         "General News",
         "Interviews",
@@ -35,14 +43,7 @@ const ArticleUpload = () => {
         "Latest Reviews(ENG)",
         "Latest Reviews(GRE)",
         "Legends"
-    ];
-
-    const [socials, setSocials] = useState({
-        facebook: '',
-        instagram: '',
-        spotify: '',
-        youtube: ''
-    });
+    ], []);
 
     const navigate = useNavigate();
 
@@ -77,14 +78,12 @@ const ArticleUpload = () => {
         });
 
         return () => unsubscribe();
-    }, []);
+    }, [navigate]);
 
-    function replaceSpecialCharsWithDashes(text) {
+    const replaceSpecialCharsWithDashes = useCallback((text) => {
         const regex = /[.$#[\]/\u0000-\u001F\u007F-\uFFFF]/g;
         return text.replace(regex, '');
-    }
-
-
+    }, []);
 
     const handleArticleSubmit = async (e) => {
         e.preventDefault();
@@ -110,13 +109,14 @@ const ArticleUpload = () => {
                 content: articleContent.replaceAll("<p>", "<p class='lead'>").replaceAll("<img", "<img class='img-fluid'"),
                 title,
                 details,
-                socials: socials,
+                socials,
                 img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: 'en', // Store language as English
                 translations: {},
-                category: category
+                category,
+                sponsor
             };
 
             articleData.translations['en'] = newFileName;
@@ -151,34 +151,35 @@ const ArticleUpload = () => {
                 <h2 className="h2 text-white">{t('authorUploadSystem')}</h2>
                 <hr className="bg-dark" />
                 <Form className="card w-100 bg-dark p-5" onSubmit={handleArticleSubmit}>
-                    <Form.Group controlId="articleContent">
-                        <Form.Label className="text-light">{t('pasteArticleContent')}</Form.Label>
-                        <ReactQuill
-                            theme="snow"
-                            className="text-light"
-                            value={articleContent}
-                            onChange={(value) => {
-                                const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
-                                setArticleContent(sanitizedValue);
-                            }}
-                            modules={{
-                                toolbar: {
-                                    container: [
-                                        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                                        [{ size: [] }],
-                                        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                                        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                                        ['link', 'image'],
-                                        ['clean']
-                                    ],
-                                    handlers: {
-                                        'image': ImageUploader.handler
+                    <Suspense fallback={<Spinner animation="border" variant="light" />}>
+                        <Form.Group controlId="articleContent">
+                            <Form.Label className="text-light">{t('pasteArticleContent')}</Form.Label>
+                            <ReactQuill
+                                theme="snow"
+                                className="text-light"
+                                value={articleContent}
+                                onChange={(value) => {
+                                    const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
+                                    setArticleContent(sanitizedValue);
+                                }}
+                                modules={{
+                                    toolbar: {
+                                        container: [
+                                            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                            [{ size: [] }],
+                                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                                            ['link', 'image'],
+                                            ['clean']
+                                        ],
+                                        handlers: {
+                                            'image': ImageUploader.handler
+                                        }
                                     }
-                                }
-                            }}
-                        />
-                    </Form.Group>
-
+                                }}
+                            />
+                        </Form.Group>
+                    </Suspense>
                     <Row>
                         <Col>
                             <Form.Group controlId="title">
@@ -272,19 +273,37 @@ const ArticleUpload = () => {
                                     })}
                                 </Form.Control>
                             </Col>
-                            <Col className="">
-                                <CategoryDropdown
-                                    categories={categories}
-                                    onSelectCategory={setCategory}
-                                    required={true}
-                                />
-                            </Col>
+                            <Row className={"col-6 d-flex justify-content-evenly"}>
+                                <Col className="">
+                                    <CategoryDropdown
+                                        categories={categories}
+                                        onSelectCategory={setCategory}
+                                        required={true}
+                                        name={"Select a Category"}
+                                    />
+                                </Col>
+                                {/**<Col className="">
+                                 <CategoryDropdown
+                                 categories={collaborators}
+                                 onSelectCategory={(sponsor) => {
+                                 setSponsor(sponsor);
+                                 console.log(sponsor)
+                                 }}
+                                 required={true}
+                                 name={"Select a Sponsor"}
+                                 defaultChoice={"Not Sponsored"}
+                                 />
+                                 </Col>
+                                 */}
+                            </Row>
                         </Row>
                     </Form.Group>
 
-                    <Form.Group controlId="image">
-                        <ImageUpload setImage={setImage} image={image} />
-                    </Form.Group>
+                    <Suspense fallback={<Spinner animation="border" variant="light" />}>
+                        <Form.Group controlId="image">
+                            <ImageUpload setImage={setImage} image={image} />
+                        </Form.Group>
+                    </Suspense>
 
                     <Button variant="primary" type="submit">
                         {t('uploadArticle')}

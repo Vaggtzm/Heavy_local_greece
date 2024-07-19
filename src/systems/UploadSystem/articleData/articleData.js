@@ -1,73 +1,90 @@
-import {functions, storage} from "../../../firebase";
+import {database, functions, storage} from "../../../firebase";
 
 
-import {httpsCallable} from "firebase/functions";
 import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
+import {get, onValue, ref as databaseRef} from "firebase/database";
+import {httpsCallable} from "firebase/functions";
 
-const fetchAllFiles = async (setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading,pageToken) => {
+export const setClaims = async (id, isEmail, claim)=> {
+    const adminFunction = httpsCallable(functions, 'setCustomClaim');
     try {
-        const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
-        const result = await fetchFilesFunction({ maxResults: 70, folder: 'articles', pageToken: pageToken });
-        const nextPageToken = handleResult(result, setAlreadyPublishedArticles, setAlreadyPublishedError, pageToken === null);
-        if (!nextPageToken||nextPageToken.pageToken===pageToken) {
-            // No more pages to fetch, set loading to false
-            setLoading(false);
-        } else {
-            // Recursively fetch the next page of files
-            await fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, nextPageToken.pageToken);
-        }
-    } catch (error) {
-        console.error('Error fetching files:', error);
-        setLoading(false);
+        return await adminFunction({id: id, isEmail: isEmail, claim: claim})
+    }catch (e) {
+        throw e;
     }
-};
+}
 
-export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading){
-    const fetchFilesFunction = httpsCallable(functions, 'fetchFiles');
+export const setAuthor = async (id, isEmail, isAuthor)=>{
+    const claim = {admin: isAuthor};
     try {
-        const pending = fetchFilesFunction({ maxResults:100, folder: 'upload_from_authors', pageToken: null }).then((uploadedFilesResult)=>{
-            handleResult(uploadedFilesResult, setFiles, setError, true);
-        })
+        return await setClaims(id, isEmail, claim);
+    }catch (e) {
+        throw e;
+    }
+}
 
-        fetchAllFiles(setAlreadyPublishedArticles, setAlreadyPublishedError, setLoading, null)
+// disableUser
 
-
-        const early = fetchFilesFunction({ maxResults:100, folder: 'early_releases', pageToken: null}).then((earlyReleasedFilesResult)=>{
-            handleResult(earlyReleasedFilesResult, setEarlyReleasedArticles, setEarlyReleasesError, true);
-        });
-        await Promise.all([
-            pending, early
-        ]);
-    } catch (e) {
-        setError(e.message);
+export const disableUser = async (id, isEmail, disabled)=> {
+    const adminFunction = httpsCallable(functions, 'disableUser');
+    try {
+        return await adminFunction({id: id, isEmail: isEmail, disabled:disabled})
+    }catch (e) {
+        throw e;
     }
 }
 
 
+const fetchAllFiles = (setArticlesByCategory, setLoading, pageToken) => {
+    const articlesRef = databaseRef(database, 'articlesList');
+    return onValue(articlesRef, async (snapshot)=> {
+        try {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const folders = Object.keys(data);
+                const articles = {};
 
-const handleResult = (result, setData, setError, initialize) => {
-    const { articles, nextPageToken } = result.data;
-    const errors = articles.filter(article => article.error).map(article => article.error);
+                // Fetch articles for each folder
+                for (const folder of folders) {
+                    const folderRef = databaseRef(database, `articlesList/${folder}`);
+                    const folderSnapshot = await get(folderRef);
 
-    if (errors.length > 0) {
-        setError(errors.join('\n'));
-    } else {
-        setError(null);
-    }
+                    if (folderSnapshot.exists()) {
+                        const articlesByCategory = [];
+                        const categoryData = folderSnapshot.val();
 
-    // When initialize is true, set data directly
-    if (initialize) {
-        setData(articles.filter(article => !article.error));
-    } else {
-        // When initialize is false, append to the previous data
-        setData(prevData => [
-            ...prevData,
-            ...articles.filter(article => !article.error)
-        ]);
-    }
+                        // Iterate over articles in the category
+                        Object.keys(categoryData).forEach(articleKey => {
+                            const articleCategory = categoryData[articleKey];
+                            Object.keys(articleCategory).forEach((articleTitle) => {
+                                const temp = articleCategory[articleTitle];
 
-    return nextPageToken;
+                                temp.name = articleTitle;
+                                temp.category = articleKey || 'uncategorized';
+                                temp.folder = folder;
+
+                                articlesByCategory.push(temp);
+                            })
+                        });
+                        articles[folder] = articlesByCategory;
+                    }
+                }
+                setArticlesByCategory(articles);
+            }
+
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching files:', error);
+            setLoading(false);
+        }
+    });
 };
+
+export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading){
+    return fetchAllFiles(setFiles, setAlreadyPublishedError, setLoading, null)
+}
+
+
 
 export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
 
@@ -75,7 +92,13 @@ export const getFirebaseStorageUrlFull = async (fileName, shouldBeFull) => {
         return await getDownloadURL(ref(storage, fileName));
     }else{
         let shouldResize = await isAlmostRectangle(ref(storage, fileName));
-        return await getDownloadURL(ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result)));
+        const imageRef = ref(storage, changeAnalysis(fileName, "800x800", "800x600", shouldResize.result));
+        try{
+            await getMetadata(imageRef);
+            return await getDownloadURL(imageRef);
+        }catch (e) {
+            return await getDownloadURL(ref(storage, fileName));
+        }
     }
 }
 

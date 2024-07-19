@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {Col, Container, Form, Row} from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Col, Container, Form, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ImageUpload.css';
-import {useTranslation} from "react-i18next"; // Custom CSS file for additional styling
+import { useTranslation } from "react-i18next"; // Custom CSS file for additional styling
 
-const ImageUpload = ({image, setImage}) => {
+const ImageUpload = ({ image, setImage }) => {
     const [preview, setPreview] = useState(null);
     const [dragging, setDragging] = useState(false);
     const { t } = useTranslation();
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
-        if(image) {
+        if (image) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result);
             };
             reader.readAsDataURL(image);
-        }else{
+        } else {
             setPreview(null);
         }
     }, [image]);
-
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -63,6 +63,12 @@ const ImageUpload = ({image, setImage}) => {
         }
     };
 
+    const handleClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
     return (
         <Container>
             <Row className="justify-content-center">
@@ -74,11 +80,14 @@ const ImageUpload = ({image, setImage}) => {
                             onDragOver={handleDragOver}
                             onDragLeave={handleDragLeave}
                             onDrop={handleDrop}
+                            onClick={handleClick}
                         >
                             <input
                                 type="file"
                                 className="file-input"
                                 onChange={handleImageChange}
+                                ref={fileInputRef}
+                                style={{ display: 'none' }}
                             />
                             {!preview && (
                                 <div className="upload-message">

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Change to the directory of your project (optional)
+# cd /path/to/your/project
+
+# Check for changes
+if git diff-index --quiet HEAD --; then
+    echo "No changes to commit."
+    exit 0
+fi
+# Prompt the user for a commit message
+read -p "Τί έκανες; : " commit_message
+
+# Add changes to staging
+git add .
+
+# Commit with the user's message
+git commit -m "$commit_message"
+
+# Push to the repository
+# Push to the repository
+if ! git push origin main; then  # Change 'main' to the name of your branch if different
+    clear
+    printf '\n\n\n\n\n\n\n\n\nΚάνε push ΜΑΛΑΚΑ ΓΤΧΣ\n\n\n\n\n\n\n'
+    exit 1
+fi
+
+echo "Changes have been committed and pushed."

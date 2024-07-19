@@ -34,7 +34,7 @@ const ReviewsBanner = () => {
 
      </p>
      <div className="Button Box d-flex justify-content-center align-items-center">
-     <NavLink to="https://pulse-of-the-underground.com/articles-page" className="btn btn-danger">
+     <NavLink to="/articles-page" className="btn btn-danger">
       Explore 
      </NavLink>
      </div>

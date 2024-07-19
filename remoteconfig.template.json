@@ -11,6 +11,12 @@
                 "value": "{\"en\":\"US\", \"el\":\"GR\"}"
             },
             "valueType": "STRING"
+        },
+        "showModal": {
+            "defaultValue": {
+                "value": "{\"party\":\"true\"}"
+            },
+            "valueType": "JSON"
         }
     }
 }

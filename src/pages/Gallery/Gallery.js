@@ -7,7 +7,7 @@ import './gallery.css';
 
 import { getDownloadURL, ref as storageRef } from "firebase/storage";
 import { NavLink } from "react-router-dom";
-import {deleteImage} from "../../components/UploadSystem/articleData/articleData";
+import {deleteImage} from "../../systems/UploadSystem/articleData/articleData";
 
 const ArtGallery = () => {
     const { t } = useTranslation();

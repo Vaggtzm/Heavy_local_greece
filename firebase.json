@@ -1,47 +1,44 @@
 {
-  "hosting": [{
-    "site": "heavy-local-12bc4",
-    "predeploy": "npm run build",
-    "public": "build",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/feed",
-        "function": "webApi"
-      },
-      {
-        "source": "/save_token/",
-        "function": "saveDeviceToken"
-      },
-      {
-        "source": "/article/**",
-        "function": "webApi"
-      },
-      {
-        "source": "/assets/**",
-        "function": "webApi"
-      },
-      {
-        "source": "/author/**",
-        "function": "webApi"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  },
+  "hosting": [
     {
-      "site": "heavy-local-author",
+      "site": "heavy-local-12bc4",
+      "predeploy": "npm run build",
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
       "rewrites": [
         {
+          "source": "/feed",
+          "function": "webApi"
+        },
+        {
+          "source": "/save_token/",
+          "function": "saveDeviceToken"
+        },
+        {
+          "source": "/article/**",
+          "function": "webApi"
+        },
+        {
+          "source": "/assets/**",
+          "function": "webApi"
+        },
+        {
+          "source": "/author/**",
+          "function": "webApi"
+        },
+        {
+          "source": "/getDNSLoc",
+          "function": "getDnsLoc"
+        },
+        {
           "source": "**",
-          "function": "proxySubdomains"
-        }]
+          "destination": "/index.html"
+        }
+      ]
     }
   ],
   "functions": {

@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {functions, messaging} from './firebase';
+import {config, functions, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -13,19 +13,19 @@ import AcidMamoth from './pages/articles/Interviews/AcidMamoth';
 import HollerInterview from './pages/articles/Interviews/Holler';
 import KhavarInterview from './pages/articles/Interviews/Khavar';
 import Primordial from './pages/articles/Primordial-black-interview';
-import ArticleUpload from "./components/UploadSystem/UploadSystem";
-import Login from "./components/UploadSystem/Login/Login";
-import Register from "./components/UploadSystem/Register/Register";
-import FirebaseFileList from "./components/UploadSystem/VerificationSystem/VerificationSystem";
-import TranlationSystem from "./components/UploadSystem/TranslationSystem/TranlationSystem";
+import ArticleUpload from "./systems/UploadSystem/UploadSystem";
+import Login from "./systems/UploadSystem/Login/Login";
+import Register from "./systems/UploadSystem/Register/Register";
+import FirebaseFileList from "./systems/UploadSystem/VerificationSystem/VerificationSystem";
+import TranlationSystem from "./systems/UploadSystem/TranslationSystem/TranlationSystem";
 
 import UserHome from './components/Users/UserHome';
 import SavedArtciles from './components/Users/Pages/Saved';
 import './App.css'
-import UserProfile from "./components/UploadSystem/Profile/UserProfile";
+import UserProfile from "./systems/UploadSystem/Profile/UserProfile";
 import Authors from "./pages/Authors/Authors";
 import RecommendationSystem from "./components/RecommendationSystem/RecomendationSystem";
-import AdminSystem from "./components/AdminSystem/AdminSystem";
+import AdminSystem from "./systems/AdminSystem/AdminSystem";
 import AppNavigation from "./components/AppNav/AppNav";
 import UploadGalleryItem from "./pages/Gallery/uploadArt/UploadGalleryItem";
 import ArticlesList from "./pages/ArticlesList/ArticlesList";
@@ -36,12 +36,17 @@ import {httpsCallable} from "firebase/functions";
 import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 import GigsPage from "./pages/GigsPage/GigsPage";
 import GigDetailPage from "./pages/GigsPage/GigDetailPage";
-import AdsPage from "./pages/ads/AdsPage";
+import AdsPage from "./systems/ads/AdsPage";
+import ReportedCommentsContainer from "./pages/CommentReportSystem/ReportedCommentsContainer";
+import PartyAnnouncement from "./pages/party/PartyAnnouncement";
+import PartyModal from "./pages/party/PartyModal";
+import {fetchAndActivate, getValue} from "firebase/remote-config";
 
 function App() {
 
     const [menuVisible, setMenuVisible] = useState(false);
     const placeholderRef = useRef(null);
+    const [shouldShowModal, setShouldShowModal] = useState(false);
 
     const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
 
@@ -76,8 +81,24 @@ function App() {
         }
     }
 
+
+
+
     useEffect(() => {
         requestPermission().then();
+
+
+        fetchAndActivate(config).then(()=>{
+            try {
+                const serverLanguages = getValue(config, "showModal").asString();
+                console.log(serverLanguages)
+                setShouldShowModal(JSON.parse(serverLanguages).party);
+            }catch (e) {
+                console.log(e);
+            }
+        })
+
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -136,6 +157,8 @@ function App() {
                 <Route path="gigs" element={<GigsPage />} />
                 <Route path="gigs/:date" element={<GigDetailPage />} />
                 <Route path="ads" element={<AdsPage/>} />
+                <Route path="admin/comments" element={<ReportedCommentsContainer/>} />
+                <Route path="party" element={<PartyAnnouncement/>} />
             </Route>
         )
     }
@@ -144,6 +167,7 @@ function App() {
     return (
         <BrowserRouter>
         <div className="d-flex flex-column h-100">
+            {shouldShowModal&&<PartyModal/>}
             <div ref={placeholderRef} style={{height: '1px'}}></div>
             <div className="flex-grow-1">
                 <NotificationToast/>

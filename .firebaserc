@@ -4,5 +4,14 @@
     "default": "heavy-local-12bc4"
   },
   "targets": {},
-  "etags": {}
+  "etags": {
+    "heavy-local-12bc4": {
+      "extensionInstances": {
+        "storage-googledrive-export": "41d4f06f14d02ed6c5bf39336e9ad52fce4aa3109b802a6e2278915579b34a53",
+        "delete-user-data": "6dc9b92051436ebf3fa147979958bef85895e84cd5c0ef542e80fd2ad6f30f77",
+        "storage-resize-images": "a7e0ac0c82501f480d4ff5b3f96e932073885c5de5ce088a8b7520526240edbe"
+      }
+    }
+  },
+  "dataconnectEmulatorConfig": {}
 }

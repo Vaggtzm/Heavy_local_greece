@@ -3,8 +3,8 @@ import {get, getDatabase, push, ref} from 'firebase/database';
 import {getDownloadURL, getStorage, ref as storageRef, uploadBytes} from 'firebase/storage';
 import {Alert, Button, Container, Form} from 'react-bootstrap';
 import {auth} from "../../firebase";
-import ImageUpload from "../../components/UploadSystem/components/fancyImage/ImageUpload";
-import "../../components/UploadSystem/components/fancyImage/ImageUpload.css";
+import ImageUpload from "../UploadSystem/components/fancyImage/ImageUpload";
+import "../UploadSystem/components/fancyImage/ImageUpload.css";
 import {useTranslation} from "react-i18next";
 
 const AdUpload = () => {
