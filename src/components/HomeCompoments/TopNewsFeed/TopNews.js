@@ -86,17 +86,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fab67616d0000b2731220a6ff8a929cd4743d1729_800x800.jpeg?alt=media&token=3d634d3c-4aa6-4b3a-87e1-f7cc737a83df"
+                                        src="https://pulse-of-the-underground.com/assets/51900619_2321203294791447_5989544280404787200_n.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            ALBUM REVIEW: “As All Light Leaves Her” by Advent Sorrow — Of Somber Voices, Introspection and Death
+                                        BAND REVIEW: Veritas — The Truth in Hard Rock and Metal
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/ALBUM-REVIEW:-As-All-Light-Leaves-Her-by-Advent-Sorrow--Of-Somber-Voices,-Introspections-and-Death"}>
+                                                 to={"/article/BAND-REVIEW:-Veritas--The-Truth-in-Hard-Rock-and-Metal"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -106,17 +106,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa1941378762_16_800x800.jpg?alt=media&token=ad9fd32a-260b-4a99-a7b9-e6689dd836e9"
+                                        src="https://pulse-of-the-underground.com/assets/451020836_1025661109196004_3543762158773206324_n.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            Album Review + info - Μια Αποτυχημένη Επιτόπια Επέμβαση - Pythagoras - Botched Field Surgery
-                                        </p>
+                                        SINGLE REVIEW: Gaerea’s “Hope Shatters” — A Dark Gem Unleashed
+                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Album-Review-+-info---------Pythagoras---Botched-Field-Surgery"}>
+                                                 to={"/article/SINGLE-REVIEW:-Gaereas-Hope-Shatters--A-Dark-Gem-Unleashed"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -126,14 +126,14 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa3686591661_10_800x800.jpg?alt=media&token=955c5b54-5f5b-4267-95ba-97f5f485635e"
+                                        src="https://pulse-of-the-underground.com/assets/a3422251798_10.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            ALBUM REVIEW: “Krijtland” by Wurgilnõ — A Must-Have Piece of Work
+                                        EP REVIEW: Sorry… Dives Deep with “Never Fail to Disappoint”
                                         </p>
                                         <NavLink className="btn btn-danger"
                                                  to={"/article/ALBUM-REVIEW:-Krijtland-by-Wurgiln--A-Must-Have-Piece-of-Work"}>
@@ -142,6 +142,52 @@ const TopNews = () => {
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/Warfarer-heir.jpg"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                        Single Review + news - Αδελφικό Αίμα - Warfarer - Heir Uncrowned                                                                               
+                                         </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/Single-Review-+-news-------Warfarer---Heir-Uncrowned"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/3.jpg"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                        Single Review + info - Συγχώρεση - Autumn’s Grief - The Absolution                                       
+                                         </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/Single-Review-+-info--------Nobody---Stronger-Than-Dead"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
 
                             <div className="row">
