@@ -136,7 +136,7 @@ const TopNews = () => {
                                         EP REVIEW: Sorry… Dives Deep with “Never Fail to Disappoint”
                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/ALBUM-REVIEW:-Krijtland-by-Wurgiln--A-Must-Have-Piece-of-Work"}>
+                                                 to={"/article/EP-REVIEW:-Sorry-Dives-Deep-with-Never-Fail-to-Disappoint"}>
                                             Read More
                                         </NavLink>
                                     </div>
