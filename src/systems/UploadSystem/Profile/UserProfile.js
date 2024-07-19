@@ -11,6 +11,7 @@ import {
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {get, ref as databaseRef, update} from "firebase/database";
 import {useTranslation} from 'react-i18next';
+import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const UserProfile = () => {
     const { t } = useTranslation();
@@ -25,8 +26,13 @@ const UserProfile = () => {
     const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || '');
     const [userRef, setUserRef] = useState(null);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if(!user){
+                navigate("/")
+            }
             const idTokenResult =  await getIdTokenResult(user);
             let userFolder;
             if (idTokenResult.claims && idTokenResult.claims.admin) {
