@@ -42,3 +42,5 @@ emulatorMetadata.zip
 
 # Sentry Config File
 .sentryclirc
+
+.env
