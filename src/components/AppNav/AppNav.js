@@ -28,6 +28,7 @@ const AppNavigation = ({menuVisible}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (user) {
+                setLoggedIn(true);
 
                 getIdTokenResult(user).then((idTokenResult) => {
                     if (idTokenResult.claims && idTokenResult.claims.band) {
@@ -50,8 +51,6 @@ const AppNavigation = ({menuVisible}) => {
 
                     const commentAdminList = roles.comments?roles.comments:[];
                     setIsCommentAdmin(commentAdminList.includes(user.email));
-
-                    setLoggedIn(true);
                     try {
                         const idTokenResult = await getIdTokenResult(user);
                         setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
@@ -113,7 +112,7 @@ const AppNavigation = ({menuVisible}) => {
                             <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
                             <NavLink to={"/gigs"} className='nav-link text-white'>Gigs</NavLink>
                             <NavLink to={"/ads"} className='nav-link text-white'>Ads By You</NavLink>
-                            <NavLink to="/profile" className='nav-link text-white'>Profile</NavLink>
+                            {(loggedIn)&&<NavLink to="/profile" className='nav-link text-white'>Profile</NavLink>}
                             <InstallButton/>
                             {(isAdmin|| isLeader|| isCommentAdmin) &&
                             <NavDropdown className={"text-white"} title="Administration" >
