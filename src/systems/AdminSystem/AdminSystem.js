@@ -125,6 +125,8 @@ const AdminSystem = () => {
             updatedRoles[role].push(email);
         }
 
+        console.log(updatedRoles)
+
         // Update the roles in the database
         update(ref(database, "roles"), updatedRoles).then();
         setRoles(updatedRoles);
@@ -210,7 +212,7 @@ const AdminSystem = () => {
                                         {users[key].displayName} ({users[key].email})
                                     </Card.Title>
                                     <Card.Text className={"bg-secondary text-light badge"}>
-                                        {userRoles.length>0?userRoles.join(", "):"Author"}
+                                        {userRoles.length > 0 ? userRoles.join(", ") : "Author"}
                                     </Card.Text>
                                     <div className="d-flex justify-content-around mt-3">
                                         <Button
@@ -257,15 +259,28 @@ const AdminSystem = () => {
                                             Comments Admin
                                         </Button>
                                     </div>
+
                                     <div className="d-flex justify-content-around mt-3">
-                                        <Button variant="danger" onClick={()=>handleShow(email, setAuthor, `Do you really want to remove ${email} from the authors?`)}>
+                                        <Button
+                                            variant={userRoles.includes("gigs") ? "primary" : "outline-primary"}
+                                            onClick={() => handleRoleChange("gigs", email)}
+                                        >
+                                            Gigs Admin
+                                        </Button>
+                                    </div>
+
+                                    <div className="d-flex justify-content-around mt-3">
+                                        <Button variant="danger"
+                                                onClick={() => handleShow(email, setAuthor, `Do you really want to remove ${email} from the authors?`)}>
                                             Remove
                                         </Button>
-                                        <Button variant={!users[key].disabled?"danger":"outline-danger"} onClick={()=>handleShow(users[key], toggleDisableUser, `Do you really want to ${!users[key].disabled?"disable":"dnable"} ${email}`)}>
-                                            {!users[key].disabled?"Disable":"Enable"}
+                                        <Button variant={!users[key].disabled ? "danger" : "outline-danger"}
+                                                onClick={() => handleShow(users[key], toggleDisableUser, `Do you really want to ${!users[key].disabled ? "disable" : "dnable"} ${email}`)}>
+                                            {!users[key].disabled ? "Disable" : "Enable"}
                                         </Button>
 
-                                        <Modal size={"md"} className={"bg-transparent"} show={show} onHide={handleClose}>
+                                        <Modal size={"md"} className={"bg-transparent"} show={show}
+                                               onHide={handleClose}>
                                             <Modal.Header closeButton>
                                                 <Modal.Title>Confirm</Modal.Title>
                                             </Modal.Header>

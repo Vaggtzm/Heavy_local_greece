@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { ref, get } from 'firebase/database';
-import { database } from '../../firebase';
+import {auth, database} from '../../firebase';
 import NavLink from "../../components/LanguageWrapper/NavLink";
 import "./Gigs.css";
 import {getFirebaseStorageUrlFull} from "../../systems/UploadSystem/articleData/articleData";
+import UploadComponent from "./UploadGig";
 
 const GigsPage = () => {
     const [gigs, setGigs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [admin, setIsAdmin] = useState(false);
 
     const getThumbnailUrl = async (gig, thumbnail) => {
         try {
@@ -18,7 +20,22 @@ const GigsPage = () => {
         }
     };
 
+    const checkAdmin = async (user) => {
+        const commentAdminRef = ref(database, `roles/gigs`);
+        const snapshot = await get(commentAdminRef);
+        if (snapshot.exists() && snapshot.val().includes(user.email)) {
+            setIsAdmin(true);
+        }
+    };
+
     useEffect(() => {
+
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if(user){
+                checkAdmin(user).then();
+            }
+        })
+
         const gigsRef = ref(database, '/gigs');
         console.log("Waiting for gigs");
         get(gigsRef).then(async (snapshot) => {
@@ -36,11 +53,18 @@ const GigsPage = () => {
             }
             setLoading(false);
         }).catch((error)=>{
+            console.log("Hello")
             console.log(error);
         });
+
+        return unsubscribe;
     }, []);
 
     return (
+        <>
+            {admin&&(<section className={"container d-flex justify-content-center"}>
+                <UploadComponent/>
+            </section>)}
         <section className='gigs'>
             <div className="container">
                 <h1 className="text-center mb-5 text-white">Gigs</h1>
@@ -87,6 +111,7 @@ const GigsPage = () => {
                 )}
             </div>
         </section>
+        </>
     );
 };
 
