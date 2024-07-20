@@ -60,8 +60,9 @@ try {
 
 // Connect to emulators if in development mode
 export const isDev = process.env.NODE_ENV === 'development';
+const useEmulators = process.env.REACT_APP_USE_EMULATORS === 'true';
 
-if (isDev) {
+if (isDev&&useEmulators) {
     console.log("Dev env");
     connectAuthEmulator(auth, "http://localhost:9099");
     connectDatabaseEmulator(database, "localhost", 9001);
