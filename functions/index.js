@@ -26,70 +26,76 @@ const database = admin.database();
 
 
 app.get("/feed", async (req, res) => {
-    const feed = new RSS({
-        title: "Pulse Of The Underground",
-        description: "An active news website for underground metal bands",
-        feed_url: "https://pulse-of-the-underground.com/feed",
-        site_url: "https://pulse-of-the-underground.com/",
-        image_url: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
-        managingEditor: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
-        webMaster: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
-        pubDate: new Date().toUTCString(),
-    });
+    const category = req.query.category || null;
+    let latestArticleDate = null;
 
     try {
-        let files = [];
-        let nextPageToken = undefined;
+        const authorsRef = database.ref('authors');
+        const authorSnapshot = await authorsRef.once('value');
+        const authors = authorSnapshot.val();
 
-        do {
-            const [result] = await bucket.getFiles({
-                prefix: "articles/",
-                maxResults: 1000,
-                pageToken: nextPageToken,
-            });
+        const usersRef = database.ref('users');
+        const userSnapshot = await usersRef.once('value');
+        const users = userSnapshot.val();
 
-            files = files.concat(result);
+        const allAuthors = {...authors, ...users};
 
-            nextPageToken = result.nextPageToken;
-        } while (nextPageToken);
 
-        const promises = files.map(async (file) => {
-            const [metadata] = await file.getMetadata();
+        const articlesRef = database.ref('articlesList/articles');
+        const snapshot = await articlesRef.once('value');
+        const articles = snapshot.val();
+        let articlesArray = [];
 
-            if (!metadata.contentType.startsWith("application/json")) {
-                return; // Skip non-JSON files
+        if (category && articles[category]) {
+            articlesArray = Object.entries(articles[category]).map(([key, value]) => ({ key, ...value }));
+        } else {
+            for (const [cat, articlesInCategory] of Object.entries(articles)) {
+                articlesArray = articlesArray.concat(
+                    Object.entries(articlesInCategory).map(([key, value]) => ({ category: cat, key, ...value }))
+                );
             }
+        }
 
-            const articleData = await file.download();
-            const article = JSON.parse(articleData.toString());
 
-            let parts_of_date = article.date.split("/");
 
+        // Sort articles by date, newest to oldest
+        articlesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (articlesArray.length > 0) {
+            latestArticleDate = new Date(articlesArray[0].date);
+            console.log(latestArticleDate)
+        }else{
+            console.log("Something went wrong")
+        }
+
+        const feed = new RSS({
+            title: "Pulse Of The Underground",
+            description: "An active news website for underground metal bands",
+            feed_url: "https://pulse-of-the-underground.com/feed",
+            site_url: "https://pulse-of-the-underground.com/",
+            image_url: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
+            managingEditor: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
+            webMaster: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
+            pubDate: latestArticleDate ? latestArticleDate.toUTCString() : new Date().toUTCString(),
+        });
+
+        articlesArray.forEach(article => {
+            console.log(article)
             const item = {
                 title: article.title,
-                description: article.content.replace(
+                description: article.content ? article.content.replace(
                     "/assets",
                     "https://pulse-of-the-underground.com/assets"
-                ),
-                url: `https://pulse-of-the-underground.com/article/${file.name
-                    .split("/")
-                    .pop()
-                    .replace(".json", "")}`,
-                author: article.sub,
-                date: new Date(
-                    +parts_of_date[2],
-                    parts_of_date[1] - 1,
-                    +parts_of_date[0]
-                ),
-                enclosure: {url: article.img01},
+                ) : '',
+                url: `https://pulse-of-the-underground.com/article/${article.key.replaceAll(".json", "")}`,
+                author: Object.keys(allAuthors).includes(article.author) ? allAuthors[article.author].displayName : 'Unknown',
+                date: new Date(article.date),
+                enclosure: { url: article.image },
             };
-
             feed.item(item);
         });
 
-        await Promise.all(promises);
-
-        const xml = feed.xml({indent: true});
+        const xml = feed.xml({ indent: true });
         res.set("Content-Type", "application/rss+xml");
         res.send(xml);
     } catch (error) {
@@ -339,7 +345,8 @@ const handle_single_dir = async (directory) => {
                     : {},
                 "lang": content.lang ? content.lang : "",
                 "isReady": !!content.isReady,
-                "sponsor": content.sponsor?content.sponsor:""
+                "sponsor": content.sponsor?content.sponsor:"",
+                "author": content.sub
             };
         });
 
