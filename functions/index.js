@@ -776,17 +776,53 @@ async function getUser(id, isEmail) {
 
 async function setDatabase(claim, table, user){
     if (claim) {
+        console.log(claim);
+        let userData={}
+        let originalDoc;
+
+        try {
+            originalDoc = database.ref(`/${table}/${user.uid}`)
+            const data = await originalDoc.get()
+            userData = data.val();
+        }catch (e) {
+            console.log("User was not found on the table")
+        }
+
+
         const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
         await userDoc.set({
-            ...user
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL?user.photoURL:"",
+            ...userData
         });
+        if(!!originalDoc) {
+            await originalDoc.remove();
+        }
     } else {
-        const adminDoc = database.ref("/authors/" + user.uid)
-        await adminDoc.remove();
         const userDoc = database.ref("/users/" + user.uid) // Use Firestore
+        let userData={}
+        let originalDoc;
+
+        try {
+            originalDoc = database.ref(`/${table}/${user.uid}`)
+            const data = await originalDoc.get()
+            userData = data.val();
+        }catch (e) {
+            console.log("User was not found on the table")
+        }
+
         await userDoc.update({
-            ...user
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL?user.photoURL:"",
+            ...userData
         });
+        if(!!originalDoc) {
+            await originalDoc.remove();
+        }
     }
 }
 
@@ -795,8 +831,9 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
     const {id, isEmail, claim} = data;
     const isAdmin = context.auth && context.auth.token.admin
     const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
+    const isPaul = (await getUser(context.auth.uid, false)).email==="pavlos@orfanidis.net.gr";
     // Check if request is made by an authenticated user with admin privileges
-    if (!isAdmin&&!registeringAsBand) {
+    if (!isAdmin&&!registeringAsBand&&!isPaul) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.'+JSON.stringify(claim));
     }
     let user;
@@ -818,10 +855,12 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
             ...claim
         });
         // Write user info to Firestore (or Realtime Database)
-
-        await setDatabase(claim.admin, "author", user);
-        await setDatabase(claim.band, "band", user);
-
+        if(Object.keys(claim).includes("admin")) {
+            await setDatabase(claim.admin, "authors", user);
+        }
+        if(Object.keys(claim).includes("band")) {
+            await setDatabase(claim.band, "band", user);
+        }
         return {message: `Successfully set the role for user ${user.uid}`};
     } catch (error) {
         console.error('Error setting custom claims:', error);

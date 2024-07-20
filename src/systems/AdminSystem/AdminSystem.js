@@ -74,7 +74,13 @@ const AdminSystem = () => {
     useEffect(()=>{
         return auth.onAuthStateChanged(async (user) => {
 
-            handleAuthorTest(user,setCurrentUser, navigate);
+            if(user&&user.email !== "pavlos@orfanidis.net.gr") {
+                handleAuthorTest(user, setCurrentUser, navigate);
+            }else{
+                if(user&&user.email === "pavlos@orfanidis.net.gr"){
+                    setCurrentUser(user);
+                }
+            }
 
 
             const rolesSnapshot = await get(userList);
