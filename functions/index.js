@@ -565,13 +565,18 @@ function getImageDimensionsBuffer(buffer) {
     });
 }
 
-exports.handleDeleteArticle = functions.storage
+const runtimeOpts = {
+    timeoutSeconds: 300,
+    memory: '1GB'
+}
+
+exports.handleDeleteArticle = functions.runWith(runtimeOpts).storage
     .object().onDelete(async (object) => {
         await Promise.all([handleArticleCategories(object)])
     })
 
 
-exports.handleNewArticle = functions.storage
+exports.handleNewArticle = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
         await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
@@ -636,11 +641,6 @@ const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
     }
 };
-
-const runtimeOpts = {
-    timeoutSeconds: 300,
-    memory: '1GB'
-}
 
 exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
     try {
