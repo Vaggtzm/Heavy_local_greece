@@ -775,13 +775,13 @@ async function getUser(id, isEmail) {
 }
 
 async function setDatabase(claim, table, user){
+    console.log(claim, table, user);
     if (claim) {
-        console.log(claim);
         let userData={}
         let originalDoc;
 
         try {
-            originalDoc = database.ref(`/${table}/${user.uid}`)
+            originalDoc = database.ref(`/users/${user.uid}`)
             const data = await originalDoc.get()
             userData = data.val();
         }catch (e) {
@@ -855,6 +855,7 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
             ...claim
         });
         // Write user info to Firestore (or Realtime Database)
+        console.log(claim);
         if(Object.keys(claim).includes("admin")) {
             await setDatabase(claim.admin, "authors", user);
         }
