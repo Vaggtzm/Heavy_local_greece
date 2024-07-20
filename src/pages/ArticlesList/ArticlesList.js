@@ -35,6 +35,10 @@ const ArticlesList = () => {
                 }
 
                 get(articlesRef).then(async (snapshot) => {
+                    if(!snapshot.exists()){
+                        articlesRef = ref(database, `users/${authorCode}`);
+                        snapshot = await get(articlesRef);
+                    }
                     let data = snapshot.val();
                     let articles;
                     if(!authorCode){
@@ -43,7 +47,11 @@ const ArticlesList = () => {
                         articles = data.writtenArticles;
                         fetchImagesFromGallery();
                         let userImageRef = storageRef(storage, `/profile_images/${authorCode}_600x600`);
-                        data.photoURL = await getDownloadURL(userImageRef);
+                        try {
+                            data.photoURL = await getDownloadURL(userImageRef);
+                        }catch (e) {
+                            data.photoURL = "";
+                        }
                         setAuthor(data);
                     }
 

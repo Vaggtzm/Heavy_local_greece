@@ -5,7 +5,7 @@ import {get, onValue, ref, update} from "firebase/database";
 import {getDownloadURL, ref as storageRef} from "firebase/storage";
 import {Button, Card, DropdownButton, Form, Modal, Dropdown} from "react-bootstrap";
 import useNavigate from "../../components/LanguageWrapper/Navigation";
-import {disableUser, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
+import {disableUser, handleAuthorTest, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -74,13 +74,14 @@ const AdminSystem = () => {
     useEffect(()=>{
         return auth.onAuthStateChanged(async (user) => {
 
+            handleAuthorTest(user,setCurrentUser, navigate);
+
 
             const rolesSnapshot = await get(userList);
             const roles = rolesSnapshot.val();
             setRoles(roles);
 
             if (user && (roles.admin.includes(user.email) || user.email === "pavlos@orfanidis.net.gr")) {
-                setCurrentUser(user);
                 const usersRef = ref(database, "authors");
                 onValue(usersRef, async (users) => {
                     users = users.val();
@@ -131,6 +132,7 @@ const AdminSystem = () => {
             if(!emails){
                 emails = [];
             }
+            console.log(emails);
             if (emails.includes(email)) {
                 userRoles.push(role);
             }

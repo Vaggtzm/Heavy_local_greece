@@ -1,7 +1,7 @@
 import NavLink from "../LanguageWrapper/NavLink";
 import React, {useEffect, useState} from "react";
 import "./profile-normal.css"
-import {onValue, ref as dbRef} from "firebase/database";
+import {get, onValue, ref as dbRef} from "firebase/database";
 import {getDownloadURL, ref} from "firebase/storage";
 import {database, storage} from "../../firebase";
 
@@ -11,15 +11,36 @@ const AuthorOfArticle = ({authorCode}) => {
 
 
     const getAuthor = async ()=>{
-        const usersRef = dbRef(database, `authors/${authorCode}`);
+        /**
+         * Find the correct user ref
+         * @type {DatabaseReference}
+         */
+        let usersRef = dbRef(database, `authors/${authorCode}`);
+        const tempRef = await get(usersRef);
+        if(!tempRef.exists()){
+            usersRef = dbRef(database, `users/${authorCode}`);
+            const tempRef = await get(usersRef);
+            if(!tempRef.exists()){
+                setAuthor({
+                    displayName: authorCode
+                });
+            }
+        }
+
+        // Set the author based on the ref
+
         if (usersRef) {
             onValue(usersRef, async (snapshot) => {
                 if (snapshot.exists()) {
                     const usersData = snapshot.val();
                     let userImage = ref(storage, `/profile_images/${authorCode}_600x600`);
-                    usersData.photoURL = await getDownloadURL(userImage);
-                    console.log(usersData);
+                    try{
+                        usersData.photoURL = await getDownloadURL(userImage);
+                    }catch (e) {
+                        usersData.wantToShow = false;
+                    }
 
+                    console.log(usersData);
                     setAuthor(usersData);
                 } else {
                     setAuthor({

@@ -20,9 +20,7 @@ const AppNavigation = ({menuVisible}) => {
     const [isCommentAdmin, setIsCommentAdmin] = useState(false);
 
     const [isBand, setIsBand] = useState(false);
-
     const [displayName, setDisplayName] = useState("");
-
     const navigate = useNavigate()
 
     useEffect(() => {

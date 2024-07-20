@@ -9,7 +9,7 @@ import {onValue, ref as databaseRef} from "firebase/database";
 import {useTranslation} from "react-i18next";
 
 import {getDownloadURL, getMetadata, ref as storageRef, ref as StorageRef, uploadString} from "firebase/storage";
-import {fetchFiles} from "../articleData/articleData";
+import {fetchFiles, handleAuthorTest} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const TranslationSystem = () => {
@@ -70,9 +70,8 @@ const TranslationSystem = () => {
             const userList = [...Object.values(roles.translationSystem), ...Object.values(roles.admin)];
             console.log(userList);
             const unsubscribe = auth.onAuthStateChanged((user) => {
-                if (user && userList.includes(user.email)) {
-                    setUser(user);
-                } else {
+                handleAuthorTest(user,setUser, navigate);
+                if (!user || !userList.includes(user.email)) {
                     navigate('/upload');
                     signOut(auth).then();
                 }

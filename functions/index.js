@@ -775,26 +775,18 @@ async function getUser(id, isEmail) {
 }
 
 async function setDatabase(claim, table, user){
-    if(claim) {
-        if (claim) {
-            const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
-            await userDoc.set({
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL?user.photoURL:"",
-            });
-        } else {
-            const adminDoc = database.ref("/authors/" + user.uid)
-            await adminDoc.remove();
-            const userDoc = database.ref("/users/" + user.uid) // Use Firestore
-            await userDoc.update({
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL?user.photoURL:"",
-            });
-        }
+    if (claim) {
+        const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
+        await userDoc.set({
+            ...user
+        });
+    } else {
+        const adminDoc = database.ref("/authors/" + user.uid)
+        await adminDoc.remove();
+        const userDoc = database.ref("/users/" + user.uid) // Use Firestore
+        await userDoc.update({
+            ...user
+        });
     }
 }
 
