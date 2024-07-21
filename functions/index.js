@@ -177,11 +177,13 @@ app.get("/author/*", async (req, res) => {
     const authorCode = req.params[0];
     let author = await database.ref(`/authors/${authorCode}`).get();
     if (!author.exists()) {
-        return res.status(404).send("Author not found");
+        author = await database.ref(`/users/${authorCode}`).get();
+        if (!author.exists()) {
+            return res.status(404).send("Author not found");
+        }
     }
 
     author = author.val();
-
     const filepath = path.resolve(__dirname, "index.html");
 
 
