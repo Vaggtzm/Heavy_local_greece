@@ -6,7 +6,7 @@ import {getIdTokenResult, signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from 'firebase/remote-config';
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../../components/LanguageWrapper/Navigation";
-import {getImageDimensions} from "./articleData/articleData";
+import {getImageDimensions, handleAuthorTest} from "./articleData/articleData";
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 import ImageUploader from 'quill-image-uploader';
@@ -58,23 +58,7 @@ const ArticleUpload = () => {
         }
 
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                getIdTokenResult(user).then((idTokenResult) => {
-                    if (idTokenResult.claims && idTokenResult.claims.admin) {
-                        console.log("the user is an admin");
-                    } else {
-                        signOut(auth).then(() => {
-                            console.log("Trying to login again");
-                            navigate('/upload/login');
-                        });
-                    }
-                });
-
-                setCurrentUser(user);
-            } else {
-                setCurrentUser(null);
-                navigate('/upload/login');
-            }
+            handleAuthorTest(user, setCurrentUser, navigate);
         });
 
         return () => unsubscribe();

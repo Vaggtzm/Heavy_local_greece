@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-import {deleteImage, fetchFiles, getRef} from "../articleData/articleData";
+import {deleteImage, fetchFiles, getRef, handleAuthorTest} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
@@ -55,6 +55,9 @@ const FirebaseFileList = () => {
             const leaderList = roles.authorLeader || [];
 
             auth.onAuthStateChanged((user) => {
+
+                handleAuthorTest(user,(user)=>{}, navigate);
+
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
                     setIsLeader(leaderList.includes(user.email)&&!userList.includes(user.email));
                 } else {

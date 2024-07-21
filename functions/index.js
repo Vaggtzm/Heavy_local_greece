@@ -26,70 +26,76 @@ const database = admin.database();
 
 
 app.get("/feed", async (req, res) => {
-    const feed = new RSS({
-        title: "Pulse Of The Underground",
-        description: "An active news website for underground metal bands",
-        feed_url: "https://pulse-of-the-underground.com/feed",
-        site_url: "https://pulse-of-the-underground.com/",
-        image_url: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
-        managingEditor: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
-        webMaster: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
-        pubDate: new Date().toUTCString(),
-    });
+    const category = req.query.category || null;
+    let latestArticleDate = null;
 
     try {
-        let files = [];
-        let nextPageToken = undefined;
+        const authorsRef = database.ref('authors');
+        const authorSnapshot = await authorsRef.once('value');
+        const authors = authorSnapshot.val();
 
-        do {
-            const [result] = await bucket.getFiles({
-                prefix: "articles/",
-                maxResults: 1000,
-                pageToken: nextPageToken,
-            });
+        const usersRef = database.ref('users');
+        const userSnapshot = await usersRef.once('value');
+        const users = userSnapshot.val();
 
-            files = files.concat(result);
+        const allAuthors = {...authors, ...users};
 
-            nextPageToken = result.nextPageToken;
-        } while (nextPageToken);
 
-        const promises = files.map(async (file) => {
-            const [metadata] = await file.getMetadata();
+        const articlesRef = database.ref('articlesList/articles');
+        const snapshot = await articlesRef.once('value');
+        const articles = snapshot.val();
+        let articlesArray = [];
 
-            if (!metadata.contentType.startsWith("application/json")) {
-                return; // Skip non-JSON files
+        if (category && articles[category]) {
+            articlesArray = Object.entries(articles[category]).map(([key, value]) => ({ key, ...value }));
+        } else {
+            for (const [cat, articlesInCategory] of Object.entries(articles)) {
+                articlesArray = articlesArray.concat(
+                    Object.entries(articlesInCategory).map(([key, value]) => ({ category: cat, key, ...value }))
+                );
             }
+        }
 
-            const articleData = await file.download();
-            const article = JSON.parse(articleData.toString());
 
-            let parts_of_date = article.date.split("/");
 
+        // Sort articles by date, newest to oldest
+        articlesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        if (articlesArray.length > 0) {
+            latestArticleDate = new Date(articlesArray[0].date);
+            console.log(latestArticleDate)
+        }else{
+            console.log("Something went wrong")
+        }
+
+        const feed = new RSS({
+            title: "Pulse Of The Underground",
+            description: "An active news website for underground metal bands",
+            feed_url: "https://pulse-of-the-underground.com/feed",
+            site_url: "https://pulse-of-the-underground.com/",
+            image_url: "https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg",
+            managingEditor: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
+            webMaster: "admin@pulse-of-the-undergroung.com (Pulse Of The Underground)",
+            pubDate: latestArticleDate ? latestArticleDate.toUTCString() : new Date().toUTCString(),
+        });
+
+        articlesArray.forEach(article => {
+            console.log(article)
             const item = {
                 title: article.title,
-                description: article.content.replace(
+                description: article.content ? article.content.replace(
                     "/assets",
                     "https://pulse-of-the-underground.com/assets"
-                ),
-                url: `https://pulse-of-the-underground.com/article/${file.name
-                    .split("/")
-                    .pop()
-                    .replace(".json", "")}`,
-                author: article.sub,
-                date: new Date(
-                    +parts_of_date[2],
-                    parts_of_date[1] - 1,
-                    +parts_of_date[0]
-                ),
-                enclosure: {url: article.img01},
+                ) : '',
+                url: `https://pulse-of-the-underground.com/article/${article.key.replaceAll(".json", "")}`,
+                author: Object.keys(allAuthors).includes(article.author) ? allAuthors[article.author].displayName : 'Unknown',
+                date: new Date(article.date),
+                enclosure: { url: article.image },
             };
-
             feed.item(item);
         });
 
-        await Promise.all(promises);
-
-        const xml = feed.xml({indent: true});
+        const xml = feed.xml({ indent: true });
         res.set("Content-Type", "application/rss+xml");
         res.send(xml);
     } catch (error) {
@@ -339,7 +345,8 @@ const handle_single_dir = async (directory) => {
                     : {},
                 "lang": content.lang ? content.lang : "",
                 "isReady": !!content.isReady,
-                "sponsor": content.sponsor?content.sponsor:""
+                "sponsor": content.sponsor?content.sponsor:"",
+                "author": content.sub
             };
         });
 
@@ -565,13 +572,18 @@ function getImageDimensionsBuffer(buffer) {
     });
 }
 
-exports.handleDeleteArticle = functions.storage
+const runtimeOpts = {
+    timeoutSeconds: 300,
+    memory: '1GB'
+}
+
+exports.handleDeleteArticle = functions.runWith(runtimeOpts).storage
     .object().onDelete(async (object) => {
         await Promise.all([handleArticleCategories(object)])
     })
 
 
-exports.handleNewArticle = functions.storage
+exports.handleNewArticle = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
         await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
@@ -636,11 +648,6 @@ const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
         throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
     }
 };
-
-const runtimeOpts = {
-    timeoutSeconds: 300,
-    memory: '1GB'
-}
 
 exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
     try {
@@ -775,25 +782,53 @@ async function getUser(id, isEmail) {
 }
 
 async function setDatabase(claim, table, user){
-    if(claim) {
-        if (claim) {
-            const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
-            await userDoc.set({
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL?user.photoURL:"",
-            });
-        } else {
-            const adminDoc = database.ref("/authors/" + user.uid)
-            await adminDoc.remove();
-            const userDoc = database.ref("/users/" + user.uid) // Use Firestore
-            await userDoc.update({
-                uid: user.uid,
-                email: user.email,
-                displayName: user.displayName,
-                photoURL: user.photoURL?user.photoURL:"",
-            });
+    console.log(claim, table, user);
+    if (claim) {
+        let userData={}
+        let originalDoc;
+
+        try {
+            originalDoc = database.ref(`/users/${user.uid}`)
+            const data = await originalDoc.get()
+            userData = data.val();
+        }catch (e) {
+            console.log("User was not found on the table")
+        }
+
+
+        const userDoc = database.ref(`/${table}/${user.uid}`) // Use Firestore
+        await userDoc.set({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL?user.photoURL:"",
+            ...userData
+        });
+        if(!!originalDoc) {
+            await originalDoc.remove();
+        }
+    } else {
+        const userDoc = database.ref("/users/" + user.uid) // Use Firestore
+        let userData={}
+        let originalDoc;
+
+        try {
+            originalDoc = database.ref(`/${table}/${user.uid}`)
+            const data = await originalDoc.get()
+            userData = data.val();
+        }catch (e) {
+            console.log("User was not found on the table")
+        }
+
+        await userDoc.update({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            photoURL: user.photoURL?user.photoURL:"",
+            ...userData
+        });
+        if(!!originalDoc) {
+            await originalDoc.remove();
         }
     }
 }
@@ -803,8 +838,9 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
     const {id, isEmail, claim} = data;
     const isAdmin = context.auth && context.auth.token.admin
     const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
+    const isPaul = (await getUser(context.auth.uid, false)).email==="pavlos@orfanidis.net.gr";
     // Check if request is made by an authenticated user with admin privileges
-    if (!isAdmin&&!registeringAsBand) {
+    if (!isAdmin&&!registeringAsBand&&!isPaul) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.'+JSON.stringify(claim));
     }
     let user;
@@ -826,10 +862,13 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
             ...claim
         });
         // Write user info to Firestore (or Realtime Database)
-
-        await setDatabase(claim.admin, "author", user);
-        await setDatabase(claim.band, "band", user);
-
+        console.log(claim);
+        if(Object.keys(claim).includes("admin")) {
+            await setDatabase(claim.admin, "authors", user);
+        }
+        if(Object.keys(claim).includes("band")) {
+            await setDatabase(claim.band, "band", user);
+        }
         return {message: `Successfully set the role for user ${user.uid}`};
     } catch (error) {
         console.error('Error setting custom claims:', error);

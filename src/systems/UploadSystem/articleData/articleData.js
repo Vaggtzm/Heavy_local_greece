@@ -1,9 +1,10 @@
-import {database, functions, storage} from "../../../firebase";
+import {auth, database, functions, storage} from "../../../firebase";
 
 
 import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
 import {get, onValue, ref as databaseRef} from "firebase/database";
 import {httpsCallable} from "firebase/functions";
+import {getIdTokenResult, signOut} from "firebase/auth";
 
 export const setClaims = async (id, isEmail, claim)=> {
     const adminFunction = httpsCallable(functions, 'setCustomClaim');
@@ -209,3 +210,23 @@ export const getImageDimensions = (file) => {
         img.src = URL.createObjectURL(file);
     });
 };
+
+export function handleAuthorTest(user, setCurrentUser, navigate){
+    if (user) {
+        getIdTokenResult(user).then((idTokenResult) => {
+            if (idTokenResult.claims && idTokenResult.claims.admin) {
+                console.log("the user is an admin");
+            } else {
+                signOut(auth).then(() => {
+                    console.log("Trying to login again");
+                    navigate('/upload/login');
+                });
+            }
+        });
+
+        setCurrentUser(user);
+    } else {
+        setCurrentUser(null);
+        navigate('/upload/login');
+    }
+}
