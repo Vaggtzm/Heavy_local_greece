@@ -175,10 +175,13 @@ app.get("/article/early/:article", (req, res) => {
 
 app.get("/author/*", async (req, res) => {
     const authorCode = req.params[0];
+    console.log(`Checking /authors/${authorCode}`);
     let author = await database.ref(`/authors/${authorCode}`).get();
     if (!author.exists()) {
+        console.log(`Not found in /authors, checking /users/${authorCode}`);
         author = await database.ref(`/users/${authorCode}`).get();
         if (!author.exists()) {
+            console.log(`Not found in /users either`);
             return res.status(404).send("Author not found");
         }
     }
