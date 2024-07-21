@@ -202,7 +202,7 @@ app.get("/author/*", async (req, res) => {
     try {
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
-        htmlData = htmlData.replace(/_TITLE_/g, author.displayName.replaceAll("'", '"'));
+        htmlData = htmlData.replace(/_TITLE_/g, author.displayName?author.displayName.replaceAll("'", '"'):"Pulse Of The Underground");
         htmlData = htmlData.replace(/_THUMB_/g, url);
 
         res.send(htmlData);
