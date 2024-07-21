@@ -176,9 +176,9 @@ const DefaultArticle = (props) => {
                         <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">
                             <AuthorOfArticle authorCode={articles.sub} />
                         </div>
-                        <div className="col-10 col-md-5 d-flex align-items-center">
-                            <AuthorOfArticle authorCode={articles.translatedBy} />
-                        </div>
+                        {articles.translatedBy&&<div className="col-10 col-md-5 d-flex align-items-center">
+                            <AuthorOfArticle authorCode={articles.translatedBy}/>
+                        </div>}
                     </div>
                     <hr className={"mt-2 bg-dark"} />
                     <div className="row d-flex">

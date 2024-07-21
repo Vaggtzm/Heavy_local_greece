@@ -178,13 +178,14 @@ app.get("/author/*", async (req, res) => {
     console.log(`Checking /authors/${authorCode}`);
     let author = await database.ref(`/authors/${authorCode}`).get();
     if (!author.exists()) {
-        console.log(`Not found in /authors, checking /users/${authorCode}`);
+        console.warn(`Not found in /authors, checking /users/${authorCode}`);
         author = await database.ref(`/users/${authorCode}`).get();
         if (!author.exists()) {
-            console.log(`Not found in /users either`);
+            console.warn(`Not found in /users either`);
             return res.status(404).send("Author not found");
         }
     }
+    console.warn(`Found author: ${author.val().displayName}`);
 
     author = author.val();
     const filepath = path.resolve(__dirname, "index.html");

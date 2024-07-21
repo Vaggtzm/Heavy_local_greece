@@ -35,11 +35,13 @@ const ArticlesList = () => {
                 }
 
                 get(articlesRef).then(async (snapshot) => {
-                    if(!snapshot.exists()){
+                    if(!snapshot.exists()&&!!authorCode){
                         articlesRef = ref(database, `users/${authorCode}`);
                         snapshot = await get(articlesRef);
                     }
                     let data = snapshot.val();
+
+                    console.warn(data);
                     let articles;
                     if(!authorCode){
                         articles = data
