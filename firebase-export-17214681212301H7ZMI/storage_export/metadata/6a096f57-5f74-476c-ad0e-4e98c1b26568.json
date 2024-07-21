@@ -1,0 +1,19 @@
+{
+  "name": "images/sula_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120789277,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d729aa54-f924-4ece-b22b-3b4bd36bcf6e"
+  ],
+  "etag": "/Y29jeYAtoUSOGDDIVDIR1IpZBw",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:49.277Z",
+  "updated": "2024-07-04T19:19:49.277Z",
+  "size": 62605,
+  "md5Hash": "ySlfyqOu2Vxv+2yN7m5RPw==",
+  "crc32c": "3488373354"
+}

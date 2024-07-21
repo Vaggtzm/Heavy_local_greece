@@ -1,0 +1,22 @@
+{
+  "name": "images/Herc_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799578,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "dfae2625-72bc-4a7d-94f6-5fe6905b2f72"
+  ],
+  "etag": "X3Ss9LZ/vKCJIlcN0PuNLqnYz0k",
+  "customMetadata": {
+    "width": "600",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:59.578Z",
+  "updated": "2024-07-04T19:20:44.749Z",
+  "size": 50412,
+  "md5Hash": "a+EbE/d4Gi+shdIn0Q/cWw==",
+  "crc32c": "2479937969"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/Venus_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120782294,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "51d7dd19-a67a-4f44-9888-e6be528e7dee"
+  ],
+  "etag": "r4WTuvHcMrTEYkkFT3VvL4JsDM4",
+  "customMetadata": {
+    "width": "555",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:42.294Z",
+  "updated": "2024-07-04T19:19:44.541Z",
+  "size": 96794,
+  "md5Hash": "+EY75XBAQtB5Yvdy6GOmLQ==",
+  "crc32c": "3460257790"
+}

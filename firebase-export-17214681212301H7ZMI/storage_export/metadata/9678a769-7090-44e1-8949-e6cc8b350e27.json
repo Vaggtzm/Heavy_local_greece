@@ -1,0 +1,19 @@
+{
+  "name": "articles/GOA-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119310928,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "9e6a8df3-59db-4d26-8964-1f5abd22bd33"
+  ],
+  "etag": "aMfeHPREOVxgP8VtmCusgGgbXLo",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:10.928Z",
+  "updated": "2024-07-04T18:55:10.928Z",
+  "size": 2881,
+  "md5Hash": "g42tdnAw7K9vmwFkY2Y4oQ==",
+  "crc32c": "2138339903"
+}

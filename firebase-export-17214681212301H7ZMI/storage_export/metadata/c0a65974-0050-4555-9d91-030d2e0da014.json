@@ -1,0 +1,22 @@
+{
+  "name": "images/foudre.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120800613,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "7bdccc8f-8dad-469a-84dd-2b8576a74836"
+  ],
+  "etag": "YDXQoyKBpj0X7Dm+RhxcMGuXE/I",
+  "customMetadata": {
+    "width": "2048",
+    "height": "1365"
+  },
+  "timeCreated": "2024-07-04T19:20:00.613Z",
+  "updated": "2024-07-04T19:20:47.416Z",
+  "size": 512453,
+  "md5Hash": "wtcprxk33n70IdZnha6IHQ==",
+  "crc32c": "4151406499"
+}

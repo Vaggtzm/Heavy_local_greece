@@ -1,0 +1,19 @@
+{
+  "name": "images/kokkinia2_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120797899,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "bfb6d450-f2ae-4eb7-b4ec-38607631e7ac"
+  ],
+  "etag": "Z/AiMXqMXl8CaNYYMyyPx/QiYO4",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:57.899Z",
+  "updated": "2024-07-04T19:19:57.899Z",
+  "size": 36900,
+  "md5Hash": "jE03dg1qQ63lJf1z8cCSUA==",
+  "crc32c": "785471917"
+}

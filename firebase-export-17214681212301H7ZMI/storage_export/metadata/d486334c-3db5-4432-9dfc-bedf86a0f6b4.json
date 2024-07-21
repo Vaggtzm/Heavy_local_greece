@@ -1,0 +1,19 @@
+{
+  "name": "images/specialkid_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120789967,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "88ae4c37-ff27-48b4-90b8-90cf2ba21a45"
+  ],
+  "etag": "4oL1Nnpp+VssQCDBKC+HUK+4lyU",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:49.967Z",
+  "updated": "2024-07-04T19:19:49.967Z",
+  "size": 22166,
+  "md5Hash": "yNTfnj3FRlywm6/8uHLy4g==",
+  "crc32c": "3019122308"
+}

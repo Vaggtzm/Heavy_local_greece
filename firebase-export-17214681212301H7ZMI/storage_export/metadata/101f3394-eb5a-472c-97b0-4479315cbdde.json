@@ -1,0 +1,19 @@
+{
+  "name": "images/fred_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120800555,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "14727088-b33f-45ca-9e83-171be2d8633c"
+  ],
+  "etag": "JDmtvFo4KgutGI0fw24MY6gI2Ro",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:00.555Z",
+  "updated": "2024-07-04T19:20:00.555Z",
+  "size": 49143,
+  "md5Hash": "/c6sqIijwGHRYBD6XJG/Jw==",
+  "crc32c": "757211700"
+}

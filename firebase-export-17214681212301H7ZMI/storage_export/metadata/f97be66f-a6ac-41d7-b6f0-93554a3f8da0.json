@@ -1,0 +1,22 @@
+{
+  "name": "images/Acyl_800x800.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120806920,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "e9ab9cf7-ea92-4145-8d72-3ada67e9fc2e"
+  ],
+  "etag": "ub5RDIuEyjrGTlynw4mVRAy52bY",
+  "customMetadata": {
+    "width": "736",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:20:06.920Z",
+  "updated": "2024-07-04T19:20:37.496Z",
+  "size": 75994,
+  "md5Hash": "kqTxfdsWJVYgYpskAtVhaw==",
+  "crc32c": "1234228763"
+}

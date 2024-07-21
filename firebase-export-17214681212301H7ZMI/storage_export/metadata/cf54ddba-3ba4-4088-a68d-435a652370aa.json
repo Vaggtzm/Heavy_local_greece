@@ -1,0 +1,19 @@
+{
+  "name": "images/ECR_LIMF_album_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120801535,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b31b061a-2ad6-425c-af2a-36217b9e9c8d"
+  ],
+  "etag": "Y3Z96YT7xl7+ei81dY4hdUMzcDE",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:01.535Z",
+  "updated": "2024-07-04T19:20:01.535Z",
+  "size": 132202,
+  "md5Hash": "XdjvMhxlS3DNybEw//QL7A==",
+  "crc32c": "3932336322"
+}

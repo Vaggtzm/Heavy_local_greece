@@ -1,0 +1,12 @@
+.Box-Angels ,.Box-Artizans ,.Box-Kingdom ,.Box-Atomic {
+    border-left:1px solid white ;
+    margin: 1rem;
+}
+
+@media  (max-width:768px){
+    .SponshorBox{
+        display: flex;
+        flex-direction: column;
+    }
+    
+}

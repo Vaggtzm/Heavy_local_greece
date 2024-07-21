@@ -1,0 +1,22 @@
+{
+  "name": "images/sddefault_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120791059,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "fa31115b-1daf-4064-96fb-9f1b3ba42d0b"
+  ],
+  "etag": "yByDxYeBMmmXNyS2eo2I/Qu3FuE",
+  "customMetadata": {
+    "width": "600",
+    "height": "480"
+  },
+  "timeCreated": "2024-07-04T19:19:51.059Z",
+  "updated": "2024-07-04T19:20:49.295Z",
+  "size": 40020,
+  "md5Hash": "ynIrxSbEZSbtNIxz90mGAA==",
+  "crc32c": "1542437353"
+}

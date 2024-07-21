@@ -1,0 +1,22 @@
+{
+  "name": "gigs/2024_03_15/22_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720284562853,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "6201c9b7-6fe1-452f-8ea8-4a8fc19743a6"
+  ],
+  "etag": "CmT+RJhHf6RKc2EqK+UB4O9FGmg",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-06T16:49:22.853Z",
+  "updated": "2024-07-06T16:49:42.707Z",
+  "size": 38051,
+  "md5Hash": "LoX4hqEvQYAmQq2+i82Ewg==",
+  "crc32c": "1008290754"
+}

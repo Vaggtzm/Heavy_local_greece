@@ -1,0 +1,22 @@
+{
+  "name": "images/chronicles/chronicle-01/02_800x400.JPEG",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720125088484,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "892d1aeb-3ef1-4d32-b0bc-6b14dce97d64"
+  ],
+  "etag": "eP4yEFWnL5J4YGVXgzezoRpRXz0",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T20:31:28.484Z",
+  "updated": "2024-07-04T20:31:30.656Z",
+  "size": 53432,
+  "md5Hash": "oNp3QnCKnibD6rhnyRyCzw==",
+  "crc32c": "964737114"
+}

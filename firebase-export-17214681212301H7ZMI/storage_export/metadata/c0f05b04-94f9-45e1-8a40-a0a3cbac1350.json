@@ -1,0 +1,22 @@
+{
+  "name": "images/tortuga.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120787527,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5127bab9-7819-4c59-abcb-9329e2cea5ac"
+  ],
+  "etag": "hOZM6igXqlWUd1motWUzMsJ5Vm0",
+  "customMetadata": {
+    "width": "1280",
+    "height": "720"
+  },
+  "timeCreated": "2024-07-04T19:19:47.527Z",
+  "updated": "2024-07-04T19:21:07.615Z",
+  "size": 138765,
+  "md5Hash": "wd4htIqzU2Dj+ne6/P21wg==",
+  "crc32c": "947801285"
+}

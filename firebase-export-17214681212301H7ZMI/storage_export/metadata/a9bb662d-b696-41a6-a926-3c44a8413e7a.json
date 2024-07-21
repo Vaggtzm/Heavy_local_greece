@@ -1,0 +1,22 @@
+{
+  "name": "images/hemplifier_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799624,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "f3bebf6b-45bb-4015-9fc5-acff57da81bb"
+  ],
+  "etag": "/y7qBBselswuVdqwAUpd0y9plMg",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-04T19:19:59.624Z",
+  "updated": "2024-07-04T19:20:46.178Z",
+  "size": 163245,
+  "md5Hash": "0rAMGmHzCxHfkDAF2beePQ==",
+  "crc32c": "4046617152"
+}

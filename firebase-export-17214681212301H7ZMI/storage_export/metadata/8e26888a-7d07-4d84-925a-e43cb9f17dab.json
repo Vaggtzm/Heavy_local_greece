@@ -1,0 +1,22 @@
+{
+  "name": "images/reka03_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120791922,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "510acb78-44aa-4617-813e-b7b286aefe90"
+  ],
+  "etag": "eOjs024dWjPrrIt6pM2AFn+T0js",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:51.922Z",
+  "updated": "2024-07-04T19:20:48.945Z",
+  "size": 47600,
+  "md5Hash": "eTgQcaVY6dQm68bDsS+jfA==",
+  "crc32c": "4288957221"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/Tuber_800x800.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120783255,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "47b16b5b-0b02-4929-aae0-3bce9f0a0203"
+  ],
+  "etag": "5n9/648T9OEKXgr1rrfkxxmffqQ",
+  "customMetadata": {
+    "width": "800",
+    "height": "606"
+  },
+  "timeCreated": "2024-07-04T19:19:43.255Z",
+  "updated": "2024-07-04T19:19:51.469Z",
+  "size": 30368,
+  "md5Hash": "YvLZvZOXY8q38dpjMRPeIw==",
+  "crc32c": "2220550999"
+}

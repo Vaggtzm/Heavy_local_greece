@@ -1,0 +1,19 @@
+{
+  "name": "images/ENSTIGMA_600x300.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120801332,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b6e4007f-5027-4487-a193-b653f8606d11"
+  ],
+  "etag": "PdIMW7O7vkdf8jtWHMhoq/dAEzM",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:01.332Z",
+  "updated": "2024-07-04T19:20:01.332Z",
+  "size": 34072,
+  "md5Hash": "G+BELnwemWlsI39pIXwdZg==",
+  "crc32c": "2794733773"
+}

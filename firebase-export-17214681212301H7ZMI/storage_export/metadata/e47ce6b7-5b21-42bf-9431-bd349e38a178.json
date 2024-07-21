@@ -1,0 +1,22 @@
+{
+  "name": "images/adrastia1_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120806695,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ef2fb24d-f1ee-4890-9902-be4e93436099"
+  ],
+  "etag": "E0Axlbham3Bp5QstYSR6WuWANac",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:20:06.695Z",
+  "updated": "2024-07-04T19:20:48.151Z",
+  "size": 29556,
+  "md5Hash": "jBZLe+n92imfX/8bmo11Yg==",
+  "crc32c": "3198160034"
+}

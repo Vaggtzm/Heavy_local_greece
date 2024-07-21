@@ -1,0 +1,22 @@
+{
+  "name": "images/AutumnMachinery.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120804961,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "50606450-821d-4757-85f6-e2ed127f655c"
+  ],
+  "etag": "NGv/mhNLK7n+C/J83wQSxLbml2Q",
+  "customMetadata": {
+    "width": "606",
+    "height": "606"
+  },
+  "timeCreated": "2024-07-04T19:20:04.962Z",
+  "updated": "2024-07-04T19:20:54.957Z",
+  "size": 153322,
+  "md5Hash": "9zIDINwZtUbL5Wdizq1PXw==",
+  "crc32c": "3831390540"
+}

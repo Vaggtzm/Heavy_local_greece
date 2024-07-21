@@ -4,6 +4,7 @@ import "./Animation.css";
 import NavLink from "../../LanguageWrapper/NavLink";
 import ReviewsBanner from "./NewsCompoments/ReviewsBanner";
 import POUtransparent from "./../../../assets/PulseOfTheUnderground-removebg-preview.png"
+import Sponshorbanner from "./NewsCompoments/SponshorBanner";
 import Contact from "../../ContactForm/contact";
 
 
@@ -211,17 +212,10 @@ const TopNews = () => {
                             </div>
                             {/**Reviews End */}
                         </div>
-
-                        {/** Sidebar Column */}
-                        <div className="col-md-4">
-                            <div className="sidebar">
-                                <h3 className="text-white"><span className="image"><img src={POUtransparent}
-                                                                                        className="img-fluid w-25 h-25"/></span>Communication
-                                    Form</h3>
-                                <Contact/>
-                            </div>
-                        </div>
+                      
                     </div>
+                    <Sponshorbanner />
+
 
                     {/**News Start */}
                     {/* Empty For Now */}

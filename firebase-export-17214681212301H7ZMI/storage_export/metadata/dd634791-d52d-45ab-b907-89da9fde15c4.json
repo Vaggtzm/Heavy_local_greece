@@ -1,0 +1,19 @@
+{
+  "name": "images/DarkParrot_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120803201,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "a3ea5b7d-81ba-4a75-b2ab-9188127795cf"
+  ],
+  "etag": "sCAHNLEVnfYyNIZTQEbjHrQJvRQ",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:03.201Z",
+  "updated": "2024-07-04T19:20:03.201Z",
+  "size": 25656,
+  "md5Hash": "GwFiEcIm064KrCdQHoC12Q==",
+  "crc32c": "4191956541"
+}

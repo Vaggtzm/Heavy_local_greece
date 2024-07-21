@@ -1,0 +1,22 @@
+{
+  "name": "images/sado03_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120791526,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "a9b2d234-c2de-41d8-b945-2e859a8c03ec"
+  ],
+  "etag": "1arkLsppsi3cK2GjdOWZfBfNj98",
+  "customMetadata": {
+    "width": "200",
+    "height": "180"
+  },
+  "timeCreated": "2024-07-04T19:19:51.527Z",
+  "updated": "2024-07-04T19:20:28.789Z",
+  "size": 8854,
+  "md5Hash": "REvS4vCfbTS4cD6TWMAolg==",
+  "crc32c": "3866077334"
+}

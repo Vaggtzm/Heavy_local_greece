@@ -1,0 +1,19 @@
+{
+  "name": "images/Demande_800x800.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120802707,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "dfcfd6cf-e0b9-4bb7-adb8-e1c89dbde05b"
+  ],
+  "etag": "fp8CHkjE/4HZ5apgE+enFxBYNWQ",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:02.707Z",
+  "updated": "2024-07-04T19:20:02.707Z",
+  "size": 28786,
+  "md5Hash": "uPN3HF/ROcT1EO1ZmLvJdQ==",
+  "crc32c": "1895428457"
+}

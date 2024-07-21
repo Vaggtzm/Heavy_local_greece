@@ -1,0 +1,22 @@
+{
+  "name": "images/Demande A La Poussiere - pic 1.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120802649,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0c5a5888-ac69-455c-99e6-f3661c98412b"
+  ],
+  "etag": "m5jRdDfTz76cKrCsO2xSTb5LIZM",
+  "customMetadata": {
+    "width": "3000",
+    "height": "2000"
+  },
+  "timeCreated": "2024-07-04T19:20:02.649Z",
+  "updated": "2024-07-04T19:20:19.957Z",
+  "size": 1116958,
+  "md5Hash": "1VA3/EMHkvpgpF/IskF4EA==",
+  "crc32c": "2068692467"
+}

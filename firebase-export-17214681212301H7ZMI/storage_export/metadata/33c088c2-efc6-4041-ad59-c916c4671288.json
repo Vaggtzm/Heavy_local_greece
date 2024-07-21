@@ -1,0 +1,19 @@
+{
+  "name": "articles/klage-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119307903,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "aece8dd2-de1a-43d8-a045-5aaf35289cd1"
+  ],
+  "etag": "/SORbfgC6FTmyNXSI0Xqr+VV8JM",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:07.904Z",
+  "updated": "2024-07-04T18:55:07.904Z",
+  "size": 3365,
+  "md5Hash": "bvO1PhnDwo2ykO96ozMmRA==",
+  "crc32c": "4192154470"
+}

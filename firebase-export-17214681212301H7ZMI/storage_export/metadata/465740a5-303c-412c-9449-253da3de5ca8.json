@@ -1,0 +1,22 @@
+{
+  "name": "images/AherusiaFull_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120806315,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "88dc97e3-1523-4de0-97f8-15fbae451371"
+  ],
+  "etag": "IUETUETKvowC+QV4yS7moX1H18k",
+  "customMetadata": {
+    "width": "600",
+    "height": "500"
+  },
+  "timeCreated": "2024-07-04T19:20:06.315Z",
+  "updated": "2024-07-04T19:20:39.705Z",
+  "size": 28290,
+  "md5Hash": "f1V1PPhSxcV4k0RFJUtqZw==",
+  "crc32c": "4227496373"
+}

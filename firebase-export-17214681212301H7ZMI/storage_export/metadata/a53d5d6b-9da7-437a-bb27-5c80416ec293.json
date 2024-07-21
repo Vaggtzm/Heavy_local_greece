@@ -1,0 +1,19 @@
+{
+  "name": "articles/Khavar-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119307895,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5862993e-7382-4124-8b32-45987e77df5d"
+  ],
+  "etag": "SstEHuFzjXuyJu4d47RjbI4CJQs",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:07.895Z",
+  "updated": "2024-07-04T18:55:07.895Z",
+  "size": 3125,
+  "md5Hash": "UyO5D/re0nulFopEydo78A==",
+  "crc32c": "305236789"
+}

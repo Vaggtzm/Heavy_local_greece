@@ -1,0 +1,19 @@
+{
+  "name": "images/occult_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120794590,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "bdcc1f64-7248-4d35-9a10-082162646264"
+  ],
+  "etag": "L/Onum5NgMa9353m43kOTDfiiXM",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:54.590Z",
+  "updated": "2024-07-04T19:19:54.590Z",
+  "size": 41634,
+  "md5Hash": "UEWsUpFwH3s4PC7/s0EKjg==",
+  "crc32c": "637505228"
+}

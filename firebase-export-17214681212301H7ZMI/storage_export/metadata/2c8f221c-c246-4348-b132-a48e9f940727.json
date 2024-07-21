@@ -1,0 +1,22 @@
+{
+  "name": "images/aherusia-bacchus_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120806379,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "6fda41dc-b18e-485e-83c3-21ba3a6f2a15"
+  ],
+  "etag": "mW/3Gr6zSZOAdphlKw3uDLYR8mg",
+  "customMetadata": {
+    "width": "500",
+    "height": "500"
+  },
+  "timeCreated": "2024-07-04T19:20:06.379Z",
+  "updated": "2024-07-04T19:21:03.272Z",
+  "size": 56609,
+  "md5Hash": "jCHMjEa0W+xRTaF01mlP0A==",
+  "crc32c": "2417144753"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/Funeral02_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120800473,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "c6538c4a-57fa-4084-9e4f-0efcac46221f"
+  ],
+  "etag": "OdyRqfPn/HveIV+hWE4z1STMOFU",
+  "customMetadata": {
+    "width": "400",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:20:00.473Z",
+  "updated": "2024-07-04T19:20:20.607Z",
+  "size": 32093,
+  "md5Hash": "0XNtF4fIaKPefCRrS4y/NA==",
+  "crc32c": "2887130225"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/infernalstorm_400x400.JPEG",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120798358,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "80b58a13-cbbd-4caf-927e-a96f5970bdaa"
+  ],
+  "etag": "Ga+s0KrBNgr5aR1su9uNPue9/jU",
+  "customMetadata": {
+    "width": "400",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:58.358Z",
+  "updated": "2024-07-04T19:20:42.152Z",
+  "size": 26467,
+  "md5Hash": "KEhWtw+ydoVyljNOmWp7FQ==",
+  "crc32c": "673795150"
+}

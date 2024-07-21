@@ -1,0 +1,51 @@
+/* CubeAnimation.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    height: 100%;
+  }
+  
+  .container {
+    perspective: 1000px;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.5s;
+  }
+  
+  .face {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .face1 {
+    transform: rotateY(0deg) translateZ(50vw);
+  }
+  
+  .face2 {
+    transform: rotateY(90deg) translateZ(50vw);
+  }
+  
+  .face3 {
+    transform: rotateY(180deg) translateZ(50vw);
+  }
+  
+  .face4 {
+    transform: rotateY(-90deg) translateZ(50vw);
+  }
+  

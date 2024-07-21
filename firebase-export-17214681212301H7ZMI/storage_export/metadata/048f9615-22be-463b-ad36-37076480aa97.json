@@ -1,0 +1,22 @@
+{
+  "name": "images/Nitritono_Band_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120794754,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "711ec208-b337-44e7-91a5-88e14945f1bd"
+  ],
+  "etag": "400T/XhBuC+qYLxX2MdrQzlcbzU",
+  "customMetadata": {
+    "width": "700",
+    "height": "465"
+  },
+  "timeCreated": "2024-07-04T19:19:54.754Z",
+  "updated": "2024-07-04T19:20:31.454Z",
+  "size": 55326,
+  "md5Hash": "+OkgQezFqTtPUmOmav0hQQ==",
+  "crc32c": "1416067349"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/startTheMonkey_merch2.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120789585,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1612e4b9-5f89-4c8f-aa63-d3ad5c08984f"
+  ],
+  "etag": "9TpuUWLQSKwh3j6wml1f/mf+R9E",
+  "customMetadata": {
+    "width": "1256",
+    "height": "1570"
+  },
+  "timeCreated": "2024-07-04T19:19:49.586Z",
+  "updated": "2024-07-04T19:20:42.737Z",
+  "size": 270343,
+  "md5Hash": "D42oDAICtyGoZjRQd7RU3Q==",
+  "crc32c": "2309670895"
+}

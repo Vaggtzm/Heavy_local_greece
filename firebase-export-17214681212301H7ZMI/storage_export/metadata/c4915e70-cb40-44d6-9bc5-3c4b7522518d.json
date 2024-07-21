@@ -1,0 +1,22 @@
+{
+  "name": "images/sumit-live_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120789023,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "42cf1bb8-a85e-4063-ab3d-4081cd86912b"
+  ],
+  "etag": "HZYCYC+MQJ4Hrumeaek1wAJmrAg",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-04T19:19:49.023Z",
+  "updated": "2024-07-04T19:20:39.965Z",
+  "size": 73625,
+  "md5Hash": "jW1reOnYW9UqoyWHrHj45w==",
+  "crc32c": "770286240"
+}

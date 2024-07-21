@@ -1,0 +1,22 @@
+{
+  "name": "images/Of_the_Muses_600x300.jpeg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120794555,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "f948958a-3ef5-4634-9087-947078893a41"
+  ],
+  "etag": "ExTzUU+YS+W3erkn009Dh1x2S/Q",
+  "customMetadata": {
+    "width": "600",
+    "height": "300"
+  },
+  "timeCreated": "2024-07-04T19:19:54.555Z",
+  "updated": "2024-07-04T19:20:15.513Z",
+  "size": 19447,
+  "md5Hash": "zlQCVLKcb2MeY5UXQKXMcA==",
+  "crc32c": "2335870667"
+}

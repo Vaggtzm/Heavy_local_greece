@@ -1,0 +1,22 @@
+{
+  "name": "images/cover-Minerall-buegeln-print_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120803887,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0d92c687-55df-4573-bc89-061bd5b31e0d"
+  ],
+  "etag": "hRTdr6RLBf4LRjGhpyLOoVA6eHs",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:20:03.887Z",
+  "updated": "2024-07-04T19:21:06.577Z",
+  "size": 28090,
+  "md5Hash": "epEpPN53UEWIg8P2TgsZ9Q==",
+  "crc32c": "851892405"
+}

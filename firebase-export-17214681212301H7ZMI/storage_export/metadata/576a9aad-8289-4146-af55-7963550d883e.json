@@ -1,0 +1,22 @@
+{
+  "name": "images/yothirialive_600x300.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120778428,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "be96a0c9-534b-4d5e-92b1-250aa9cc6db5"
+  ],
+  "etag": "CPgJUqXtiMo9r/2hVCFwCqA0Wi4",
+  "customMetadata": {
+    "width": "600",
+    "height": "300"
+  },
+  "timeCreated": "2024-07-04T19:19:38.428Z",
+  "updated": "2024-07-04T19:19:38.676Z",
+  "size": 31642,
+  "md5Hash": "qLpA3yPH824dxqTqceZ7ZA==",
+  "crc32c": "553656263"
+}

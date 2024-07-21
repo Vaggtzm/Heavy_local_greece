@@ -1,0 +1,22 @@
+{
+  "name": "images/IdiotsCorrected.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799253,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ea704ea2-a6c5-46c6-997a-0790e5618d77"
+  ],
+  "etag": "8fPy9BGQcZ4KC/+LvBaUsumTpZ4",
+  "customMetadata": {
+    "width": "350",
+    "height": "350"
+  },
+  "timeCreated": "2024-07-04T19:19:59.253Z",
+  "updated": "2024-07-04T19:20:35.314Z",
+  "size": 17724,
+  "md5Hash": "SDfCfgLvySQe4hC0EbSpvA==",
+  "crc32c": "3950359946"
+}

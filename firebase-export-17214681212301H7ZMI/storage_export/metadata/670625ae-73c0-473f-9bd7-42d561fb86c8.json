@@ -1,0 +1,22 @@
+{
+  "name": "images/ADE02_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120806762,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "29dbb3b7-5c89-42d8-b7bf-725b6d176d2e"
+  ],
+  "etag": "rkZus4jRW+JBiJfBuj3Od50P5uQ",
+  "customMetadata": {
+    "width": "600",
+    "height": "322"
+  },
+  "timeCreated": "2024-07-04T19:20:06.762Z",
+  "updated": "2024-07-04T19:20:41.658Z",
+  "size": 54944,
+  "md5Hash": "F+UGWfA1e2YoaoSXvYI5mw==",
+  "crc32c": "1422171477"
+}

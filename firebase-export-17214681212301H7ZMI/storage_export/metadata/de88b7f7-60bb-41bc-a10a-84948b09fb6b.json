@@ -1,0 +1,22 @@
+{
+  "name": "images/gallery/art-item_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720125443884,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "eeef3a36-1db0-4384-98a4-deb71c6cfe7d"
+  ],
+  "etag": "VQoAKbQd4exmGgdopPeqLl/7jH0",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T20:37:23.884Z",
+  "updated": "2024-07-04T20:37:28.462Z",
+  "size": 90254,
+  "md5Hash": "V5KoHyfn/5cKBWrOuYn2mA==",
+  "crc32c": "4000574349"
+}

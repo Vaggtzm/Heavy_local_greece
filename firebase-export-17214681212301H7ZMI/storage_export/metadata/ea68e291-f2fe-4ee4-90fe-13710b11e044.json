@@ -1,0 +1,22 @@
+{
+  "name": "images/haxenzijrkell_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799824,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "bbf27404-9a00-4281-a16d-278c9d770df1"
+  ],
+  "etag": "RdU6yrMxWgsjqm+Ujg6I+4fo3m0",
+  "customMetadata": {
+    "width": "600",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:59.824Z",
+  "updated": "2024-07-04T19:20:51.583Z",
+  "size": 114984,
+  "md5Hash": "Q4IzWm1pI1jbGsuFAJkZEA==",
+  "crc32c": "120664753"
+}

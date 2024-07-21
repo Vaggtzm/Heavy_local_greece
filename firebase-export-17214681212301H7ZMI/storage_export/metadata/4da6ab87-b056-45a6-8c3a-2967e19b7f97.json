@@ -1,0 +1,19 @@
+{
+  "name": "images/Fabio_200x200.jpeg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120801007,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0fa2ea35-f5d8-4ce8-b772-16cc72fbaed5"
+  ],
+  "etag": "U9GoV1DVR+uDYQY5gMQzilmlgyA",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:01.007Z",
+  "updated": "2024-07-04T19:20:01.007Z",
+  "size": 14763,
+  "md5Hash": "bNGDYOi5cKrXaimRITf9kg==",
+  "crc32c": "1629786594"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "gigs/2024_06_01/Akral_Necrosis_3_600x300.png",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720285307125,
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0df68662-d239-4115-9dba-953db78df02e"
+  ],
+  "etag": "6b0JAyX5/e6TMtbtN+rTKHyR6eI",
+  "customMetadata": {
+    "width": "600",
+    "height": "300"
+  },
+  "timeCreated": "2024-07-06T17:01:47.125Z",
+  "updated": "2024-07-06T17:01:52.102Z",
+  "size": 235396,
+  "md5Hash": "03zv9Bb5k5JO5Rscidk32w==",
+  "crc32c": "972564039"
+}

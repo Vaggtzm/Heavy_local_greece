@@ -1,0 +1,22 @@
+{
+  "name": "images/Astronomica_response.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120805079,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "4444195d-d2d5-436b-8efa-3e8b2e725a89"
+  ],
+  "etag": "VFsjFnrJICSYaU+3Ye80Rc9/GuU",
+  "customMetadata": {
+    "width": "991",
+    "height": "1383"
+  },
+  "timeCreated": "2024-07-04T19:20:05.079Z",
+  "updated": "2024-07-04T19:20:56.891Z",
+  "size": 167116,
+  "md5Hash": "dpwqLR9JXNnH0SXfctafQg==",
+  "crc32c": "710356713"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/HeavyLocalLogo_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799688,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "4d58e7de-a582-47a9-abd0-7e65220c417a"
+  ],
+  "etag": "DnYqwNxcjHrAaoURJpJ0ewgMIB4",
+  "customMetadata": {
+    "width": "800",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:59.688Z",
+  "updated": "2024-07-04T19:20:39.198Z",
+  "size": 50942,
+  "md5Hash": "KJPieXY3rH7MKEWfFXr5IA==",
+  "crc32c": "1962241351"
+}

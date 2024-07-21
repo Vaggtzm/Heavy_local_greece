@@ -1,0 +1,19 @@
+{
+  "name": "images/Falooda_Demo_2024_artwork_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120800928,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "74b818f6-17df-4556-927d-4e475b02da8e"
+  ],
+  "etag": "Odf6BX/jLYY1fpvPeYVgtDU6Bwc",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:00.928Z",
+  "updated": "2024-07-04T19:20:00.928Z",
+  "size": 171537,
+  "md5Hash": "WYAHgULv787cE4n0BPZ24A==",
+  "crc32c": "2879150460"
+}

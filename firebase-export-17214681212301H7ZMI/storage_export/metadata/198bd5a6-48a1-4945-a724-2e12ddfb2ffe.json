@@ -1,0 +1,22 @@
+{
+  "name": "images/StartTheMonkey_second_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120789428,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "65113644-3bbf-496f-a4ec-42407a267b84"
+  ],
+  "etag": "V349adzZmvJzH6gZL3TvCruT/WQ",
+  "customMetadata": {
+    "width": "600",
+    "height": "540"
+  },
+  "timeCreated": "2024-07-04T19:19:49.428Z",
+  "updated": "2024-07-04T19:20:19.780Z",
+  "size": 62925,
+  "md5Hash": "g6x6IM9z4sO7uNdCAOtX2w==",
+  "crc32c": "75698661"
+}

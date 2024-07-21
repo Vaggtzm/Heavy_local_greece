@@ -1,0 +1,19 @@
+{
+  "name": "images/kroheim_600x300.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120797729,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d7da668a-c401-46c8-8f9f-941d86e9249e"
+  ],
+  "etag": "oBjU+wuslC5hE0b2Qx8RsF3LkLI",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:57.729Z",
+  "updated": "2024-07-04T19:19:57.729Z",
+  "size": 54112,
+  "md5Hash": "cO2BFiX/ZiFQhCMYw7H0LA==",
+  "crc32c": "1562854667"
+}

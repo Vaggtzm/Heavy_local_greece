@@ -1,0 +1,22 @@
+{
+  "name": "gigs/2024_06_01/Spinecrusher_3_800x800.png",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720285304944,
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "238918a3-c236-4f8e-b17f-e1b980bbe9ac"
+  ],
+  "etag": "v2DgdMdnjI+cU+E6J+TfUUlnAUM",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-06T17:01:44.944Z",
+  "updated": "2024-07-06T17:01:48.783Z",
+  "size": 1124719,
+  "md5Hash": "vgSuQ3BlgROYn9gOXwCVKA==",
+  "crc32c": "3163009264"
+}

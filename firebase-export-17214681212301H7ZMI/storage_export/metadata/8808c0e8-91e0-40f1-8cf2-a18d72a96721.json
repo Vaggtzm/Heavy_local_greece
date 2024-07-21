@@ -1,0 +1,19 @@
+{
+  "name": "articles/RNR-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119304665,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ac720fd4-61b5-46ec-bbfa-fa2d5fc47c12"
+  ],
+  "etag": "osmbd+2GP2D2AylMvmLThJIDHZs",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:04.665Z",
+  "updated": "2024-07-04T18:55:04.665Z",
+  "size": 3902,
+  "md5Hash": "OGiyBv/OGP8D+cA0MCezyg==",
+  "crc32c": "2555229290"
+}

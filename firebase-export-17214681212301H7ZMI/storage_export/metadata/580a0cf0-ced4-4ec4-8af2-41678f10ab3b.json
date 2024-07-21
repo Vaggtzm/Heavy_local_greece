@@ -1,0 +1,22 @@
+{
+  "name": "images/marwen.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120796183,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "795c8df9-6d9d-4302-a3f7-b6cc378b1dce"
+  ],
+  "etag": "j9ZS/7E3Ot/I1yPPA6XeAUfpcpo",
+  "customMetadata": {
+    "width": "634",
+    "height": "642"
+  },
+  "timeCreated": "2024-07-04T19:19:56.183Z",
+  "updated": "2024-07-04T19:20:15.259Z",
+  "size": 52479,
+  "md5Hash": "eD/Mcj7updgXxXpkMb4VSQ==",
+  "crc32c": "2320385017"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/order-02_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120794470,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b8ff3275-010a-4f65-bb66-e883ff57ce57"
+  ],
+  "etag": "4k+U3eC1AA52wYSpI5mn2STZ7WU",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:19:54.471Z",
+  "updated": "2024-07-04T19:20:38.697Z",
+  "size": 9508,
+  "md5Hash": "KHzYIfl+B2hxAxxUc3F3IQ==",
+  "crc32c": "4160067915"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/Medusas_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120795794,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "07b714aa-d85f-4f57-94f2-3704736516ad"
+  ],
+  "etag": "5Ba5MdUG5I4R73tzF+I8PSui2JY",
+  "customMetadata": {
+    "width": "275",
+    "height": "183"
+  },
+  "timeCreated": "2024-07-04T19:19:55.794Z",
+  "updated": "2024-07-04T19:20:48.098Z",
+  "size": 7833,
+  "md5Hash": "HRvjk6CSKCKJ3N2FGaUegg==",
+  "crc32c": "1927205702"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/BeastiDiSatana03_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120804728,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ce7128ae-c9d8-44e2-9f47-47c22804abf5"
+  ],
+  "etag": "sCQH9OEvz95mNMG/hA1s9IvMavg",
+  "customMetadata": {
+    "width": "194",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:04.728Z",
+  "updated": "2024-07-04T19:20:30.474Z",
+  "size": 10880,
+  "md5Hash": "T2ivnGtpwi1dfpuXIrN1GQ==",
+  "crc32c": "2610326233"
+}

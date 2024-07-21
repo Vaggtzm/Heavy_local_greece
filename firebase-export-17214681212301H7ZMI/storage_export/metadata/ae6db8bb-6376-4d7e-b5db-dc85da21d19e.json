@@ -1,0 +1,22 @@
+{
+  "name": "images/UDAD03_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120783060,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ce8490d0-0cea-4dff-8bcd-6187bfeb8f71"
+  ],
+  "etag": "uAeXeslrsIwaM8Yuy54iot6queQ",
+  "customMetadata": {
+    "width": "800",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:43.060Z",
+  "updated": "2024-07-04T19:19:48.810Z",
+  "size": 14222,
+  "md5Hash": "AqwAA8UFMieOsCOXHspc0w==",
+  "crc32c": "632975640"
+}

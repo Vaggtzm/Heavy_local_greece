@@ -1,0 +1,22 @@
+{
+  "name": "images/moonseeds_COVER-web_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120795233,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "51fe65df-ebfe-46b3-a0d3-1b9e4859b9f2"
+  ],
+  "etag": "cymx2bMDlLp7EP5whPR9r1n/34Q",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-04T19:19:55.233Z",
+  "updated": "2024-07-04T19:20:30.254Z",
+  "size": 46335,
+  "md5Hash": "SE8NLcdaqltKRbb1Sir5ZQ==",
+  "crc32c": "2759150596"
+}

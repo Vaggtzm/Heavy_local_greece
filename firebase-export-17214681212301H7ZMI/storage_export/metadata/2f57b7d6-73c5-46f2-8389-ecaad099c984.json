@@ -1,0 +1,19 @@
+{
+  "name": "images/akral_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120806174,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "cb67ff25-6035-4b75-84c0-9c73c2773419"
+  ],
+  "etag": "ycLqQ7VQ3nBv6zAPC6lnoN0IWNE",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:06.174Z",
+  "updated": "2024-07-04T19:20:06.174Z",
+  "size": 47066,
+  "md5Hash": "e4L0OyL9NKUK2xT9Bdx2XQ==",
+  "crc32c": "2503396994"
+}

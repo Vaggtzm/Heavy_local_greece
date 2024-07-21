@@ -1,0 +1,19 @@
+{
+  "name": "images/Dymna_Lotva_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120801647,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "a5ca0eae-924a-48b2-b6a0-00b5d69f3913"
+  ],
+  "etag": "KfijOyVvnrrKpPLlr80y4bKlhaM",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:01.647Z",
+  "updated": "2024-07-04T19:20:01.647Z",
+  "size": 114126,
+  "md5Hash": "zEROQiiMavswOYPe6fKAgQ==",
+  "crc32c": "2162886875"
+}

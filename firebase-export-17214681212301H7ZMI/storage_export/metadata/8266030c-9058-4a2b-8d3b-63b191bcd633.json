@@ -1,0 +1,22 @@
+{
+  "name": "images/a2181404431_65_200x200.jpeg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120808543,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "acb3f79b-6f95-4d1c-8554-fe656407f945"
+  ],
+  "etag": "WyVAcCdjmkFEetAz42oqLsLF6bY",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:08.543Z",
+  "updated": "2024-07-04T19:21:02.040Z",
+  "size": 9812,
+  "md5Hash": "AeuWocemab7OPLws6/+jOg==",
+  "crc32c": "3773627492"
+}

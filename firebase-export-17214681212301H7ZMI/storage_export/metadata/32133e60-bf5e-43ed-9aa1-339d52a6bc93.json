@@ -1,0 +1,19 @@
+{
+  "name": "articles/Birds_of_nazca-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119325453,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "463d2d98-fbb0-44d7-a601-661f4dfab669"
+  ],
+  "etag": "gc+D46bM6BwMQi01Z/hkz8ftdC0",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:25.453Z",
+  "updated": "2024-07-04T18:55:25.453Z",
+  "size": 9983,
+  "md5Hash": "hO4zZFQ/6yyjuv6osE2W5A==",
+  "crc32c": "2695855598"
+}

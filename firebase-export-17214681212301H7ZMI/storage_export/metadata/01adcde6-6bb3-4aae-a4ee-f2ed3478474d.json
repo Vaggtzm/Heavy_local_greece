@@ -1,0 +1,22 @@
+{
+  "name": "images/BluesCondors01_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120804485,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0f495bf4-f66b-49c1-a413-b12e84b6cd0e"
+  ],
+  "etag": "qWR47kQ755HNe4j2fjewiCdZXco",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:04.486Z",
+  "updated": "2024-07-04T19:21:12.058Z",
+  "size": 9544,
+  "md5Hash": "5+2TVFbWN1nU8Je00cDMAA==",
+  "crc32c": "951813141"
+}

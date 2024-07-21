@@ -1,0 +1,22 @@
+{
+  "name": "images/servan_200x200.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120790854,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "c9ed0580-4c2f-455e-b671-5e1f948fbc92"
+  ],
+  "etag": "GFbd0CrP6Go2dqLV2QbgNRVw9vE",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:19:50.854Z",
+  "updated": "2024-07-04T19:21:04.032Z",
+  "size": 4280,
+  "md5Hash": "9/FBklAGAuCytkBg7sePew==",
+  "crc32c": "2671672869"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/Stroszek.jpeg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120789397,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "2a9aa114-ff34-4348-bd58-8308cd154a5d"
+  ],
+  "etag": "qbW8A3LCEyBlYw15qju/erbIQT4",
+  "customMetadata": {
+    "width": "700",
+    "height": "700"
+  },
+  "timeCreated": "2024-07-04T19:19:49.397Z",
+  "updated": "2024-07-04T19:20:12.462Z",
+  "size": 60131,
+  "md5Hash": "lF5Wp3ZTjstlEWmBLF4+Vw==",
+  "crc32c": "2557707230"
+}

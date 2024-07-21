@@ -1,0 +1,22 @@
+{
+  "name": "images/sado-sathanasLogo.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120791448,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5ddc02ae-ae24-47a1-820e-a2b8b82017c1"
+  ],
+  "etag": "yhBOGg+hw2XPOLqdoiLbD7516po",
+  "customMetadata": {
+    "width": "260",
+    "height": "193"
+  },
+  "timeCreated": "2024-07-04T19:19:51.449Z",
+  "updated": "2024-07-04T19:20:16.394Z",
+  "size": 7720,
+  "md5Hash": "MPJrCLEytgBlEWND61oOUw==",
+  "crc32c": "3859584138"
+}

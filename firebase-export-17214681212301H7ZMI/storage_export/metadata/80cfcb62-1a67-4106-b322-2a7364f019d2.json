@@ -1,0 +1,19 @@
+{
+  "name": "images/review_picture_600x600.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120791662,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "a2fbed72-13fb-4fc7-a922-6e8096fe6d88"
+  ],
+  "etag": "NRaqgmeG6vIgI3rqPsvhALFjDU8",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:51.662Z",
+  "updated": "2024-07-04T19:19:51.662Z",
+  "size": 5424,
+  "md5Hash": "TDkqqGrr/ds8CnVXMq0mAA==",
+  "crc32c": "1931897847"
+}

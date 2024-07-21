@@ -1,0 +1,22 @@
+{
+  "name": "images/funeralChasm_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120800307,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ec9cee3f-b503-4174-bdb7-578ce435b20a"
+  ],
+  "etag": "07WstIuf09EUR80Zv3WAqqyRanE",
+  "customMetadata": {
+    "width": "800",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:20:00.307Z",
+  "updated": "2024-07-04T19:20:20.965Z",
+  "size": 90911,
+  "md5Hash": "uHIw7UPJLLR3koPJrzYHjg==",
+  "crc32c": "1136392369"
+}

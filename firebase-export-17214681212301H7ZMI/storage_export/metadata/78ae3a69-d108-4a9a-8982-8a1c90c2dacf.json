@@ -1,0 +1,22 @@
+{
+  "name": "images/zong01_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120772941,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "ca1ff5cb-28bb-4dfa-84a0-1cfdd48fca2a"
+  ],
+  "etag": "3M0h4Vb4ZjiIjOuZqhC8eg8FM9w",
+  "customMetadata": {
+    "width": "400",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:32.941Z",
+  "updated": "2024-07-04T19:19:33.348Z",
+  "size": 21299,
+  "md5Hash": "vnBsQl0VmYk382vyR4khDA==",
+  "crc32c": "3912574080"
+}

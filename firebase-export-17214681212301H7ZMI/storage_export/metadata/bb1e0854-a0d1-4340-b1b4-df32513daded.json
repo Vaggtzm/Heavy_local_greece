@@ -1,0 +1,22 @@
+{
+  "name": "images/NightStalker_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120794946,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "356330d3-3116-436a-941a-69f886cc3c30"
+  ],
+  "etag": "twHeMcOV3BDosaMmHR+yuT6kAd0",
+  "customMetadata": {
+    "width": "220",
+    "height": "329"
+  },
+  "timeCreated": "2024-07-04T19:19:54.946Z",
+  "updated": "2024-07-04T19:21:08.727Z",
+  "size": 15560,
+  "md5Hash": "382FwzucoLIFNJskLUOKnw==",
+  "crc32c": "1904723400"
+}

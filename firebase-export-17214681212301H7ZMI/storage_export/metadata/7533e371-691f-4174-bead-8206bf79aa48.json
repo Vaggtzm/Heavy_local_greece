@@ -1,0 +1,22 @@
+{
+  "name": "images/funeralChasm.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120800347,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "32b0917e-d809-445f-b374-056ca8ec30fc"
+  ],
+  "etag": "Sv/LyMinG5py/avzwk7RKmN4J0M",
+  "customMetadata": {
+    "width": "1200",
+    "height": "1071"
+  },
+  "timeCreated": "2024-07-04T19:20:00.347Z",
+  "updated": "2024-07-04T19:20:26.521Z",
+  "size": 331745,
+  "md5Hash": "pmErGUnhk/QbRcR+MJdAag==",
+  "crc32c": "2581571586"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "images/SenseOfear_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120790926,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "6bb0b3ef-6970-4b09-abfa-5c624da81287"
+  ],
+  "etag": "2lSxX/T5edysE6fVIgABYsxAZy4",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:50.926Z",
+  "updated": "2024-07-04T19:19:50.926Z",
+  "size": 25027,
+  "md5Hash": "CbAvyACx+GHolB41H0mKZQ==",
+  "crc32c": "2281605254"
+}

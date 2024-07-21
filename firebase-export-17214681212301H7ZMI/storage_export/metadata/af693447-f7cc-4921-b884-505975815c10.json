@@ -1,0 +1,22 @@
+{
+  "name": "images/Dissimulator01_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120801892,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "43474b83-d88a-4971-a30d-92f0ca1b5eaf"
+  ],
+  "etag": "PVSinDltaH44k2P1QyLu2QvfpN0",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:01.892Z",
+  "updated": "2024-07-04T19:20:31.326Z",
+  "size": 15461,
+  "md5Hash": "6um6aMI5k6wFZAMMVXPxXg==",
+  "crc32c": "980624151"
+}

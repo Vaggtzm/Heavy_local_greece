@@ -1,0 +1,22 @@
+{
+  "name": "images/Ushala_400x400.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120782456,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "2a720f42-a208-410c-83e4-72726b9eb8b7"
+  ],
+  "etag": "2UQJyk0pXRnrdOWdh2XsUUc6760",
+  "customMetadata": {
+    "width": "400",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:42.456Z",
+  "updated": "2024-07-04T19:19:46.340Z",
+  "size": 18904,
+  "md5Hash": "Gu94ELpqgPY2E7P76JC47A==",
+  "crc32c": "2663943735"
+}

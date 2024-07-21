@@ -1,0 +1,19 @@
+{
+  "name": "articles/Summit-catharsis-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119303880,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "e436435a-c2d2-4f17-b689-4e17a02b9850"
+  ],
+  "etag": "HgOePoAP1KYuW4MPrJvdMBTuqd0",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:03.880Z",
+  "updated": "2024-07-04T18:55:03.880Z",
+  "size": 9019,
+  "md5Hash": "QpI/4hP8nNe1D2bZsnnP9g==",
+  "crc32c": "3976820839"
+}

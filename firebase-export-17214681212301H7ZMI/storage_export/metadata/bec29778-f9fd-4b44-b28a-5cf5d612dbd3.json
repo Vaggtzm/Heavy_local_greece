@@ -1,0 +1,22 @@
+{
+  "name": "images/PulseOfTheUnderground_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120792208,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "def6db64-43e4-4846-bb47-d67c57586405"
+  ],
+  "etag": "zDFkWG256/FoR+bP1hYswHxebzk",
+  "customMetadata": {
+    "width": "288",
+    "height": "286"
+  },
+  "timeCreated": "2024-07-04T19:19:52.208Z",
+  "updated": "2024-07-04T19:20:22.905Z",
+  "size": 8915,
+  "md5Hash": "+vzPxmQDdSeubVhqnr+2BQ==",
+  "crc32c": "3550826330"
+}

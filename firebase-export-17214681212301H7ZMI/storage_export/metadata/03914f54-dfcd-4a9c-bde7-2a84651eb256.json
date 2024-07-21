@@ -1,0 +1,22 @@
+{
+  "name": "images/InnerLord_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120798304,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "79395e00-9648-4e7d-87ec-372cae0d90b7"
+  ],
+  "etag": "OJlYj5phMjaoX49NIisEnicPxj0",
+  "customMetadata": {
+    "width": "400",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:58.304Z",
+  "updated": "2024-07-04T19:20:31.585Z",
+  "size": 22284,
+  "md5Hash": "YLBz/UyHARkmC7Dxz/Rh6A==",
+  "crc32c": "667224699"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/WickedWizard_600x300.png",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120780440,
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "70118caa-dc26-420c-9d55-8fd39e70e54e"
+  ],
+  "etag": "6h+jywlNbTG1iecntSvPeO2xtsw",
+  "customMetadata": {
+    "width": "204",
+    "height": "192"
+  },
+  "timeCreated": "2024-07-04T19:19:40.440Z",
+  "updated": "2024-07-04T19:19:40.822Z",
+  "size": 8992,
+  "md5Hash": "DAa3WkDZQfJWnuvt5r8ERw==",
+  "crc32c": "2237027311"
+}

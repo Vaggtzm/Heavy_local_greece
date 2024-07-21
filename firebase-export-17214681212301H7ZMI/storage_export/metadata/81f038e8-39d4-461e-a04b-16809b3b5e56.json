@@ -1,0 +1,22 @@
+{
+  "name": "images/gallery/goth04_200x200.png",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720125441652,
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "91534105-44c1-47c5-9cd9-8767440e5340"
+  ],
+  "etag": "Op+9pbeX7hbIr4YaIYNKujyVERg",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T20:37:21.652Z",
+  "updated": "2024-07-04T20:37:22.740Z",
+  "size": 46370,
+  "md5Hash": "adi7elBSAjeErX+kif6LNA==",
+  "crc32c": "3479233166"
+}

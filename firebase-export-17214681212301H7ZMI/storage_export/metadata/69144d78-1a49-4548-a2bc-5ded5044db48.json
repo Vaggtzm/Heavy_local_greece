@@ -1,0 +1,22 @@
+{
+  "name": "images/Dreariness02_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120801738,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "8cb0dc35-d128-474a-abcb-87447416c130"
+  ],
+  "etag": "bEUWMuGz8uR6dtVVh5GvU1YWocY",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:20:01.738Z",
+  "updated": "2024-07-04T19:20:29.593Z",
+  "size": 19389,
+  "md5Hash": "8lyEsyNSIxuwFWd9xxvZqw==",
+  "crc32c": "2698785918"
+}

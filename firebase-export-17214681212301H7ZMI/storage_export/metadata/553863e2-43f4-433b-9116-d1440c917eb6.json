@@ -1,0 +1,22 @@
+{
+  "name": "images/Hexaban_800x800.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799428,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "5cae54b2-cd93-4cd0-8e21-93fc7813bf5d"
+  ],
+  "etag": "hkAfEXe+R79vGkw21Xv7z1m5UEw",
+  "customMetadata": {
+    "width": "350",
+    "height": "350"
+  },
+  "timeCreated": "2024-07-04T19:19:59.428Z",
+  "updated": "2024-07-04T19:20:43.102Z",
+  "size": 36896,
+  "md5Hash": "FXX+PYMeIkd+dUL4HACJjA==",
+  "crc32c": "2159519813"
+}

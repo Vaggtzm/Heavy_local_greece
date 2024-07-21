@@ -1,0 +1,19 @@
+{
+  "name": "articles/123.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119343375,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "c8c462c3-2385-406d-9a31-acd5c224deaf"
+  ],
+  "etag": "+3DC5jBk9Msae9I//jfbiNr0Geo",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:43.375Z",
+  "updated": "2024-07-04T18:55:43.375Z",
+  "size": 361,
+  "md5Hash": "ejHtamPtpEyvuv8PcvmugQ==",
+  "crc32c": "1999974985"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/NightPleasure.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120795098,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "cd292c9c-094f-4b94-8a14-1896c5aa3498"
+  ],
+  "etag": "l8/Azpol1Bk0e9+NVGNdHjTg/dw",
+  "customMetadata": {
+    "width": "606",
+    "height": "606"
+  },
+  "timeCreated": "2024-07-04T19:19:55.098Z",
+  "updated": "2024-07-04T19:21:01.875Z",
+  "size": 71994,
+  "md5Hash": "dEdkGqW3OmkGGzkmcRvLOA==",
+  "crc32c": "2967777888"
+}

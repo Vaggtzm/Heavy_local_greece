@@ -1,0 +1,19 @@
+{
+  "name": "images/mysticpath_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120795271,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "27ea7e94-7b04-4027-a1fc-82e412eb7cfc"
+  ],
+  "etag": "sAzo3EyI9Q3ddF3EyyWPXNUPLz4",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:55.272Z",
+  "updated": "2024-07-04T19:19:55.272Z",
+  "size": 14717,
+  "md5Hash": "H7R97t5Xzw6fY4pFq8Ocjg==",
+  "crc32c": "3525817050"
+}

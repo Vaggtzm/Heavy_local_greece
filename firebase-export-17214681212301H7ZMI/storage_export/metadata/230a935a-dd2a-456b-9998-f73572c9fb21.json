@@ -1,0 +1,22 @@
+{
+  "name": "images/ANORMOI01_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120805340,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "cae6775f-f55d-4354-a75c-658df9298ed3"
+  ],
+  "etag": "cfrqwO+1FVDqRwarHq5UDD3wplU",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:05.340Z",
+  "updated": "2024-07-04T19:20:55.460Z",
+  "size": 9715,
+  "md5Hash": "FWsfVtqSnPMCoQi7xHWLEg==",
+  "crc32c": "651843188"
+}

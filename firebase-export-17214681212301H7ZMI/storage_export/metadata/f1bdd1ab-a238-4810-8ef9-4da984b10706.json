@@ -1,0 +1,19 @@
+{
+  "name": "articles/KOKKINIA-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119307082,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "02347f80-400b-4397-9837-06dd81e756fb"
+  ],
+  "etag": "n6HaO08SybAhWN5LP6X8mTG09LY",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:07.082Z",
+  "updated": "2024-07-04T18:55:07.082Z",
+  "size": 4320,
+  "md5Hash": "VrObTMcVZI0dTTXdW73JQg==",
+  "crc32c": "644123353"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/BCLogoinvert2_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120804762,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "262d2cfa-e1b5-4396-bc72-c86cd0191fde"
+  ],
+  "etag": "0s16rTaGRJzHUVFNa2LeTbJVLic",
+  "customMetadata": {
+    "width": "800",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:20:04.762Z",
+  "updated": "2024-07-04T19:20:23.654Z",
+  "size": 97496,
+  "md5Hash": "2N0mCWtgqFbbfwrAy3cKNw==",
+  "crc32c": "2572142367"
+}

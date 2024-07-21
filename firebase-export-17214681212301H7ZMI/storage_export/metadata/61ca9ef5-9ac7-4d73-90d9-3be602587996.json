@@ -1,0 +1,22 @@
+{
+  "name": "images/ThyDarkenedShade02.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120787877,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "07f990dc-8e4c-45a6-ace2-916c593bb010"
+  ],
+  "etag": "+w7krswEVuVOotn95jhmoaltwvA",
+  "customMetadata": {
+    "width": "500",
+    "height": "750"
+  },
+  "timeCreated": "2024-07-04T19:19:47.877Z",
+  "updated": "2024-07-04T19:21:09.257Z",
+  "size": 68885,
+  "md5Hash": "wF+p12K02u8bK5b8OMAz1w==",
+  "crc32c": "3356388426"
+}

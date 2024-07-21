@@ -1,0 +1,22 @@
+{
+  "name": "images/lioneye_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120797297,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "11171f3a-bf0b-49d6-86c3-678c61ae8612"
+  ],
+  "etag": "QFOQsh6fXkUjD/2zxKRQIQBgfuQ",
+  "customMetadata": {
+    "width": "600",
+    "height": "540"
+  },
+  "timeCreated": "2024-07-04T19:19:57.297Z",
+  "updated": "2024-07-04T19:20:15.882Z",
+  "size": 90330,
+  "md5Hash": "00jZpFQ789N3axsBUFg4CQ==",
+  "crc32c": "2003092113"
+}

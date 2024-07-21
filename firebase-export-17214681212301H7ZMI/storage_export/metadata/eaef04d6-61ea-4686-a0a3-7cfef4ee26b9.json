@@ -1,0 +1,22 @@
+{
+  "name": "images/Animamortua Band Photo_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120805344,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "59166f4f-3385-4238-9e8b-8fd752f62187"
+  ],
+  "etag": "uBxNvIYqOaUpbAwMZ1fYYNqytA8",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-04T19:20:05.344Z",
+  "updated": "2024-07-04T19:20:55.404Z",
+  "size": 107234,
+  "md5Hash": "+EKGUqxGij6NW3e4k05V3g==",
+  "crc32c": "1710880731"
+}

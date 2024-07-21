@@ -1,0 +1,19 @@
+{
+  "name": "images/liquify_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120797121,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "b46d031e-0e55-4a5a-90e5-a9c88e92872f"
+  ],
+  "etag": "CailsWTFNngWpGOvitGqcqRjosg",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:57.121Z",
+  "updated": "2024-07-04T19:19:57.121Z",
+  "size": 37720,
+  "md5Hash": "gP3ZGDVXKozpc7O0O8ED6g==",
+  "crc32c": "413723407"
+}

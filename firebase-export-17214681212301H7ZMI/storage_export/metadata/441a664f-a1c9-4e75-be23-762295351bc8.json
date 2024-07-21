@@ -1,0 +1,22 @@
+{
+  "name": "images/Events/cyanide_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720125681202,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1e45be18-f166-43bc-9919-684127e52238"
+  ],
+  "etag": "j6kNbTkFnKA1aRaOEKzZdyOqp7M",
+  "customMetadata": {
+    "width": "800",
+    "height": "503"
+  },
+  "timeCreated": "2024-07-04T20:41:21.202Z",
+  "updated": "2024-07-04T20:41:21.626Z",
+  "size": 62034,
+  "md5Hash": "09y5gM7gdYolyxBIAqbTpw==",
+  "crc32c": "4155792664"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "images/decembrance_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120802987,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d9c49f69-6917-4e8b-8a4f-4004a2ab72a1"
+  ],
+  "etag": "xcDXxr7Vxm/D8ppVqXHDzy7pPI0",
+  "customMetadata": {
+    "width": "600",
+    "height": "540"
+  },
+  "timeCreated": "2024-07-04T19:20:02.987Z",
+  "updated": "2024-07-04T19:21:12.400Z",
+  "size": 48292,
+  "md5Hash": "am6ngRs+7HS/zo2Zy5888w==",
+  "crc32c": "299745349"
+}

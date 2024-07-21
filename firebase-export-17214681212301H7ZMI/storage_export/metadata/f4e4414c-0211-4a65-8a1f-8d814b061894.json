@@ -1,0 +1,22 @@
+{
+  "name": "images/startTheMonkey_800x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120789636,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "412157f5-c779-444f-8198-e36b9e24d038"
+  ],
+  "etag": "wuPEaGk857RScCfJftGUK/qY4W4",
+  "customMetadata": {
+    "width": "800",
+    "height": "400"
+  },
+  "timeCreated": "2024-07-04T19:19:49.636Z",
+  "updated": "2024-07-04T19:20:49.840Z",
+  "size": 85998,
+  "md5Hash": "17dqgWfGMa0KyUrzpcmgag==",
+  "crc32c": "4222887498"
+}

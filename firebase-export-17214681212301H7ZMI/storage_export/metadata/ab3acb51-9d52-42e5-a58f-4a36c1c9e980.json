@@ -1,0 +1,22 @@
+{
+  "name": "images/GhostOfAgony_800x800.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120799866,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "75074048-eb96-4062-bdc4-2d0b4079f7cf"
+  ],
+  "etag": "l9FtI7XMexVhefKhweVioq9Et9w",
+  "customMetadata": {
+    "width": "606",
+    "height": "606"
+  },
+  "timeCreated": "2024-07-04T19:19:59.866Z",
+  "updated": "2024-07-04T19:20:51.499Z",
+  "size": 56092,
+  "md5Hash": "U7HBS575HfVUl/dosyT03g==",
+  "crc32c": "728739921"
+}

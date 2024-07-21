@@ -1,0 +1,22 @@
+{
+  "name": "images/ScentOfThornsLogo.png",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120791287,
+  "contentType": "image/png",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "e9d810d5-c80b-4a80-b79d-eaad2d713fd8"
+  ],
+  "etag": "rkg0OkJ8Yv/9Ok2d3QDvRn9wPYs",
+  "customMetadata": {
+    "width": "975",
+    "height": "180"
+  },
+  "timeCreated": "2024-07-04T19:19:51.287Z",
+  "updated": "2024-07-04T19:20:21.803Z",
+  "size": 88956,
+  "md5Hash": "Jd52D7m6f4WMW+sZaa1ETQ==",
+  "crc32c": "3281622300"
+}

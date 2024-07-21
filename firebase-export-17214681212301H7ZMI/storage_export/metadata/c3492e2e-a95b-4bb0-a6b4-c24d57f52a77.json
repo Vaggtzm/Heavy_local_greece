@@ -1,0 +1,19 @@
+{
+  "name": "images/Exogalactic_800x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120801021,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "4d2ef080-fe57-448c-8bc6-8f005c49afdf"
+  ],
+  "etag": "Vhv1wf6xccmrIl89Xp6iLDEckFQ",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:01.021Z",
+  "updated": "2024-07-04T19:20:01.021Z",
+  "size": 15192,
+  "md5Hash": "KbQxPVCjdvI2Aybu1h55/g==",
+  "crc32c": "278784674"
+}

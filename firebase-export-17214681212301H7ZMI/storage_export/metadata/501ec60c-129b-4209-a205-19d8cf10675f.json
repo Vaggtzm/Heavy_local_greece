@@ -1,0 +1,19 @@
+{
+  "name": "images/automn_800x800.jpeg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120804990,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d36fd439-b716-48f8-b5e1-087da9590d76"
+  ],
+  "etag": "Hr9k8IESOBrd+sCOHjDdMD6PMcU",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:04.990Z",
+  "updated": "2024-07-04T19:20:04.990Z",
+  "size": 9392,
+  "md5Hash": "VQvuT77sRiJfAWMQq1+Abw==",
+  "crc32c": "4057949035"
+}

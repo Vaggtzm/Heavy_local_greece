@@ -1,0 +1,22 @@
+{
+  "name": "images/Udad01_800x800.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120783204,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1cbf2cac-ca06-4bdb-b97e-4fe3242b8a8e"
+  ],
+  "etag": "B960vjeB++dXdljX92NRlFmNV3I",
+  "customMetadata": {
+    "width": "800",
+    "height": "800"
+  },
+  "timeCreated": "2024-07-04T19:19:43.204Z",
+  "updated": "2024-07-04T19:19:50.443Z",
+  "size": 13200,
+  "md5Hash": "FWJfoXVU4fHpLTdmYsfGbg==",
+  "crc32c": "749349558"
+}

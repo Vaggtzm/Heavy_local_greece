@@ -1,0 +1,19 @@
+{
+  "name": "images/7JuneIlion.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120810860,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "800aa03c-e27b-4089-9560-3bba631e3397"
+  ],
+  "etag": "LtMUruUpzS/1CovelGrbmmEoq+k",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:20:10.860Z",
+  "updated": "2024-07-04T19:20:10.860Z",
+  "size": 1803990,
+  "md5Hash": "dcVk1s0LE7WHwXplxEQyUA==",
+  "crc32c": "1133922080"
+}

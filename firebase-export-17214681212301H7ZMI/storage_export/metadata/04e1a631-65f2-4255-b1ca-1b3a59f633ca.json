@@ -1,0 +1,22 @@
+{
+  "name": "images/Birds_200x200.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120804591,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "50b87b24-fb44-4db9-ad08-f3f11a783356"
+  ],
+  "etag": "Nrr6Q2eiPJ1xhhbYpQTSX546R/w",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:20:04.591Z",
+  "updated": "2024-07-04T19:20:54.302Z",
+  "size": 3976,
+  "md5Hash": "JfxeMLsUx7zdFeyT6PFKew==",
+  "crc32c": "1970977583"
+}

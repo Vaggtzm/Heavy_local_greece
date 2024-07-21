@@ -1,0 +1,19 @@
+{
+  "name": "images/klage-live.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120797992,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "0847ee5e-041c-48dc-9ceb-d377f63f27a8"
+  ],
+  "etag": "+CM1K1ayWvgLZqdP66WnUuK0cVs",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:57.992Z",
+  "updated": "2024-07-04T19:19:57.992Z",
+  "size": 6858,
+  "md5Hash": "WKEm1VjSirx+PxlG8mBexQ==",
+  "crc32c": "964009275"
+}

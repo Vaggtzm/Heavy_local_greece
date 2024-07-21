@@ -1,0 +1,22 @@
+{
+  "name": "images/SleepDealer_800x600.webp",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120790255,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "eb8dcfdf-4011-4e16-83ca-bd6041a0c345"
+  ],
+  "etag": "h2wWq5E96ykGI4T1ebktIjzbJvo",
+  "customMetadata": {
+    "width": "606",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:50.255Z",
+  "updated": "2024-07-04T19:20:39.382Z",
+  "size": 21590,
+  "md5Hash": "u3EXVx0su7CUa3MjAfqq5g==",
+  "crc32c": "1042609364"
+}

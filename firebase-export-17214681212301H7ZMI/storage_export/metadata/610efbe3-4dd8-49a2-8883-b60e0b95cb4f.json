@@ -1,0 +1,22 @@
+{
+  "name": "images/A Lil Louder EP3000.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120805673,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "1ebcd103-9094-46b8-ad70-433ca58c791a"
+  ],
+  "etag": "NZUnP1FfqjeP2p3WRku8sOUmvDk",
+  "customMetadata": {
+    "width": "3000",
+    "height": "3000"
+  },
+  "timeCreated": "2024-07-04T19:20:05.673Z",
+  "updated": "2024-07-04T19:20:39.268Z",
+  "size": 3629411,
+  "md5Hash": "R2DCx5vvJi1V3t9xBBtBSQ==",
+  "crc32c": "389803188"
+}

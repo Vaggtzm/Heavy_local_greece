@@ -1,0 +1,22 @@
+{
+  "name": "images/Nile_200x200.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120794934,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "88d44b3e-d44b-42af-b90a-031dcf7ff271"
+  ],
+  "etag": "W734UaRWgQpQSZRQw32yN+DA2ks",
+  "customMetadata": {
+    "width": "200",
+    "height": "200"
+  },
+  "timeCreated": "2024-07-04T19:19:54.934Z",
+  "updated": "2024-07-04T19:21:09.012Z",
+  "size": 9928,
+  "md5Hash": "aYzaNpJAig5p9+9sKhI8DQ==",
+  "crc32c": "2668132854"
+}

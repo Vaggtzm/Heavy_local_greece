@@ -1,0 +1,22 @@
+{
+  "name": "images/Necrovile_600x600.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 2,
+  "generation": 1720120795123,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "637a6c4f-e95e-447b-bc74-51377b4514cc"
+  ],
+  "etag": "3ZUxzIiYkl8wWVrcQRgSXiOCKYE",
+  "customMetadata": {
+    "width": "600",
+    "height": "600"
+  },
+  "timeCreated": "2024-07-04T19:19:55.123Z",
+  "updated": "2024-07-04T19:20:17.454Z",
+  "size": 108933,
+  "md5Hash": "FoYUhEt3xdR4zdo8qJkNRA==",
+  "crc32c": "2285896349"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "images/SIF02_400x400.jpg",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720120790689,
+  "contentType": "image/jpeg",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "d1abb589-5a5a-42d6-8bea-9ff92bd3a536"
+  ],
+  "etag": "GPTeFJtqA64WhKyJ5nVNRxGLhXk",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T19:19:50.690Z",
+  "updated": "2024-07-04T19:19:50.690Z",
+  "size": 39625,
+  "md5Hash": "nWtimaiMS1vgmmNeDdg8jA==",
+  "crc32c": "3492094237"
+}

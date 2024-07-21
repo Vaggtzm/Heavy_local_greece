@@ -1,0 +1,19 @@
+{
+  "name": "articles/Faloda-archive.json",
+  "bucket": "heavy-local-12bc4.appspot.com",
+  "metageneration": 1,
+  "generation": 1720119311934,
+  "contentType": "application/json",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "8c7864b8-1697-4d65-a806-8bb330578b74"
+  ],
+  "etag": "zpfwAGkckHv5irg44YFKcx92X9Y",
+  "customMetadata": {},
+  "timeCreated": "2024-07-04T18:55:11.934Z",
+  "updated": "2024-07-04T18:55:11.934Z",
+  "size": 3058,
+  "md5Hash": "2w+JVks/TWi6yplKLNXiyg==",
+  "crc32c": "4235035867"
+}
