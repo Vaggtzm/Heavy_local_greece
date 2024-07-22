@@ -49,19 +49,15 @@ const ExploreMore = () => {
           <div className="row text-center">
             <Author
               rating={4.5}
-              className={"col-md-4 mb-5 mb-md-0"}
+              className={"col-md-6 mb-5 mb-md-0"}
               userId={"uSXH49YHlzT8vjQ94ZuJTOz351m2"}
             />
             <Author
               rating={5}
-              className={"col-md-4 mb-5 mb-md-0"}
+              className={"col-md-6 mb-5 mb-md-0"}
               userId={"gbK4OvgKbyYDfYCfIjboOqjA9Yv1"}
             />
-            <Author
-              rating={4}
-              className={"col-md-4 mb-5 text-white pb-2"}
-              userId={"QY7GE8irSce3f4AFKW20DAWVxhr2"}
-            />
+         
             <hr className="bg-white" />
             <Author
               rating={4}
