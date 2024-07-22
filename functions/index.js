@@ -91,6 +91,7 @@ app.get("/feed", async (req, res) => {
                 author: Object.keys(allAuthors).includes(article.author) ? allAuthors[article.author].displayName : 'Unknown',
                 date: new Date(article.date),
                 enclosure: { url: article.image },
+                categories: [category]
             };
             feed.item(item);
         });
@@ -145,7 +146,6 @@ function changeAnalysis(
 
     // If there's no dot, return the filename with the suffix appended
     if (dotIndex === -1) {
-
         return `${fileName}_${
             change_analysis ? analysis_true : analysis_false
         }`;

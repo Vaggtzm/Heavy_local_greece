@@ -230,3 +230,14 @@ export function handleAuthorTest(user, setCurrentUser, navigate){
         navigate('/upload/login');
     }
 }
+
+export const categories =  [
+    "Top News",
+    "General News",
+    "Interviews",
+    "Collabs and Sponsorships",
+    "Latest Reviews(ENG)",
+    "Latest Reviews(GRE)",
+    "Latest Reviews(IT)",
+    "Legends"
+]

@@ -7,7 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-import {deleteImage, fetchFiles, getRef, handleAuthorTest} from "../articleData/articleData";
+import {deleteImage, fetchFiles, getRef, handleAuthorTest, categories} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 
 const FirebaseFileList = () => {
@@ -761,15 +761,7 @@ const FirebaseFileList = () => {
                             <Form.Label className={"text-light"}>Category</Form.Label>
 
                             <CategoryDropdown
-                                categories={[
-                                    "Top News",
-                                    "General News",
-                                    "Interviews",
-                                    "Collabs and Sponsorships",
-                                    "Latest Reviews(ENG)",
-                                    "Latest Reviews(GRE)",
-                                    "Legends"
-                                ]}
+                                categories={categories}
                                 onSelectCategory={(category) => {
                                     handleChange({target: {value: category}}, 'category', false)
                                 }}
