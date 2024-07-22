@@ -38,6 +38,10 @@ const TopNews = () => {
                         <h2 className="text-white">Latest News</h2>
                     </div>
 
+
+
+
+
                     <div className="row">
                         {/** Main Content Column */}
                         <div className="col-md-8">
@@ -45,40 +49,23 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2Fa0248265050_10_800x800.jpg?alt=media&token=9de31b7c-4d5c-46d7-9378-3af889a32085"
+                                        src="https://pulse-of-the-underground.com/assets/274805849_365444885584538_4848305611902603414_n.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
+                                        <h3><span className="text-danger bold">NEW ALBUM(ENG):</span></h3>
                                         <p className="lead text-white">
-                                            Συνέντευξη με τους Meden Agan
-                                        </p>
+                                        NEW ALBUM: Crest of Darkness Unveils New Single and Prepares for October Album Release                                        </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/---Meden-Agan"}>
+                                                 to={"/article/Crest-of-Darkness-Unveils-New-Single-and-Prepares-for-October-Album-Release"}>
                                             Read More
                                         </NavLink>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F1_800x600.png?alt=media&token=40f90fa7-bc07-45ba-95a2-fe9f28cf0f05"
-                                        className="img-fluid m-2"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
-                                        <p className="lead text-white">Συνέντευξη εφ'όλης της ύλης με τους death/thrashers Piranha</p>
-                                        <NavLink className="btn btn-danger"
-                                                 to={"/article/-'-----deaththrashers-Piranha"}>
-                                            Read More
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
+                    
                             {/**Interviews END */}
 
 
@@ -87,15 +74,14 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/51900619_2321203294791447_5989544280404787200_n.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/unnamed.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        BAND REVIEW: Veritas — The Truth in Hard Rock and Metal
-                                        </p>
+                                        SINGLE REVIEW: “The Flame” Ignites My Darkest Red’s Melancholic Majesty</p>
                                         <NavLink className="btn btn-danger"
                                                  to={"/article/BAND-REVIEW:-Veritas--The-Truth-in-Hard-Rock-and-Metal"}>
                                             Read More
@@ -103,26 +89,25 @@ const TopNews = () => {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/451020836_1025661109196004_3543762158773206324_n.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/none.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">NEWS(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        SINGLE REVIEW: Gaerea’s “Hope Shatters” — A Dark Gem Unleashed
-                                         </p>
+                                        END OF AN ERA: None Bids Farewell After Four Albums                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/SINGLE-REVIEW:-Gaereas-Hope-Shatters--A-Dark-Gem-Unleashed"}>
+                                                 to={"/article/END-OF-AN-ERA:-None-Bids-Farewell-After-Four-Albums"}>
                                             Read More
                                         </NavLink>
                                     </div>
                                 </div>
                             </div>
+                        
 
                             <div className="row">
                                 <div className="col-md-6">
@@ -214,12 +199,14 @@ const TopNews = () => {
                         </div>
                       
                     </div>
-                    <Sponshorbanner />
 
 
                     {/**News Start */}
+                
                     {/* Empty For Now */}
                     {/**News End */}
+                    <Sponshorbanner />
+
                 </div>
             </div>
         </div>
