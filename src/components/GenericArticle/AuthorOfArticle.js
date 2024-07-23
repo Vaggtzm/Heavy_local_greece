@@ -16,7 +16,9 @@ const AuthorOfArticle = ({authorCode}) => {
          * @type {DatabaseReference}
          */
         let usersRef = dbRef(database, `authors/${authorCode}`);
+        console.log(`authors/${authorCode}`)
         const tempRef = await get(usersRef);
+        console.log("Test 131")
         if(!tempRef.exists()){
             usersRef = dbRef(database, `users/${authorCode}`);
             const tempRef = await get(usersRef);
@@ -24,7 +26,9 @@ const AuthorOfArticle = ({authorCode}) => {
                 setAuthor({
                     displayName: authorCode
                 });
+                console.log(`users/${authorCode}`)
             }
+            console.log("Test 133")
         }
 
         // Set the author based on the ref

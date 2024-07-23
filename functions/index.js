@@ -91,6 +91,7 @@ app.get("/feed", async (req, res) => {
                 author: Object.keys(allAuthors).includes(article.author) ? allAuthors[article.author].displayName : 'Unknown',
                 date: new Date(article.date),
                 enclosure: { url: article.image },
+                categories: [category]
             };
             feed.item(item);
         });
@@ -145,7 +146,6 @@ function changeAnalysis(
 
     // If there's no dot, return the filename with the suffix appended
     if (dotIndex === -1) {
-
         return `${fileName}_${
             change_analysis ? analysis_true : analysis_false
         }`;
@@ -178,13 +178,14 @@ app.get("/author/*", async (req, res) => {
     console.log(`Checking /authors/${authorCode}`);
     let author = await database.ref(`/authors/${authorCode}`).get();
     if (!author.exists()) {
-        console.log(`Not found in /authors, checking /users/${authorCode}`);
+        console.warn(`Not found in /authors, checking /users/${authorCode}`);
         author = await database.ref(`/users/${authorCode}`).get();
         if (!author.exists()) {
-            console.log(`Not found in /users either`);
+            console.warn(`Not found in /users either`);
             return res.status(404).send("Author not found");
         }
     }
+    console.warn(`Found author: ${author.val().displayName}`);
 
     author = author.val();
     const filepath = path.resolve(__dirname, "index.html");
@@ -921,4 +922,64 @@ const axios = require('axios');
 exports.getDnsLoc = functions.https.onCall(async (data, context) => {
     return "37 58 38.396 N 23 42 38.719 E 0.00m 3m 5m 5m\n" +
         "39 39 36.345 N 20 50 56.432 E 5.00m 30m 5m 5m";
+});
+
+
+exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, context) => {
+    const cloudflare = functions.config().cloudflare;
+    console.log("functions", functions.config())
+    console.log("cloudflare", cloudflare);
+    const CLOUDFLARE_API_KEY = cloudflare.api_key;
+    const ZONE_ID = cloudflare.zone_id;
+    // Verify authentication
+    if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+    }
+
+    // Validate the input
+    if (typeof data.display !== 'boolean') {
+        throw new functions.https.HttpsError('invalid-argument', 'The `display` field must be a boolean.');
+    }
+
+    const display = data.display; // Boolean: true or false
+
+    try {
+        if (display) {
+            // Get the current security level
+            const response = await axios.get(
+                `https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/settings/security_level`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`
+                    }
+                }
+            );
+            return { success: true, data: response.data };
+        } else {
+            // Change the security level based on the action
+            const action = data.action; // Boolean: true or false
+            if (typeof action !== 'boolean') {
+                throw new functions.https.HttpsError('invalid-argument', 'The `action` field must be a boolean.');
+            }
+
+            const securityLevel = action ? 'under_attack' : 'high';
+            const response = await axios.patch(
+                `https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/settings/security_level`,
+                {
+                    value: securityLevel
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`
+                    }
+                }
+            );
+            return { success: true, data: response.data };
+        }
+    } catch (error) {
+        console.error(error);
+        throw new functions.https.HttpsError('internal', 'Error processing request.');
+    }
 });

@@ -9,8 +9,9 @@ import {onValue, ref as databaseRef} from "firebase/database";
 import {useTranslation} from "react-i18next";
 
 import {getDownloadURL, getMetadata, ref as storageRef, ref as StorageRef, uploadString} from "firebase/storage";
-import {fetchFiles, handleAuthorTest} from "../articleData/articleData";
+import {categories, fetchFiles, handleAuthorTest} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
+import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 
 const TranslationSystem = () => {
     const {t} = useTranslation();
@@ -257,10 +258,9 @@ const TranslationSystem = () => {
         return (
             <ListGroup>
                 {sortedFiles.map((file, index) => (
-                    <ListGroup.Item key={index} className="bg-dark text-light">
-                        {file.isReady && <><i className="text-success fa-solid fa-check"></i><span> </span></>}<p
-                        key={file.date}
-                        className="form-label badge bg-dark-subtle text-dark m-1">{file.date}</p>{file.title}
+                    <ListGroup.Item key={index} className={`m-1 border-1 rounded-2 shadow-lg text-light ${file.isReady?"bg-success":"bg-dark"}`}>
+                        <p className="form-label badge bg-dark-subtle text-dark m-1">{file.date}</p>
+                        {file.title}
                         {
                             (file.translations && Object.keys(file.translations).length > 0) ? (
                                 <div>
@@ -318,10 +318,10 @@ const TranslationSystem = () => {
                 </div>
             </div>
             <Modal size="xl" show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{t("Translation Modal")}</Modal.Title>
+                <Modal.Header className={"bg-dark text-white"} closeButton>
+                    <Modal.Title>{fileData.title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className={"bg-dark text-white"}>
                     <Form>
                         <div>
                             <h5>{t('translate')}</h5>
@@ -332,42 +332,43 @@ const TranslationSystem = () => {
                             </FormGroup>
                             <FormGroup controlId="translatedTitle">
                                 <Form.Label>{t('Title')}</Form.Label>
-                                <Form.Control type="text" value={translationData.title}
+                                <Form.Control className={"bg-dark text-white"} type="text" value={translationData.title}
                                               onChange={(e) => handleTranslationChange(e.target.value, 'title')}/>
                             </FormGroup>
                             <FormGroup controlId="translatedDetails">
                                 <Form.Label>{t('Details')}</Form.Label>
-                                <Form.Control type="text" value={translationData.details}
+                                <Form.Control className={"bg-dark text-white"} type="text" value={translationData.details}
                                               onChange={(e) => handleTranslationChange(e.target.value, 'details')}/>
-                            </FormGroup>
-                            <FormGroup controlId="translatedImg01">
-                                <Form.Label>{t('ImgUrl')}</Form.Label>
-                                <Form.Control type="text" value={translationData.img01}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'img01')}
-                                              readOnly={true}/>
                             </FormGroup>
                             <FormGroup controlId="translatedSub">
                                 <Form.Label>{t('AuthorCode')} {fileData.authorName}</Form.Label>
-                                <Form.Control type="text" value={fileData.sub} readOnly={true}/>
                             </FormGroup>
-                            <FormGroup controlId="translatedDate">
-                                <Form.Label>{t('Date')}</Form.Label>
-                                <Form.Control type="text" value={translationData.date}
-                                              onChange={(e) => handleTranslationChange(e.target.value, 'date')}
-                                              readOnly={true}/>
-                            </FormGroup>
+
+                            <Form.Group controlId="categories">
+                                <Form.Label className={"text-light"}>Category</Form.Label>
+
+                                <CategoryDropdown
+                                    categories={categories}
+                                    onSelectCategory={(category) => {
+                                        handleTranslationChange(category, 'category')
+                                    }}
+                                    required={true}
+                                    value={translationData.category}
+                                />
+                            </Form.Group>
+
                             <FormGroup controlId="translatedLanguage">
                                 <Form.Label>{t('translatedLanguageLabel')}</Form.Label>
-                                <Form.Control as="select" value={newLanguage}
+                                <Form.Control className={"bg-dark text-white"} as="select" value={newLanguage}
                                               onChange={(e) => setNewLanguage(e.target.value)}>
-                                    <option value="">{t('selectLanguagePlaceholder')}</option>
+                                    <option className={"bg-dark text-white"} value="">{t('selectLanguagePlaceholder')}</option>
                                     {Object.keys(availableLanguages).map((lang) => (
-                                        <option key={lang} value={lang}>{availableLanguages[lang]}</option>
+                                        <option className={"bg-dark text-white"} key={lang} value={lang}>{availableLanguages[lang]}</option>
                                     ))}
                                 </Form.Control>
                             </FormGroup>
                         </div>
-                        <Button className="btn btn-dark m-3" onClick={handleSave}>{t("Save")}</Button>
+                        <Button className="btn btn-primary m-3" onClick={handleSave}>{t("Save")}</Button>
                     </Form>
                 </Modal.Body>
             </Modal>

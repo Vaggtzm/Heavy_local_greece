@@ -3,6 +3,7 @@
     {
       "site": "heavy-local-12bc4",
       "predeploy": "npm run build",
+      "postdeploy": "./purge_cache.sh",
       "public": "build",
       "ignore": [
         "firebase.json",
