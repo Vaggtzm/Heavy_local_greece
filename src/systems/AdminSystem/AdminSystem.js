@@ -6,6 +6,7 @@ import {getDownloadURL, ref as storageRef} from "firebase/storage";
 import {Button, Card, DropdownButton, Form, Modal, Dropdown} from "react-bootstrap";
 import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {disableUser, handleAuthorTest, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
+import SecurityToggleButton from "./SecurityToggleButton";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
@@ -153,6 +154,9 @@ const AdminSystem = () => {
             <h2 className={"h2 text-white"}>User Admin System</h2>
             <hr className="bg-white" />
             <div className={"row d-flex justify-content-center"}>
+                <div className={"col-3"}>
+                    <SecurityToggleButton/>
+                </div>
                 <div className={"row col-8 col-md-12 d-flex  justify-content-center"}>
                     <div className={"col-12 col-md-6 m-1 m-md-4"}>
                     <Form.Control className={"bg-dark text-white"} type={"text"} value={newUserEmail} onChange={(event)=>{setNewUserEmail(event.target.value)}} placeholder={"Enter the email for the new author"}/>

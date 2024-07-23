@@ -923,3 +923,60 @@ exports.getDnsLoc = functions.https.onCall(async (data, context) => {
     return "37 58 38.396 N 23 42 38.719 E 0.00m 3m 5m 5m\n" +
         "39 39 36.345 N 20 50 56.432 E 5.00m 30m 5m 5m";
 });
+
+
+exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, context) => {
+    const CLOUDFLARE_API_KEY = functions.config().cloudflare.api_key;
+    const ZONE_ID = functions.config().cloudflare.zone_id;
+    // Verify authentication
+    if (!context.auth) {
+        throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
+    }
+
+    // Validate the input
+    if (typeof data.display !== 'boolean') {
+        throw new functions.https.HttpsError('invalid-argument', 'The `display` field must be a boolean.');
+    }
+
+    const display = data.display; // Boolean: true or false
+
+    try {
+        if (display) {
+            // Get the current security level
+            const response = await axios.get(
+                `https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/settings/security_level`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`
+                    }
+                }
+            );
+            return { success: true, data: response.data };
+        } else {
+            // Change the security level based on the action
+            const action = data.action; // Boolean: true or false
+            if (typeof action !== 'boolean') {
+                throw new functions.https.HttpsError('invalid-argument', 'The `action` field must be a boolean.');
+            }
+
+            const securityLevel = action ? 'under_attack' : 'high';
+            const response = await axios.patch(
+                `https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/settings/security_level`,
+                {
+                    value: securityLevel
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`
+                    }
+                }
+            );
+            return { success: true, data: response.data };
+        }
+    } catch (error) {
+        console.error(error);
+        throw new functions.https.HttpsError('internal', 'Error processing request.');
+    }
+});
