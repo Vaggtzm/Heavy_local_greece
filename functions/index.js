@@ -926,8 +926,11 @@ exports.getDnsLoc = functions.https.onCall(async (data, context) => {
 
 
 exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, context) => {
-    const CLOUDFLARE_API_KEY = functions.config().cloudflare.api_key;
-    const ZONE_ID = functions.config().cloudflare.zone_id;
+    const cloudflare = functions.config().cloudflare;
+    console.log("functions", functions.config())
+    console.log("cloudflare", cloudflare);
+    const CLOUDFLARE_API_KEY = cloudflare.api_key;
+    const ZONE_ID = cloudflare.zone_id;
     // Verify authentication
     if (!context.auth) {
         throw new functions.https.HttpsError('unauthenticated', 'The function must be called while authenticated.');
