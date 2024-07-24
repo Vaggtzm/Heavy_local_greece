@@ -999,7 +999,7 @@ function hashIp(ip) {
 exports.beforeSignIn = functions.auth.user().beforeSignIn((user, context) =>{
     const ipAddress = context.ipAddress;
     const table = (user.customClaims&&user.customClaims.admin)?"authors":"users";
-    const ref = database.ref(`${table}/${user.uid}`)
+    const ref = database.ref(`${table}/${user.uid}/ip`)
     ref.push({
         loginAttempt: {
             ip: ipAddress,
