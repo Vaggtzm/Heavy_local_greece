@@ -998,39 +998,14 @@ function hashIp(ip) {
 
 exports.handleLogin = functions.https.onCall(async (data, context) => {
     const { email, password } = data;
+    const user = await admin.auth().getUserByEmail(email);
     const ipAddress = context.rawRequest.ip;
-    const hashedIp = hashIp(ipAddress);
-
-    const ref = database.ref('failedLoginAttempts').child(hashedIp);
-    const attemptData = await ref.once('value');
-    const attempts = attemptData.val() || { count: 0, firstAttempt: Date.now() };
-
-    if (attempts.bannedUntil && Date.now() < attempts.bannedUntil) {
-        throw new functions.https.HttpsError('failed-precondition', 'Your IP address has been banned due to too many failed login attempts.');
-    }
-
-    try {
-        // Try to sign in the user
-        const user = await admin.auth().getUserByEmail(email);
-        const correctPasswordHash = user.passwordHash;
-        const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
-        if(!isPasswordCorrect){
-            throw new Error("Invalid credentials");
+    const table = (user.customClaims&&user.customClaims.admin)?"authors":"users";
+    const ref = database.ref(`${table}/${user.uid}`)
+    ref.push({
+        loginAttempt: {
+            ip: ipAddress,
+            timestamp: database.ServerValue.TIMESTAMP,
         }
-
-        // If login is successful, reset failed attempts
-        await ref.remove();
-
-        return { message: 'Login successful' };
-    } catch (error) {
-        // Increment failed attempts if login fails
-        attempts.count++;
-        if (attempts.count >= MAX_FAILED_ATTEMPTS) {
-            attempts.bannedUntil = Date.now() + BAN_DURATION_MS;
-        }
-
-        await ref.set(attempts);
-
-        throw new functions.https.HttpsError('unauthenticated', 'Invalid login credentials');
-    }
+    })
 });
