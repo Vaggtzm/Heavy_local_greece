@@ -83,7 +83,7 @@ const TopNews = () => {
                                         <p className="lead text-white">
                                         SINGLE REVIEW: “The Flame” Ignites My Darkest Red’s Melancholic Majesty</p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"https://pulse-of-the-underground.com/article/SINGLE-REVIEW:-The-Flame-Ignites-My-Darkest-Reds-Melancholic-Majesty"}>
+                                                 to={"article/SINGLE-REVIEW:-The-Flame-Ignites-My-Darkest-Reds-Melancholic-Majesty"}>
                                             Read More
                                         </NavLink>
                                     </div>
