@@ -1001,7 +1001,7 @@ exports.handleLogin = functions.https.onCall(async (data, context) => {
     const ipAddress = context.rawRequest.ip;
     const hashedIp = hashIp(ipAddress);
 
-    const ref = db.ref('failedLoginAttempts').child(hashedIp);
+    const ref = database.ref('failedLoginAttempts').child(hashedIp);
     const attemptData = await ref.once('value');
     const attempts = attemptData.val() || { count: 0, firstAttempt: Date.now() };
 
@@ -1012,7 +1012,11 @@ exports.handleLogin = functions.https.onCall(async (data, context) => {
     try {
         // Try to sign in the user
         const user = await admin.auth().getUserByEmail(email);
-        await user.verifyPasswordHash(password);
+        const correctPasswordHash = user.passwordHash;
+        const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
+        if(!isPasswordCorrect){
+            throw new Error("Invalid credentials");
+        }
 
         // If login is successful, reset failed attempts
         await ref.remove();
