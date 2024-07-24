@@ -983,3 +983,50 @@ exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, cont
         throw new functions.https.HttpsError('internal', 'Error processing request.');
     }
 });
+
+
+// Maximum failed attempts before ban
+const MAX_FAILED_ATTEMPTS = 10;
+// Ban duration in milliseconds (1 hour)
+const BAN_DURATION_MS = 60 * 60 * 1000;
+
+// Utility function to hash IP address
+function hashIp(ip) {
+    return crypto.createHash('sha256').update(ip).digest('hex');
+}
+
+
+exports.handleLogin = functions.https.onCall(async (data, context) => {
+    const { email, password } = data;
+    const ipAddress = context.rawRequest.ip;
+    const hashedIp = hashIp(ipAddress);
+
+    const ref = db.ref('failedLoginAttempts').child(hashedIp);
+    const attemptData = await ref.once('value');
+    const attempts = attemptData.val() || { count: 0, firstAttempt: Date.now() };
+
+    if (attempts.bannedUntil && Date.now() < attempts.bannedUntil) {
+        throw new functions.https.HttpsError('failed-precondition', 'Your IP address has been banned due to too many failed login attempts.');
+    }
+
+    try {
+        // Try to sign in the user
+        const user = await admin.auth().getUserByEmail(email);
+        await user.verifyPasswordHash(password);
+
+        // If login is successful, reset failed attempts
+        await ref.remove();
+
+        return { message: 'Login successful' };
+    } catch (error) {
+        // Increment failed attempts if login fails
+        attempts.count++;
+        if (attempts.count >= MAX_FAILED_ATTEMPTS) {
+            attempts.bannedUntil = Date.now() + BAN_DURATION_MS;
+        }
+
+        await ref.set(attempts);
+
+        throw new functions.https.HttpsError('unauthenticated', 'Invalid login credentials');
+    }
+});
