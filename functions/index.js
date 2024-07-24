@@ -1003,7 +1003,7 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn((user, context) =>{
     ref.push({
         loginAttempt: {
             ip: ipAddress,
-            timestamp: database.ServerValue.TIMESTAMP,
+            timestamp: (new Date()).toUTCString(),
         }
     })
 });
