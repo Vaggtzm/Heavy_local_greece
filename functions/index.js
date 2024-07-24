@@ -996,10 +996,8 @@ function hashIp(ip) {
 }
 
 
-exports.handleLogin = functions.https.onCall(async (data, context) => {
-    const { email, password } = data;
-    const user = await admin.auth().getUserByEmail(email);
-    const ipAddress = context.rawRequest.ip;
+exports.beforeSignIn = functions.auth.user().beforeSignIn((user, context) =>{
+    const ipAddress = context.ipAddress;
     const table = (user.customClaims&&user.customClaims.admin)?"authors":"users";
     const ref = database.ref(`${table}/${user.uid}`)
     ref.push({
