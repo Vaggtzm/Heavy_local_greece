@@ -82,8 +82,8 @@
     "emulators": "firebase emulators:start --project heavy-local-12bc4 --import=./emulatorMetadata --export-on-exit=./emulatorMetadata",
     "deploy": "firebase deploy --project heavy-local-12bc4",
     "initialize-emulators": "unzip ./emulatorMetadata.zip",
-    "prebuild": "./firebase_handler",
-    "sentry:sourcemaps": "export $(cat .env | xargs) && export RELEASE=$(sentry-cli releases propose-version) && sentry-cli releases new --org orfanidis-q5 --project javascript-react $RELEASE && sentry-cli releases files $RELEASE upload-sourcemaps ./build --rewrite --project javascript-react && sentry-cli releases finalize $RELEASE && sentry-cli releases set-commits $RELEASE --auto"
+    "prebuild": "./firebase_handler&&./update_env.sh",
+    "sentry:sourcemaps": "export $(cat .env | xargs) && sentry-cli releases new --org orfanidis-q5 --project javascript-react $REACT_APP_RELEASE && sentry-cli releases files $REACT_APP_RELEASE upload-sourcemaps ./build --rewrite --project javascript-react && sentry-cli releases finalize $REACT_APP_RELEASE && sentry-cli releases set-commits $REACT_APP_RELEASE --auto"
   },
   "eslintConfig": {
     "extends": [
