@@ -10,10 +10,10 @@ import {getImageDimensions, handleAuthorTest} from "./articleData/articleData";
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 import ImageUploader from 'quill-image-uploader';
+import ReactQuill from "react-quill";
+import ImageUpload from "./components/fancyImage/ImageUpload";
+import CategoryDropdown from "./components/CategoryDropdown/CategoryDropdown";
 
-const ReactQuill = lazy(() => import('react-quill'));
-const ImageUpload = lazy(() => import('./components/fancyImage/ImageUpload'));
-const CategoryDropdown = lazy(() => import('./components/CategoryDropdown/CategoryDropdown'));
 
 const ArticleUpload = () => {
     const { t, i18n } = useTranslation();
