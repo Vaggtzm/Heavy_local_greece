@@ -1,18 +1,24 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Header from "./../components/HomeCompoments/Header/Header";
-import TopNews from "../components/HomeCompoments/TopNewsFeed/TopNews";
-import ExploreMore from "../components/HomeCompoments/ExploreMore/ExpoloreMore";
 import Footer from "../components/footer/footer";
+
+// Lazy load the TopNews and ExploreMore components
+const TopNews = React.lazy(() => import("../components/HomeCompoments/TopNewsFeed/TopNews"));
+const ExploreMore = React.lazy(() => import("../components/HomeCompoments/ExploreMore/ExpoloreMore"));
+
 const Home = () => {
-
-return(
-  <>
-    <Header />
-    <TopNews />
-    <ExploreMore/>
-  </>
-)
-
+    return (
+        <>
+            <Header />
+            <Suspense fallback={<div>Loading Top News...</div>}>
+                <TopNews />
+            </Suspense>
+            <Suspense fallback={<div>Loading Explore More...</div>}>
+                <ExploreMore />
+            </Suspense>
+            <Footer />
+        </>
+    );
 };
 
 export default Home;
