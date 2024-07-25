@@ -1006,9 +1006,9 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) 
 
     // Convert the text response to JSON
     const jsonResponse = textResponse.split('\n').reduce((obj, line) => {
-        const [key, value] = line.split(':');
-        if (key && value) {
-            obj[key.trim()] = value.trim();
+        const [key, ...valueParts] = line.split(':');
+        if (key && valueParts.length) {
+            obj[key.trim()] = valueParts.join(':').trim();
         }
         return obj;
     }, {});
