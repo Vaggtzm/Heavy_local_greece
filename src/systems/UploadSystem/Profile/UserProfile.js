@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Form} from 'react-bootstrap';
-import {auth, database, storage} from '../../../firebase';
+import {auth, database, functions, storage} from '../../../firebase';
 import {
     EmailAuthProvider,
     getIdTokenResult,
@@ -12,6 +12,7 @@ import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {get, ref as databaseRef, update} from "firebase/database";
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
+import {httpsCallable} from "firebase/functions";
 
 const UserProfile = () => {
     const { t } = useTranslation();
@@ -25,6 +26,7 @@ const UserProfile = () => {
     const [profileImage, setProfileImage] = useState(null);
     const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || '');
     const [userRef, setUserRef] = useState(null);
+    const [isAuthor, setIsAuthor] = useState(false);
 
     const navigate = useNavigate();
 
@@ -33,12 +35,24 @@ const UserProfile = () => {
             if(!user){
                 navigate("/")
             }
-            const idTokenResult =  await getIdTokenResult(user);
+            let idTokenResult;
+            try {
+                idTokenResult = await getIdTokenResult(user);
+            }catch (e) {
+                navigate("/User/login");
+            }
+
             let userFolder;
+            if(!idTokenResult){
+                navigate("/User/login");
+                return null;
+            }
             if (idTokenResult.claims && idTokenResult.claims.admin) {
                 userFolder = 'authors';
+                setIsAuthor(true);
             } else {
                 userFolder = 'users';
+                setIsAuthor(false);
             }
 
             const userRef = databaseRef(database, `${userFolder}/${user.uid}`);
@@ -61,6 +75,18 @@ const UserProfile = () => {
 
         return () => unsubscribe();
     }, []);
+
+    const handleLogoutAllDevices = async () => {
+        const logoutAllDevices = httpsCallable(functions, 'logoutAllDevices');
+        try {
+            await logoutAllDevices();
+            alert('Successfully logged out of all devices.');
+        } catch (error) {
+            console.error('Error logging out of all devices:', error);
+            alert('Failed to log out of all devices.');
+        }
+    };
+
 
     if (!user) {
         return <div>{t('loading')}</div>;
@@ -142,7 +168,11 @@ const UserProfile = () => {
             <div style={{color: '#fff'}}>
                 <h2 className="row d-flex text-white">
                     <p className="col-4 h1">{t('userProfile')}</p>
-                    <Form className="col d-flex justify-content-end">
+                    {/*<div className={"col-3"}>
+                        <Button onClick={handleLogoutAllDevices} size={"small"} type={"danger"}>Log Out Of All
+                            Devices</Button>
+                    </div>*/}
+                    {isAuthor&&<Form className="col d-flex justify-content-end">
                         <Form.Check
                             type="switch"
                             id="sort-by-date-switch"
@@ -155,7 +185,7 @@ const UserProfile = () => {
                                 });
                             }}
                         />
-                    </Form>
+                    </Form>}
                 </h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {successMessage && <Alert variant="success">{successMessage}</Alert>}

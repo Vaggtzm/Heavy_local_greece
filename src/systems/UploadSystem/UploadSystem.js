@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {lazy, Suspense, useCallback, useEffect, useMemo, useState, startTransition} from 'react';
 import {Alert, Button, Col, Form, Row, Spinner} from 'react-bootstrap';
 import {ref, uploadBytes, uploadString} from 'firebase/storage';
 import {auth, config, storage} from '../../firebase';
@@ -143,8 +143,10 @@ const ArticleUpload = () => {
                                 className="text-light"
                                 value={articleContent}
                                 onChange={(value) => {
-                                    const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
-                                    setArticleContent(sanitizedValue);
+                                    startTransition(() => {
+                                        const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
+                                        setArticleContent(sanitizedValue);
+                                    });
                                 }}
                                 modules={{
                                     toolbar: {
@@ -172,7 +174,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     className={"bg-dark text-light"}
                                     value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => startTransition(() => setTitle(e.target.value))}
                                     required={true}
                                 />
                             </Form.Group>
@@ -184,7 +186,7 @@ const ArticleUpload = () => {
                                     type="text"
                                     className={"bg-dark text-light"}
                                     value={details}
-                                    onChange={(e) => setDetails(e.target.value)}
+                                    onChange={(e) => startTransition(() => setDetails(e.target.value))}
                                 />
                             </Form.Group>
                         </Col>
@@ -199,7 +201,7 @@ const ArticleUpload = () => {
                                     placeholder={t('facebook')}
                                     className={"bg-dark text-light"}
                                     value={socials.facebook}
-                                    onChange={(e) => setSocials({ ...socials, facebook: e.target.value })}
+                                    onChange={(e) => startTransition(() => setSocials({ ...socials, facebook: e.target.value }))}
                                 />
                             </Col>
                             <Col>
@@ -208,7 +210,7 @@ const ArticleUpload = () => {
                                     placeholder={t('instagram')}
                                     className={"bg-dark text-light"}
                                     value={socials.instagram}
-                                    onChange={(e) => setSocials({ ...socials, instagram: e.target.value })}
+                                    onChange={(e) => startTransition(() => setSocials({ ...socials, instagram: e.target.value }))}
                                 />
                             </Col>
                         </Row>
@@ -219,7 +221,7 @@ const ArticleUpload = () => {
                                     placeholder={t('spotify')}
                                     className={"bg-dark text-light"}
                                     value={socials.spotify}
-                                    onChange={(e) => setSocials({ ...socials, spotify: e.target.value })}
+                                    onChange={(e) => startTransition(() => setSocials({ ...socials, spotify: e.target.value }))}
                                 />
                             </Col>
                             <Col>
@@ -228,7 +230,7 @@ const ArticleUpload = () => {
                                     placeholder={t('youtube')}
                                     className={"bg-dark text-light"}
                                     value={socials.youtube}
-                                    onChange={(e) => setSocials({ ...socials, youtube: e.target.value })}
+                                    onChange={(e) => startTransition(() => setSocials({ ...socials, youtube: e.target.value }))}
                                 />
                             </Col>
                         </Row>
@@ -242,8 +244,10 @@ const ArticleUpload = () => {
                                     value={language}
                                     className={"form-control bg-dark text-light"}
                                     onChange={(e) => {
-                                        setLanguage(e.target.value);
-                                        i18n.changeLanguage(e.target.value); // Change UI language
+                                        startTransition(() => {
+                                            setLanguage(e.target.value);
+                                            i18n.changeLanguage(e.target.value); // Change UI language
+                                        });
                                     }}
                                     required={true}
                                 >
@@ -261,24 +265,11 @@ const ArticleUpload = () => {
                                 <Col className="">
                                     <CategoryDropdown
                                         categories={categories}
-                                        onSelectCategory={setCategory}
+                                        onSelectCategory={(category) => startTransition(() => setCategory(category))}
                                         required={true}
                                         name={"Select a Category"}
                                     />
                                 </Col>
-                                {/**<Col className="">
-                                 <CategoryDropdown
-                                 categories={collaborators}
-                                 onSelectCategory={(sponsor) => {
-                                 setSponsor(sponsor);
-                                 console.log(sponsor)
-                                 }}
-                                 required={true}
-                                 name={"Select a Sponsor"}
-                                 defaultChoice={"Not Sponsored"}
-                                 />
-                                 </Col>
-                                 */}
                             </Row>
                         </Row>
                     </Form.Group>

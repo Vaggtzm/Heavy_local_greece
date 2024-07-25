@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {HelmetProvider} from 'react-helmet-async';
 import './i18n';
 import * as Sentry from "@sentry/react";
+import {BrowserRouter} from "react-router-dom";
 
 Sentry.init({
     dsn: "https://7a6fd8fc6b2954e1c5f4b8a26cd15f4f@o4507623109099520.ingest.de.sentry.io/4507623110869072",
@@ -29,7 +30,9 @@ const root = ReactDOMClient.createRoot(container);
 root.render(
     <React.StrictMode>
         <HelmetProvider>
+            <BrowserRouter>
                 <App/>
+            </BrowserRouter>
         </HelmetProvider>
     </React.StrictMode>,
 );

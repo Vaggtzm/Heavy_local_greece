@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
-import {config, functions, messaging} from './firebase';
+import {auth, config, functions, messaging} from './firebase';
 import Gallery from './pages/Gallery/Gallery';
 import Home from './pages/Home';
 import LegendV0L2 from './pages/articles/Aleah';
@@ -41,6 +41,8 @@ import ReportedCommentsContainer from "./pages/CommentReportSystem/ReportedComme
 import PartyAnnouncement from "./pages/party/PartyAnnouncement";
 import PartyModal from "./pages/party/PartyModal";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
+import {signOut} from "firebase/auth";
+import useNavigate from "./components/LanguageWrapper/Navigation";
 
 function App() {
 
@@ -49,7 +51,7 @@ function App() {
     const [shouldShowModal, setShouldShowModal] = useState(false);
 
     const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
-
+    const navigate = useNavigate();
     const saveDeviceToken = async (token) => {
         try {
             const result = await saveDeviceTokenFunction({token: token});
@@ -97,10 +99,31 @@ function App() {
                 console.log(e);
             }
         })
-
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        const handleAuthStateChanged = (user) => {
+            if (!user) {
+                return; // User is not signed in
+            }
+
+            user.getIdTokenResult(true).catch((error) => {
+                if (error.code === 'auth/id-token-expired') {
+                    // Token expired, sign out the user
+                    signOut(auth).then(() => {
+                        console.log('User signed out due to token expiration.');
+                        navigate("/User/login");
+                    }).catch((signOutError) => {
+                        console.error('Error signing out:', signOutError);
+                    });
+                }
+            });
+        };
+
+        const unsubscribe = auth.onAuthStateChanged(handleAuthStateChanged);
+        return () => unsubscribe();
+    }, [auth]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -165,7 +188,7 @@ function App() {
 
 
     return (
-        <BrowserRouter>
+
         <div className="d-flex flex-column h-100">
             {shouldShowModal&&<PartyModal/>}
             <div ref={placeholderRef} style={{height: '1px'}}></div>
@@ -185,7 +208,6 @@ function App() {
 
             {/** <Footer footerVisible={menuVisible}/> */}
         </div>
-        </BrowserRouter>
     );
 }
 

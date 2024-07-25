@@ -1019,3 +1019,18 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) 
         loginAttempt: jsonResponse
     })
 });
+
+exports.logoutAllDevices = functions.https.onCall(async (data, context) => {
+    const uid = context.auth.uid;
+
+    if (!uid) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
+    }
+
+    try {
+        await admin.auth().revokeRefreshTokens(uid);
+        return { message: 'Successfully logged out of all devices.' };
+    } catch (error) {
+        throw new functions.https.HttpsError('unknown', 'Failed to log out of all devices.', error);
+    }
+});

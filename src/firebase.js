@@ -1,4 +1,4 @@
-import {connectAuthEmulator, getAuth} from 'firebase/auth';
+import {connectAuthEmulator, getAuth, signOut} from 'firebase/auth';
 import {initializeApp} from 'firebase/app';
 import {getAnalytics} from 'firebase/analytics';
 import {connectDatabaseEmulator, getDatabase} from 'firebase/database';
