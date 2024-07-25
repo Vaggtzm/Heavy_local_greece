@@ -273,7 +273,6 @@ const ArticleUpload = () => {
                             </Row>
                         </Row>
                     </Form.Group>
-
                     <Suspense fallback={<Spinner animation="border" variant="light" />}>
                         <Form.Group controlId="image">
                             <ImageUpload setImage={setImage} image={image} />
