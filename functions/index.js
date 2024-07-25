@@ -996,14 +996,26 @@ function hashIp(ip) {
 }
 
 
-exports.beforeSignIn = functions.auth.user().beforeSignIn((user, context) =>{
+exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) =>{
     const ipAddress = context.ipAddress;
+
+    const apiKey = functions.config().whatismyip.key;
+    const url = `https://api.whatismyip.com/ip-address-lookup.php?key=${apiKey}&input=${ipAddress}`;
+    const response = await axios.get(url)
+    const textResponse = response.data;
+
+    // Convert the text response to JSON
+    const jsonResponse = textResponse.split('\n').reduce((obj, line) => {
+        const [key, value] = line.split(':');
+        if (key && value) {
+            obj[key.trim()] = value.trim();
+        }
+        return obj;
+    }, {});
+
     const table = (user.customClaims&&user.customClaims.admin)?"authors":"users";
     const ref = database.ref(`${table}/${user.uid}/ip`)
     ref.push({
-        loginAttempt: {
-            ip: ipAddress,
-            timestamp: (new Date()).toUTCString(),
-        }
+        loginAttempt: jsonResponse
     })
 });
