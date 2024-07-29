@@ -49,16 +49,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/274805849_365444885584538_4848305611902603414_n.jpg"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FBlackreuss.jpg?alt=media&token=ef380d93-db0a-43f8-8716-fed00375447b"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">NEW ALBUM(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">INTERVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        NEW ALBUM: Crest of Darkness Unveils New Single and Prepares for October Album Release                                        </p>
+                                        INTERVIEW: Inside the Mind of Black Reuss — The One-Man Musical Revolution
+                                       </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Crest-of-Darkness-Unveils-New-Single-and-Prepares-for-October-Album-Release"}>
+                                                 to={"/article/INTERVIEW:-Inside-the-Mind-of-Black-Reuss:-A-One-Man-Musical-Revolution"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -74,16 +75,16 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/unnamed.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/a0089922294_10.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        SINGLE REVIEW: “The Flame” Ignites My Darkest Red’s Melancholic Majesty</p>
+                                        ALBUM REVIEW:  "Silver Pulse" by BleakHeart — The Epitome of Emotional Metal</p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"article/SINGLE-REVIEW:-The-Flame-Ignites-My-Darkest-Reds-Melancholic-Majesty"}>
+                                                 to={"https://pulse-of-the-underground.com/article/ALBUM-REVIEW:--%22Silver-Pulse%22-by-BleakHeart--The-Epitome-of-Emotional-Metal"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -97,7 +98,7 @@ const TopNews = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">NEWS(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
                                         END OF AN ERA: None Bids Farewell After Four Albums                                         </p>
                                         <NavLink className="btn btn-danger"
@@ -112,90 +113,22 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/a3422251798_10.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/unnamed.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">News(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        EP REVIEW: Sorry… Dives Deep with “Never Fail to Disappoint”
-                                        </p>
+                                        SHINIGAMI | HELLPASS | PRIMAL ROOTS | JEHOVAH ON DEATH – live @ Temple Athens – Saturday September 21                                         </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/EP-REVIEW:-Sorry-Dives-Deep-with-Never-Fail-to-Disappoint"}>
+                                                 to={"/article/-SHINIGAMI-|-HELLPASS-|-PRIMAL-ROOTS-|-JEHOVAH-ON-DEATH--live-@-Temple-Athens--Saturday-September-21-"}>
                                             Read More
                                         </NavLink>
                                     </div>
                                 </div>
                             </div>
 
-
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <img
-                                        src="https://pulse-of-the-underground.com/assets/Warfarer-heir.jpg"
-                                        className="img-fluid w-50 m-2"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
-                                        <p className="lead text-white">
-                                        Single Review + news - Αδελφικό Αίμα - Warfarer - Heir Uncrowned                                                                               
-                                         </p>
-                                        <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review-+-news-------Warfarer---Heir-Uncrowned"}>
-                                            Read More
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <img
-                                        src="https://pulse-of-the-underground.com/assets/3.jpg"
-                                        className="img-fluid w-50 m-2"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
-                                        <p className="lead text-white">
-                                        Single Review + info - Συγχώρεση - Autumn’s Grief - The Absolution                                       
-                                         </p>
-                                        <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review-+-info--------Nobody---Stronger-Than-Dead"}>
-                                            Read More
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2F4_800x800.jpg?alt=media&token=2fe8c5ff-08f0-4adf-98a4-a4bc0410af46"
-                                        className="img-fluid w-50 m-2"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
-                                        <p className="lead text-white">
-                                            Single Review + info - Περιθωριακός Αγώνας - Nobody - Stronger Than Dead
-                                        </p>
-                                        <NavLink className="btn btn-danger"
-                                                 to={"/article/Single-Review-+-info--------Nobody---Stronger-Than-Dead"}>
-                                            Read More
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-                            {/**Reviews End */}
                         </div>
                       
                     </div>
