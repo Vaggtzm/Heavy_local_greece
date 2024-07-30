@@ -243,8 +243,19 @@ const TranslationSystem = () => {
 
     const sortFilesByDate = (files) => {
         return files.sort((a, b) => {
-            const dateA = new Date(a.date.split('/').reverse().join('-'));
-            const dateB = new Date(b.date.split('/').reverse().join('-'));
+            let dateA;
+            if(!a.date){
+                dateA=new Date();
+            }else {
+                dateA = new Date(a.date.split('/').reverse().join('-'));
+            }
+            let dateB;
+            if(!b.date){
+                dateB = new Date();
+            }else {
+                dateB = new Date(b.date.split('/').reverse().join('-'));
+            }
+
             return dateB - dateA;
         });
     };
