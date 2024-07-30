@@ -73,7 +73,9 @@ const ArticleUpload = () => {
         e.preventDefault();
 
         try {
-            const imageRef = ref(storage, `images/${image.name}`);
+            const nameWithoutJSON = replaceSpecialCharsWithDashes(title.replaceAll(" ", "-"));
+            const newFileName = `${nameWithoutJSON}.json`;
+            const imageRef = ref(storage, `images/${nameWithoutJSON}`);
             const dimensions = await getImageDimensions(image);
             const metadata = {
                 customMetadata: dimensions
@@ -81,7 +83,6 @@ const ArticleUpload = () => {
             await uploadBytes(imageRef, image, metadata);
 
             console.log(metadata);
-            const newFileName = `${replaceSpecialCharsWithDashes(title.replaceAll(" ", "-"))}.json`;
 
             const options = {
                 day: '2-digit',
@@ -94,7 +95,7 @@ const ArticleUpload = () => {
                 title,
                 details,
                 socials,
-                img01: `https://pulse-of-the-underground.com/assets/${image.name}`,
+                img01: `https://pulse-of-the-underground.com/assets/${nameWithoutJSON}`,
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
                 lang: 'en', // Store language as English
