@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {getToken} from "firebase/messaging";
 import React, {useEffect, useRef, useState} from "react";
-import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import DefaultArticle from './components/GenericArticle/GenericArticle';
 import NotificationToast from "./components/messaging/Message";
 import {auth, config, functions, messaging} from './firebase';
@@ -82,18 +82,16 @@ function App() {
     }
 
 
-
-
     useEffect(() => {
         requestPermission().then();
 
 
-        fetchAndActivate(config).then(()=>{
+        fetchAndActivate(config).then(() => {
             try {
                 const serverLanguages = getValue(config, "showModal").asString();
                 console.log(serverLanguages)
                 setShouldShowModal(JSON.parse(serverLanguages).party);
-            }catch (e) {
+            } catch (e) {
                 console.log(e);
             }
         })
@@ -144,9 +142,9 @@ function App() {
         };
     }, []);
 
-    const getRoutes= (langPathShouldExist)=>{
-        return(
-            <Route path={langPathShouldExist?"/:lang":"/"} element={<LanguageWrapper />}>
+    const getRoutes = (langPathShouldExist) => {
+        return (
+            <Route path={langPathShouldExist ? "/:lang" : "/"} element={<LanguageWrapper/>}>
                 <Route path='' element={<Home/>}/>
                 <Route path='articles-page' element={<ArticlesList/>}/>
                 <Route path='Art-Gallery-page' element={<Gallery/>}/>
@@ -175,13 +173,49 @@ function App() {
                 <Route path='User/Saved' element={<SavedArtciles/>}/>
                 <Route path='author/:authorCode' element={<ArticlesList/>}/>
                 <Route path={"404"} element={<NotFound/>}/>
-                <Route path="gigs" element={<GigsPage />} />
-                <Route path="gigs/:date" element={<GigDetailPage />} />
-                <Route path="ads" element={<AdsPage/>} />
-                <Route path="admin/comments" element={<ReportedCommentsContainer/>} />
+                <Route path="gigs" element={<GigsPage/>}/>
+                <Route path="gigs/:date" element={<GigDetailPage/>}/>
+                <Route path="ads" element={<AdsPage/>}/>
+                <Route path="admin/comments" element={<ReportedCommentsContainer/>}/>
             </Route>
         )
     }
+
+    return (
+        <div className="d-flex flex-column h-100">
+            <div ref={placeholderRef} style={{height: '1px'}}></div>
+            <div className="flex-grow-1">
+                <NotificationToast/>
+                <AppNavigation menuVisible={menuVisible}/>
+                <div className="d-flex flex-column h-100">
+                <div ref={placeholderRef} style={{height: '1px'}}></div>
+                <div className="flex-grow-1">
+                <NotificationToast/>
+                <AppNavigation menuVisible={menuVisible}/>
+
+                <Routes>
+                    {getRoutes(true)}
+                    {getRoutes(false)}
+                    <Route path="*" element={<Navigate to="/404"/>}/>
+                </Routes>
+            </div>
+                {/**
+                 Ραδιόφωνο. Το πας όπου θες
+                 **/}
+                //<Routes>
+                // {getRoutes(true)}
+                // {getRoutes(false)}
+                //<Route path="*" element={<Navigate to="/404"/>}/>
+                //</Routes>
+                //</div>
+                //{/**
+             //Ραδιόφωνο. Το πας όπου θες
+             *//*/}
+
+            {/** <Footer footerVisible={menuVisible}/> */}
+            </div>
+        </div>
+    );
 
 }
 

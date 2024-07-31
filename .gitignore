@@ -46,3 +46,5 @@ emulatorMetadata.zip
 .env
 
 authors.csv
+
+.env.bak
