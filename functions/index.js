@@ -985,15 +985,28 @@ exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, cont
 });
 
 
-// Maximum failed attempts before ban
-const MAX_FAILED_ATTEMPTS = 10;
-// Ban duration in milliseconds (1 hour)
-const BAN_DURATION_MS = 60 * 60 * 1000;
+exports.getDMARCReports = functions.https.onCall(async (data, context) => {
+    const cloudflare = { //functions.config().cloudflare
+        "zone_id": "b39bd8623e7275d3d881e1edee9fb4f5",
+        "api_key": "83muydnMI1cx3XdOEM7apg_DRlj0VbdZGSrgB631"
+    }
+    const CLOUDFLARE_API_KEY = cloudflare.api_key;
+    const ZONE_ID = cloudflare.zone_id;
+    try {
+        const response = await axios.get(`https://api.cloudflare.com/client/v4/radar/email/security/timeseries_groups/dmarc`, {
+            headers: {
+                'Authorization': `Bearer ${CLOUDFLARE_API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        return response.data.result;
+    } catch (error) {
+        console.error('Error fetching DMARC reports:', error);
+        throw new functions.https.HttpsError('internal', 'Error fetching DMARC reports');
+    }
+});
 
-// Utility function to hash IP address
-function hashIp(ip) {
-    return crypto.createHash('sha256').update(ip).digest('hex');
-}
+
 
 
 exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) =>{
