@@ -75,16 +75,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/a0089922294_10.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/Band-Review:-Selofan   "
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                        ALBUM REVIEW:  "Silver Pulse" by BleakHeart — The Epitome of Emotional Metal</p>
+                                        Band Review: Selofan
+                                        </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"https://pulse-of-the-underground.com/article/ALBUM-REVIEW:--%22Silver-Pulse%22-by-BleakHeart--The-Epitome-of-Emotional-Metal"}>
+                                                 to={"/article/Band-Review:-Selofan"}>
                                             Read More
                                         </NavLink>
                                     </div>
