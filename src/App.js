@@ -183,28 +183,6 @@ function App() {
         )
     }
 
-
-   /// return (
-
-       // <div className="d-flex flex-column h-100">
-         //   <div ref={placeholderRef} style={{height: '1px'}}></div>
-           /// <div className="flex-grow-1">
-              ///  <NotificationToast/>
-                //<AppNavigation menuVisible={menuVisible}/>
-
-                //<Routes>
-                  //  {getRoutes(true)}
-                   // {getRoutes(false)}
-                    //<Route path="*" element={<Navigate to="/404"/>}/>
-                //</Routes>
-            //</div>
-            //{/**
-             //Ραδιόφωνο. Το πας όπου θες
-             *//*/}
-
-            //{/** <Footer footerVisible={menuVisible}/> */}
-       // </div>
-    //);
 }
 
 
