@@ -49,17 +49,17 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FBlackreuss.jpg?alt=media&token=ef380d93-db0a-43f8-8716-fed00375447b"
+                                        src="https://pulse-of-the-underground.com/assets/Aphotic.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">INTERVIEW(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                        INTERVIEW: Inside the Mind of Black Reuss — The One-Man Musical Revolution
+                                        SINGLE REVIEW:Worship The Sacrifice - Aphotic
                                        </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/INTERVIEW:-Inside-the-Mind-of-Black-Reuss:-A-One-Man-Musical-Revolution"}>
+                                                 to={"/article/SINGLE:Worship-The-Sacrifice---Aphotic"}>
                                             Read More
                                         </NavLink>
                                     </div>
