@@ -806,7 +806,7 @@ async function setDatabase(claim, table, user){
         await userDoc.set({
             uid: user.uid,
             email: user.email,
-            displayName: user.displayName,
+            displayName: user.displayName?user.displayName:"",
             photoURL: user.photoURL?user.photoURL:"",
             ...userData
         });
