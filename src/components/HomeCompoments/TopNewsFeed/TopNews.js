@@ -49,6 +49,26 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
+                                        src="https://pulse-of-the-underground.com/assets/Meet-Aaron-Kusterer"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                        INTERVIEW:Meet Aaron Kusterer                                       
+                                        </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/Meet-Aaron-Kusterer"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
                                         src="https://pulse-of-the-underground.com/assets/Aphotic.jpg"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
@@ -109,8 +129,47 @@ const TopNews = () => {
                                     </div>
                                 </div>
                             </div>
-                        
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/NEWS:Vision-Bleak--Weird-Tales"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">NEWS(ENG):</span></h3>
+                                        <p className="lead text-white">
+                                        NEWS:Vision Bleak -Weird Tales                                       
+                                         </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/NEWS:Vision-Bleak--Weird-Tales"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
 
+
+
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FGlassCare.jpg?alt=media&token=f5e4d929-68b3-44f8-bf99-da8d2f9498b2"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">NEWS(GR):</span></h3>
+                                        <p className="lead text-white">
+                                        NEWS: DECAIR – single “Glasscase”
+                                        </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/GLASSCASE"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
@@ -119,7 +178,7 @@ const TopNews = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">News(ENG):</span></h3>
+                                        <h3><span className="text-danger bold">NEWS(ENG):</span></h3>
                                         <p className="lead text-white">
                                         SHINIGAMI | HELLPASS | PRIMAL ROOTS | JEHOVAH ON DEATH – live @ Temple Athens – Saturday September 21                                         </p>
                                         <NavLink className="btn btn-danger"
