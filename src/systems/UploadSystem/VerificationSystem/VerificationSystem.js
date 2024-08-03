@@ -393,7 +393,7 @@ const FirebaseFileList = () => {
             const cardTitle = file.title || 'Untitled';
 
             return (
-                <Card className={`m-3 h-100 ${file.isReady?"bg-success":"bg-dark"}` }>
+                <Card className={`col-3 m-3 ${file.isReady?"bg-success":"bg-dark"}` }>
                     <Card.Body>
                         {(!isDev)&&<Card.Img
                             variant="top"
