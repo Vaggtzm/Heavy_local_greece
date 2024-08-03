@@ -290,15 +290,17 @@ const categories = {
 const handleArticleCategories = async (object) => {
     const filePath = object.name;
     const directory = path.dirname(filePath);
+
     // Only proceed if the uploaded file is a JSON file
     if (path.extname(filePath) !== '.json') {
         return null;
     }
+
     const directories = ['articles', 'early_releases', 'upload_from_authors'];
-    await Promise.all(directories.map(async (dir) => {
-        return handle_single_dir(dir)
-    }));
-}
+    const relevantDirectories = directories.filter(dir => directory.includes(dir));
+
+    await Promise.all(relevantDirectories.map(handle_single_dir));
+};
 
 const sanitizeKey = (key) => {
     return key
@@ -320,47 +322,62 @@ const filterUndefinedValues = (obj) => {
 };
 
 const handle_single_dir = async (directory) => {
-
-    const [files] = await bucket.getFiles({prefix: directory});
+    const [files] = await bucket.getFiles({ prefix: directory });
     const articles = {};
     const allArticles = [];
 
-    for (const file of files) {
-        if (path.extname(file.name) !== '.json') {
-            continue;
-        }
+    const jsonFiles = files.filter(file => path.extname(file.name) === '.json');
+
+    // Get file metadata and filter by modification time (same day)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const fileStatsPromises = jsonFiles.map(async file => {
+        const [metadata] = await file.getMetadata();
+        const mtime = new Date(metadata.updated);
+        return { file, mtime };
+    });
+
+    const fileStats = await Promise.all(fileStatsPromises);
+    const filesChangedToday = fileStats.filter(({ mtime }) => mtime >= today);
+
+    for (const { file } of filesChangedToday) {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
         // Extract the newArticle name from the file name without the .json extension
         const newArticle = path.basename(file.name, '.json');
 
-        // Extract categories (if multiple, split by comma and trim)
-        const categories = content.category ? content.category.split(',').map(cat => cat.trim()) : ['undefined'];
+        console.log(content);
 
-        categories.forEach(category => {
-            if (!articles[category]) {
-                articles[category] = {};
-            }
-            articles[category][newArticle] = {
-                "date": content.date.split('/').reverse().join('-'),
-                "title": content.title,
-                "image": content.img01,
-                "translations": content.translations
-                    ? filterUndefinedValues(content.translations)
-                    : {},
-                "lang": content.lang ? content.lang : "",
-                "isReady": !!content.isReady,
-                "sponsor": content.sponsor?content.sponsor:"",
-                "author": content.sub
-            };
-        });
+        // Extract categories (if multiple, split by comma and trim)
+        const category = content.category ? content.category : 'undefined';
+
+        console.log(category);
+        console.log(newArticle);
+
+        if(!articles[category]){
+            articles[category]={};
+        }
+
+        articles[category][newArticle] = {
+            "date": content.date.split('/').reverse().join('-'),
+            "title": content.title,
+            "image": content.img01,
+            "translations": content.translations
+                ? filterUndefinedValues(content.translations)
+                : {},
+            "lang": content.lang ? content.lang : "",
+            "isReady": !!content.isReady,
+            "sponsor": content.sponsor ? content.sponsor : "",
+            "author": content.sub
+        };
 
         // Collect all articles with their metadata
         allArticles.push({
             filename: newArticle,
             date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
-            category: categories,
+            category: category,
             "lang": content.lang ? content.lang : ""
         });
 
@@ -372,7 +389,7 @@ const handle_single_dir = async (directory) => {
             ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${categories[0]}`);
         }
         try {
-            ref.child(sanitizeKey(newArticle)).set({
+            await ref.child(sanitizeKey(newArticle)).set({
                 "date": content.date.split('/').reverse().join('-'),
                 "title": content.title,
                 "image": content.img01,
@@ -381,25 +398,30 @@ const handle_single_dir = async (directory) => {
                     : {},
                 "lang": content.lang ? content.lang : "",
                 "isReady": !!content.isReady,
-                "sponsor": content.sponsor?content.sponsor:""
-            }).then(() => {
-            }).catch((e) => {
+                "sponsor": content.sponsor ? content.sponsor : ""
             });
         } catch (e) {
             console.log(e);
         }
     }
 
-    // Save articles in `articlesList` as lists of filenames
-    const articlesList = {};
+    // Retrieve existing articles from Firebase
+    const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
+    const existingArticlesList = articlesListSnapshot.val() || {};
+
+    // Merge existing articles with new ones
+    const updatedArticlesList = { ...existingArticlesList };
     for (const category in articles) {
-        articlesList[category] = articles[category];
+        if (!updatedArticlesList[category]) {
+            updatedArticlesList[category] = {};
+        }
+        updatedArticlesList[category] = { ...updatedArticlesList[category], ...articles[category] };
     }
 
-    // Save `articlesList` in Firebase
-    await database.ref(`/articlesList/${directory}`).set(articlesList);
+    // Save updated articles list in Firebase
+    await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
 
-    // Prepare to store latest articles for each category
+    // Prepare to store the latest articles for each category
     const latestArticlesByCategory = {};
 
     // Group all articles by category
@@ -411,12 +433,10 @@ const handle_single_dir = async (directory) => {
             }
             articlesByCategory["undefined"].push(article);
         } else {
-            article.category.forEach(category => {
-                if (!articlesByCategory[category]) {
-                    articlesByCategory[category] = [];
-                }
-                articlesByCategory[category].push(article);
-            })
+            if (!articlesByCategory[article.category]) {
+                articlesByCategory[article.category] = [];
+            }
+            articlesByCategory[article.category].push(article);
         }
     });
 
@@ -442,7 +462,7 @@ const handle_single_dir = async (directory) => {
         }
     }
 
-    // Save `latestArticlesByCategory` in Firebase under `articlesListLatestTest`
+    // Save latest articles by category in Firebase under `articlesListLatest`
     await database.ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
 
     console.log('Articles organized and stored in the database successfully.');
@@ -585,9 +605,76 @@ const runtimeOpts = {
 
 exports.handleDeleteArticle = functions.runWith(runtimeOpts).storage
     .object().onDelete(async (object) => {
-        await Promise.all([handleArticleCategories(object)])
+
+        const filePath = object.name;
+        // Exit early if the file is not a JSON file
+        if (path.extname(filePath) !== '.json') {
+            return null;
+        }
+        const directory = path.dirname(filePath);
+        const articleName = path.basename(filePath, '.json');
+
+        // Retrieve existing articles from Firebase
+        const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
+        const existingArticlesList = articlesListSnapshot.val() || {};
+
+        let articleCategory = null;
+        let author = null;
+        let translator = null;
+        let updatedArticlesList = { ...existingArticlesList };
+
+        // Remove the deleted article from articles list
+        for (const category in updatedArticlesList) {
+            if (updatedArticlesList[category][articleName]) {
+                articleCategory = category;
+                author = updatedArticlesList[category][articleName].author;
+                translator = updatedArticlesList[category][articleName].translations
+                    ? updatedArticlesList[category][articleName].translations.translatedBy
+                    : null;
+                delete updatedArticlesList[category][articleName];
+                break;
+            }
+        }
+
+        // Update the articles list in Firebase
+        await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
+
+        // Update the latest articles list if necessary
+        if (articleCategory) {
+            const articlesByCategorySnapshot = await database.ref(`/articlesListLatest/${directory}`).once('value');
+            const articlesByCategory = articlesByCategorySnapshot.val() || {};
+
+            if (articlesByCategory[articleCategory]) {
+                articlesByCategory[articleCategory] = articlesByCategory[articleCategory].filter(article => article !== articleName);
+                await database.ref(`/articlesListLatest/${directory}`).set(articlesByCategory);
+            }
+        }
+
+        // Update author's written articles
+        if (author) {
+            await removeAuthorArticle(directory, articleCategory, author, articleName);
+        }
+
+        // Update translator's written articles if applicable
+        if (translator) {
+            await removeAuthorArticle(directory, articleCategory, translator, articleName);
+        }
+
+        console.log(`Article ${articleName} deleted and database updated successfully.`);
+        return null;
     })
 
+
+const removeAuthorArticle = async (directory, category, author, articleName) => {
+    const authorRef = database.ref(`/authors/${author}/writtenArticles/${directory}/${category}`);
+    const authorArticlesSnapshot = await authorRef.once('value');
+    const authorArticles = authorArticlesSnapshot.val() || {};
+
+    if (authorArticles[articleName]) {
+        delete authorArticles[articleName];
+        await authorRef.set(authorArticles);
+    }
+};
 
 exports.handleNewArticle = functions.runWith(runtimeOpts).storage
     .object()
@@ -878,7 +965,7 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
         return {message: `Successfully set the role for user ${user.uid}`};
     } catch (error) {
         console.error('Error setting custom claims:', error);
-        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data.');
+        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data. '+JSON.stringify(error));
     }
 });
 
