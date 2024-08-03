@@ -1,10 +1,4 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #000; /* Χρώμα φόντου για ολόκληρη την οθόνη */
-    min-height: 100vh; /* Ensure body takes up full viewport height */
-  }
-  
+
   .loader-container {
     position: fixed;
     top: 0;
