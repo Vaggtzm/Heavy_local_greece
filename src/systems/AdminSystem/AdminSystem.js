@@ -7,7 +7,6 @@ import {Button, Card, DropdownButton, Form, Modal, Dropdown} from "react-bootstr
 import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {disableUser, handleAuthorTest, setAuthor, setClaims} from "../UploadSystem/articleData/articleData";
 import SecurityToggleButton from "./SecurityToggleButton";
-import DMARCChart from "./DMARCChart/DMARCChart";
 
 const AdminSystem = () => {
     const [currentUser, setCurrentUser] = useState(null);
