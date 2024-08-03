@@ -4,11 +4,13 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import "./form-control.css";
 import {auth, database, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {deleteImage, fetchFiles, getRef, handleAuthorTest, categories} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
+
 
 const FirebaseFileList = () => {
 
@@ -466,7 +468,7 @@ const FirebaseFileList = () => {
                         {(!isAlreadyPublished && isEarlyReleased && !leader) && (
 
                             <Button variant="success" onClick={() => {
-                                handlePublish(false, file, isEarlyReleased);
+                                handlePublish(false, file, isEarlyReleased).then();
                             }} className="col-4">
                                 Normal
                             </Button>
@@ -583,6 +585,7 @@ const FirebaseFileList = () => {
                                 key={selectedFile ? selectedFile.name : ''}
                                 value={fileData.content}
                                 onChange={handleContentChange}
+                                style={{color:"#a9a9a9"}}
                             />
                         </Form.Group>
                         <Form.Group controlId="title">

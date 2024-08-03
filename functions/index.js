@@ -1099,7 +1099,12 @@ exports.getDMARCReports = functions.https.onCall(async (data, context) => {
 exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) =>{
     const ipAddress = context.ipAddress;
 
+    if(!functions.config().whatismyip){
+        return null;
+    }
+
     const apiKey = functions.config().whatismyip.key;
+
     const url = `https://api.whatismyip.com/ip-address-lookup.php?key=${apiKey}&input=${ipAddress}`;
     const response = await axios.get(url)
     const textResponse = response.data;
