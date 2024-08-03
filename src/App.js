@@ -8,10 +8,11 @@ import { auth, config, functions, messaging } from './firebase';
 import useNavigate from "./components/LanguageWrapper/Navigation";
 import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 import AppNavigation from "./components/AppNav/AppNav";
+import NotificationToast from "./components/messaging/Message";
 
 // Lazy load components
 const DefaultArticle = lazy(() => import('./components/GenericArticle/GenericArticle'));
-const NotificationToast = lazy(() => import("./components/messaging/Message"));
+
 const Gallery = lazy(() => import('./pages/Gallery/Gallery'));
 const Home = lazy(() => import('./pages/Home'));
 const LegendV0L2 = lazy(() => import('./pages/articles/Aleah'));
@@ -171,12 +172,8 @@ function App() {
         <div className="d-flex flex-column h-100">
             <div ref={placeholderRef} style={{ height: '1px' }}></div>
             <div className="flex-grow-1">
-                <Suspense fallback={<div>Loading...</div>}>
-                    <NotificationToast />
-                </Suspense>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <AppNavigation menuVisible={menuVisible} />
-                </Suspense>
+                <NotificationToast />
+                <AppNavigation menuVisible={menuVisible} />
                 <Routes>
                     {getRoutes(true)}
                     {getRoutes(false)}

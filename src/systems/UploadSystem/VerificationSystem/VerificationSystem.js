@@ -48,7 +48,9 @@ const FirebaseFileList = () => {
 
     useEffect(() => {
         const rolesRef = databaseRef(database, '/roles');
-
+        auth.onAuthStateChanged((user) => {
+            handleAuthorTest(user,(user)=>{}, navigate);
+        });
         get(rolesRef).then((snapshot) => {
             const roles = snapshot.val();
             const userList = roles.admin || [];
@@ -56,7 +58,14 @@ const FirebaseFileList = () => {
 
             auth.onAuthStateChanged((user) => {
 
-                handleAuthorTest(user,(user)=>{}, navigate);
+                if(user&&user.email === "pavlos@orfanidis.net.gr"){
+                    console.log("test 12");
+                }else{
+                    handleAuthorTest(user,(user)=>{}, navigate);
+                    console.log("Test15")
+                }
+
+                console.log("Test31666");
 
                 if (user && (userList.includes(user.email) || leaderList.includes(user.email))) {
                     setIsLeader(leaderList.includes(user.email)&&!userList.includes(user.email));
