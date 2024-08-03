@@ -340,7 +340,7 @@ const handle_single_dir = async (directory) => {
 
     const fileStats = await Promise.all(fileStatsPromises);
     const filesChangedToday = fileStats.filter(({ mtime }) => mtime >= today);
-
+    console.log(filesChangedToday);
     for (const { file } of filesChangedToday) {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
