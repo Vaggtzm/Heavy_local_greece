@@ -23,7 +23,7 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Install Dependencies
-        run: npm install&&cd functions&&npm install&&cd ..
+        run: npm install&&cd functions&&echo "$ADMIN_SDK">heavy-local-admin.json&&npm install&&cd ..
 
       - name: Deploy to Firebase
         run: firebase deploy --project heavy-local-12bc4
@@ -36,3 +36,4 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_ACCOUNT }}
           CI: false
+          ADMIN_SDK: ${{ secrets.HEAVY_LOCAL_ADMIN }}
