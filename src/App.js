@@ -4,11 +4,12 @@ import { getToken } from "firebase/messaging";
 import { httpsCallable } from "firebase/functions";
 import { signOut } from "firebase/auth";
 import { fetchAndActivate, getValue } from "firebase/remote-config";
-import { auth, config, functions, messaging } from './firebase';
+import {app, auth, config, functions, messaging} from './firebase';
 import useNavigate from "./components/LanguageWrapper/Navigation";
 import LanguageWrapper from "./components/LanguageWrapper/LanguageWrapper";
 import AppNavigation from "./components/AppNav/AppNav";
 import NotificationToast from "./components/messaging/Message";
+import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
 
 // Lazy load components
 const DefaultArticle = lazy(() => import('./components/GenericArticle/GenericArticle'));
@@ -43,7 +44,6 @@ const ReportedCommentsContainer = lazy(() => import("./pages/CommentReportSystem
 function App() {
     const [menuVisible, setMenuVisible] = useState(false);
     const placeholderRef = useRef(null);
-    const [shouldShowModal, setShouldShowModal] = useState(false);
 
     const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
     const navigate = useNavigate();
@@ -74,15 +74,9 @@ function App() {
 
     useEffect(() => {
         requestPermission().then();
-
-        fetchAndActivate(config).then(() => {
-            try {
-                const serverLanguages = getValue(config, "showModal").asString();
-                console.log(serverLanguages);
-                setShouldShowModal(JSON.parse(serverLanguages).party);
-            } catch (e) {
-                console.log(e);
-            }
+        initializeAppCheck(app, {
+            provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
+            isTokenAutoRefreshEnabled: true
         });
     }, []);
 

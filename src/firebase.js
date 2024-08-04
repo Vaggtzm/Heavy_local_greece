@@ -22,19 +22,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-
-
-// Initialize App Check
-if (!window._firebaseAppCheckInitialized) {
-    initializeAppCheck(app, {
-        provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
-        isTokenAutoRefreshEnabled: true
-    });
-    console.log("test");
-    window._firebaseAppCheckInitialized = true; // Set a flag to prevent reinitialization
-    console.log(window._firebaseAppCheckInitialized)
-}
-
 const config = getRemoteConfig(app);
 config.settings = {
     minimumFetchIntervalMillis: 3600000, // 1 hour
