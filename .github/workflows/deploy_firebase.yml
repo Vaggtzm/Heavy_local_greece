@@ -24,7 +24,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm install&&cd functions&&echo "$ADMIN_SDK">heavy-local-admin.json&&echo "$ADMIN_SDK"&&npm install&&cd ..
-
+        env:
+          ADMIN_SDK: ${{ secrets.HEAVY_LOCAL_ADMIN }}
       - name: Deploy to Firebase
         run: firebase deploy --project heavy-local-12bc4
         env:
@@ -36,4 +37,3 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_ACCOUNT }}
           CI: false
-          ADMIN_SDK: ${{ secrets.HEAVY_LOCAL_ADMIN }}
