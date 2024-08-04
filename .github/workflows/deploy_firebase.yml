@@ -35,3 +35,4 @@ jobs:
           REACT_APP_RELEASE: ${{ secrets.REACT_APP_RELEASE }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_ACCOUNT }}
+          CI: false
