@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Deploy to Firebase
-        run: firebase deploy --project heavy-local-12bc4 --token=${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --project heavy-local-12bc4
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           REACT_APP_USE_EMULATORS: ${{ secrets.REACT_APP_USE_EMULATORS }}
@@ -34,3 +34,4 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
           REACT_APP_RELEASE: ${{ secrets.REACT_APP_RELEASE }}
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.FIREBASE_ACCOUNT }}
