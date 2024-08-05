@@ -2,6 +2,7 @@ import {Accordion, Button, Nav} from "react-bootstrap";
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {NavLink} from "react-router-dom";
+import {LazyLoadComponent} from "react-lazy-load-image-component";
 
 export function AccordionComponent({articles, loggedIn, isEarlyAccess}) {
     const { t } = useTranslation();
@@ -16,7 +17,7 @@ export function AccordionComponent({articles, loggedIn, isEarlyAccess}) {
                 if (!article) return null;
 
                 return (
-                    <div className="col-auto d-flex justify-content-evenly" key={index}>
+                    <div className="col-12 col-md-4 d-flex justify-content-evenly" key={index}>
                         <div className="card mb-4">
                             <div className="card-header">
                                 {article.image && (
