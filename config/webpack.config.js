@@ -188,6 +188,12 @@ module.exports = function (webpackEnv) {
 
   return {
     target: ['browserslist'],
+    externals: [
+      {
+        react: 'React',
+        'react-dom': 'ReactDOM'
+      }
+    ],
     // Webpack noise constrained to errors and warnings
     stats: 'errors-warnings',
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',

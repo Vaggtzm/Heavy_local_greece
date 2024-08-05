@@ -23,12 +23,11 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {fetchAndActivate, getValue} from "firebase/remote-config";
 import {config} from "../../../firebase";
-import WorldFlag from 'react-world-flags';
 
 const LanguageButtons = ({className}) => {
 
     const [languages, setLanguages] = useState([]);
-    const { i18n } = useTranslation();
+    const {i18n} = useTranslation();
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng).then();
@@ -44,7 +43,7 @@ const LanguageButtons = ({className}) => {
         } catch (err) {
             console.log(err);
         }
-    },[]);
+    }, []);
 
     return (
         <div className={`language-switcher ${className}`}>
@@ -54,8 +53,10 @@ const LanguageButtons = ({className}) => {
                     return (
                         <button key={index} className={"btn " + active}
                                 onClick={() => changeLanguage(lang)}>
-                            <WorldFlag code={languages[lang]}
-                                       style={{width: '4vh', height: 'auto'}}/>
+                            <img
+                                src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${languages[lang]}.svg`}
+                                alt={lang}
+                                style={{width: '4vh', height: 'auto'}}/>
                         </button>
                     )
                 })
