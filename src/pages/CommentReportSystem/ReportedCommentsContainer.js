@@ -22,7 +22,6 @@
 import React, {useEffect, useState} from 'react';
 import {get, ref, remove} from 'firebase/database';
 import {Button, Card, Col, Container, Row, Spinner} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import useNavigate from "../../components/LanguageWrapper/Navigation";
 import {auth, database} from "../../firebase";
 

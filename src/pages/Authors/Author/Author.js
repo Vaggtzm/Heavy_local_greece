@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, off, onValue, ref } from 'firebase/database';
 import { getDownloadURL, ref as storageRef } from 'firebase/storage';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './author.css';
 import { storage } from "../../../firebase";
 import NavLink from "../../../components/LanguageWrapper/NavLink";

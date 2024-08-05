@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Col, Container, Form, Row } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './ImageUpload.css';
 import { useTranslation } from "react-i18next"; // Custom CSS file for additional styling
 

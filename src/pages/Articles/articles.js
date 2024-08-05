@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {getDownloadURL, listAll, ref} from 'firebase/storage';
 import {storage} from "../../firebase";
 import FetchedArticles from './FetchedArticles';
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./../home.css";
 import {useTranslation} from 'react-i18next';
 

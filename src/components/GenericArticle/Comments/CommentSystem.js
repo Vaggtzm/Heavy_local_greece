@@ -3,7 +3,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {get, onValue, push, ref, remove, set, update} from 'firebase/database';
 import {auth, database} from '../../../firebase'; // Import Firebase auth
 import {Button, Card, Form, InputGroup, Modal} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {CommentAuthor} from "./CommentAuthor";
 import {getIdTokenResult} from "firebase/auth";
 import {useLocation} from "react-router-dom";

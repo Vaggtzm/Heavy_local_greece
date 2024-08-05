@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {get, limitToLast, orderByChild, query, ref} from 'firebase/database';
 import {getDownloadURL, ref as storageRef} from 'firebase/storage';
 import {auth, database, storage} from '../../firebase';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink, useParams} from 'react-router-dom';
 import {Form, Spinner} from 'react-bootstrap';
 import {Helmet} from 'react-helmet';

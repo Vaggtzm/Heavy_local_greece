@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Dropdown, DropdownButton} from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {useTranslation} from "react-i18next";
 
 const CategoryDropdown = ({name, categories, onSelectCategory, required, value, defaultChoice}) => {

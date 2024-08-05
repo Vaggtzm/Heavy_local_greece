@@ -21,7 +21,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SecurityToggleButton = () => {
     const [isUnderAttack, setIsUnderAttack] = useState(false);
