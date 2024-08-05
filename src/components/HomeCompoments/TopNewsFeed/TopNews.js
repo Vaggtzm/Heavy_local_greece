@@ -6,6 +6,7 @@ import ReviewsBanner from "./NewsCompoments/ReviewsBanner";
 import POUtransparent from "./../../../assets/PulseOfTheUnderground-removebg-preview.png"
 import Sponshorbanner from "./NewsCompoments/SponshorBanner";
 import Contact from "../../ContactForm/contact";
+import Facebook_Angels from './../../Facebook/Facebook_Angels';
 
 
 const TopNews = () => {
