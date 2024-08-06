@@ -6,7 +6,6 @@ import ReviewsBanner from "./NewsCompoments/ReviewsBanner";
 import POUtransparent from "./../../../assets/PulseOfTheUnderground-removebg-preview.png"
 import Sponshorbanner from "./NewsCompoments/SponshorBanner";
 import Contact from "../../ContactForm/contact";
-import Facebook_Angels from './../../Facebook/Facebook_Angels';
 
 
 const TopNews = () => {
@@ -66,6 +65,46 @@ const TopNews = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/Ghost-of-Agony:-Ashen-Kingdom-(album-review)-"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
+                                        <p className="lead text-white">
+                                        ALBUM REVIEW:Ghost of Agony- Ashen Kingdom                                        </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/Ghost-of-Agony:-Ashen-Kingdom-(album-review)-"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <img
+                                        src="https://pulse-of-the-underground.com/assets/SINGLE-REVIEW:Distorted-Force--Approaching-Even-Horizon"
+                                        className="img-fluid w-50 m-2"/>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="CustomBorder">
+                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <p className="lead text-white">
+                                        SINGLE REVIEW:Distorted Force -Approaching Even Horizon
+                                       </p>
+                                        <NavLink className="btn btn-danger"
+                                                 to={"/article/SINGLE-REVIEW:Distorted-Force--Approaching-Even-Horizon"}>
+                                            Read More
+                                        </NavLink>
+                                    </div>
+                                </div>
+                            </div>
+
                             
                             <div className="row">
                                 <div className="col-md-6">
