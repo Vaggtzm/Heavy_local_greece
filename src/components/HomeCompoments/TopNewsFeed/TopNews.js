@@ -46,38 +46,21 @@ const TopNews = () => {
                         {/** Main Content Column */}
                         <div className="col-md-8">
                             {/**Interviews Start (ENG FIRST ) */}
+                       
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/Meet-Aaron-Kusterer"
-                                        className="img-fluid w-50 m-2"/>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">INTERVIEW(GR):</span></h3>
-                                        <p className="lead text-white">
-                                        INTERVIEW:Meet Aaron Kusterer                                       
-                                        </p>
-                                        <NavLink className="btn btn-danger"
-                                                 to={"/article/Meet-Aaron-Kusterer"}>
-                                            Read More
-                                        </NavLink>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <img
-                                        src="https://pulse-of-the-underground.com/assets/Ghost-of-Agony:-Ashen-Kingdom-(album-review)-"
+                                        src="https://firebasestorage.googleapis.com/v0/b/heavy-local-12bc4.appspot.com/o/images%2FNEW-ALBUM%3A-Finnish-Black-Metal-Band-Luuskki-to-Release-Self-Titled-Debut-Album-in-October--First-Single-%22Fifth-of-the-Fifth-Columns%22-Out-Now!_800x800?alt=media&token=54bbcc05-b649-4521-94ba-ed543badd511"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        ALBUM REVIEW:Ghost of Agony- Ashen Kingdom                                        </p>
+                                        SINGLE REVIEW: Denigrate's "Crystal Rest" — A Dark Fusion of Crushing Metal and Stunning Visuals                                        
+                                        </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/Ghost-of-Agony:-Ashen-Kingdom-(album-review)-"}>
+                                                 to={"https://pulse-of-the-underground.com/article/NEW-ALBUM:-Finnish-Black-Metal-Band-Luuskki-to-Release-Self-Titled-Debut-Album-in-October--First-Single-%22Fifth-of-the-Fifth-Columns%22-Out-Now!"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -88,17 +71,16 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/SINGLE-REVIEW:Distorted-Force--Approaching-Even-Horizon"
+                                        src="https://pulse-of-the-underground.com/assets/Kreyl:-Medusa's-Death-(Single-Review)"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
-                                        <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
+                                        <h3><span className="text-danger bold">REVIEW(ENG):</span></h3>
                                         <p className="lead text-white">
-                                        SINGLE REVIEW:Distorted Force -Approaching Even Horizon
-                                       </p>
+                                        SIGNLE REVIEW :Kreyl- Medusa's Death                                        </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/SINGLE-REVIEW:Distorted-Force--Approaching-Even-Horizon"}>
+                                                 to={"/article/Kreyl:-Medusa's-Death-(Single-Review)"}>
                                             Read More
                                         </NavLink>
                                     </div>
@@ -109,17 +91,16 @@ const TopNews = () => {
                             <div className="row">
                                 <div className="col-md-6">
                                     <img
-                                        src="https://pulse-of-the-underground.com/assets/Aphotic.jpg"
+                                        src="https://pulse-of-the-underground.com/assets/REVIEW:--ORKRIST----single-Prince-of-Melancholy----LUEA"
                                         className="img-fluid w-50 m-2"/>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="CustomBorder">
                                         <h3><span className="text-danger bold">REVIEW(GR):</span></h3>
                                         <p className="lead text-white">
-                                        SINGLE REVIEW:Worship The Sacrifice - Aphotic
-                                       </p>
+                                        SINGLE REVIEW: Οι ORKRIST παρουσιάζουν το  single “Prince of Melancholy” από το άλμπουμ “LUEA”.                                       </p>
                                         <NavLink className="btn btn-danger"
-                                                 to={"/article/SINGLE:Worship-The-Sacrifice---Aphotic"}>
+                                                 to={"/article/REVIEW:--ORKRIST----single-Prince-of-Melancholy----LUEA"}>
                                             Read More
                                         </NavLink>
                                     </div>
