@@ -65,8 +65,9 @@ const ArticleUpload = () => {
     }, [navigate]);
 
     const replaceSpecialCharsWithDashes = useCallback((text) => {
-        const regex = /[.$#[\]/\u0000-\u001F\u007F-\uFFFF]/g;
-        return text.replace(regex, '');
+        // Replace all characters that are not letters, digits, or spaces with a dash
+        const regex = /[^\p{L}\p{N} ]/gu;
+        return text.replace(regex, '-').replace(/-+/g, '-');
     }, []);
 
     const handleArticleSubmit = async (e) => {
