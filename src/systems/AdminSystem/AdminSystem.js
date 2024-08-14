@@ -86,6 +86,7 @@ const AdminSystem = () => {
                 }
             }));
             console.log("Success");
+            alert(`Username for the user ${userId} has been changed successfully`);
         }).catch(error => {
             console.error("Error updating username:", error);
         });
