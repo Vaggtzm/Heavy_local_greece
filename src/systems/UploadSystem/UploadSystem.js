@@ -248,7 +248,6 @@ const ArticleUpload = () => {
                                     onChange={(e) => {
                                         startTransition(() => {
                                             setLanguage(e.target.value);
-                                            i18n.changeLanguage(e.target.value); // Change UI language
                                         });
                                     }}
                                     required={true}

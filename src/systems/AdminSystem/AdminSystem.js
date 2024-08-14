@@ -17,6 +17,7 @@ const AdminSystem = () => {
     const userList = ref(database, "roles");
 
     const [role, setRole] = useState('admin');
+    const [usernameInputs, setUsernameInputs] = useState({});
 
     const roleMapping = {
         Author: "admin",
@@ -68,6 +69,33 @@ const AdminSystem = () => {
                 alert(e.message)
             });
         }
+    };
+
+
+    const handleUsernameChange = (userId, newUsername) => {
+        if (newUsername === users[userId]?.username) return; // No change
+
+        const userRef = ref(database, `authors/${userId}`);
+        update(userRef, { username: newUsername }).then(() => {
+            // Update the local state
+            setUsers(prevUsers => ({
+                ...prevUsers,
+                [userId]: {
+                    ...prevUsers[userId],
+                    username: newUsername
+                }
+            }));
+            console.log("Success");
+        }).catch(error => {
+            console.error("Error updating username:", error);
+        });
+    };
+
+    const handleUsernameInputChange = (userId, value) => {
+        setUsernameInputs(prevInputs => ({
+            ...prevInputs,
+            [userId]: value
+        }));
     };
 
 
@@ -219,6 +247,23 @@ const AdminSystem = () => {
                                     <Card.Text className={"bg-secondary text-light badge"}>
                                         {userRoles.length > 0 ? userRoles.join(", ") : "Author"}
                                     </Card.Text>
+
+                                    <div className={"w-100"}>
+                                        <Form.Control
+                                            className={"input-group-sm"}
+                                            type={"text"}
+                                            value={usernameInputs[key] || users[key].username}
+                                            onChange={(e) => handleUsernameInputChange(key, e.target.value)}
+                                            placeholder={"Change username"}
+                                        />
+                                        <Button
+                                            className={"btn btn-primary btn-sm mt-2"}
+                                            onClick={() => handleUsernameChange(key, usernameInputs[key] || users[key].username)}
+                                        >
+                                            Change username
+                                        </Button>
+                                    </div>
+
                                     <div className="d-flex justify-content-around mt-3">
                                         <Button
                                             variant={userRoles.includes("admin") ? "danger" : "outline-danger"}

@@ -24,7 +24,6 @@ const bucket = admin.storage().bucket("heavy-local-12bc4.appspot.com");
 const database = admin.database();
 
 
-
 app.get("/feed", async (req, res) => {
     const category = req.query.category || null;
     let latestArticleDate = null;
@@ -47,15 +46,14 @@ app.get("/feed", async (req, res) => {
         let articlesArray = [];
 
         if (category && articles[category]) {
-            articlesArray = Object.entries(articles[category]).map(([key, value]) => ({ key, ...value }));
+            articlesArray = Object.entries(articles[category]).map(([key, value]) => ({key, ...value}));
         } else {
             for (const [cat, articlesInCategory] of Object.entries(articles)) {
                 articlesArray = articlesArray.concat(
-                    Object.entries(articlesInCategory).map(([key, value]) => ({ category: cat, key, ...value }))
+                    Object.entries(articlesInCategory).map(([key, value]) => ({category: cat, key, ...value}))
                 );
             }
         }
-
 
 
         // Sort articles by date, newest to oldest
@@ -64,7 +62,7 @@ app.get("/feed", async (req, res) => {
         if (articlesArray.length > 0) {
             latestArticleDate = new Date(articlesArray[0].date);
             console.log(latestArticleDate)
-        }else{
+        } else {
             console.log("Something went wrong")
         }
 
@@ -90,13 +88,13 @@ app.get("/feed", async (req, res) => {
                 url: `https://pulse-of-the-underground.com/article/${article.key.replaceAll(".json", "")}`,
                 author: Object.keys(allAuthors).includes(article.author) ? allAuthors[article.author].displayName : 'Unknown',
                 date: new Date(article.date),
-                enclosure: { url: article.image },
+                enclosure: {url: article.image},
                 categories: [category]
             };
             feed.item(item);
         });
 
-        const xml = feed.xml({ indent: true });
+        const xml = feed.xml({indent: true});
         res.set("Content-Type", "application/rss+xml");
         res.send(xml);
     } catch (error) {
@@ -203,7 +201,7 @@ app.get("/author/*", async (req, res) => {
     try {
         // Read and replace placeholders in the HTML template
         let htmlData = fs.readFileSync(filepath, "utf-8");
-        htmlData = htmlData.replace(/_TITLE_/g, author.displayName?author.displayName.replaceAll("'", '"'):"Pulse Of The Underground");
+        htmlData = htmlData.replace(/_TITLE_/g, author.displayName ? author.displayName.replaceAll("'", '"') : "Pulse Of The Underground");
         htmlData = htmlData.replace(/_THUMB_/g, url);
 
         res.send(htmlData);
@@ -322,7 +320,7 @@ const filterUndefinedValues = (obj) => {
 };
 
 const handle_single_dir = async (directory) => {
-    const [files] = await bucket.getFiles({ prefix: directory });
+    const [files] = await bucket.getFiles({prefix: directory});
     const articles = {};
     const allArticles = [];
 
@@ -335,13 +333,13 @@ const handle_single_dir = async (directory) => {
     const fileStatsPromises = jsonFiles.map(async file => {
         const [metadata] = await file.getMetadata();
         const mtime = new Date(metadata.updated);
-        return { file, mtime };
+        return {file, mtime};
     });
 
     const fileStats = await Promise.all(fileStatsPromises);
-    const filesChangedToday = fileStats.filter(({ mtime }) => mtime >= today);
+    const filesChangedToday = fileStats.filter(({mtime}) => mtime >= today);
     console.log(filesChangedToday);
-    for (const { file } of filesChangedToday) {
+    for (const {file} of filesChangedToday) {
         const fileContents = await file.download();
         const content = JSON.parse(fileContents[0].toString('utf8'));
 
@@ -356,8 +354,8 @@ const handle_single_dir = async (directory) => {
         console.log(category);
         console.log(newArticle);
 
-        if(!articles[category]){
-            articles[category]={};
+        if (!articles[category]) {
+            articles[category] = {};
         }
 
         articles[category][newArticle] = {
@@ -410,12 +408,12 @@ const handle_single_dir = async (directory) => {
     const existingArticlesList = articlesListSnapshot.val() || {};
 
     // Merge existing articles with new ones
-    const updatedArticlesList = { ...existingArticlesList };
+    const updatedArticlesList = {...existingArticlesList};
     for (const category in articles) {
         if (!updatedArticlesList[category]) {
             updatedArticlesList[category] = {};
         }
-        updatedArticlesList[category] = { ...updatedArticlesList[category], ...articles[category] };
+        updatedArticlesList[category] = {...updatedArticlesList[category], ...articles[category]};
     }
 
     // Save updated articles list in Firebase
@@ -621,7 +619,7 @@ exports.handleDeleteArticle = functions.runWith(runtimeOpts).storage
         let articleCategory = null;
         let author = null;
         let translator = null;
-        let updatedArticlesList = { ...existingArticlesList };
+        let updatedArticlesList = {...existingArticlesList};
 
         // Remove the deleted article from articles list
         for (const category in updatedArticlesList) {
@@ -874,17 +872,17 @@ async function getUser(id, isEmail) {
     return user;
 }
 
-async function setDatabase(claim, table, user){
+async function setDatabase(claim, table, user) {
     console.log(claim, table, user);
     if (claim) {
-        let userData={}
+        let userData = {}
         let originalDoc;
 
         try {
             originalDoc = database.ref(`/users/${user.uid}`)
             const data = await originalDoc.get()
             userData = data.val();
-        }catch (e) {
+        } catch (e) {
             console.log("User was not found on the table")
         }
 
@@ -893,23 +891,23 @@ async function setDatabase(claim, table, user){
         await userDoc.set({
             uid: user.uid,
             email: user.email,
-            displayName: user.displayName?user.displayName:"",
-            photoURL: user.photoURL?user.photoURL:"",
+            displayName: user.displayName ? user.displayName : "",
+            photoURL: user.photoURL ? user.photoURL : "",
             ...userData
         });
-        if(!!originalDoc) {
+        if (!!originalDoc) {
             await originalDoc.remove();
         }
     } else {
         const userDoc = database.ref("/users/" + user.uid) // Use Firestore
-        let userData={}
+        let userData = {}
         let originalDoc;
 
         try {
             originalDoc = database.ref(`/${table}/${user.uid}`)
             const data = await originalDoc.get()
             userData = data.val();
-        }catch (e) {
+        } catch (e) {
             console.log("User was not found on the table")
         }
 
@@ -917,10 +915,10 @@ async function setDatabase(claim, table, user){
             uid: user.uid,
             email: user.email,
             displayName: user.displayName,
-            photoURL: user.photoURL?user.photoURL:"",
+            photoURL: user.photoURL ? user.photoURL : "",
             ...userData
         });
-        if(!!originalDoc) {
+        if (!!originalDoc) {
             await originalDoc.remove();
         }
     }
@@ -930,11 +928,11 @@ async function setDatabase(claim, table, user){
 exports.setCustomClaim = functions.https.onCall(async (data, context) => {
     const {id, isEmail, claim} = data;
     const isAdmin = context.auth && context.auth.token.admin
-    const registeringAsBand=Object.keys(claim).includes("band")&&Object.keys(claim).length<2
-    const isPaul = (await getUser(context.auth.uid, false)).email==="pavlos@orfanidis.net.gr";
+    const registeringAsBand = Object.keys(claim).includes("band") && Object.keys(claim).length < 2
+    const isPaul = (await getUser(context.auth.uid, false)).email === "pavlos@orfanidis.net.gr";
     // Check if request is made by an authenticated user with admin privileges
-    if (!isAdmin&&!registeringAsBand&&!isPaul) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.'+JSON.stringify(claim));
+    if (!isAdmin && !registeringAsBand && !isPaul) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called by an authenticated admin.' + JSON.stringify(claim));
     }
     let user;
     try {
@@ -956,16 +954,16 @@ exports.setCustomClaim = functions.https.onCall(async (data, context) => {
         });
         // Write user info to Firestore (or Realtime Database)
         console.log(claim);
-        if(Object.keys(claim).includes("admin")) {
+        if (Object.keys(claim).includes("admin")) {
             await setDatabase(claim.admin, "authors", user);
         }
-        if(Object.keys(claim).includes("band")) {
+        if (Object.keys(claim).includes("band")) {
             await setDatabase(claim.band, "band", user);
         }
         return {message: `Successfully set the role for user ${user.uid}`};
     } catch (error) {
         console.error('Error setting custom claims:', error);
-        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data. '+JSON.stringify(error));
+        throw new functions.https.HttpsError('internal', 'Unable to set custom claims or write user data. ' + JSON.stringify(error));
     }
 });
 
@@ -1042,7 +1040,7 @@ exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, cont
                     }
                 }
             );
-            return { success: true, data: response.data };
+            return {success: true, data: response.data};
         } else {
             // Change the security level based on the action
             const action = data.action; // Boolean: true or false
@@ -1063,7 +1061,7 @@ exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, cont
                     }
                 }
             );
-            return { success: true, data: response.data };
+            return {success: true, data: response.data};
         }
     } catch (error) {
         console.error(error);
@@ -1073,10 +1071,7 @@ exports.toggleCloudflareSecurityLevel = functions.https.onCall(async (data, cont
 
 
 exports.getDMARCReports = functions.https.onCall(async (data, context) => {
-    const cloudflare = { //functions.config().cloudflare
-        "zone_id": "b39bd8623e7275d3d881e1edee9fb4f5",
-        "api_key": "83muydnMI1cx3XdOEM7apg_DRlj0VbdZGSrgB631"
-    }
+    const cloudflare = functions.config().cloudflare;
     const CLOUDFLARE_API_KEY = cloudflare.api_key;
     const ZONE_ID = cloudflare.zone_id;
     try {
@@ -1094,12 +1089,10 @@ exports.getDMARCReports = functions.https.onCall(async (data, context) => {
 });
 
 
-
-
-exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) =>{
+exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) => {
     const ipAddress = context.ipAddress;
 
-    if(!functions.config().whatismyip){
+    if (!functions.config().whatismyip) {
         return null;
     }
 
@@ -1118,7 +1111,7 @@ exports.beforeSignIn = functions.auth.user().beforeSignIn(async (user, context) 
         return obj;
     }, {});
 
-    const table = (user.customClaims&&user.customClaims.admin)?"authors":"users";
+    const table = (user.customClaims && user.customClaims.admin) ? "authors" : "users";
     const ref = database.ref(`${table}/${user.uid}/ip`)
     ref.push({
         loginAttempt: jsonResponse
@@ -1134,8 +1127,129 @@ exports.logoutAllDevices = functions.https.onCall(async (data, context) => {
 
     try {
         await admin.auth().revokeRefreshTokens(uid);
-        return { message: 'Successfully logged out of all devices.' };
+        return {message: 'Successfully logged out of all devices.'};
     } catch (error) {
         throw new functions.https.HttpsError('unknown', 'Failed to log out of all devices.', error);
     }
 });
+
+
+exports.updateUsername = functions.database.ref('/authors/{userId}/username')
+    .onUpdate(async (change, context) => {
+        const oldUsername = change.before.val();
+        const newUsername = change.after.val();
+        const userId = context.params.userId;
+
+        if (oldUsername !== newUsername) {
+            // Update Cloudflare CNAME and redirect list
+            await updateCloudflareRecords(oldUsername, newUsername, userId);
+
+            // Update the database or perform any additional processing
+            await admin.database().ref(`/otherData/${userId}`).update({
+                username: newUsername
+            });
+        }
+    });
+
+
+async function updateCloudflareRecords(oldUsername, newUsername, userId) {
+    // Your Cloudflare API credentials
+    const cloudflare = functions.config().cloudflare;
+    const cloudflareZoneId = cloudflare.zone_id;
+    const cloudflareApiToken = cloudflare.api_key;
+
+
+    // Delete the old CNAME record
+    const oldRecordId = await getDnsRecordId(oldUsername, cloudflareZoneId, cloudflareApiToken);
+    if (oldRecordId) {
+        await axios.delete(`https://api.cloudflare.com/client/v4/zones/${cloudflareZoneId}/dns_records/${oldRecordId}`, {
+            headers: {
+                'Authorization': `Bearer ${cloudflareApiToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    const newRecordId = await getDnsRecordId(newUsername, cloudflareZoneId, cloudflareApiToken);
+    if (!newRecordId) {
+        // Add the new CNAME record
+        await axios.post(`https://api.cloudflare.com/client/v4/zones/${cloudflareZoneId}/dns_records`, {
+            type: 'CNAME',
+            name: `${newUsername}.pulse-of-the-underground.com`,
+            content: 'pulse-of-the-underground.com',
+            proxied: true
+        }, {
+            headers: {
+                'Authorization': `Bearer ${cloudflareApiToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+
+    // Update the redirect list
+    await updateRedirectList(oldUsername, newUsername, userId);
+}
+
+async function getDnsRecordId(username, zoneId, apiToken) {
+    const response = await axios.get(`https://api.cloudflare.com/client/v4/zones/${zoneId}/dns_records`, {
+        headers: {
+            'Authorization': `Bearer ${apiToken}`,
+            'Content-Type': 'application/json'
+        },
+        params: {
+            name: `${username}.pulse-of-the-underground.com`,
+            type: 'CNAME'
+        }
+    });
+
+    const records = response.data.result;
+    return records.length > 0 ? records[0].id : null;
+}
+
+async function updateRedirectList() {
+    const redirectListId = '8038d5ea7f384e70a7a48f6b88095ca8';
+    const cloudflare = functions.config().cloudflare;
+    const cloudflareApiToken = cloudflare.api_key;
+    const cloudflareAccountId = "515a4c1253b30f8541443c98c0cb7ee5";
+
+    // Step 1: Read all usernames and user IDs from the Realtime Database
+    const usersSnapshot = await database.ref('authors').once('value');
+    const usersData = usersSnapshot.val();
+
+    let redirects = [];
+
+    // Step 2: Construct the redirect list from the database data
+    Object.keys(usersData).forEach(userId => {
+        const username = usersData[userId].username;
+        if (!username) {
+            return;
+        }
+
+        const newRedirect = {
+            "redirect": {
+                "source_url": `${username}.pulse-of-the-underground.com/`,
+                "target_url": `https://pulse-of-the-underground.com/author/${userId}`
+            }
+        }
+
+        redirects.push(newRedirect);
+    })
+
+    console.log(redirects);
+
+// Step 3: Update the entire list in Cloudflare
+    try {
+        await axios.put(`https://api.cloudflare.com/client/v4/accounts/${cloudflareAccountId}/rules/lists/${redirectListId}/items`,
+            redirects
+        , {
+            headers: {
+                'Authorization': `Bearer ${cloudflareApiToken}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        console.log('Redirect list successfully updated in Cloudflare.');
+    } catch (error) {
+        console.error('Error updating redirect list in Cloudflare:', error.response ? error.response.data : error.message);
+    }
+}
