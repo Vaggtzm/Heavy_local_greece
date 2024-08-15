@@ -5,6 +5,7 @@ import Sponshorbanner from "./NewsCompoments/SponshorBanner";
 import "./TopNews.css";
 import { database } from "../../../firebase";
 import { get, ref } from "firebase/database";
+import ReviewsBanner from "./NewsCompoments/ReviewsBanner";
 
 const TopNews = () => {
     const { t } = useTranslation();
@@ -62,6 +63,9 @@ const TopNews = () => {
 
     return (
         <div className="top-news-wrapper mt-5 container rounded-3">
+            <ReviewsBanner/>
+            <hr className="bg-white"/>
+
             <div className="top-news-header d-flex justify-content-between align-items-center mb-4">
                 <h1 className="top-news-title">{t('Latest Articles')}</h1>
                 <NavLink to="/articles-page" className="btn explore-btn">
