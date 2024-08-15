@@ -22,3 +22,13 @@
 .form-control::placeholder {
     color: #a9a9a9; /* Light grey color for better visibility */
 }
+
+@keyframes blink {
+    0% { background-color: var(--bs-success); }
+    50% { background-color: var(--bs-dark); }
+    100% { background-color: var(--bs-success); }
+}
+
+.blink-bg {
+    animation: blink 1s infinite;
+}

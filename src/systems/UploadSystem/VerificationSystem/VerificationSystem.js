@@ -405,7 +405,11 @@ const FirebaseFileList = () => {
             const cardTitle = file.title || 'Untitled';
 
             return (
-                <Card className={`col-3 m-3 ${file.isReady ? "bg-success" : "bg-dark"}`}>
+                <Card className={`col-3 m-3 ${
+                    file.isReady
+                        ?'bg-success': file.authorApproved
+                            ? 'blink-bg': 'bg-dark'
+                }`}>
                     <Card.Body>
                         {(!isDev) && <Card.Img
                             variant="top"
@@ -795,11 +799,12 @@ const FirebaseFileList = () => {
                 </Modal.Body>
                 <Modal.Footer className={"bg-dark"}>
                     <Row className={"d-flex justify-content-center"}>
-                        <Col className={"col-12 d-flex justify-content-center"}>
+                        {leader&&<Col className={"col-12 d-flex justify-content-center"}>
                             <Form.Check
+                                disabled={!fileData.authorApproved}
                                 type="switch"
                                 id="custom-switch"
-                                label="The article is ready to be published"
+                                label={fileData.authorApproved?"The article is ready to be published":"The author has not approved their article"}
                                 checked={fileData.isReady}
                                 className={"bg-warning rounded-3 justify-content-center"}
                                 onChange={() => {
@@ -816,7 +821,30 @@ const FirebaseFileList = () => {
                                     transition: 'background-color 0.3s ease'
                                 }}
                             />
-                        </Col>
+                        </Col>}
+
+                        {user&&(user.uid===(fileData.translatedBy?fileData.translatedBy:fileData.sub))&&<Col className={"col-12 d-flex justify-content-center"}>
+                            <Form.Check
+                                type="switch"
+                                id="custom-switch"
+                                label="The article is ready for review"
+                                checked={fileData.authorApproved}
+                                className={"bg-warning rounded-3 justify-content-center"}
+                                onChange={() => {
+                                    console.log(fileData.authorApproved)
+                                    if (!fileData.authorApproved) {
+                                        handleChange({target: {value: true}}, 'authorApproved', false)
+                                    } else {
+                                        handleChange({target: {value: false}}, 'authorApproved', false)
+                                    }
+
+                                }}
+                                style={{
+                                    fontSize: '1.25rem',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                            />
+                        </Col>}
                     </Row>
 
                     <Row>
