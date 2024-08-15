@@ -368,7 +368,9 @@ const handle_single_dir = async (directory) => {
             "lang": content.lang ? content.lang : "",
             "isReady": !!content.isReady,
             "sponsor": content.sponsor ? content.sponsor : "",
-            "author": content.sub
+            "author": content.sub,
+            "authorApproved":content.authorApproved||false,
+            "translatedBy":content.translatedBy?content.translatedBy:""
         };
 
         // Collect all articles with their metadata
@@ -740,16 +742,6 @@ const fetchArticlesCategory = async (folder, currentPageToken, maxResults) => {
     }
 };
 
-exports.fetchFiles = functions.runWith(runtimeOpts).https.onCall(async (data, context) => {
-    try {
-        const {folder, maxResults, pageToken} = data;
-        const {articles, nextPageToken} = await fetchArticlesCategory(folder, pageToken, maxResults);
-        return {articles, nextPageToken};
-    } catch (error) {
-        console.error('Error in fetchFiles:', error);
-        throw new functions.https.HttpsError('unknown', 'Failed to fetch files');
-    }
-});
 
 
 const fetchArticlesWithImages = async (authorCode) => {
