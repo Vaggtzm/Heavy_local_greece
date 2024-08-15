@@ -1245,3 +1245,38 @@ async function updateRedirectList() {
         console.error('Error updating redirect list in Cloudflare:', error.response ? error.response.data : error.message);
     }
 }
+
+
+exports.createSession = functions.https.onCall(async (data, context) => {
+    const appSecret = functions.config().callsapp.secret;
+    const appId = functions.config().callsapp.appid;
+    const basePath = 'https://rtc.live.cloudflare.com/v1';
+    try {
+        const { offerSDP } = data;
+
+        const url = `${basePath}/apps/${appId}/sessions/new`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': `Bearer ${appSecret}`,
+            },
+            body: JSON.stringify({
+                sessionDescription: {
+                    type: 'offer',
+                    sdp: offerSDP,
+                },
+            }),
+        });
+
+        const result = await response.json();
+
+        if (result.errorCode) {
+            throw new Error(result.errorDescription);
+        }
+
+        return result;
+    } catch (error) {
+        throw new functions.https.HttpsError('internal', error.message);
+    }
+});
