@@ -29,7 +29,7 @@ const TopNews = () => {
     }, []);
 
     return (
-        <div ref={topNewsRef} className={`top-news-container ${visible ? "visible" : ""}`}>
+        <div ref={topNewsRef} className={`top-news-container mt-5 ${visible ? "visible" : ""}`}>
             <ReviewsBanner/>
             <hr className="bg-white"/>
             <div className="container">
