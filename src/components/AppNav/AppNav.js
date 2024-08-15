@@ -112,7 +112,7 @@ const AppNavigation = ({menuVisible}) => {
                             <NavLink to={"/ads"} className='nav-link text-white'>Ads By You</NavLink>
                             {(loggedIn)&&<NavLink to="/profile" className='nav-link text-white'>Profile</NavLink>}
                             <InstallButton/>
-                            {(isAdmin|| isLeader|| isCommentAdmin) &&
+                            {(isAdmin|| isLeader|| isCommentAdmin||isAuthor)     &&
                             <NavDropdown className={"text-white"} title="Administration" >
                                 {isCommentAdmin && (
                                     <NavLink to="/admin/comments" className='nav-link text-white bg-dark'>Reported
@@ -123,7 +123,7 @@ const AppNavigation = ({menuVisible}) => {
                                     <NavLink to="/admin" className='nav-link text-white bg-dark'>User Administration</NavLink>
                                 }
 
-                                {(isAdmin || isLeader) &&
+                                {(isAdmin || isLeader || isAuthor) &&
                                     <NavLink to="/upload/admin" className='nav-link text-white bg-dark'>Admin Dashboard</NavLink>
                                 }
                             </NavDropdown>}
