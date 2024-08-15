@@ -137,12 +137,13 @@ const FirebaseFileList = () => {
 
     const handleSave = async () => {
         if (!selectedFile || !fileData) return;
+        const author = fileData.translatedBy || fileData.sub;
         try {
             const fileRef = storageRef(storage, `${selectedFile.folder}/${selectedFile.name}.json`);
             console.log(`${selectedFile.folder}/${selectedFile.name}`)
             const updatedContent = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
             console.log(fileData);
-            await uploadString(fileRef, JSON.stringify({...fileData, content: updatedContent}));
+            await uploadString(fileRef, JSON.stringify({...fileData, content: updatedContent, authorApproved: (user.uid===author)}));
 
             setAuthorName('');
             setSocials({});
