@@ -80,13 +80,6 @@ const Author = ({ userId, className, rating }) => {
           <div className="d-flex justify-content-center">
             <hr className="text-light w-75" />
           </div>
-          <div className={`card-content px-xl-3 text-white w-100 ${hovered || isMobile ? 'expanded' : ''}`}>
-            <p>
-              <i className="fas fa-quote-left pe-2"></i>
-              {user.bio}
-              <i className="fas fa-quote-right pe-2"></i>
-            </p>
-          </div>
 
           <StarRating rating={rating}></StarRating>
         </div>

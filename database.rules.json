@@ -19,6 +19,9 @@
       ".read": true,
       ".indexOn": "date"
     },
+    "articlesListLatest": {
+      ".read": true
+    },
     "deviceTokens":{
       ".read": false,
       ".write":false,

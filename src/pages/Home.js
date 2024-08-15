@@ -1,24 +1,34 @@
 import React, { Suspense } from "react";
 import Header from "./../components/HomeCompoments/Header/Header";
 import Footer from "../components/footer/footer";
+import SideMenu from "../components/HomeCompoments/SideMenu/SideMenu";
 
 // Lazy load the TopNews and ExploreMore components
 const TopNews = React.lazy(() => import("../components/HomeCompoments/TopNewsFeed/TopNews"));
 const ExploreMore = React.lazy(() => import("../components/HomeCompoments/ExploreMore/ExpoloreMore"));
 
-const Home = () => {
+const Home = ({isMenuVisible}) => {
     return (
-        <>
-            <Header />
+        <div>
+            <section id="header">
+                <Header />
+            </section>
+            <SideMenu isMenuVisible={isMenuVisible}/>
             <Suspense fallback={<div>Loading Top News...</div>}>
-                <TopNews />
+                <section id="top-news">
+                    <TopNews/>
+                </section>
             </Suspense>
             <Suspense fallback={<div>Loading Explore More...</div>}>
-                <ExploreMore />
+                <section id="explore-more">
+                    <ExploreMore/>
+                </section>
             </Suspense>
-            <Footer />
-        </>
-    );
+            <section id="footer">
+                <Footer/>
+            </section>
+        </div>
+);
 };
 
 export default Home;

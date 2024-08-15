@@ -1,13 +1,120 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+/* General header styling */
 header {
-  transition: transform 0.5s ease;
-  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* προσθήκη filter transition */ 
-  filter: blur(0); /* αρχική τιμή για το blur */
-
+    position: fixed; /* Ensure the header remains fixed at the top */
+    top: 0; /* Stick to the top */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out, filter 0.6s ease-in-out;
+    filter: blur(0);
+    z-index: 9999; /* Ensure the header stays on top of other elements */
 }
 
-
+/* When header is scrolled */
 header.scrolled {
-  transform: translateX(100%);
-  filter: blur(5px); /* τιμή blur κατά την κίνηση */
+    opacity: 0; /* Fade out the header */
+    transform: translateY(-100px); /* Move the header up when scrolled */
+    filter: blur(5px) brightness(0.8);
+    z-index: -1;
 }
 
+/* Parallax background */
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    opacity: 0.7;
+    transform: scale(1.1);
+    transition: transform 0.6s ease-in-out;
+}
+
+header.scrolled .parallax-bg {
+    transform: scale(1);
+}
+
+/* Fancy text animation */
+.fancy-text {
+    font-family: 'Great Vibes', 'Times New Roman', cursive; /* Primary cursive font with a fallback */
+    color: #cc0000; /* Darker red color */
+    font-weight: 700;
+    text-shadow:
+            0 0 5px #cc0000,   /* Inner glow */
+            0 0 10px #cc0000,  /* Middle glow */
+            0 0 20px #cc0000,  /* Outer glow */
+            0 0 40px #cc0000,  /* Stronger glow */
+            0 0 80px #cc0000,  /* More intense glow */
+            0 0 90px #cc0000,  /* Even more intense */
+            0 0 100px #cc0000, /* Maximum intensity */
+            0 0 150px #cc0000; /* Additional glow for effect */
+    animation: text-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes text-glow {
+    from {
+        text-shadow:
+                0 0 10px #cc0000,
+                0 0 20px #cc0000,
+                0 0 30px #cc0000,
+                0 0 40px #cc0000,
+                0 0 50px #cc0000;
+    }
+    to {
+        text-shadow:
+                0 0 20px #cc0000,
+                0 0 30px #cc0000,
+                0 0 40px #cc0000,
+                0 0 60px #cc0000,
+                0 0 100px #cc0000,
+                0 0 200px #cc0000;
+    }
+}
+
+/* Neon red subtitle animation */
+.neon-subtitle {
+    font-family: 'Sacramento', 'Times New Roman', sans-serif; /* Fallbacks */
+    font-size: 1.5rem;
+    color: #cc0000; /* Darker red color */
+    font-weight: 500;
+    text-shadow:
+            0 0 4px #cc0000,   /* Inner glow */
+            0 0 8px #cc0000,   /* Middle glow */
+            0 0 12px #cc0000,  /* Outer glow */
+            0 0 16px #cc0000;  /* Stronger glow */
+}
+
+/* Additional styling for the header content */
+.header-content {
+    border-radius: 15px;
+    padding: 20px;
+    transition: background 0.6s ease-in-out;
+}
+
+header.scrolled .header-content {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+.jumbotron {
+    background-color: transparent;
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: #333;
+    transition: color 0.6s ease-in-out;
+}
+
+header.scrolled .lead {
+    color: #ccc;
+}

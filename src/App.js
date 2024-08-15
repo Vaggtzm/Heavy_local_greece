@@ -30,7 +30,6 @@ const TranlationSystem = lazy(() => import("./systems/UploadSystem/TranslationSy
 const UserHome = lazy(() => import('./components/Users/UserHome'));
 const SavedArtciles = lazy(() => import('./components/Users/Pages/Saved'));
 const UserProfile = lazy(() => import("./systems/UploadSystem/Profile/UserProfile"));
-const Authors = lazy(() => import("./pages/Authors/Authors"));
 const RecommendationSystem = lazy(() => import("./components/RecommendationSystem/RecomendationSystem"));
 const AdminSystem = lazy(() => import("./systems/AdminSystem/AdminSystem"));
 const UploadGalleryItem = lazy(() => import("./pages/Gallery/uploadArt/UploadGalleryItem"));
@@ -110,6 +109,7 @@ function App() {
             { threshold: [0] }
         );
 
+
         const currentPlaceholder = placeholderRef.current;
 
         if (currentPlaceholder) {
@@ -126,7 +126,7 @@ function App() {
     const getRoutes = (langPathShouldExist) => {
         return (
             <Route path={langPathShouldExist ? "/:lang" : "/"} element={<LanguageWrapper />}>
-                <Route path='' element={<Suspense fallback={<div>Loading...</div>}><Home /></Suspense>} />
+                <Route path='' element={<Suspense fallback={<div>Loading...</div>}><Home isMenuVisible={menuVisible} /></Suspense>} />
                 <Route path='articles-page' element={<Suspense fallback={<div>Loading...</div>}><ArticlesList /></Suspense>} />
                 <Route path='Art-Gallery-page' element={<Suspense fallback={<div>Loading...</div>}><Gallery /></Suspense>} />
                 <Route path='legends-2-archive' element={<Suspense fallback={<div>Loading...</div>}><LegendV0L2 /></Suspense>} />
@@ -137,7 +137,6 @@ function App() {
                 <Route path='legends-5-archive' element={<Suspense fallback={<div>Loading...</div>}><GeorgeKollias /></Suspense>} />
                 <Route path='article/:name' element={<Suspense fallback={<div>Loading...</div>}><DefaultArticle earlyAccess={false} /></Suspense>} />
                 <Route path='article/early/:name' element={<Suspense fallback={<div>Loading...</div>}><DefaultArticle earlyAccess={true} /></Suspense>} />
-                <Route path='about-us' element={<Suspense fallback={<div>Loading...</div>}><Authors /></Suspense>} />
                 <Route path='recommended' element={<Suspense fallback={<div>Loading...</div>}><RecommendationSystem /></Suspense>} />
                 <Route path='admin' element={<Suspense fallback={<div>Loading...</div>}><AdminSystem /></Suspense>} />
                 <Route path='gallery/upload' element={<Suspense fallback={<div>Loading...</div>}><UploadGalleryItem /></Suspense>} />
