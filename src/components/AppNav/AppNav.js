@@ -81,7 +81,7 @@ const AppNavigation = ({menuVisible}) => {
                         <img
                             src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
                             className="img-fluid rounded-circle"
-                            style={{maxWidth: "100px", maxHeight: "100px"}}
+                            style={{maxWidth: "50px", maxHeight: "50px"}}
                             alt="Navbar Brand"
                         />
                     </NavLink>

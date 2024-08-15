@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SecondaryCarousel from "./../carousel/carousel";
 import Author from "../../../pages/Authors/Author/Author";
-import Footer from "../../footer/footer";
-import "./Animation.css";
+import "./ExploreMore.css";
 
 const ExploreMore = () => {
   const { t } = useTranslation();
@@ -30,62 +29,55 @@ const ExploreMore = () => {
   }, []);
 
   return (
-    <>
-<section ref={exploreMoreRef} className={`ExploreMore ${visible ? "visible" : ""}`}>
-      <h2 className="text-center text-white">{t("exploreMore")}</h2>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12">
-            <h3 className="text-white">{t("galleryTitle")}</h3>
-            <hr className="bg-white" />
+      <section
+          ref={exploreMoreRef}
+          className={`explore-more-section mt-5 container rounded-3 ${visible ? "visible" : ""}`}
+      >
+        <div className="container text-center">
+          <h2 className="section-title">{t("exploreMore")}</h2>
+          <div className="gallery-section">
+            <h3 className="sub-title">{t("galleryTitle")}</h3>
+            <hr className="divider" />
             <SecondaryCarousel />
           </div>
-       
-        </div>
-        <div className="col-md-12">
-          <h3 className="text-white">{t("meetTheTeam")}</h3>
-        </div>
-        <div className="testinomial">
-          <div className="row text-center">
-            <Author
-              rating={4.5}
-              className={"col-md-6 mb-5 mb-md-0"}
-              userId={"uSXH49YHlzT8vjQ94ZuJTOz351m2"}
-            />
-            <Author
-              rating={5}
-              className={"col-md-6 mb-5 mb-md-0"}
-              userId={"gbK4OvgKbyYDfYCfIjboOqjA9Yv1"}
-            />
-         
-            <hr className="bg-white" />
-            <Author
-              rating={4}
-              className={"col-md-6 mb-5 text-white"}
-              userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}
-            />
-            <Author
-              rating={4}
-              className={"col-md-6 mb-5 text-white"}
-              userId={"mmQTo2rdEDZ7YsnpJn15gCuaWz93"}
-            />
-            <hr className="bg-white" />
-            <Author
-              rating={4}
-              className={"col-md-6 mb-0 text-white"}
-              userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}
-            />
-            <Author
-              rating={4}
-              className={"col-md-6 mb-0 text-white"}
-              userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}
-            />
+
+          <div className="team-section m-3">
+            <h3 className="sub-title">{t("meetTheTeam")}</h3>
+            <div className="row text-center justify-content-center">
+              <Author
+                  rating={4.5}
+                  className="col-md-4 mb-4"
+                  userId={"uSXH49YHlzT8vjQ94ZuJTOz351m2"}
+              />
+              <Author
+                  rating={5}
+                  className="col-md-4 mb-4"
+                  userId={"gbK4OvgKbyYDfYCfIjboOqjA9Yv1"}
+              />
+              <Author
+                  rating={4}
+                  className="col-md-4 mb-4"
+                  userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}
+              />
+              <Author
+                  rating={4}
+                  className="col-md-4 mb-4"
+                  userId={"mmQTo2rdEDZ7YsnpJn15gCuaWz93"}
+              />
+              <Author
+                  rating={4}
+                  className="col-md-4 mb-4"
+                  userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}
+              />
+              <Author
+                  rating={4}
+                  className="col-md-4 mb-4"
+                  userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-    </>
-    
+      </section>
   );
 };
 
