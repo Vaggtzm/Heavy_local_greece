@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Heavy_local_greece.iml" filepath="$PROJECT_DIR$/.idea/Heavy_local_greece.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../orange/.idea/orange.iml" filepath="$PROJECT_DIR$/../orange/.idea/orange.iml" />
     </modules>
   </component>
 </project>
