@@ -512,9 +512,9 @@ const sendNotofication = async (object) => {
         // Check if the uploaded file is under the 'articles' directory
         const filePath = object.name; // Full path of the uploaded file in Firebase Storage
         if (!filePath.startsWith("articles/")) {
-            console.log(
+            /**console.log(
                 'Uploaded file is not in the "articles" directory. Skipping...'
-            );
+            );**/
             return null;
         }
 
@@ -551,7 +551,7 @@ const sendNotofication = async (object) => {
             try {
                 await admin.messaging().send(message);
             } catch (error) {
-                console.error("Error sending notification to token:", token, error);
+                //console.error("Error sending notification to token:", token, error);
                 // If sending fails due to an error, delete the token from Realtime Database
                 const tokenRef = database.ref(`deviceTokens/${token}`);
                 deleteTokensPromises.push(tokenRef.remove());
@@ -1245,3 +1245,41 @@ async function updateRedirectList() {
         console.error('Error updating redirect list in Cloudflare:', error.response ? error.response.data : error.message);
     }
 }
+
+
+
+exports.createRoom = functions.https.onRequest(async (req, res) => {
+    const newRoomId = "test"
+    const roomRef = admin.database().ref(`/rooms/${newRoomId}`);
+    try {
+        await roomRef.set({
+            createdAt: new Date(),
+            ...req.body
+        });
+        return res.json({ roomId: newRoomId });
+    } catch (error) {
+        return res.status(500).send('Error creating room');
+    }
+});
+
+exports.getMeetingInfo = functions.https.onRequest(async (req, res) => {
+    const meetingId = req.query.meetingId;
+
+    if (!meetingId) {
+        return res.status(400).send('Meeting ID is required');
+    }
+
+    const meetingRef = admin.database().ref(`/meetings/${meetingId}`);
+    try {
+        const snapshot = await meetingRef.once('value');
+        const meetingInfo = snapshot.val();
+
+        if (meetingInfo) {
+            res.status(200).json(meetingInfo);
+        } else {
+            res.status(404).send('Meeting not found');
+        }
+    } catch (error) {
+        res.status(500).send('Error retrieving meeting info');
+    }
+});
