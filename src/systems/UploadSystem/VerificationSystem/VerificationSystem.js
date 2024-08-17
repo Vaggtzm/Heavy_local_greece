@@ -1,5 +1,5 @@
 import {deleteObject, getDownloadURL, ref as storageRef, uploadString} from 'firebase/storage';
-import {child, get, ref as databaseRef, remove, update} from 'firebase/database';
+import {child, get, orderByChild, query, ref as databaseRef, remove, update} from 'firebase/database';
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'react-bootstrap';
 import ReactQuill from 'react-quill';
@@ -49,6 +49,9 @@ const FirebaseFileList = () => {
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
 
+    const [adminUids, setAdminUids] = useState([]);
+    const [leadersUids, setLeadersUids] = useState([]);
+
 
     const sendPushoverNotification = httpsCallable(functions, 'sendPushoverNotification');
 
@@ -58,10 +61,37 @@ const FirebaseFileList = () => {
             handleAuthorTest(user, (user) => {
             }, navigate);
         });
-        get(rolesRef).then((snapshot) => {
+        get(rolesRef).then(async (snapshot) => {
             const roles = snapshot.val();
             const userList = roles.admin || [];
             const leaderList = roles.authorLeader || [];
+
+            const authorsRef = databaseRef(database, 'authors');
+            const authorsSnapshot = await get(authorsRef);
+            const authorsData = authorsSnapshot.val();
+
+            const adminUids = userList.map(email => {
+                for (const uid in authorsData) {
+                    if (authorsData[uid].email === email) {
+                        return uid;
+                    }
+                }
+                return null; // Return null if no match is found
+            });
+
+            setAdminUids(adminUids.filter(uid => uid !== null));
+
+            const leaderUids = leaderList.map(email => {
+                for (const uid in authorsData) {
+                    if (authorsData[uid].email === email) {
+                        return uid;
+                    }
+                }
+                return null; // Return null if no match is found
+            });
+
+            setLeadersUids(leaderUids.filter(uid => uid !== null));
+
 
             auth.onAuthStateChanged((user) => {
                 setUser(user);
@@ -146,20 +176,25 @@ const FirebaseFileList = () => {
             const fileRef = storageRef(storage, `${selectedFile.folder}/${selectedFile.name}.json`);
             console.log(`${selectedFile.folder}/${selectedFile.name}`)
             const updatedContent = fileData.content.replaceAll('<p>', "<p class='lead'>").replaceAll('<img', "<img class='img-fluid'");
-            console.log(fileData);
+            console.log("fileData", fileData);
             await uploadString(fileRef, JSON.stringify({...fileData, content: updatedContent, authorApproved: (user.uid===author)}));
 
             setAuthorName('');
             setSocials({});
             setShowModal(false);
 
-            sendPushoverNotification({ uid:"VSGMmP7o4DWwimc0tZjHC02487B3", title:"test", message:"Article Was saved"}).then((result) => {
-                const data = result.data;
-                if (data.success) {
-                    console.log("Notification sent successfully:", data.message);
-                } else {
-                    console.error("Error sending notification:", data.message);
-                }
+            if(leader) {
+                sendNotification(fileData.sub)
+            }
+
+            if(!leader){
+                leadersUids.forEach((uid)=>{
+                    sendNotification(uid);
+                })
+            }
+
+            adminUids.forEach(uid => {
+                sendNotification(uid);
             })
 
             alert('Changes saved successfully!');
@@ -167,6 +202,22 @@ const FirebaseFileList = () => {
             setError('Error saving file data: ' + error.message);
         }
     };
+
+    const sendNotification = (userId)=>{
+        sendPushoverNotification({
+            uid: userId,
+            title: `Article edited`,
+            message: `Your article was edited by ${user.displayName} and is now ready for review by you.`,
+            url:"https://pulse-of-the-underground.com/upload/admin"
+        }).then((result) => {
+            const data = result.data;
+            if (data.success) {
+                console.log("Notification sent successfully:", data.message);
+            } else {
+                console.error("Error sending notification:", data.message);
+            }
+        })
+    }
 
     const handleChange = (e, field, isObject) => {
         let {value} = e.target;
@@ -403,7 +454,7 @@ const FirebaseFileList = () => {
 // Function to render category cards
         function renderCategoryCards(articles) {
             return (
-                <div className="row row-cols-1 row-cols-md-3 g-4">
+                <div className="row g-4">
                     {articles.map((file, index) => (
                         <div key={index} className="col-auto">
                             {renderArticleCard(file, isAlreadyPublished, isEarlyReleased)}
@@ -419,7 +470,7 @@ const FirebaseFileList = () => {
             const cardTitle = file.title || 'Untitled';
 
             return (
-                <Card className={`col-3 m-3 ${
+                <Card className={`col-md-3 col-11 m-3 ${
                     file.isReady
                         ?'bg-success': file.authorApproved
                             ? 'blink-bg': 'bg-dark'
