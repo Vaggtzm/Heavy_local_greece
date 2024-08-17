@@ -5,11 +5,12 @@ import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'reac
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./form-control.css";
-import {auth, database, isDev, storage} from '../../../firebase';
+import {auth, database, functions, isDev, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {categories, deleteImage, fetchFiles, getRef, handleAuthorTest} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
+import {httpsCallable} from "firebase/functions";
 
 
 const FirebaseFileList = () => {
@@ -47,6 +48,9 @@ const FirebaseFileList = () => {
     const [showToast, setShowToast] = useState(false);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+
+
+    const sendPushoverNotification = httpsCallable(functions, 'sendPushoverNotification');
 
     useEffect(() => {
         const rolesRef = databaseRef(database, '/roles');
@@ -148,6 +152,15 @@ const FirebaseFileList = () => {
             setAuthorName('');
             setSocials({});
             setShowModal(false);
+
+            sendPushoverNotification({ uid:"VSGMmP7o4DWwimc0tZjHC02487B3", title:"test", message:"Article Was saved"}).then((result) => {
+                const data = result.data;
+                if (data.success) {
+                    console.log("Notification sent successfully:", data.message);
+                } else {
+                    console.error("Error sending notification:", data.message);
+                }
+            })
 
             alert('Changes saved successfully!');
         } catch (error) {
