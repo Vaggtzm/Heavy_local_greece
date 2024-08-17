@@ -1283,3 +1283,31 @@ exports.getMeetingInfo = functions.https.onRequest(async (req, res) => {
         res.status(500).send('Error retrieving meeting info');
     }
 });
+
+
+exports.sendPushoverNotification = functions.https.onRequest(async (req, res) => {
+    const message = req.body.message || "Default message";
+    const title = req.body.title || "Default title";
+    const url = req.body.url || "";
+    const urlTitle = req.body.urlTitle || "";
+
+    try {
+        const response = await axios.post("https://api.pushover.net/1/messages.json", {
+            token: process.env.PUSHOVER_API_TOKEN,
+            user: process.env.PUSHOVER_USER_KEY,
+            message: message,
+            title: title,
+            url: url,
+            url_title: urlTitle,
+        });
+
+        if (response.status === 200) {
+            res.status(200).send("Notification sent successfully via Pushover");
+        } else {
+            res.status(response.status).send("Failed to send notification");
+        }
+    } catch (error) {
+        console.error("Error sending Pushover notification:", error);
+        res.status(500).send("Error sending notification");
+    }
+});
