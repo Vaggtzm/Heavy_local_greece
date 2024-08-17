@@ -27,6 +27,7 @@ const UserProfile = () => {
     const [profileImageUrl, setProfileImageUrl] = useState(user?.photoURL || '');
     const [userRef, setUserRef] = useState(null);
     const [isAuthor, setIsAuthor] = useState(false);
+    const [pushOver, setPushOver] = useState("");
 
     const navigate = useNavigate();
 
@@ -61,6 +62,7 @@ const UserProfile = () => {
 
             if (userstore.exists()) {
                 const userData = userstore.val();
+                setPushOver(userData.pushoverApiKey?userData.pushoverApiKey:"");
                 if (!userData.wantToShow) {
                     userData.wantToShow = false;
                 } else {
@@ -168,10 +170,10 @@ const UserProfile = () => {
             <div style={{color: '#fff'}}>
                 <h2 className="row d-flex text-white">
                     <p className="col-4 h1">{t('userProfile')}</p>
-                    {/*<div className={"col-3"}>
-                        <Button onClick={handleLogoutAllDevices} size={"small"} type={"danger"}>Log Out Of All
+                    <div className={"col-3"}>
+                        <Button onClick={handleLogoutAllDevices} size={"small"} variant={"danger"}>Log Out Of All
                             Devices</Button>
-                    </div>*/}
+                    </div>
                     {isAuthor&&<Form className="col d-flex justify-content-end">
                         <Form.Check
                             type="switch"
@@ -189,7 +191,7 @@ const UserProfile = () => {
                 </h2>
                 {error && <Alert variant="danger">{error}</Alert>}
                 {successMessage && <Alert variant="success">{successMessage}</Alert>}
-                <Form onSubmit={handleUpdateProfile}>
+                <Form className={"mb-5"} onSubmit={handleUpdateProfile}>
                     <Form.Group controlId="displayName">
                         <Form.Label>{t('displayName')}</Form.Label>
                         <Form.Control
@@ -216,10 +218,27 @@ const UserProfile = () => {
                             style={{backgroundColor: '#333', color: '#fff'}}
                         />
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className={"mt-3"} variant="primary" type="submit">
                         {t('updateProfile')}
                     </Button>
                 </Form>
+
+                <Form.Group className={"mb-5"} controlId="pushOver">
+                    <Form.Label column={"lg"}>PushOver user key (it updates as you press buttons. No need to save)</Form.Label>
+                    <Form.Control
+                        type="text"
+                        onChange={(e)=>{
+                            console.log(e.target.value);
+                            setPushOver(e.target.value)
+                            update(userRef, {
+                                pushoverApiKey: e.target.value
+                            }).then()
+                        }}
+                        value={pushOver}
+                        style={{backgroundColor: '#333', color: '#fff'}}
+                    />
+                </Form.Group>
+
                 <Form onSubmit={handleUpdatePassword}>
                     <Form.Group controlId="currentPassword">
                         <Form.Label>{t('currentPassword')}</Form.Label>
