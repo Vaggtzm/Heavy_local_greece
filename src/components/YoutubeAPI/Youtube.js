@@ -6,7 +6,7 @@ const Youtube = () => {
     const [videos, setVideos] = useState([]);
 
     useEffect(() => {
-        const ApiKey = 'AIzaSyB_yibCKiMw14KPhwhsin7VnqHPLnZdE_o';
+        const ApiKey = 'AIzaSyD9qgA2uTEAwnF3btTBz8M088EXk9D0XiQ';
         const ChannelID = 'UCH6ADxBFyVUsiazyICRz2sQ';
         const fetchData = async () => {
             try {
@@ -19,26 +19,28 @@ const Youtube = () => {
             }
 
         }
-        fetchData();
+        fetchData().then();
     }, []); // Empty dependency array to run the effect only once
     return (
-        <div>
-            <h1 className="mb-4">YouTube Channel Videos</h1>
+        <div className={"container mt-5"}>
+            <h1 className="mb-4 text-white text-center">YouTube Channel Videos</h1>
             <div className="row">
-                {videos.map(video => (
-                    <div className="col-md-4 mb-3" key={video.id.videoId}>
-                        <div className="card p-2 w-100">
-                            <img className="card-img-top w-100 " src={video.snippet.thumbnails.default.url}
+                {videos.map((video) =>  {
+                    console.log(video.snippet.thumbnails);
+                    return(
+                    <div className="col-md-4 col-12 mb-3" key={video.id.videoId}>
+                        <div className="card p-2 w-100 bg-dark text-white border-0 shadow-lg">
+                            <img className="card-img-top w-100 " src={video.snippet.thumbnails.high.url}
                                  alt="Thumbnail"/>
                             <div className="card-body">
                                 <h5 className="card-title">{video.snippet.title}</h5>
                                 <p className="card-text">{video.snippet.description}</p>
-                                <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                                <a rel={"noreferrer"} href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                                    className="btn btn-primary" target="_blank">Watch Video</a>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    </div>)
+                })}
             </div>
         </div>
     );
