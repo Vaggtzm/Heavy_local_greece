@@ -23,7 +23,7 @@ const Youtube = () => {
     }, []); // Empty dependency array to run the effect only once
     return (
         <div className={"container mt-5"}>
-            <h1 className="mb-4 text-white">YouTube Channel Videos</h1>
+            <h1 className="mb-4 text-white text-center">YouTube Channel Videos</h1>
             <div className="row">
                 {videos.map((video) =>  {
                     console.log(video.snippet.thumbnails);
@@ -35,7 +35,7 @@ const Youtube = () => {
                             <div className="card-body">
                                 <h5 className="card-title">{video.snippet.title}</h5>
                                 <p className="card-text">{video.snippet.description}</p>
-                                <a href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                                <a rel={"noreferrer"} href={`https://www.youtube.com/watch?v=${video.id.videoId}`}
                                    className="btn btn-primary" target="_blank">Watch Video</a>
                             </div>
                         </div>

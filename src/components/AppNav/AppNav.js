@@ -107,6 +107,9 @@ const AppNavigation = ({menuVisible}) => {
                             </NavDropdown>
 
 
+                            <NavLink to={"/youtube"}
+                                     className='nav-link text-white'>YouTube Videos</NavLink>
+
                             <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
                             <NavLink to={"/gigs"} className='nav-link text-white'>Gigs</NavLink>
                             <NavLink to={"/ads"} className='nav-link text-white'>Ads By You</NavLink>
