@@ -40,6 +40,8 @@ const GigDetailPage = lazy(() => import("./pages/GigsPage/GigDetailPage"));
 const AdsPage = lazy(() => import("./systems/ads/AdsPage"));
 const ReportedCommentsContainer = lazy(() => import("./pages/CommentReportSystem/ReportedCommentsContainer"));
 
+ const Youtube = lazy(() => import("./components/YoutubeAPI/Youtube"));
+
 function App() {
     const [menuVisible, setMenuVisible] = useState(false);
     const placeholderRef = useRef(null);
@@ -157,6 +159,7 @@ function App() {
                 <Route path="gigs/:date" element={<Suspense fallback={<div>Loading...</div>}><GigDetailPage /></Suspense>} />
                 <Route path="ads" element={<Suspense fallback={<div>Loading...</div>}><AdsPage /></Suspense>} />
                 <Route path="admin/comments" element={<Suspense fallback={<div>Loading...</div>}><ReportedCommentsContainer /></Suspense>} />
+                <Route path="youtube" element={<Suspense fallback={<div>Loading...</div>}><Youtube /></Suspense>} />
             </Route>
         );
     };
