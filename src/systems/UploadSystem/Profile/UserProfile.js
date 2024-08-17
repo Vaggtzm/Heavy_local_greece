@@ -223,11 +223,12 @@ const UserProfile = () => {
                     </Button>
                 </Form>
 
-                <Form.Group className={"mb-5"} controlId="pushOver">
-                    <Form.Label column={"lg"}>PushOver user key (it updates as you press buttons. No need to save)</Form.Label>
+                {isAuthor&&<Form.Group className={"mb-5"} controlId="pushOver">
+                    <Form.Label column={"lg"}>PushOver user key (it updates as you press buttons. No need to
+                        save)</Form.Label>
                     <Form.Control
                         type="text"
-                        onChange={(e)=>{
+                        onChange={(e) => {
                             console.log(e.target.value);
                             setPushOver(e.target.value)
                             update(userRef, {
@@ -237,7 +238,7 @@ const UserProfile = () => {
                         value={pushOver}
                         style={{backgroundColor: '#333', color: '#fff'}}
                     />
-                </Form.Group>
+                </Form.Group>}
 
                 <Form onSubmit={handleUpdatePassword}>
                     <Form.Group controlId="currentPassword">
