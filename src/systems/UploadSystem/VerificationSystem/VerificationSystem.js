@@ -8,7 +8,7 @@ import "./form-control.css";
 import {auth, database, isDev, sendPushoverNotification, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
-import {categories, deleteImage, fetchFiles, getRef, handleAuthorTest} from "../articleData/articleData";
+import {categories, deleteImage, fetchFiles, getRef, handleAuthorTest, setUids} from "../articleData/articleData";
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 import {httpsCallable} from "firebase/functions";
 
@@ -55,43 +55,21 @@ const FirebaseFileList = () => {
 
 
 
+
+
     useEffect(() => {
-        const rolesRef = databaseRef(database, '/roles');
         auth.onAuthStateChanged((user) => {
             handleAuthorTest(user, (user) => {
             }, navigate);
         });
+        const rolesRef = databaseRef(database, '/roles');
         get(rolesRef).then(async (snapshot) => {
             const roles = snapshot.val();
             const userList = roles.admin || [];
             const leaderList = roles.authorLeader || [];
 
-            const authorsRef = databaseRef(database, 'authors');
-            const authorsSnapshot = await get(authorsRef);
-            const authorsData = authorsSnapshot.val();
 
-            const adminUids = userList.map(email => {
-                for (const uid in authorsData) {
-                    if (authorsData[uid].email === email) {
-                        return uid;
-                    }
-                }
-                return null; // Return null if no match is found
-            });
-
-            setAdminUids(adminUids.filter(uid => uid !== null));
-
-            const leaderUids = leaderList.map(email => {
-                for (const uid in authorsData) {
-                    if (authorsData[uid].email === email) {
-                        return uid;
-                    }
-                }
-                return null; // Return null if no match is found
-            });
-
-            setLeadersUids(leaderUids.filter(uid => uid !== null));
-
+            setUids(userList, leaderList, setAdminUids, setLeadersUids  );
 
             auth.onAuthStateChanged((user) => {
                 setUser(user);

@@ -241,3 +241,31 @@ export const categories =  [
     "Latest Reviews(IT)",
     "Legends"
 ]
+
+export const setUids= async (userList, leaderList, setAdminUids, setLeadersUids)=>{
+    const authorsRef = databaseRef(database, 'authors');
+    const authorsSnapshot = await get(authorsRef);
+    const authorsData = authorsSnapshot.val();
+
+    const adminUids = userList.map(email => {
+        for (const uid in authorsData) {
+            if (authorsData[uid].email === email) {
+                return uid;
+            }
+        }
+        return null; // Return null if no match is found
+    });
+
+    setAdminUids(adminUids.filter(uid => uid !== null));
+
+    const leaderUids = leaderList.map(email => {
+        for (const uid in authorsData) {
+            if (authorsData[uid].email === email) {
+                return uid;
+            }
+        }
+        return null; // Return null if no match is found
+    });
+
+    setLeadersUids(leaderUids.filter(uid => uid !== null));
+}
