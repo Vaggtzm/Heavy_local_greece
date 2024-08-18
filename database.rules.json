@@ -32,12 +32,14 @@
       ".indexOn": "token"
     },
     "authors": {
-      "notifications": {
-        ".read": "auth != null && auth.uid === $uid",
-        ".write": false
-      },
-      ".read": true,
-      ".write": "auth != null && auth.uid === $uid"
+      "$uid": {
+        "notifications": {
+          ".read": "auth != null && auth.uid === $uid",
+          ".write": false
+        },
+        ".read": true,
+        ".write": "auth != null && auth.uid === $uid"
+      }
     },
     "ads": {
       ".read": true,
