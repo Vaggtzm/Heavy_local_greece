@@ -1315,7 +1315,7 @@ exports.sendPushoverNotification = functions.https.onCall(async (data, context) 
 
         const notificationUserRef =  database.ref(`/authors/${uid}/notifications`);
 
-        notificationUserRef.push({...pushoverPayload, date:new Date()});
+        notificationUserRef.push({...pushoverPayload, sentOn:new Date()});
 
         // Check if the user has a Pushover API key
         if (!userData.pushoverApiKey) {

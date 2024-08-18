@@ -19,39 +19,55 @@
  * SOFTWARE.
  */
 
-import React, { useState, useEffect } from 'react';
-import { getDatabase, ref, onValue, update } from 'firebase/database';
-import { ListGroup, Container, Badge } from 'react-bootstrap';
-import './NotificationsPage.css'; // Import custom CSS
+import React, {useEffect, useState} from 'react';
+import {get, getDatabase, onValue, ref, update} from 'firebase/database';
+import {Badge, Container, ListGroup} from 'react-bootstrap';
+import './NotificationsPage.css';
+import {auth} from "../../firebase"; // Import custom CSS
 
-const NotificationsPage = ({ uid }) => {
+const NotificationsPage = () => {
     const [notifications, setNotifications] = useState([]);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        const db = getDatabase();
-        const notificationUserRef = ref(db, `/authors/${uid}/notifications`);
+        return auth.onAuthStateChanged((user) => {
+            setUser(user);
+        });
+    }, []);
 
-        onValue(notificationUserRef, (snapshot) => {
+
+    useEffect(() => {
+        if(!user){
+            return ;
+        }
+        const db = getDatabase();
+        const notificationUserRef = ref(db, `/authors/${user.uid}/notifications`);
+
+        get(notificationUserRef).catch((error) => {
+            alert(error);
+        })
+
+        return onValue(notificationUserRef, (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 const notificationList = Object.entries(data)
                     .map(([id, notification]) => ({
                         id,
                         ...notification,
-                        date: new Date(notification.date),
+                        sentOn: new Date(notification.sentOn),
                     }))
                     .sort((a, b) => b.date - a.date);
 
                 setNotifications(notificationList);
             }
         });
-    }, [uid]);
+    }, [user]);
 
     const markAsRead = (notificationId) => {
         const db = getDatabase();
-        const notificationRef = ref(db, `/authors/${uid}/notifications/${notificationId}`);
+        const notificationRef = ref(db, `/authors/${user.uid}/notifications/${notificationId}`);
 
-        update(notificationRef, { read: true });
+        update(notificationRef, {read: true}).then();
     };
 
     return (
@@ -68,7 +84,7 @@ const NotificationsPage = ({ uid }) => {
                             <div>
                                 <h5 className="mb-1">{notification.title}</h5>
                                 <p className="mb-1">{notification.message}</p>
-                                <small className="text-muted">{notification.date.toLocaleString()}</small>
+                                <small className="text-muted">{notification.sentOn.toLocaleString()}</small>
                             </div>
                             {!notification.read && <Badge bg="primary" className="align-self-start">New</Badge>}
                         </div>
