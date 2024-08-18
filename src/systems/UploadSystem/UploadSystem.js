@@ -1,18 +1,19 @@
 import React, {lazy, Suspense, useCallback, useEffect, useMemo, useState, startTransition} from 'react';
 import {Alert, Button, Col, Form, Row, Spinner} from 'react-bootstrap';
 import {ref, uploadBytes, uploadString} from 'firebase/storage';
-import {auth, config, storage} from '../../firebase';
+import {auth, config, database, sendPushoverNotification, storage} from '../../firebase';
 import {getIdTokenResult, signOut} from 'firebase/auth';
 import {fetchAndActivate, getValue} from 'firebase/remote-config';
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../../components/LanguageWrapper/Navigation";
-import {getImageDimensions, handleAuthorTest} from "./articleData/articleData";
+import {getImageDimensions, handleAuthorTest, setUids} from "./articleData/articleData";
 import 'react-quill/dist/quill.snow.css';
 import './quill-custom.css';
 import ImageUploader from 'quill-image-uploader';
 import ReactQuill from "react-quill";
 import ImageUpload from "./components/fancyImage/ImageUpload";
 import CategoryDropdown from "./components/CategoryDropdown/CategoryDropdown";
+import {get, ref as databaseRef} from "firebase/database";
 
 
 const ArticleUpload = () => {
@@ -35,6 +36,9 @@ const ArticleUpload = () => {
         youtube: ''
     });
 
+    const [adminUids, setAdminUids] = useState([]);
+    const [leadersUids, setLeadersUids] = useState([]);
+
     const categories = useMemo(() => [
         "Top News",
         "General News",
@@ -48,6 +52,18 @@ const ArticleUpload = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        const rolesRef = databaseRef(database, '/roles');
+        get(rolesRef).then(async (snapshot) => {
+            const roles = snapshot.val();
+            const userList = roles.admin || [];
+            const leaderList = roles.authorLeader || [];
+            setUids(userList, leaderList, setAdminUids, setLeadersUids).then();
+        });
+
+
+
+
         try {
             fetchAndActivate(config).then(() => {
                 const serverLanguages = getValue(config, "languages").asString();
@@ -62,13 +78,33 @@ const ArticleUpload = () => {
         });
 
         return () => unsubscribe();
-    }, [navigate]);
+    }, []);
+
+
 
     const replaceSpecialCharsWithDashes = useCallback((text) => {
         // Replace all characters that are not letters, digits, or spaces with a dash
         const regex = /[^\p{L}\p{N} ]/gu;
         return text.replace(regex, '-').replace(/-+/g, '-');
     }, []);
+
+
+    const sendNotification = (userId)=>{
+        sendPushoverNotification({
+            uid: userId,
+            title: `Article uploaded`,
+            message: `A new article was uploaded by ${currentUser.displayName} and is now ready for review by you.`,
+            url:"https://pulse-of-the-underground.com/upload/admin"
+        }).then((result) => {
+            const data = result.data;
+            if (data.success) {
+                console.log("Notification sent successfully:", data.message);
+            } else {
+                console.error("Error sending notification:", data.message);
+            }
+        })
+    }
+
 
     const handleArticleSubmit = async (e) => {
         e.preventDefault();
@@ -124,6 +160,16 @@ const ArticleUpload = () => {
             setSubmitSuccess(true);
             setSubmitError(null);
             setCategory("");
+
+
+            leadersUids.forEach((uid)=>{
+                sendNotification(uid);
+            })
+            adminUids.forEach(uid => {
+                sendNotification(uid);
+            })
+
+
         } catch (error) {
             console.error('Error submitting article:', error.message);
             setSubmitError('Error submitting article. Please try again.\n' + error.message);

@@ -676,6 +676,30 @@ const removeAuthorArticle = async (directory, category, author, articleName) => 
     }
 };
 
+const getAdminUids = async (role) => {
+    // Reference to the 'roles/admin' node in the Realtime Database
+    const rolesRef = admin.database().ref(`roles/${role}`);
+    const rolesSnapshot = await rolesRef.once('value');
+    const adminEmails = rolesSnapshot.val() || [];
+
+    // Reference to the 'authors' node in the Realtime Database
+    const authorsRef = admin.database().ref('authors');
+    const authorsSnapshot = await authorsRef.once('value');
+    const authorsData = authorsSnapshot.val() || {};
+
+    // Create a mapping of email to UID
+    const emailToUidMap = {};
+    for (const uid in authorsData) {
+        if (authorsData[uid].email) {
+            emailToUidMap[authorsData[uid].email] = uid;
+        }
+    }
+
+    // Get UIDs for all admin emails
+    return adminEmails.map(email => emailToUidMap[email] || null);
+};
+
+
 exports.handleNewArticle = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
@@ -1286,7 +1310,8 @@ exports.getMeetingInfo = functions.https.onRequest(async (req, res) => {
 
 const apiKey = functions.config().pushover.key
 
-exports.sendPushoverNotification = functions.https.onCall(async (data, context) => {
+
+const sendNotification = async (data, context) => {
     const { uid, title, message, url, urlTitle } = data;
 
     if (!uid || !title || !message) {
@@ -1334,4 +1359,6 @@ exports.sendPushoverNotification = functions.https.onCall(async (data, context) 
         console.error("Error sending Pushover notification:", error);
         return { success: false, message: "Error sending notification: " + error.message };
     }
-});
+}
+
+exports.sendPushoverNotification = functions.https.onCall(sendNotification);
