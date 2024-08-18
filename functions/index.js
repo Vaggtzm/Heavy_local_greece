@@ -1295,17 +1295,12 @@ exports.sendPushoverNotification = functions.https.onCall(async (data, context) 
 
     try {
         // Fetch the user data from the Realtime Database
-        const userRef = admin.database().ref(`/authors/${uid}`);
+        const userRef = database.ref(`/authors/${uid}`);
         const snapshot = await userRef.once('value');
         const userData = snapshot.val();
 
         if (!userData) {
             return { success: false, message: "User not found." };
-        }
-
-        // Check if the user has a Pushover API key
-        if (!userData.pushoverApiKey) {
-            return { success: false, message: "User does not have a Pushover API key." };
         }
 
         // Prepare the Pushover notification payload
@@ -1317,6 +1312,15 @@ exports.sendPushoverNotification = functions.https.onCall(async (data, context) 
             url: url || "",                  // Optional URL
             url_title: urlTitle || ""         // Optional URL title
         };
+
+        const notificationUserRef =  database.ref(`/authors/${uid}/notifications`);
+
+        notificationUserRef.push({...pushoverPayload, date:new Date()});
+
+        // Check if the user has a Pushover API key
+        if (!userData.pushoverApiKey) {
+            return { success: false, message: "User does not have a Pushover API key." };
+        }
 
         // Send the notification via Pushover
         const response = await axios.post("https://api.pushover.net/1/messages.json", pushoverPayload);
