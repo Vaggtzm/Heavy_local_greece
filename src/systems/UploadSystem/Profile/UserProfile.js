@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Form} from 'react-bootstrap';
-import {auth, database, functions, storage} from '../../../firebase';
+import {auth, database, functions, sendPushoverNotification, storage} from '../../../firebase';
 import {
     EmailAuthProvider,
     getIdTokenResult,
@@ -239,7 +239,27 @@ const UserProfile = () => {
                         value={pushOver}
                         style={{backgroundColor: '#333', color: '#fff'}}
                     />
-                    <PushoverSetupModal />
+                    <div className={"row mt-3"}>
+                        <div className={"col-6 d-flex justify-content-center"}>
+                            <PushoverSetupModal/>
+                        </div>
+                        <div className={"col-6 d-flex justify-content-center"}>
+                            <Button variant={"secondary"} onClick={() => {
+                                sendPushoverNotification({
+                                    uid: user.uid,
+                                    title: `Test Notification`,
+                                    message: `This is a test notification to verify that the notifications are working as exxpected`
+                                }).then((result) => {
+                                    const data = result.data;
+                                    if (data.success) {
+                                        alert(data.message);
+                                    } else {
+                                        alert(data.message);
+                                    }
+                                })
+                            }}>Test Notification</Button>
+                        </div>
+                    </div>
                 </Form.Group>}
 
                 <Form onSubmit={handleUpdatePassword}>

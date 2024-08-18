@@ -6,7 +6,7 @@ import {getMessaging} from 'firebase/messaging';
 import {initializeAppCheck, ReCaptchaV3Provider} from 'firebase/app-check';
 import {connectStorageEmulator, getStorage} from 'firebase/storage';
 import {getRemoteConfig} from 'firebase/remote-config';
-import {connectFunctionsEmulator, getFunctions} from 'firebase/functions';
+import {connectFunctionsEmulator, getFunctions, httpsCallable} from 'firebase/functions';
 import {connectFirestoreEmulator, getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -58,6 +58,11 @@ if (isDev&&useEmulators) {
     connectFunctionsEmulator(functions, "localhost", 8443);
 }
 
+const sendPushoverNotification = httpsCallable(functions, 'sendPushoverNotification');
+
+
+
+
 export {
     app,
     config,
@@ -67,5 +72,6 @@ export {
     auth,
     database,
     functions,
-    firebaseMessaging as messaging
+    firebaseMessaging as messaging,
+    sendPushoverNotification,
 };
