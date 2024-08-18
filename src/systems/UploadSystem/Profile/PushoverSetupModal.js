@@ -13,7 +13,9 @@ const PushoverSetupModal = () => {
                 How to Setup Pushover
             </Button>
 
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal style={{
+                zIndex: 9999
+            }} show={show} onHide={handleClose} centered>
                 <Modal.Header style={{ backgroundColor: '#2c2c2c', color: '#ffffff' }}>
                     {/* X Button for Closing at the Top-Right */}
                     <Button
