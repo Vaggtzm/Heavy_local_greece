@@ -6,7 +6,7 @@ import { onValue, ref } from 'firebase/database';
 import './Observer.css';
 import NavLink from '../LanguageWrapper/NavLink';
 import useNavigate from '../LanguageWrapper/Navigation';
-import InstallButton from "../PWAinstal/pwaInstall";
+import InstallButton from '../PWAinstal/pwaInstall';
 
 const AppNavigation = ({ menuVisible }) => {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -89,7 +89,7 @@ const AppNavigation = ({ menuVisible }) => {
         <Navbar expand="lg" className={`sticky-top ${menuVisible ? 'visible' : 'hidden'}`} variant="dark"
                 style={{ backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 99999 }}>
             <Container fluid>
-                <NavLink to={(loggedIn) ? '/User/home' : '/'} className="navbar-brand">
+                <NavLink to={loggedIn ? '/User/home' : '/'} className="navbar-brand">
                     <img
                         src="https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"
                         className="img-fluid rounded-circle"
@@ -100,7 +100,7 @@ const AppNavigation = ({ menuVisible }) => {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse style={{ flexFlow: 'column' }} id="basic-navbar-nav">
                     <Nav className="d-flex align-items-center justify-content-evenly w-100 table-hover">
-                        <NavLink to={(loggedIn) ? '/User/home' : '/'} className="nav-link text-white">
+                        <NavLink to={loggedIn ? '/User/home' : '/'} className="nav-link text-white">
                             Home
                         </NavLink>
 
@@ -121,40 +121,46 @@ const AppNavigation = ({ menuVisible }) => {
                         <NavLink to="/gigs" className="nav-link text-white">Gigs</NavLink>
                         <NavLink to="/ads" className="nav-link text-white">Ads By You</NavLink>
 
-                        <NavDropdown data-bs-theme="dark" className="text-white" title={
-                            <div className="profile-badge-container">
-                                <img src={profilePic} alt="Profile" className="profile-image"/>
-                                {unreadNotificationsCount > 0 &&
-                                    <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
-                            </div>
-                        } align="end" menuClassName="nav-dropdown-menu">
-                            <NavDropdown.Item as={NavLink} to="/profile" className="text-white">
-                                <strong>{displayName}</strong>
-                            </NavDropdown.Item>
-                            <NavDropdown.Item as={NavLink} to="/notifications" className="text-white">
-                                Notifications {unreadNotificationsCount > 0 && <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={() => signOut(auth).then(() => navigate("/"))} className="text-danger">
-                                Sign Out
-                            </NavDropdown.Item>
-                        </NavDropdown>
+                        {loggedIn ? (
+                            <>
+                                <NavDropdown data-bs-theme="dark" className="text-white" title={
+                                    <div className="profile-badge-container">
+                                        <img src={profilePic} alt="Profile" className="profile-image"/>
+                                        {unreadNotificationsCount > 0 &&
+                                            <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
+                                    </div>
+                                } align="end" menuClassName="nav-dropdown-menu">
+                                    <NavDropdown.Item as={NavLink} to="/profile" className="text-white">
+                                        <strong>{displayName}</strong>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item as={NavLink} to="/notifications" className="text-white">
+                                        Notifications {unreadNotificationsCount > 0 && <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Divider />
+                                    <NavDropdown.Item onClick={() => signOut(auth).then(() => navigate("/"))} className="text-danger">
+                                        Sign Out
+                                    </NavDropdown.Item>
+                                </NavDropdown>
 
-                        <InstallButton/>
+                                <InstallButton/>
 
-                        {(isAdmin || isLeader || isCommentAdmin || isAuthor) &&
-                            <NavDropdown data-bs-theme="dark" className="text-white" title="Administration" menuClassName="nav-dropdown-menu">
-                                {isCommentAdmin && (
-                                    <NavLink to="/admin/comments" className="nav-link text-white">Reported Comments</NavLink>
-                                )}
-                                {isAdmin &&
-                                    <NavLink to="/admin" className="nav-link text-white">User Administration</NavLink>
+                                {(isAdmin || isLeader || isCommentAdmin || isAuthor) &&
+                                    <NavDropdown data-bs-theme="dark" className="text-white" title="Administration" menuClassName="nav-dropdown-menu">
+                                        {isCommentAdmin && (
+                                            <NavLink to="/admin/comments" className="nav-link text-white">Reported Comments</NavLink>
+                                        )}
+                                        {isAdmin &&
+                                            <NavLink to="/admin" className="nav-link text-white">User Administration</NavLink>
+                                        }
+                                        {(isAdmin || isLeader || isAuthor) &&
+                                            <NavLink to="/upload/admin" className="nav-link text-white">Admin Dashboard</NavLink>
+                                        }
+                                    </NavDropdown>
                                 }
-                                {(isAdmin || isLeader || isAuthor) &&
-                                    <NavLink to="/upload/admin" className="nav-link text-white">Admin Dashboard</NavLink>
-                                }
-                            </NavDropdown>
-                        }
+                            </>
+                        ) : (
+                            <Button variant="outline-light" onClick={() => navigate('/User/login')}>Log In</Button>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

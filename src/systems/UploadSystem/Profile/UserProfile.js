@@ -248,7 +248,7 @@ const UserProfile = () => {
                                 sendPushoverNotification({
                                     uid: user.uid,
                                     title: `Test Notification`,
-                                    message: `This is a test notification to verify that the notifications are working as exxpected`
+                                    message: `This is a test notification to verify that the notifications are working as expected`
                                 }).then((result) => {
                                     const data = result.data;
                                     if (data.success) {
