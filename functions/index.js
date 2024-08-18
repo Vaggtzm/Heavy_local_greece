@@ -1,10 +1,10 @@
 const functions = require("firebase-functions");
 
 const {webApp} = require("./utils/articleShowAndRSS");
-const {disableUserFunction, setCustomClaimsFunction, sendNotification, logoutAllDevicesFunction, beforeSignInFunction,
+const {disableUserFunction, setCustomClaimsFunction, logoutAllDevicesFunction, beforeSignInFunction,
     updateUsernameFunction
 } = require("./utils/handleUsers");
-const {database} = require("./utils/utils");
+const {database, sendNotification, bucket} = require("./utils/utils");
 const {DeleteArticle, handleNewArticleFunction} = require("./utils/handleArticles");
 const {toggleCloudflareSecurityLevelFunction} = require("./utils/cloudflare");
 const {getMeetingInfoFunction, createRoomFunction} = require("./utils/meetings");
@@ -48,3 +48,38 @@ exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'Error saving device token', error.message);
     }
 });
+
+exports.lowFilesAlert = functions.pubsub.schedule('0 12 * * *')
+    .timeZone('America/New_York')
+    .onRun(async (context) => {
+        // Define the bucket and folder
+        const folderPath = 'upload_from_authors/';
+
+        try {
+            // Get the list of files in the specified folder
+            const [files] = await bucket.getFiles({ prefix: folderPath });
+
+            // Count the number of files
+            const fileCount = files.length;
+
+            console.log(`Number of files in '${folderPath}': ${fileCount}`);
+
+            // Check if there are fewer than 3 files
+            if (fileCount < 3) {
+                // Define notification details
+                const title = 'Low File Count Alert';
+                const message = `There are only ${fileCount} articles left to be published. We need more.`;
+                const url = 'https://pulse-of-the-underground.com/upload/admin'; // Replace with your URL
+                const urlTitle = 'Check it out';
+
+                // Send the notification
+                await sendNotification({ title, message, url, urlTitle });
+                console.log('Notification sent successfully.');
+            } else {
+                console.log('Sufficient number of files present. No notification sent.');
+            }
+
+        } catch (error) {
+            console.error('Error checking files or sending notification:', error);
+        }
+    });
