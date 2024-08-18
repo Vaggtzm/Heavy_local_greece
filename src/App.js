@@ -1,22 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { getToken } from "firebase/messaging";
-import { httpsCallable } from "firebase/functions";
-import { signOut } from "firebase/auth";
-import {app, auth, functions, messaging} from './firebase';
-import useNavigate from "./components/LanguageWrapper/Navigation";
-import AppNavigation from "./components/AppNav/AppNav";
-import NotificationToast from "./components/messaging/Message";
-import {initializeAppCheck, ReCaptchaV3Provider} from "firebase/app-check";
-import {getRoutes} from "./AppRoutes";
-
+import { getToken } from 'firebase/messaging';
+import { httpsCallable } from 'firebase/functions';
+import { signOut } from 'firebase/auth';
+import { app, auth, functions, messaging } from './firebase';
+import useNavigate from './components/LanguageWrapper/Navigation';
+import AppNavigation from './components/AppNav/AppNav';
+import NotificationToast from './components/messaging/Message';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { getRoutes } from './AppRoutes';
 
 function App() {
-    const [menuVisible, setMenuVisible] = useState(false);
+    const [menuVisible, setMenuVisible] = useState(true); // Default to visible
+    const [isScrollable, setIsScrollable] = useState(true);
     const placeholderRef = useRef(null);
+    const navigate = useNavigate();
 
     const saveDeviceTokenFunction = httpsCallable(functions, 'saveDeviceToken');
-    const navigate = useNavigate();
 
     const saveDeviceToken = async (token) => {
         try {
@@ -30,15 +30,15 @@ function App() {
     async function requestPermission() {
         try {
             const permission = await Notification.requestPermission();
-            if (permission === "granted") {
+            if (permission === 'granted') {
                 const token = await getToken(messaging, {
-                    vapidKey: "BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ",
+                    vapidKey: 'BHbCF6XioBa1F2fLgx7jKudN96QxN8iPlRJsBO4I_lTUipyeBwu7bE3Qee9QU56J873zSGEKpwn2BM8srjC14UQ',
                 });
-                console.log("Token generated : ", token);
+                console.log('Token generated:', token);
                 await saveDeviceToken(token);
             }
         } catch (e) {
-            console.error("Error requesting permission: ", e);
+            console.error('Error requesting permission:', e);
         }
     }
 
@@ -46,7 +46,7 @@ function App() {
         requestPermission().then();
         initializeAppCheck(app, {
             provider: new ReCaptchaV3Provider('6LdI_sMpAAAAADFJGDiXfkFW4VPap3M_YDFN2cwi'),
-            isTokenAutoRefreshEnabled: true
+            isTokenAutoRefreshEnabled: true,
         });
     }, []);
 
@@ -60,7 +60,7 @@ function App() {
                 if (error.code === 'auth/id-token-expired') {
                     signOut(auth).then(() => {
                         console.log('User signed out due to token expiration.');
-                        navigate("/User/login");
+                        navigate('/User/login');
                     }).catch((signOutError) => {
                         console.error('Error signing out:', signOutError);
                     });
@@ -73,26 +73,47 @@ function App() {
     }, [auth]);
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setMenuVisible(!entry.isIntersecting);
-            },
-            { threshold: [0] }
-        );
+        // Function to check if the page is scrollable
+        const checkScrollable = () => {
+            setIsScrollable(document.documentElement.scrollHeight > window.innerHeight);
+        };
 
-
-        const currentPlaceholder = placeholderRef.current;
-
-        if (currentPlaceholder) {
-            observer.observe(currentPlaceholder);
-        }
+        // Check scrollability on mount and resize
+        checkScrollable();
+        window.addEventListener('resize', checkScrollable);
+        window.addEventListener('scroll', checkScrollable); // Recheck on scroll
 
         return () => {
-            if (currentPlaceholder) {
-                observer.unobserve(currentPlaceholder);
-            }
+            window.removeEventListener('resize', checkScrollable);
+            window.removeEventListener('scroll', checkScrollable);
         };
     }, []);
+
+    useEffect(() => {
+        if (isScrollable) {
+            const observer = new IntersectionObserver(
+                ([entry]) => {
+                    setMenuVisible(!entry.isIntersecting);
+                },
+                { threshold: [0] }
+            );
+
+            const currentPlaceholder = placeholderRef.current;
+
+            if (currentPlaceholder) {
+                observer.observe(currentPlaceholder);
+            }
+
+            return () => {
+                if (currentPlaceholder) {
+                    observer.unobserve(currentPlaceholder);
+                }
+            };
+        } else {
+            // If not scrollable, ensure menu is always visible
+            setMenuVisible(true);
+        }
+    }, [isScrollable]);
 
     return (
         <div className="d-flex flex-column h-100">
