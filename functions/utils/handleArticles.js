@@ -240,7 +240,8 @@ const handle_single_dir = async (directory) => {
             filename: newArticle,
             date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
             category: category,
-            "lang": content.lang || ""
+            "lang": content.lang || "",
+            "articleData": articles[category][newArticle]  // Store the entire article data here
         });
 
         let ref;
@@ -272,20 +273,20 @@ const handle_single_dir = async (directory) => {
     // Find the latest date for each category
     const latestArticlesByCategory = {};
 
+    const today = new Date();
+    const sevenDaysAgo = new Date(today);
+    sevenDaysAgo.setDate(today.getDate() - 7);
+
     for (const category in updatedArticlesList) {
-        const categoryArticles = Object.entries(updatedArticlesList[category])
-            .map(([filename, details]) => ({
-                filename,
-                date: new Date(details.date),
-            }));
+        const categoryArticles = allArticles
+            .filter(article => article.category === category)
+            .filter(article => article.date >= sevenDaysAgo && article.date <= today);
 
-        // Find the latest date in the category
-        const latestDate = new Date(Math.max(...categoryArticles.map(article => article.date.getTime())));
-
-        // Get all articles with the latest date
-        latestArticlesByCategory[category] = categoryArticles
-            .filter(article => article.date.getTime() === latestDate.getTime())
-            .map(article => article.filename);
+        // Store the entire article data directly in articlesListLatest
+        latestArticlesByCategory[category] = categoryArticles.reduce((acc, article) => {
+            acc[article.filename] = article.articleData;
+            return acc;
+        }, {});
     }
 
     await database.ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);

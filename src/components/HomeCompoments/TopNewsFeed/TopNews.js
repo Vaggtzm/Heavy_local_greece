@@ -16,34 +16,35 @@ const TopNews = () => {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
+                // Fetch the latest articles directly from the 'articlesListLatest'
                 const categoriesSnapshot = await get(ref(database, '/articlesListLatest/articles'));
                 const categoriesData = categoriesSnapshot.val();
+
+                // Prepare the categories list, including 'All'
                 const categoriesList = ['All', ...Object.keys(categoriesData)];
                 setCategories(categoriesList);
 
-                const articlesPromises = categoriesList.filter(category => category !== 'All').map(async (category) => {
-                    const articlesSnapshot = await get(ref(database, `/articlesList/articles/${category}`));
-                    const articlesData = articlesSnapshot.val();
+                // Aggregate articles across all categories
+                const allArticles = [];
 
-                    const filteredArticles = Object.keys(articlesData)
-                        .filter(articleName => categoriesData[category].includes(articleName))
-                        .reduce((acc, articleName) => {
-                            acc[articleName] = articlesData[articleName];
-                            return acc;
-                        }, {});
+                for (const category of categoriesList) {
+                    if (category === 'All') continue;
 
-                    return { category, articles: filteredArticles };
-                });
+                    const articlesInCategory = categoriesData[category];
 
-                const articlesResults = await Promise.all(articlesPromises);
-                const allArticles = articlesResults.flatMap(result => Object.keys(result.articles).map(articleKey => {
-                    const article = result.articles[articleKey];
-                    return ({
-                        ...article,
-                        category: result.category,
-                        link: articleKey
-                    });
-                }));
+                    for (const articleKey in articlesInCategory) {
+                        const article = articlesInCategory[articleKey];
+
+                        // Add the article to the aggregated list
+                        allArticles.push({
+                            ...article,
+                            category: category,
+                            link: articleKey
+                        });
+                    }
+                }
+
+                // Update the state with the aggregated articles
                 setArticles(allArticles);
             } catch (error) {
                 console.error("Error fetching articles:", error);
@@ -91,7 +92,7 @@ const TopNews = () => {
                         {filteredArticles.map((article, index) => (
                             <div
                                 key={index}
-                                className={`top-news-article-card p-2 pb-3 col-md-4 col-sm-6`}
+                                className={`top-news-article-card p-2 pb-3 col-md-5 col-sm-6`}
                             >
                                 <div className="top-news-card bg-dark text-white shadow-lg">
                                     <img
