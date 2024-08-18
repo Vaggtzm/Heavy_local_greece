@@ -1331,7 +1331,7 @@ const sendNotification = async (data, context) => {
         // Prepare the Pushover notification payload
         const pushoverPayload = {
             token: apiKey, // Token for the Pushover application
-            user: userData.pushoverApiKey,    // User's Pushover user key
+            user: userData.pushoverApiKey||"",    // User's Pushover user key
             message: message,
             title: title,
             url: url || "",                  // Optional URL
