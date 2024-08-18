@@ -1,27 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {auth, database} from "../../firebase";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import InstallButton from "../PWAinstal/pwaInstall";
-import {getIdTokenResult, signOut} from "firebase/auth";
-import {Button, NavDropdown} from "react-bootstrap";
-import {onValue, ref} from "firebase/database";
+import React, { useEffect, useState } from 'react';
+import { auth, database } from '../../firebase';
+import { Container, Navbar, Nav, NavDropdown, Button, Badge } from 'react-bootstrap';
+import { getIdTokenResult, signOut } from 'firebase/auth';
+import { onValue, ref } from 'firebase/database';
 import './Observer.css';
-import NavLink from "../LanguageWrapper/NavLink";
-import useNavigate from "../LanguageWrapper/Navigation";
+import NavLink from '../LanguageWrapper/NavLink';
+import useNavigate from '../LanguageWrapper/Navigation';
+import InstallButton from "../PWAinstal/pwaInstall";
 
-const AppNavigation = ({menuVisible}) => {
+const AppNavigation = ({ menuVisible }) => {
     const [loggedIn, setLoggedIn] = useState(false);
-    const [isAuthor, setIsAuthor] = useState(true);
+    const [isAuthor, setIsAuthor] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isTranslator, setIsTranslator] = useState(false);
     const [isLeader, setIsLeader] = useState(false);
     const [isCommentAdmin, setIsCommentAdmin] = useState(false);
-
     const [isBand, setIsBand] = useState(false);
-    const [displayName, setDisplayName] = useState("");
-    const navigate = useNavigate()
+    const [displayName, setDisplayName] = useState('');
+    const [profilePic, setProfilePic] = useState('https://via.placeholder.com/50'); // Default profile picture
+    const [notifications, setNotifications] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -32,132 +30,135 @@ const AppNavigation = ({menuVisible}) => {
                     if (idTokenResult.claims && idTokenResult.claims.band) {
                         setIsBand(true);
                     }
-                })
+                });
 
+                setDisplayName(user.displayName ? user.displayName : 'Unknown');
+                setProfilePic(user.photoURL ? user.photoURL : 'https://via.placeholder.com/50'); // Set profile picture
 
-                setDisplayName(user.displayName?user.displayName:"Unknown");
-                const userList = ref(database, 'roles');
-                onValue(userList, async (snapshot) => {
+                const userListRef = ref(database, 'roles');
+                onValue(userListRef, async (snapshot) => {
                     const roles = snapshot.val();
-
                     const userList = roles.translationSystem;
                     setIsTranslator(userList.includes(user.email));
                     const leaderList = roles.authorLeader;
                     setIsLeader(leaderList.includes(user.email));
                     const adminList = roles.admin;
                     setIsAdmin(adminList.includes(user.email));
-
-                    const commentAdminList = roles.comments?roles.comments:[];
+                    const commentAdminList = roles.comments ? roles.comments : [];
                     setIsCommentAdmin(commentAdminList.includes(user.email));
+
                     try {
                         const idTokenResult = await getIdTokenResult(user);
                         setIsAuthor(idTokenResult.claims && idTokenResult.claims.admin);
-                        console.log("User is author:", idTokenResult.claims && idTokenResult.claims.admin);
                     } catch (e) {
-                        console.error("Error getting ID token result:", e);
+                        console.error('Error getting ID token result:', e);
+                    }
+                });
+
+                // Fetch notifications based on role
+                const notificationsRef = isAuthor
+                    ? ref(database, `/authors/${user.uid}/notifications`)
+                    : ref(database, `/users/${user.uid}/notifications`);
+
+                onValue(notificationsRef, (snapshot) => {
+                    const notificationsData = snapshot.val();
+                    if (notificationsData) {
+                        const notificationsArray = Object.values(notificationsData).sort(
+                            (a, b) => new Date(b.date) - new Date(a.date)
+                        );
+                        setNotifications(notificationsArray);
                     }
                 });
             } else {
-                console.log("User is null");
                 setLoggedIn(false);
                 setIsTranslator(false);
                 setIsLeader(false);
                 setIsAdmin(false);
                 setIsAuthor(false);
+                setNotifications([]);
             }
         });
 
         // Clean up the subscription on unmount
         return () => unsubscribe();
-    }, []);
+    }, [isAuthor]);
 
+    const unreadNotificationsCount = notifications.filter(notification => !notification.read).length;
 
     return (
-        <>
-            <Navbar expand="lg" className={`sticky-top ${menuVisible ? 'visible' : 'hidden'}`} variant="dark"
-                    style={{backgroundColor: "rgba(0,0,0,0.85)", zIndex: 99999}}>
-                <Container fluid >
-                    <NavLink to={(loggedIn) ? "/User/home" : "/"} className="navbar-brand">
-                        <img
-                            src={"https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"}
-                            className="img-fluid rounded-circle"
-                            style={{maxWidth: "50px", maxHeight: "50px"}}
-                            alt="Navbar Brand"
-                        />
-                    </NavLink>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                    <Navbar.Collapse style={{flexFlow: "column"}} id="basic-navbar-nav">
-                        <Nav className="d-flex align-items-center justify-content-evenly w-100 table-hover">
-                            <NavLink to={(loggedIn) ? "/User/home" : "/"}
-                                     className='nav-link text-white '>Home</NavLink>
+        <Navbar expand="lg" className={`sticky-top ${menuVisible ? 'visible' : 'hidden'}`} variant="dark"
+                style={{ backgroundColor: 'rgba(0,0,0,0.85)', zIndex: 99999 }}>
+            <Container fluid>
+                <NavLink to={(loggedIn) ? '/User/home' : '/'} className="navbar-brand">
+                    <img
+                        src="https://pulse-of-the-underground.com/assets/PulseOfTheUnderground.jpg"
+                        className="img-fluid rounded-circle"
+                        style={{ maxWidth: '50px', maxHeight: '50px' }}
+                        alt="Navbar Brand"
+                    />
+                </NavLink>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse style={{ flexFlow: 'column' }} id="basic-navbar-nav">
+                    <Nav className="d-flex align-items-center justify-content-evenly w-100 table-hover">
+                        <NavLink to={(loggedIn) ? '/User/home' : '/'} className="nav-link text-white">
+                            Home
+                        </NavLink>
 
-                            <NavDropdown className={"text-white"} title="Articles" >
-                                {(loggedIn) &&
-                                    <NavLink to="/User/Saved" className='nav-link bg-dark text-white'>Saved
-                                        Articles</NavLink>}
-                                <NavLink to={"/articles-page"}
-                                         className='nav-link bg-dark text-white'>All Articles</NavLink>
-                                {isAuthor && (
-                                    <NavLink to="/upload" className='nav-link bg-dark text-white'>Upload</NavLink>
+                        <NavDropdown data-bs-theme="dark" className="text-white" title="Articles" menuClassName="nav-dropdown-menu">
+                            {loggedIn &&
+                                <NavLink to="/User/Saved" className="nav-link text-white">Saved Articles</NavLink>}
+                            <NavLink to="/articles-page" className="nav-link text-white">All Articles</NavLink>
+                            {isAuthor && (
+                                <NavLink to="/upload" className="nav-link text-white">Upload</NavLink>
+                            )}
+                            {isTranslator &&
+                                <NavLink to="/upload/translation" className="nav-link text-white">Translation System</NavLink>
+                            }
+                        </NavDropdown>
+
+                        <NavLink to="/youtube" className="nav-link text-white">YouTube Videos</NavLink>
+                        <NavLink to="/Art-Gallery-page" className="nav-link text-white">Art Gallery</NavLink>
+                        <NavLink to="/gigs" className="nav-link text-white">Gigs</NavLink>
+                        <NavLink to="/ads" className="nav-link text-white">Ads By You</NavLink>
+
+                        <NavDropdown data-bs-theme="dark" className="text-white" title={
+                            <div className="profile-badge-container">
+                                <img src={profilePic} alt="Profile" className="profile-image"/>
+                                {unreadNotificationsCount > 0 &&
+                                    <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
+                            </div>
+                        } align="end" menuClassName="nav-dropdown-menu">
+                            <NavDropdown.Item as={NavLink} to="/profile" className="text-white">
+                                <strong>{displayName}</strong>
+                            </NavDropdown.Item>
+                            <NavDropdown.Item as={NavLink} to="/notifications" className="text-white">
+                                Notifications {unreadNotificationsCount > 0 && <Badge pill bg="danger">{unreadNotificationsCount}</Badge>}
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={() => signOut(auth).then(() => navigate("/"))} className="text-danger">
+                                Sign Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
+
+                        <InstallButton/>
+
+                        {(isAdmin || isLeader || isCommentAdmin || isAuthor) &&
+                            <NavDropdown data-bs-theme="dark" className="text-white" title="Administration" menuClassName="nav-dropdown-menu">
+                                {isCommentAdmin && (
+                                    <NavLink to="/admin/comments" className="nav-link text-white">Reported Comments</NavLink>
                                 )}
-                                {isTranslator &&
-                                    <NavLink to={"/upload/translation"} className='nav-link bg-dark text-white'>Translation
-                                        System</NavLink>
+                                {isAdmin &&
+                                    <NavLink to="/admin" className="nav-link text-white">User Administration</NavLink>
+                                }
+                                {(isAdmin || isLeader || isAuthor) &&
+                                    <NavLink to="/upload/admin" className="nav-link text-white">Admin Dashboard</NavLink>
                                 }
                             </NavDropdown>
-
-
-                            <NavLink to={"/youtube"}
-                                     className='nav-link text-white'>YouTube Videos</NavLink>
-
-                            <NavLink to={"/Art-Gallery-page"} className='nav-link text-white'>Art Gallery</NavLink>
-                            <NavLink to={"/gigs"} className='nav-link text-white'>Gigs</NavLink>
-                            <NavLink to={"/ads"} className='nav-link text-white'>Ads By You</NavLink>
-                            {(loggedIn)&&<NavLink to="/profile" className='nav-link text-white'>Profile</NavLink>}
-                            <InstallButton/>
-                            {(isAdmin|| isLeader|| isCommentAdmin||isAuthor)     &&
-                            <NavDropdown className={"text-white"} title="Administration" >
-                                {isCommentAdmin && (
-                                    <NavLink to="/admin/comments" className='nav-link text-white bg-dark'>Reported
-                                        Comments</NavLink>
-                                )}
-
-                                {(isAdmin) &&
-                                    <NavLink to="/admin" className='nav-link text-white bg-dark'>User Administration</NavLink>
-                                }
-
-                                {(isAdmin || isLeader || isAuthor) &&
-                                    <NavLink to="/upload/admin" className='nav-link text-white bg-dark'>Admin Dashboard</NavLink>
-                                }
-                            </NavDropdown>}
-
-
-                            {(loggedIn) ? (
-
-                                <div className='nav-link text-white d-flex flex-column align-items-center w-25'>
-                                    <Navbar.Text className={"small w-100 m-0"}>
-                                        Logged in as: <br/><span><NavLink to="/profile" className="nav-link small w-100">{displayName}</NavLink></span>
-                                    </Navbar.Text>
-                                    <div className=" w-100">
-                                        <Button size={"sm"} onClick={() => {
-                                            signOut(auth).then(() => {
-                                                navigate("/")
-                                            })
-                                        }} variant="outline-danger">Sign Out</Button>
-                                    </div>
-                                </div>
-
-                            ) : (<>
-                                    <NavLink to="/User/register" className='nav-link text-white link'>Create
-                                        Account</NavLink>
-                                    <NavLink to="/User/login" className='nav-link text-white link'>Log in</NavLink>
-                                </>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </>
+                        }
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 };
 
