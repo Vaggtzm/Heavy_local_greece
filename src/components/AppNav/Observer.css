@@ -1,3 +1,4 @@
+/* Observer.css */
 .navbar {
     transition: opacity 0.5s ease-in-out, height 0.5s ease-in-out;
     opacity: 0;
@@ -12,4 +13,65 @@
     opacity: 0;
     height: 0;
     display: none;
+}
+
+.navbar-nav .nav-link {
+    transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #d1e7dd;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 15px;
+}
+
+.navbar-nav .nav-link.active {
+    color: #d1e7dd;
+}
+
+.nav-dropdown-menu {
+    background-color: #343a40; /* Dark background for dropdowns */
+    border: 1px solid #495057; /* Slightly lighter border for contrast */
+}
+
+.nav-dropdown-item {
+    color: #fff; /* Text color for dropdown items */
+}
+
+.nav-dropdown-item:hover {
+    background-color: #495057; /* Darker background on hover */
+}
+
+.navbar-brand img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.navbar-nav .nav-item {
+    margin-left: 15px;
+}
+
+/* Container for the profile image and badge */
+.profile-badge-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Style for the badge */
+.profile-badge-container .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    z-index: 10; /* Ensure the badge is on top */
+}
+
+/* Ensure the badge does not push the profile image */
+.profile-badge-container .profile-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
 }
