@@ -13,6 +13,7 @@ import {get, ref as databaseRef, update} from "firebase/database";
 import {useTranslation} from 'react-i18next';
 import useNavigate from "../../../components/LanguageWrapper/Navigation";
 import {httpsCallable} from "firebase/functions";
+import PushoverSetupModal from "./PushoverSetupModal";
 
 const UserProfile = () => {
     const { t } = useTranslation();
@@ -238,6 +239,7 @@ const UserProfile = () => {
                         value={pushOver}
                         style={{backgroundColor: '#333', color: '#fff'}}
                     />
+                    <PushoverSetupModal />
                 </Form.Group>}
 
                 <Form onSubmit={handleUpdatePassword}>
