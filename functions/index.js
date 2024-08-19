@@ -8,6 +8,7 @@ const {database, sendNotification, bucket} = require("./utils/utils");
 const {DeleteArticle, handleNewArticleFunction} = require("./utils/handleArticles");
 const {toggleCloudflareSecurityLevelFunction} = require("./utils/cloudflare");
 const {getMeetingInfoFunction, createRoomFunction} = require("./utils/meetings");
+const {handlePublishFunction} = require("./utils/handlePublish");
 exports.webApi = functions
     .runWith({
         enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
@@ -24,6 +25,8 @@ exports.createRoom = createRoomFunction;
 exports.getMeetingInfo = getMeetingInfoFunction;
 exports.updateUsername = updateUsernameFunction;
 exports.handleNewArticle = handleNewArticleFunction;
+exports.handlePublish = handlePublishFunction;
+
 
 exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
     try {
