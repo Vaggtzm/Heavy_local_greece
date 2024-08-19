@@ -36,6 +36,9 @@ const Youtube = () => {
             <h1 className="mb-4 text-white text-center">YouTube Channel Videos</h1>
             <div className="row">
                 {videos.map((video) =>  {
+                    if(!video.id.videoId){
+                        return  null;
+                    }
                     console.log(video.snippet.thumbnails);
                     return(
                         <div className="col-md-4 col-12 mb-3" key={video.id.videoId}>
