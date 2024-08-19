@@ -5,7 +5,7 @@ import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'reac
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./form-control.css";
-import {auth, database, isDev, sendPushoverNotification, storage} from '../../../firebase';
+import {auth, database, handlePublishFunction, isDev, sendPushoverNotification, storage} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {categories, deleteImage, fetchFiles, getRef, handleAuthorTest, setUids} from "../articleData/articleData";
@@ -292,46 +292,14 @@ const FirebaseFileList = () => {
     };
 
     const handlePublish = async (to_normal_release, file, isEarlyReleasedArticles) => {
+        const fileName = file.name;
         try {
-            let originalfolder = "upload_from_authors";
-            let folder = "early_releases";
-
-
-            if (to_normal_release) {
-                folder = "articles";
-            }
-            if (isEarlyReleasedArticles) {
-                folder = "articles";
-                originalfolder = "early_releases";
-            }
-
-            const destinationFileRef = storageRef(storage, `${folder}/${file.name}.json`);
-            const originalFileRef = storageRef(storage, `${originalfolder}/${file.name}.json`);
-
-// Retrieve fileContent directly if it's already available
-
-// Fetch fileContent if not already available
-            const downloadUrl = await getDownloadURL(originalFileRef);
-            const fileText = await fetch(downloadUrl).then(res => res.text());
-            const fileContent = JSON.parse(fileText);
-            const options = {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric'
-            };
-
-            if (!fileContent.translatedBy) {
-                fileContent.written_date = fileContent.date;
-                fileContent.date = new Date().toLocaleDateString('en-GB', options);
-            }
-// Upload updated fileContent to destination
-            await uploadString(destinationFileRef, JSON.stringify(fileContent));
-            alert('File published successfully to the destination folder!');
-// Delete original file after successful upload
-            await deleteObject(originalFileRef);
+            const result = await handlePublishFunction({ to_normal_release, fileName, isEarlyReleasedArticles });
+            console.log(result.data.message);
+            alert(result.data.message);
         } catch (error) {
-            console.log(error);
-            setError('Error publishing file: ' + error.message);
+            console.error('Error publishing file:', error);
+            alert('Error publishing file: ' + error.message);
         }
     };
 
