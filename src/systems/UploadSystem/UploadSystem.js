@@ -138,7 +138,8 @@ const ArticleUpload = () => {
                 lang: 'en', // Store language as English
                 translations: {},
                 category,
-                sponsor
+                sponsor,
+                authorApproved:true
             };
 
             articleData.translations['en'] = newFileName;

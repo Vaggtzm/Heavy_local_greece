@@ -86,3 +86,27 @@ exports.lowFilesAlert = functions.pubsub.schedule('0 12 * * *')
             console.error('Error checking files or sending notification:', error);
         }
     });
+
+
+const axios = require('axios');
+
+exports.getYoutubeVideos = functions.https.onCall(async (data, context) => {
+    const ApiKey = functions.config().youtube.api;
+    const ChannelID = 'UCH6ADxBFyVUsiazyICRz2sQ';
+
+    try {
+        const response = await axios.get(`https://www.googleapis.com/youtube/v3/search`, {
+            params: {
+                key: ApiKey,
+                channelId: ChannelID,
+                part: 'snippet,id',
+                order: 'date',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching videos:', error);
+        throw new functions.https.HttpsError('internal', 'Unable to fetch YouTube videos.');
+    }
+});
+
