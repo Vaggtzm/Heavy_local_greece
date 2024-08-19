@@ -39,8 +39,7 @@ const ExploreMore = () => {
             <h3 className="sub-title">{t("galleryTitle")}</h3>
             <hr className="divider" />
             <div className={"m-0 mx-md-3 p-3 p-md-2"}>
-
-            <SecondaryCarousel />
+              <SecondaryCarousel />
             </div>
           </div>
 
