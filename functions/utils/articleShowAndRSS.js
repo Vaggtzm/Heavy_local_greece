@@ -28,7 +28,7 @@ const express = require("express");
 const app = express();
 const RSS = require("rss");
 const fs = require("fs");
-const {resolve} = require("path");
+const path = require("path");
 
 
 app.get("/feed", async (req, res) => {
@@ -111,7 +111,7 @@ app.get("/feed", async (req, res) => {
 });
 
 const getArticle = async (req, res, folder) => {
-    const filepath = resolve(__dirname, "index.html");
+    const filepath = path.resolve(__dirname, "index.html");
     const name = req.params.article;
     console.log("Hello, file requested is: " + JSON.stringify(req.params));
 
