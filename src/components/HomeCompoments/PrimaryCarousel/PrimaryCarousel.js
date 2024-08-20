@@ -10,7 +10,7 @@ import { database } from "../../../firebase";
 import MainBackground from "../../../assets/MainBackground.jpg";
 
 const PrimaryCarousel = ({ customSettings, customImages, classNameImages, shouldBeFull }) => {
-    const [images, setImages] = useState([MainBackground]);
+    const [images, setImages] = useState([]);
     const [fullImages, setFullImages] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -50,6 +50,7 @@ const PrimaryCarousel = ({ customSettings, customImages, classNameImages, should
                 console.timeEnd("Firebase Get Request");
                 const data = snapshot.val();
                 const thumbnailList = Object.keys(data).map(itemKey => `/gigs/${itemKey}/${data[itemKey].thumbnail}`);
+                console.log(thumbnailList)
                 fetchImages(thumbnailList).then(() => {
                     console.timeEnd("Carousel Loading");
                 });
@@ -62,9 +63,16 @@ const PrimaryCarousel = ({ customSettings, customImages, classNameImages, should
         if (customImages && customImages.length > 0) {
             fetchImages(customImages).then();
         } else {
-            fetchData().then();
+            console.time("Demo images")
+            fetchImages([
+                "/gigs/2024_03_30/DSC_0008.JPG",
+                "/gigs/2024_04_14/DSC_0048.JPG",
+            ]).then(()=> {
+                console.timeEnd("Demo images")
+                fetchData().then();
+            })
         }
-    }, [customImages]);
+    }, []);
 
     const defaultSettings = {
         dots: false,
