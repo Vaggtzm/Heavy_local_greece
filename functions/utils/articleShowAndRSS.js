@@ -111,7 +111,7 @@ app.get("/feed", async (req, res) => {
 });
 
 const getArticle = async (req, res, folder) => {
-    const filepath = path.resolve(__dirname, "/../index.html");
+    const filepath = path.resolve(__dirname, "../index.html");
     const name = req.params.article;
     console.log("Hello, file requested is: " + JSON.stringify(req.params));
 
