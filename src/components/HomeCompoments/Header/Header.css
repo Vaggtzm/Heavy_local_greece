@@ -91,4 +91,32 @@
     animation: flame 1s ease-in-out infinite; /* Εφαρμογή animation */
 
   }
-  
+  @media (max-width: 768px) {
+    .carousel-container {
+        height: 100vh; /* Καλύπτει όλο το ύψος της οθόνης */
+        width: 100vw; /* Καλύπτει όλο το πλάτος της οθόνης */
+        overflow: hidden;
+    }
+
+    .carousel-item {
+        height: 100vh; /* Καλύπτει όλο το ύψος του container */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .carousel-item img {
+        width: 100vw; /* Καλύπτει όλο το πλάτος του container */
+        height: 100vh; /* Καλύπτει όλο το ύψος του container */
+        object-fit: cover; /* Προσαρμόζει την εικόνα ώστε να καλύπτει όλο το container χωρίς παραμόρφωση */
+    }
+
+    .fancy-text {
+        font-size: 2rem; /* Προσαρμόζει το μέγεθος του κειμένου */
+    }
+
+    .header-content {
+        padding: 10px; /* Μειώνει το padding για καλύτερη προσαρμογή */
+    }
+}
+

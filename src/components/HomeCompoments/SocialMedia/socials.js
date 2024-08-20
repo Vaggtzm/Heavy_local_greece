@@ -4,10 +4,7 @@ import "./Socials.css";
 const Socials = () => {
     return (
         <div className=" container text-center text-white d-flex justify-content-evenly">
-            <p className="lead text-white">Find Us on Social Media: </p>
             <div className="social-icons">
-            <hr className="bg-white" />
-
                 <a href="https://web.facebook.com/heavylocalgreece/"  target="_blank" rel="noopener noreferrer">
                     <i className="bi bi-facebook m-3 icon text-white"></i>
                 </a>
