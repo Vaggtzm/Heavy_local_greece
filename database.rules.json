@@ -14,6 +14,9 @@
       ".read": true
     },
     "gigs": {
+      "$key": {
+            ".indexOn": "thumbnail"
+        },
       ".read": true
     },
     "comments": {
