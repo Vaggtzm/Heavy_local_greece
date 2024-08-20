@@ -6,12 +6,14 @@ import "./TopNews.css";
 import { database } from "../../../firebase";
 import { get, ref } from "firebase/database";
 import ReviewsBanner from "./NewsCompoments/ReviewsBanner";
+import { Spinner } from 'react-bootstrap';
 
 const TopNews = () => {
     const { t } = useTranslation();
     const [articles, setArticles] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [loading, setLoading] = useState(true);  // New loading state
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -46,8 +48,10 @@ const TopNews = () => {
 
                 // Update the state with the aggregated articles
                 setArticles(allArticles);
+                setLoading(false);  // Set loading to false once data is fetched
             } catch (error) {
                 console.error("Error fetching articles:", error);
+                setLoading(false);  // Set loading to false even if there's an error
             }
         };
 
@@ -87,7 +91,13 @@ const TopNews = () => {
             </div>
 
             <div className="top-news-articles">
-                {filteredArticles.length > 0 ? (
+                {loading ? (
+                    <div className="d-flex justify-content-center my-5">
+                        <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    </div>
+                ) : filteredArticles.length > 0 ? (
                     <div className="row justify-content-center">
                         {filteredArticles.map((article, index) => (
                             <div

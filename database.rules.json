@@ -14,7 +14,8 @@
       ".read": true
     },
     "gigs": {
-      ".read": true
+      ".read": true,
+      ".indexOn": "thumbnail"
     },
     "comments": {
       ".read": true
