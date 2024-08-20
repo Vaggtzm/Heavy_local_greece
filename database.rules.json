@@ -14,10 +14,8 @@
       ".read": true
     },
     "gigs": {
-      "$key": {
-            ".indexOn": "thumbnail"
-        },
-      ".read": true
+      ".read": true,
+      ".indexOn": "thumbnail"
     },
     "comments": {
       ".read": true
