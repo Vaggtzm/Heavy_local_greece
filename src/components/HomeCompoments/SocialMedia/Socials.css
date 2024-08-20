@@ -2,76 +2,10 @@
 
 /* Container styling */
 .socials-container {
-    padding: 20px;
     background-color: transparent;
     border-radius: 10px;
 }
 
-/* Title styling */
-.socials-title {
-    font-family: 'Great Vibes', 'Times New Roman', cursive;
-    color: #cc0000;
-    font-size: 2rem;
-    font-weight: 700;
-    text-shadow:
-            0 0 5px #cc0000,
-            0 0 10px #cc0000,
-            0 0 20px #cc0000,
-            0 0 40px #cc0000,
-            0 0 80px #cc0000,
-            0 0 90px #cc0000,
-            0 0 100px #cc0000,
-            0 0 150px #cc0000;
-    animation: text-glow 1.5s ease-in-out infinite alternate;
-}
-
-/* Icons styling */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.social-icons a {
-    font-size: 2rem;
-    transition: color 0.3s ease;
-    text-shadow:
-            0 0 4px #cc0000,
-            0 0 8px #cc0000,
-            0 0 12px #cc0000,
-            0 0 16px #cc0000;
-}
-
-.neon-icon {
-    color: #cc0000;
-}
-
-.neon-icon:hover {
-    color: #ff3333;
-    text-shadow:
-            0 0 10px #ff3333,
-            0 0 20px #ff3333,
-            0 0 40px #ff3333,
-            0 0 80px #ff3333;
-}
-
-/* Text glow animation */
-@keyframes text-glow {
-    from {
-        text-shadow:
-                0 0 10px #cc0000,
-                0 0 20px #cc0000,
-                0 0 30px #cc0000,
-                0 0 40px #cc0000,
-                0 0 50px #cc0000;
-    }
-    to {
-        text-shadow:
-                0 0 20px #cc0000,
-                0 0 30px #cc0000,
-                0 0 40px #cc0000,
-                0 0 60px #cc0000,
-                0 0 100px #cc0000,
-                0 0 200px #cc0000;
-    }
+.icon{
+    font-size: 30px;
 }

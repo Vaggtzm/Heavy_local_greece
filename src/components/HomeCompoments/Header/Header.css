@@ -1,0 +1,94 @@
+/* Καλύπτει ολόκληρη την οθόνη */
+/* Καλύπτει ολόκληρη την οθόνη */
+.header-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* Καλύπτει όλη την οθόνη με cover */
+  .carousel-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Η εικόνα να καλύπτει το container χωρίς να παραμορφώνεται */
+    position: absolute;
+  }
+  
+  /* Overlay πάνω από το carousel για να φαίνεται καλύτερα το κείμενο */
+  .carousel-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Ελαφρύ μαύρο overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Κεντράρισμα του περιεχομένου */
+    z-index: 2; /* Πάνω από το carousel */
+    text-align: center;
+    color: white;
+  }
+  
+  /* Container για το κείμενο */
+  .text-container {
+    position: relative;
+    display: inline-block;
+    font-size: 4rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: transparent; /* Το κείμενο πρέπει να είναι διαφανές */
+    background: linear-gradient(45deg, #f00, #ff0, #f00, #f00, #ff0); /* Gradient φλόγας */
+    background-size: 200% 200%;
+    -webkit-background-clip: text; /* Χρήση background-clip μόνο για το κείμενο */
+    background-clip: text;
+    animation: flame 4s ease-in-out infinite; /* Εφαρμογή animation */
+  }
+  
+  @keyframes flame {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .text-container {
+      font-size: 2rem; /* Μείωση του μεγέθους του κειμένου για μικρές οθόνες */
+    }
+  
+    .carousel-item img {
+      height: 100vh; /* Προσαρμογή για μικρότερες οθόνες */
+    }
+    .quickaccess{
+      display: none;
+    }
+  }
+  
+  @font-face {
+    font-family: Font-1;
+    src: url(./../../../assets/Font/old-english-five/OldEnglishFive.ttf);
+
+  }
+  
+  .font-1 {
+    font-family: Font-1;
+    background: linear-gradient(45deg, #f00, #ff0, #f00, #f00, #ff0); /* Gradient φλόγας */
+    background-size: 200% 200%;
+    -webkit-background-clip: text; /* Χρήση background-clip μόνο για το κείμενο */
+    background-clip: text;
+    animation: flame 1s ease-in-out infinite; /* Εφαρμογή animation */
+
+  }
+  
