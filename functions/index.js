@@ -1,6 +1,6 @@
 const functions = require("firebase-functions");
 
-const {webApp} = require("./utils/articleShowAndRSS");
+const {webApp, getImageDimensionsBuffer, changeAnalysis} = require("./utils/articleShowAndRSS");
 const {disableUserFunction, setCustomClaimsFunction, logoutAllDevicesFunction, beforeSignInFunction,
     updateUsernameFunction
 } = require("./utils/handleUsers");

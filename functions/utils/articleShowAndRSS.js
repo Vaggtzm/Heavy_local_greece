@@ -271,4 +271,35 @@ app.get("/assets/*", async (req, res) => {
     }
 });
 
-module.exports= {webApp: app}
+function getImageDimensionsBuffer(buffer) {
+    return new Promise((resolve, reject) => {
+        const identifyProcess = spawn('identify', ['-format', '%wx%h', '-']);
+
+        // Write buffer to the stdin of the identify process
+        const bufferStream = new stream.PassThrough();
+        bufferStream.end(buffer);
+        bufferStream.pipe(identifyProcess.stdin);
+
+        let decodedStdout = '';
+
+        identifyProcess.stdout.on('data', (chunk) => {
+            decodedStdout += chunk.toString();
+        });
+
+        identifyProcess.stderr.on('data', (error) => {
+            console.error('Error:', error.toString());
+            reject(new Error('Failed to identify image dimensions'));
+        });
+
+        identifyProcess.on('close', (code) => {
+            if (code === 0) {
+                const [width, height] = decodedStdout.trim().split('x');
+                resolve({width: parseInt(width, 10), height: parseInt(height, 10)});
+            } else {
+                reject(new Error('identify command failed'));
+            }
+        });
+    });
+}
+
+module.exports= {webApp: app, getImageDimensionsBuffer, changeAnalysis}
