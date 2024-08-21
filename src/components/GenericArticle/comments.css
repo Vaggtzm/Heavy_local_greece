@@ -47,3 +47,24 @@ mark{
     background-color: inherit;
     color: inherit;
 }
+
+.player-mobile {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.player-hidden {
+    transform: translateY(100%);
+}
+
+@media (min-width: 992px) {
+    .player-mobile {
+        display: none; /* Hide the mobile player on larger screens */
+    }
+}
+

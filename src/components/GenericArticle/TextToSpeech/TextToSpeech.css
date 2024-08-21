@@ -11,19 +11,28 @@
     color: #fff;
 }
 
-.loading-message, .error-message {
+.loading-message, .error-message, .badge {
     color: #fff;
-    background-color: #dc3545;
+    background-color: #dc3545; /* Danger color for error */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.badge.bg-info {
+    background-color: #17a2b8; /* Info color for generation message */
 }
 
 .progress-bar {
     width: 100%;
     max-width: 500px;
     margin-top: 10px;
+    background-color: #007bff; /* Progress bar color */
+    height: 8px;
+    border-radius: 5px;
 }
 
 .player-controls {
@@ -50,11 +59,11 @@
     font-size: 18px;
     margin: 0 5px;
     border: none;
+    color: #fff;
 }
 
 .play-pause-btn {
     background-color: #007bff;
-    color: #fff;
 }
 
 .play-pause-btn:hover {
@@ -63,7 +72,6 @@
 
 .backward-btn, .forward-btn {
     background-color: #6c757d;
-    color: #fff;
 }
 
 .backward-btn:hover, .forward-btn:hover {

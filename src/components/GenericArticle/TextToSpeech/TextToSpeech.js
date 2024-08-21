@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { storage } from "../../../firebase";
+import { generateRecording, storage } from "../../../firebase";
 import { ref, getDownloadURL } from "firebase/storage";
-import { Button, ProgressBar } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import "./TextToSpeech.css"; // Import custom CSS for player styling
 
-const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks }) => {
+const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks, filePath }) => {
     const [audioUrl, setAudioUrl] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isFinished, setIsFinished] = useState(false);
@@ -13,25 +13,28 @@ const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks }) => {
     const [isSeeking, setIsSeeking] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [generating, setGenerating] = useState(false);
+    const [generationMessage, setGenerationMessage] = useState(null);
     const audioRef = useRef(null);
     const marksRef = useRef(ttsMarks);
 
-    useEffect(() => {
-        const fetchAudioUrl = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const audioRef = ref(storage, `recordings/${articleName}.mp3`);
-                const url = await getDownloadURL(audioRef);
-                setAudioUrl(url);
-            } catch (error) {
-                setError("Recording not found.");
-                console.error("Error fetching TTS audio URL:", error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchAudioUrl = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const audioStorageRef = ref(storage, `recordings/${articleName}.mp3`);
+            const url = await getDownloadURL(audioStorageRef);
+            setAudioUrl(url);
+            setError(null); // Clear error if the URL is found
+        } catch (error) {
+            setError("Recording not found.");
+            console.error("Error fetching TTS audio URL:", error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchAudioUrl();
     }, [articleName]);
 
@@ -113,11 +116,60 @@ const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks }) => {
 
     const progressPercentage = (currentTime / duration) * 100;
 
+    // Function to trigger the generation of recording
+    const handleGenerateRecording = async () => {
+        setGenerating(true);
+        setGenerationMessage("Generating recording, please wait...");
+        setError(null);
+
+        try {
+            await generateRecording({ filePath });
+            setGenerationMessage("Recording is being generated. Checking for availability...");
+            checkForRecording(); // Check for the recording after triggering the generation
+        } catch (error) {
+            setError("Failed to generate recording.");
+            console.error("Error generating recording:", error.message);
+        } finally {
+            setGenerating(false);
+        }
+    };
+
+    const checkForRecording = async () => {
+        const interval = setInterval(async () => {
+            try {
+                const audioStorageRef = ref(storage, `recordings/${articleName}.mp3`);
+                const url = await getDownloadURL(audioStorageRef);
+                if (url) {
+                    setAudioUrl(url);
+                    setError(null); // Clear error if the recording is found
+                    setGenerating(false);
+                    setGenerationMessage(null);
+                    clearInterval(interval); // Stop checking once the recording is found
+                }
+            } catch (error) {
+                console.log("Recording not yet available, checking again...");
+            }
+        }, 5000); // Check every 5 seconds
+    };
+
     return (
         <div className="custom-audio-player">
-            {loading && <div className="loading-message">Loading...</div>}
-            {error && !loading && <div className="badge bg-danger rounded-3">{error}</div>}
-            {!loading && !error && (
+            {loading && (
+                <div className="loading-message">
+                    <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                </div>
+            )}
+            {error && !loading && !generating && (
+                <div className="badge bg-danger rounded-3">{error}</div>
+            )}
+            {generating && (
+                <div className="badge bg-info rounded-3">
+                    <Spinner animation="border" role="status" size="sm" /> {generationMessage}
+                </div>
+            )}
+            {!loading && !error && !generating && audioUrl && (
                 <>
                     <audio
                         ref={audioRef}
@@ -128,12 +180,13 @@ const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks }) => {
                         onSeeking={handleSeekStart}
                     />
                     <div className="player-controls">
-                        <ProgressBar
-                            now={progressPercentage}
+                        <input
+                            type="range"
+                            min="0"
+                            max="100"
+                            value={progressPercentage}
                             onChange={handleProgressChange}
                             className="progress-bar"
-                            striped
-                            variant="info"
                         />
                         <div className="controls-row">
                             <Button
@@ -163,6 +216,11 @@ const TextToSpeech = ({ articleName, ttsMarks, setSpokenMarks }) => {
                         </div>
                     </div>
                 </>
+            )}
+            {error &&!loading && !audioUrl && !generating && (
+                <Button onClick={handleGenerateRecording} variant="primary">
+                    Generate Recording
+                </Button>
             )}
         </div>
     );

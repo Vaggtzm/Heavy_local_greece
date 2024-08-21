@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useCallback, useEffect, useMemo, useState} from "react";
+import React, {lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import {auth, config, database, storage} from "../../firebase";
 import {getDownloadURL, ref, updateMetadata} from "firebase/storage";
@@ -50,6 +50,33 @@ const DefaultArticle = (props) => {
             });
         }
     }, [name]);
+
+    const player = useRef();
+
+
+
+    useEffect(() => {
+        let lastScrollTop = 0;
+        const playertemp = player.current//document.querySelector('.player-mobile');
+
+        const onScroll = () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                player.current.classList.add('player-hidden');
+            } else {
+                // Scrolling up
+                player.current.classList.remove('player-hidden');
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For mobile or negative scrolling
+        };
+
+        window.addEventListener('scroll', onScroll);
+
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+        };
+    }, []);
 
 
     useEffect(() => {
@@ -225,7 +252,7 @@ const DefaultArticle = (props) => {
                         </div>
                         <div className={`col-10 col-md-9 ${enableSaving ? "d-flex justify-content-between" : ""}`}>
                             <h3>{articles.title}</h3>
-                            {enableSaving && <i onClick={toggleSaveArticle}
+                            {enableSaving && <i onClick={toggleSaveArticle} style={{cursor:"pointer"}}
                                                 className={`text-primary bi bi-bookmark${isSaved ? "-fill" : ""} h3`}></i>}
                         </div>
                         <div className="col-10 col-md-5 mb-3 mb-md-0 d-flex align-items-center">
@@ -261,9 +288,21 @@ const DefaultArticle = (props) => {
                                     <span dangerouslySetInnerHTML={{__html: articles.details}}></span>
                                 </p>
                                 <div className="lead">
-                                    <div className={"m-3"}>
-                                    <TextToSpeech articleName={name} ttsMarks={marks}
-                                                  setSpokenMarks={setSpokenMarks}/> {/* TTS Component */}
+                                    <div className="m-3 d-none d-lg-block">
+                                        <TextToSpeech
+                                            articleName={name}
+                                            ttsMarks={marks}
+                                            setSpokenMarks={setSpokenMarks}
+                                            filePath={`${isEarlyAccess ? "early_releases" : "articles"}/${name}.json`}
+                                        /> {/* TTS Component */}
+                                    </div>
+                                    <div ref={player} className={"d-lg-none sticky-bottom player-mobile"}>
+                                        <TextToSpeech
+                                            articleName={name}
+                                            ttsMarks={marks}
+                                            setSpokenMarks={setSpokenMarks}
+                                            filePath={`${isEarlyAccess ? "early_releases" : "articles"}/${name}.json`}
+                                        /> {/* TTS Component */}
                                     </div>
                                 </div>
                                 <div className="lead">

@@ -144,10 +144,18 @@ const createRecording = async (filePath)=>{
 
         const ssml = `<speak>${ssmlText}</speak>`;
 
+        const languageMapping = {
+            en: 'en-US', // English
+            el: 'el-GR', // Greek
+            it: 'it-IT', // Italian
+            // Add other language codes and their corresponding TTS format here
+        };
+
+
         // Create TTS request
         const request = {
             input: { ssml },
-            voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+            voice: { languageCode: languageMapping[articleData.lang], ssmlGender: 'NEUTRAL' },
             audioConfig: { audioEncoding: 'MP3' },
         };
 
@@ -187,15 +195,16 @@ exports.generateRecordingOnUpload = functions.storage.object().onFinalize(async 
 });
 
 exports.generateRecording = functions.https.onCall(async (data, context) => {
-    // Authentication check
-    if (!context.auth) {
-        return { error: 'Authentication required' };
-    }
-
     const { filePath } = data;
 
     if (!filePath) {
         return { error: 'Missing filePath or articleId' };
+    }
+
+    const articleId = path.basename(filePath, '.json');
+    const destination = `recordings/${articleId}.mp3`;
+    if(fs.existsSync(destination)&&!context.auth&&!context.auth.token.admin){
+        return null;
     }
 
     try {
