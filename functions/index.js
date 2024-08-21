@@ -109,4 +109,109 @@ exports.getYoutubeVideos = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('internal', 'Unable to fetch YouTube videos.');
     }
 });
+const textToSpeech = require('@google-cloud/text-to-speech');
+const client = new textToSpeech.TextToSpeechClient();
+const path = require("path");
+const fs = require("fs");
 
+const createRecording = async (filePath)=>{
+    // Check if this is a new article upload
+    if (!filePath.endsWith('.json')) {
+        return null;
+    }
+
+    console.log("Recording running 2");
+
+    const articleId = path.basename(filePath, '.json');
+    const tempFilePath = path.join('/tmp', `${articleId}.mp3`);
+    const destination = `recordings/${articleId}.mp3`;
+
+    try {
+        // Get the article content
+        const file = bucket.file(filePath);
+        const [content] = await file.download();
+
+        const articleData = JSON.parse(content.toString());
+        file.setMetadata({
+            shouldUpdateRecording:false
+        }).then()
+
+        const text = articleData.content.replace(/<\/?[^>]+(>|$)/g, ""); // Assuming the article content is stored under `content`
+        console.log("Recording running 3");
+        const ssmlText = text.split(' ').map((word, index) => {
+            return `<mark name="word${index}"/>${word}`;
+        }).join(' ');
+
+        const ssml = `<speak>${ssmlText}</speak>`;
+
+        const languageMapping = {
+            en: 'en-US', // English
+            el: 'el-GR', // Greek
+            it: 'it-IT', // Italian
+            // Add other language codes and their corresponding TTS format here
+        };
+
+
+        // Create TTS request
+        const request = {
+            input: { ssml },
+            voice: { languageCode: languageMapping[articleData.lang], ssmlGender: 'NEUTRAL' },
+            audioConfig: { audioEncoding: 'MP3' },
+        };
+
+        // Generate speech
+        const [response] = await client.synthesizeSpeech(request);
+
+        // Write audio content to a temporary file
+        fs.writeFileSync(tempFilePath, response.audioContent, 'binary');
+
+        // Upload the recording to the /recordings/ directory
+        await bucket.upload(tempFilePath, {
+            destination: destination,
+            public: true
+        });
+
+        // Cleanup temporary file
+        fs.unlinkSync(tempFilePath);
+
+        console.log(`Recording created and uploaded: ${destination}`);
+        return null;
+    } catch (error) {
+        console.error('Error generating recording:', error);
+        throw new functions.https.HttpsError('internal', 'Failed to generate TTS recording');
+    }
+}
+
+
+exports.generateRecordingOnUpload = functions.storage.object().onFinalize(async (object) => {
+    const filePath = object.name;
+    const articleId = path.basename(filePath, '.json');
+    const file = bucket.file(filePath);
+    const destination = `recordings/${articleId}.mp3`;
+    if(fs.existsSync(destination)&&!!file.metadata.shouldUpdateRecording){
+        return null;
+    }
+    await createRecording(filePath);
+});
+
+exports.generateRecording = functions.https.onCall(async (data, context) => {
+    const { filePath } = data;
+
+    if (!filePath) {
+        return { error: 'Missing filePath or articleId' };
+    }
+
+    const articleId = path.basename(filePath, '.json');
+    const destination = `recordings/${articleId}.mp3`;
+    if(fs.existsSync(destination)&&!context.auth&&!context.auth.token.admin){
+        return null;
+    }
+
+    try {
+        await createRecording(filePath);
+        return { message: 'Recording created successfully' };
+    } catch (error) {
+        console.error('Error generating recording:', error);
+        return { error: 'Failed to generate recording' };
+    }
+});

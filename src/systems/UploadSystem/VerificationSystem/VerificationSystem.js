@@ -5,7 +5,15 @@ import {Alert, Button, Card, Col, Form, ListGroup, Modal, Row, Toast} from 'reac
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import "./form-control.css";
-import {auth, database, handlePublishFunction, isDev, sendPushoverNotification, storage} from '../../../firebase';
+import {
+    auth,
+    database,
+    generateRecording,
+    handlePublishFunction,
+    isDev,
+    sendPushoverNotification,
+    storage
+} from '../../../firebase';
 import {signOut} from "firebase/auth";
 import CategoryDropdown from "../components/CategoryDropdown/CategoryDropdown";
 import {categories, deleteImage, fetchFiles, getRef, handleAuthorTest, setUids} from "../articleData/articleData";
@@ -48,6 +56,7 @@ const FirebaseFileList = () => {
     const [showToast, setShowToast] = useState(false);
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState(null);
+    const [contentChanged, setContentChanged] = useState(false);
 
     const [adminUids, setAdminUids] = useState([]);
     const [leadersUids, setLeadersUids] = useState([]);
@@ -148,6 +157,12 @@ const FirebaseFileList = () => {
     };
 
     const handleSave = async () => {
+        if(contentChanged){
+            setContentChanged(false);
+            console.log("Updating recording");
+            const filePath = `${selectedFile.folder}/${selectedFile.name}.json`;
+            generateRecording({filePath}).then();
+        }
         if (!selectedFile || !fileData) return;
         const author = fileData.translatedBy || fileData.sub;
         try {
@@ -242,6 +257,7 @@ const FirebaseFileList = () => {
     };
 
     const handleContentChange = (value) => {
+        setContentChanged(true);
         const sanitizedValue = value.replace(/<[^>]*style="[^"]*color:\s*[^";]*;?[^"]*"[^>]*>/g, '');
         setFileData((prevData) => ({
             ...prevData,
