@@ -24,7 +24,7 @@ const { OpenAI } = require('openai');
 const {bucket} = require("./utils");
 
 const openai = new OpenAI({
-    apiKey: functions.config().openai.key,
+    apiKey: functions.config().openai?functions.config().openai.key:"",
 });
 
 // Map the language codes to their full names

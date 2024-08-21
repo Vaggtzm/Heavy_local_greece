@@ -61,7 +61,7 @@ if (isDev&&useEmulators) {
 const sendPushoverNotification = httpsCallable(functions, 'sendPushoverNotification');
 const handlePublishFunction = httpsCallable(functions, 'handlePublish');
 const getYoutubeVideos = httpsCallable(functions, 'getYoutubeVideos');
-
+const generateRecording = httpsCallable(functions, 'generateRecording');
 
 export {
     app,
@@ -75,5 +75,6 @@ export {
     firebaseMessaging as messaging,
     sendPushoverNotification,
     handlePublishFunction,
-    getYoutubeVideos
+    getYoutubeVideos,
+    generateRecording
 };

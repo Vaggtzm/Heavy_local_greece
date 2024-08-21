@@ -42,3 +42,8 @@
     top:-5%;
     left:10%;
 }
+
+mark{
+    background-color: inherit;
+    color: inherit;
+}

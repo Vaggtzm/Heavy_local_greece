@@ -1,0 +1,81 @@
+.custom-audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 12px;
+    color: #fff;
+}
+
+.loading-message, .error-message {
+    color: #fff;
+    background-color: #dc3545;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    max-width: 500px;
+    margin-top: 10px;
+}
+
+.player-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.controls-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.player-btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 5px;
+    border: none;
+}
+
+.play-pause-btn {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.play-pause-btn:hover {
+    background-color: #0056b3;
+}
+
+.backward-btn, .forward-btn {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.backward-btn:hover, .forward-btn:hover {
+    background-color: #5a6268;
+}
+
+.time-controls {
+    font-size: 14px;
+    color: #ddd;
+    margin-top: 5px;
+}
+
+.time-controls span {
+    margin: 0 5px;
+}
