@@ -167,8 +167,7 @@ const createRecording = async (filePath)=>{
 
         // Upload the recording to the /recordings/ directory
         await bucket.upload(tempFilePath, {
-            destination: destination,
-            public: true
+            destination: destination
         });
 
         // Cleanup temporary file
