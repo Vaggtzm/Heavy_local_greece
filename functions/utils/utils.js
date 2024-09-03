@@ -24,6 +24,7 @@ const serviceAccount = require("../heavy-local-admin.json");
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const axios = require("axios");
+const {getUser} = require("./handleUsers");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

@@ -151,13 +151,15 @@ const createRecording = async (filePath)=>{
             // Add other language codes and their corresponding TTS format here
         };
 
-
+//TODO - Test the voice
         // Create TTS request
         const request = {
             input: { ssml },
-            voice: { languageCode: languageMapping[articleData.lang], ssmlGender: 'NEUTRAL' },
+            voice: { languageCode: languageMapping[articleData.lang], ssmlGender: 'NEUTRAL', name:`${languageMapping[articleData.lang]}-Wavenet-A` },
             audioConfig: { audioEncoding: 'MP3' },
         };
+
+        
 
         // Generate speech
         const [response] = await client.synthesizeSpeech(request);
