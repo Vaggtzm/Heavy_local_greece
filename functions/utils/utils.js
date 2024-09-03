@@ -38,65 +38,13 @@ const runtimeOpts = {
     memory: '1GB'
 };
 
-const sendNotification = async (data, context) => {
-    const { uid, title, message, url, urlTitle } = data;
-    const apiKey = functions.config().pushover.key;
 
-    const user = await getUser(uid, false);
-    const databaseTable = user.customClaims.admin ? "authors" : "users";
-
-    if (!uid || !title || !message) {
-        return { success: false, message: "Missing required parameters." };
-    }
-
-    try {
-        // Fetch the user data from the Realtime Database
-        const userRef = database.ref(`/${databaseTable}/${uid}`);
-        const snapshot = await userRef.once('value');
-        const userData = snapshot.val();
-
-        if (!userData) {
-            return { success: false, message: "User not found." };
-        }
-
-        // Prepare the Pushover notification payload
-        const pushoverPayload = {
-            token: apiKey, // Token for the Pushover application
-            user: userData.pushoverApiKey || "",    // User's Pushover user key
-            message: message,
-            title: title,
-            url: url || "",                  // Optional URL
-            url_title: urlTitle || ""         // Optional URL title
-        };
-
-        const notificationUserRef = database.ref(`/${databaseTable}/${uid}/notifications`);
-
-        notificationUserRef.push({ ...pushoverPayload, sentOn: new Date().toISOString() });
-
-        // Check if the user has a Pushover API key
-        if (!userData.pushoverApiKey) {
-            return { success: false, message: "User does not have a Pushover API key." };
-        }
-
-        // Send the notification via Pushover
-        const response = await axios.post("https://api.pushover.net/1/messages.json", pushoverPayload);
-
-        if (response.status === 200) {
-            return { success: true, message: "Notification sent successfully." };
-        } else {
-            return { success: false, message: "Failed to send notification." };
-        }
-    } catch (error) {
-        console.error("Error sending Pushover notification:", error);
-        return { success: false, message: "Error sending notification: " + error.message };
-    }
-}
 
 module.exports = {
     bucket,
     database,
     runtimeOpts,
-    sendNotification
+    auth: admin.auth()
 };
 
 

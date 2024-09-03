@@ -48,3 +48,5 @@ emulatorMetadata.zip
 authors.csv
 
 .env.bak
+
+functions/.runtimeconfig.json

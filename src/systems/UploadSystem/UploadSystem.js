@@ -164,10 +164,18 @@ const ArticleUpload = () => {
 
 
             leadersUids.forEach((uid)=>{
-                sendNotification(uid);
+                try {
+                    sendNotification(uid);
+                }catch(e){
+                    console.log(e)
+                }
             })
             adminUids.forEach(uid => {
-                sendNotification(uid);
+                try {
+                    sendNotification(uid);
+                }catch(e){
+                    console.log(e)
+                }
             })
 
 

@@ -2,9 +2,9 @@ const functions = require("firebase-functions");
 
 const {webApp, getImageDimensionsBuffer, changeAnalysis} = require("./utils/articleShowAndRSS");
 const {disableUserFunction, setCustomClaimsFunction, logoutAllDevicesFunction, beforeSignInFunction,
-    updateUsernameFunction
+    updateUsernameFunction, sendNotification
 } = require("./utils/handleUsers");
-const {database, sendNotification, bucket} = require("./utils/utils");
+const {database, bucket} = require("./utils/utils");
 const {DeleteArticle, handleNewArticleFunction} = require("./utils/handleArticles");
 const {toggleCloudflareSecurityLevelFunction} = require("./utils/cloudflare");
 const {getMeetingInfoFunction, createRoomFunction} = require("./utils/meetings");
