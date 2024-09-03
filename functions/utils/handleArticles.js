@@ -26,7 +26,6 @@ const stream = require("stream");
 const functions = require("firebase-functions");
 const path = require("path");
 const {database} = require("./utils");
-const {checkAndMarkArticleLanguage} = require("./handleCategory");
 const DeleteArticle = functions.runWith(runtimeOpts).storage
     .object().onDelete(async (object) => {
 
@@ -385,7 +384,7 @@ function getImageDimensionsBuffer(buffer) {
 const handleNewArticleFunction = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
-        await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object), checkAndMarkArticleLanguage(object)])
+        await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
     });
 
 module.exports = {
