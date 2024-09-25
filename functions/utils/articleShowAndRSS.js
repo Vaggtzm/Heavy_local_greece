@@ -193,7 +193,7 @@ app.get("/author/*", async (req, res) => {
     console.warn(`Found author: ${author.val().displayName}`);
 
     author = author.val();
-    const filepath = path.resolve(__dirname, "index.html");
+    const filepath = path.resolve(__dirname, "../index.html");
 
 
     const updatedFile = bucket.file("profile_images/" + authorCode + "_600x600");
