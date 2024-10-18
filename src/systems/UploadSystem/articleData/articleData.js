@@ -1,8 +1,8 @@
-import { auth, database, functions, storage } from "../../../firebase";
-import { deleteObject, getDownloadURL, getMetadata, ref } from "firebase/storage";
-import { get, onValue, ref as databaseRef } from "firebase/database";
-import { httpsCallable } from "firebase/functions";
-import { getIdTokenResult, signOut } from "firebase/auth";
+import {auth, functions, storage} from "../../../firebase";
+import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
+import {database, databaseRef, get, onValue} from "firebase/database"; // Make sure to import onValue
+import {httpsCallable} from "firebase/functions";
+import {getIdTokenResult, signOut} from "firebase/auth";
 
 // Set custom claims for a user
 export const setClaims = async (id, isEmail, claim) => {
@@ -34,14 +34,13 @@ export const disableUser = async (id, isEmail, disabled) => {
     }
 };
 
-import { database, databaseRef, onValue } from 'firebase/database'; // Make sure to import onValue
-
 // Fetch all files and their articles from Firebase
 const fetchAllFiles = (setArticlesByCategory, setLoading) => {
     const articlesRef = databaseRef(database, 'articlesList');
 
     // Start listening for updates to the articlesList reference
-    const unsubscribe = onValue(articlesRef, async (snapshot) => {
+    // Return the unsubscribe function to stop listening when needed
+    return onValue(articlesRef, async (snapshot) => {
         setLoading(true); // Start loading
 
         try {
@@ -73,7 +72,7 @@ const fetchAllFiles = (setArticlesByCategory, setLoading) => {
                         });
                     });
 
-                    return { [folder]: articlesByCategory };
+                    return {[folder]: articlesByCategory};
                 }
                 return null;
             });
@@ -81,7 +80,7 @@ const fetchAllFiles = (setArticlesByCategory, setLoading) => {
             const foldersData = await Promise.all(fetchFolderPromises);
             const articles = foldersData.reduce((acc, folderData) => {
                 if (folderData) {
-                    return { ...acc, ...folderData };
+                    return {...acc, ...folderData};
                 }
                 return acc;
             }, {});
@@ -93,9 +92,6 @@ const fetchAllFiles = (setArticlesByCategory, setLoading) => {
             setLoading(false); // Stop loading after processing
         }
     });
-
-    // Return the unsubscribe function to stop listening when needed
-    return unsubscribe;
 };
 
 
