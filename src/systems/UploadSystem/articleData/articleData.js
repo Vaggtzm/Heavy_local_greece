@@ -1,6 +1,6 @@
-import {auth, functions, storage} from "../../../firebase";
+import {auth, database, functions, storage} from "../../../firebase";
 import {deleteObject, getDownloadURL, getMetadata, ref} from "firebase/storage";
-import {database, databaseRef, get, onValue} from "firebase/database"; // Make sure to import onValue
+import {ref as databaseRef, get, onValue} from "firebase/database"; // Make sure to import onValue
 import {httpsCallable} from "firebase/functions";
 import {getIdTokenResult, signOut} from "firebase/auth";
 
