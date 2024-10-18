@@ -5,7 +5,7 @@ const {disableUserFunction, setCustomClaimsFunction, logoutAllDevicesFunction, b
     updateUsernameFunction, sendNotification
 } = require("./utils/handleUsers");
 const {database, bucket} = require("./utils/utils");
-const {DeleteArticle, handleNewArticleFunction} = require("./utils/handleArticles");
+const {DeleteArticle, handleNewArticleFunction, handleNewArticleCategoryFunction} = require("./utils/handleArticles");
 const {toggleCloudflareSecurityLevelFunction} = require("./utils/cloudflare");
 const {getMeetingInfoFunction, createRoomFunction} = require("./utils/meetings");
 const {handlePublishFunction} = require("./utils/handlePublish");
@@ -14,6 +14,7 @@ exports.webApi = functions
         enforceAppCheck: true, // Reject requests with missing or invalid App Check tokens.
     })
     .https.onRequest(webApp);
+
 exports.disableUser = disableUserFunction;
 exports.setCustomClaim = setCustomClaimsFunction;
 exports.logoutAllDevices = logoutAllDevicesFunction;
@@ -26,6 +27,7 @@ exports.getMeetingInfo = getMeetingInfoFunction;
 exports.updateUsername = updateUsernameFunction;
 exports.handleNewArticle = handleNewArticleFunction;
 exports.handlePublish = handlePublishFunction;
+exports.handleNewArticleCategoryFunction = handleNewArticleCategoryFunction;
 
 
 exports.saveDeviceToken = functions.https.onCall(async (data, context) => {
