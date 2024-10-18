@@ -278,9 +278,12 @@ const handle_single_dir = async (directory) => {
     sevenDaysAgo.setDate(today.getDate() - 7);
 
     for (const category in updatedArticlesList) {
-        const categoryArticles = allArticles
-            .filter(article => article.category === category)
-            .filter(article => article.date >= sevenDaysAgo && article.date <= today);
+        const categoryArticles = allArticles.filter(article =>
+            article.category === category &&
+            article.date >= sevenDaysAgo &&
+            article.date <= today &&
+            !article.translatedBy
+        );
 
         // Store the entire article data directly in articlesListLatest
         latestArticlesByCategory[category] = categoryArticles.reduce((acc, article) => {
@@ -384,9 +387,15 @@ function getImageDimensionsBuffer(buffer) {
 const handleNewArticleFunction = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
-        await Promise.all([sendNotofication(object), handleArticleCategories(object), getImageDimensions(object)])
+        await Promise.all([sendNotofication(object), getImageDimensions(object)])
+    });
+
+const handleNewArticleCategoryFunction= functions.runWith(runtimeOpts).storage
+    .object()
+    .onFinalize(async (object) => {
+        return await handleArticleCategories(object);
     });
 
 module.exports = {
-    DeleteArticle, handleNewArticleFunction
+    DeleteArticle, handleNewArticleFunction, handleNewArticleCategoryFunction
 }

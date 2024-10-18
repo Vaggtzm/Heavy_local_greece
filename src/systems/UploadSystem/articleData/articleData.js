@@ -34,58 +34,70 @@ export const disableUser = async (id, isEmail, disabled) => {
     }
 };
 
+import { database, databaseRef, onValue } from 'firebase/database'; // Make sure to import onValue
+
 // Fetch all files and their articles from Firebase
-const fetchAllFiles = async (setArticlesByCategory, setLoading) => {
+const fetchAllFiles = (setArticlesByCategory, setLoading) => {
     const articlesRef = databaseRef(database, 'articlesList');
-    try {
-        const snapshot = await get(articlesRef);
-        if (!snapshot.exists()) {
-            setLoading(false);
-            return;
-        }
 
-        const data = snapshot.val();
-        const folders = Object.keys(data);
+    // Start listening for updates to the articlesList reference
+    const unsubscribe = onValue(articlesRef, async (snapshot) => {
+        setLoading(true); // Start loading
 
-        const fetchFolderPromises = folders.map(async (folder) => {
-            const folderRef = databaseRef(database, `articlesList/${folder}`);
-            const folderSnapshot = await get(folderRef);
+        try {
+            if (!snapshot.exists()) {
+                setArticlesByCategory({}); // Clear articles if none exist
+                setLoading(false);
+                return;
+            }
 
-            if (folderSnapshot.exists()) {
-                const articlesByCategory = [];
-                const categoryData = folderSnapshot.val();
+            const data = snapshot.val();
+            const folders = Object.keys(data);
 
-                Object.keys(categoryData).forEach(articleKey => {
-                    const articleCategory = categoryData[articleKey];
-                    Object.keys(articleCategory).forEach((articleTitle) => {
-                        const temp = articleCategory[articleTitle];
-                        temp.name = articleTitle;
-                        temp.category = articleKey || 'uncategorized';
-                        temp.folder = folder;
-                        articlesByCategory.push(temp);
+            const fetchFolderPromises = folders.map(async (folder) => {
+                const folderRef = databaseRef(database, `articlesList/${folder}`);
+                const folderSnapshot = await get(folderRef);
+
+                if (folderSnapshot.exists()) {
+                    const articlesByCategory = [];
+                    const categoryData = folderSnapshot.val();
+
+                    Object.keys(categoryData).forEach(articleKey => {
+                        const articleCategory = categoryData[articleKey];
+                        Object.keys(articleCategory).forEach((articleTitle) => {
+                            const temp = articleCategory[articleTitle];
+                            temp.name = articleTitle;
+                            temp.category = articleKey || 'uncategorized';
+                            temp.folder = folder;
+                            articlesByCategory.push(temp);
+                        });
                     });
-                });
 
-                return { [folder]: articlesByCategory };
-            }
-            return null;
-        });
+                    return { [folder]: articlesByCategory };
+                }
+                return null;
+            });
 
-        const foldersData = await Promise.all(fetchFolderPromises);
-        const articles = foldersData.reduce((acc, folderData) => {
-            if (folderData) {
-                return { ...acc, ...folderData };
-            }
-            return acc;
-        }, {});
+            const foldersData = await Promise.all(fetchFolderPromises);
+            const articles = foldersData.reduce((acc, folderData) => {
+                if (folderData) {
+                    return { ...acc, ...folderData };
+                }
+                return acc;
+            }, {});
 
-        setArticlesByCategory(articles);
-        setLoading(false);
-    } catch (error) {
-        console.error('Error fetching files:', error);
-        setLoading(false);
-    }
+            setArticlesByCategory(articles);
+        } catch (error) {
+            console.error('Error fetching files:', error);
+        } finally {
+            setLoading(false); // Stop loading after processing
+        }
+    });
+
+    // Return the unsubscribe function to stop listening when needed
+    return unsubscribe;
 };
+
 
 // Fetch files function
 export async function fetchFiles(setFiles, setError, setAlreadyPublishedArticles, setAlreadyPublishedError, setEarlyReleasedArticles, setEarlyReleasesError, setLoading) {
