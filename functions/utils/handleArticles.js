@@ -188,14 +188,19 @@ const handleArticleCategories = async (object) => {
     if (path.extname(filePath) !== '.json') {
         return null;
     }
-
     const directories = ['articles', 'early_releases', 'upload_from_authors'];
     const relevantDirectories = directories.filter(dir => directory.includes(dir));
 
-    await Promise.all(relevantDirectories.map(handle_single_dir));
+    // Check if any relevant directory exists in the directory path
+    if (relevantDirectories.length === 0) {
+        console.log('The file is not in a relevant directory.');
+        return null; // Exit the function if the directory is not relevant
+    }
+
+    await handle_single_file(object);
 };
 
-const categories = {
+/*const categories = {
     "Top News": 5,
     "General News": 1,
     "Interviews": 5,
@@ -203,100 +208,91 @@ const categories = {
     "Latest Reviews(ENG)": 3,
     "Latest Reviews(GRE)": 3,
     "Legends": 1
-};
+};*/
 
-const handle_single_dir = async (directory) => {
-    const [files] = await bucket.getFiles({ prefix: directory });
-    const articles = {};
-    const allArticles = [];
+const handle_single_file = async (file) => {
+    const fileContents = await file.download();
+    const content = JSON.parse(fileContents[0].toString('utf8'));
 
-    const jsonFiles = files.filter(file => path.extname(file.name) === '.json');
+    const newArticle = path.basename(file.name, '.json');
+    const category = content.category || 'undefined';
 
-    for (const file of jsonFiles) {
-        const fileContents = await file.download();
-        const content = JSON.parse(fileContents[0].toString('utf8'));
-
-        const newArticle = path.basename(file.name, '.json');
-        const category = content.category || 'undefined';
-
-        if (!articles[category]) {
-            articles[category] = {};
-        }
-
-        articles[category][newArticle] = {
-            "date": content.date.split('/').reverse().join('-'),
-            "title": content.title,
-            "image": content.img01,
-            "translations": content.translations ? filterUndefinedValues(content.translations) : {},
-            "lang": content.lang || "",
-            "isReady": !!content.isReady,
-            "sponsor": content.sponsor || "",
-            "author": content.sub,
-            "authorApproved": content.authorApproved || false,
-            "translatedBy": content.translatedBy || ""
-        };
-
-        allArticles.push({
-            filename: newArticle,
-            date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
-            category: category,
-            "lang": content.lang || "",
-            "articleData": articles[category][newArticle]  // Store the entire article data here
-        });
-
-        let ref;
-        if (content.translatedBy === undefined) {
-            ref = database.ref(`/authors/${content.sub}/writtenArticles/${directory}/${category}`);
-        } else {
-            ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${directory}/${category}`);
-        }
-        try {
-            await ref.child(sanitizeKey(newArticle)).set(articles[category][newArticle]);
-        } catch (e) {
-            console.log(e);
-        }
+    const articles = {}; // Initialize articles object
+    if (!articles[category]) {
+        articles[category] = {};
     }
 
-    const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
+    articles[category][newArticle] = {
+        "date": content.date.split('/').reverse().join('-'),
+        "title": content.title,
+        "image": content.img01,
+        "translations": content.translations ? filterUndefinedValues(content.translations) : {},
+        "lang": content.lang || "",
+        "isReady": !!content.isReady,
+        "sponsor": content.sponsor || "",
+        "author": content.sub,
+        "authorApproved": content.authorApproved || false,
+        "translatedBy": content.translatedBy || ""
+    };
+
+    const allArticles = [{
+        filename: newArticle,
+        date: content.date ? new Date(content.date.split('/').reverse().join('-')) : new Date(),
+        category: category,
+        "lang": content.lang || "",
+        "articleData": articles[category][newArticle]  // Store the entire article data here
+    }];
+
+    let ref;
+    if (content.translatedBy === undefined) {
+        ref = database.ref(`/authors/${content.sub}/writtenArticles/${file.name}`);
+    } else {
+        ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${file.name}`);
+    }
+
+    try {
+        await ref.child(sanitizeKey(newArticle)).set(articles[category][newArticle]);
+    } catch (e) {
+        console.log(e);
+    }
+
+    const articlesListSnapshot = await database.ref(`/articlesList/${file.name}`).once('value');
     const existingArticlesList = articlesListSnapshot.val() || {};
 
     const updatedArticlesList = { ...existingArticlesList };
-    for (const category in articles) {
-        if (!updatedArticlesList[category]) {
-            updatedArticlesList[category] = {};
-        }
-        updatedArticlesList[category] = { ...updatedArticlesList[category], ...articles[category] };
+    if (!updatedArticlesList[category]) {
+        updatedArticlesList[category] = {};
     }
+    updatedArticlesList[category] = { ...updatedArticlesList[category], ...articles[category] };
 
-    await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
+    await database.ref(`/articlesList/${file.name}`).set(updatedArticlesList);
 
-    // Find the latest date for each category
-    const latestArticlesByCategory = {};
-
+    // Find the latest date for the specific category
     const today = new Date();
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(today.getDate() - 7);
 
-    for (const category in updatedArticlesList) {
-        const categoryArticles = allArticles.filter(article =>
-            article.category === category &&
-            article.date >= sevenDaysAgo &&
-            article.date <= today &&
-            !article.translatedBy
-        );
+    const categoryArticles = allArticles.filter(article =>
+        article.category === category &&
+        article.date >= sevenDaysAgo &&
+        article.date <= today &&
+        !article.translatedBy
+    );
 
-        // Store the entire article data directly in articlesListLatest
-        latestArticlesByCategory[category] = categoryArticles.reduce((acc, article) => {
+    // Store the entire article data directly in articlesListLatest
+    const latestArticlesByCategory = {
+        [category]: categoryArticles.reduce((acc, article) => {
             acc[article.filename] = article.articleData;
             return acc;
-        }, {});
-    }
+        }, {})
+    };
 
-    await database.ref(`/articlesListLatest/${directory}`).set(latestArticlesByCategory);
+    await database.ref(`/articlesListLatest/${file.name}`).set(latestArticlesByCategory);
 
-    console.log('Articles organized and stored in the database successfully.');
+    console.log('Article organized and stored in the database successfully.');
     return null;
 };
+
 
 const getImageDimensions = async (object) => {
     const {name: filePath, contentType} = object;
@@ -387,15 +383,9 @@ function getImageDimensionsBuffer(buffer) {
 const handleNewArticleFunction = functions.runWith(runtimeOpts).storage
     .object()
     .onFinalize(async (object) => {
-        await Promise.all([sendNotofication(object), getImageDimensions(object)])
-    });
-
-const handleNewArticleCategoryFunction= functions.runWith(runtimeOpts).storage
-    .object()
-    .onFinalize(async (object) => {
-        return await handleArticleCategories(object);
+        await Promise.all([sendNotofication(object), getImageDimensions(object), handleArticleCategories(object)])
     });
 
 module.exports = {
-    DeleteArticle, handleNewArticleFunction, handleNewArticleCategoryFunction
+    DeleteArticle, handleNewArticleFunction
 }
