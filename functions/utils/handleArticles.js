@@ -248,9 +248,9 @@ const handle_single_file = async (file) => {
 
     let ref;
     if (content.translatedBy === undefined) {
-        ref = database.ref(`/authors/${content.sub}/writtenArticles/${file.name}`);
+        ref = database.ref(`/authors/${content.sub}/writtenArticles/${newArticle}`);
     } else {
-        ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${file.name}`);
+        ref = database.ref(`/authors/${content.translatedBy}/writtenArticles/${newArticle}`);
     }
 
     try {
