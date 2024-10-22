@@ -211,8 +211,10 @@ const handleArticleCategories = async (object) => {
 };*/
 
 const handle_single_file = async (file) => {
-    const fileContents = await file.download();
-    const content = JSON.parse(fileContents[0].toString('utf8'));
+
+    const filePath = file.name;
+    const [fileContents] = await bucket.file(filePath).download();
+    const content = JSON.parse(fileContents[0].toString());
 
     const newArticle = path.basename(file.name, '.json');
     const category = content.category || 'undefined';
