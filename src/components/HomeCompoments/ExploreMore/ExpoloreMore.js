@@ -59,21 +59,26 @@ const ExploreMore = () => {
               <Author
                   rating={4}
                   className="col-md-4 mb-4"
+                  userId={"bUNTt5SRIbWEJdonT33xi7uDTus1"}
+              />
+              <Author
+                  rating={4}
+                  className="col-md-3 mb-4"
                   userId={"2219SdmiZHagjXDqmqDlBZ84mn22"}
               />
               <Author
                   rating={4}
-                  className="col-md-4 mb-4"
+                  className="col-md-3 mb-4"
                   userId={"mmQTo2rdEDZ7YsnpJn15gCuaWz93"}
               />
               <Author
                   rating={4}
-                  className="col-md-4 mb-4"
+                  className="col-md-3 mb-4"
                   userId={"VSGMmP7o4DWwimc0tZjHC02487B3"}
               />
               <Author
                   rating={4}
-                  className="col-md-4 mb-4"
+                  className="col-md-3 mb-4"
                   userId={"YnKl6Fza8kcshY5rTlmeQZAokIg1"}
               />
             </div>

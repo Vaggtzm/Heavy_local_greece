@@ -211,13 +211,13 @@ const handleArticleCategories = async (object) => {
 };*/
 
 const handle_single_file = async (file) => {
-
     const filePath = file.name;
+    const directory = path.dirname(filePath); // Folder where the file is saved
     const fileContents = await bucket.file(filePath).download();
     const content = JSON.parse(fileContents[0].toString());
     console.log(content);
 
-    const newArticle = path.basename(file.name, '.json');
+    const newArticle = path.basename(file.name, '.json'); // File name without .json extension
     const category = content.category || 'undefined';
 
     const articles = {}; // Initialize articles object
@@ -225,6 +225,7 @@ const handle_single_file = async (file) => {
         articles[category] = {};
     }
 
+    // Organizing article content
     articles[category][newArticle] = {
         "date": content.date.split('/').reverse().join('-'),
         "title": content.title,
@@ -246,6 +247,7 @@ const handle_single_file = async (file) => {
         "articleData": articles[category][newArticle]  // Store the entire article data here
     }];
 
+    // Reference for uploading the article data based on whether it's written or translated
     let ref;
     if (content.translatedBy === undefined) {
         ref = database.ref(`/authors/${content.sub}/writtenArticles/${newArticle}`);
@@ -254,27 +256,33 @@ const handle_single_file = async (file) => {
     }
 
     try {
+        // Upload current file's content to /articleList/{folder}/{category}/{filename without .json}
         await ref.child(sanitizeKey(newArticle)).set(articles[category][newArticle]);
+        await database.ref(`/articleList/${directory}/${category}/${newArticle}`).set(articles[category][newArticle]);
     } catch (e) {
         console.log(e);
     }
 
-    const articlesListSnapshot = await database.ref(`/articlesList/${file.name}`).once('value');
+    // Get existing articles in the directory from the database
+    const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
     const existingArticlesList = articlesListSnapshot.val() || {};
 
+    // Update the articles list
     const updatedArticlesList = { ...existingArticlesList };
     if (!updatedArticlesList[category]) {
         updatedArticlesList[category] = {};
     }
     updatedArticlesList[category] = { ...updatedArticlesList[category], ...articles[category] };
 
-    await database.ref(`/articlesList/${file.name}`).set(updatedArticlesList);
+    // Save the updated articles list to /articlesList/{folder}
+    await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
 
-    // Find the latest date for the specific category
+    // Get today's date and the date seven days ago
     const today = new Date();
     const sevenDaysAgo = new Date(today);
     sevenDaysAgo.setDate(today.getDate() - 7);
 
+    // Filter articles that belong to the current category, are from the last 7 days, and are not translated
     const categoryArticles = allArticles.filter(article =>
         article.category === category &&
         article.date >= sevenDaysAgo &&
@@ -282,7 +290,7 @@ const handle_single_file = async (file) => {
         !article.translatedBy
     );
 
-    // Store the entire article data directly in articlesListLatest
+    // Prepare the latest articles data to be uploaded
     const latestArticlesByCategory = {
         [category]: categoryArticles.reduce((acc, article) => {
             acc[article.filename] = article.articleData;
@@ -290,11 +298,13 @@ const handle_single_file = async (file) => {
         }, {})
     };
 
-    await database.ref(`/articlesListLatest/${file.name}`).set(latestArticlesByCategory);
+    // Upload the latest articles (from last 7 days) to /articlesListLatest/{folder}/{category}
+    await database.ref(`/articlesListLatest/${directory}/${category}`).set(latestArticlesByCategory);
 
     console.log('Article organized and stored in the database successfully.');
     return null;
 };
+
 
 
 const getImageDimensions = async (object) => {
