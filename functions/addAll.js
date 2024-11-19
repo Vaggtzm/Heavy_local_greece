@@ -26,8 +26,8 @@ const filterUndefinedValues = (translations) => {
 };
 
 // Function to process all files in the articles directory
-const processAllFilesInArticlesDirectory = async () => {
-    const [files] = await bucket.getFiles({ prefix: 'articles/' }); // List all files in the 'articles' directory
+const processAllFilesInArticlesDirectory = async (dir) => {
+    const [files] = await bucket.getFiles({ prefix: dir }); // List all files in the 'articles' directory
 
     for (const file of files) {
         const filePath = file.name;
@@ -99,15 +99,33 @@ const processAllFilesInArticlesDirectory = async () => {
             await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
 
             // Find articles within the last 7 days
-            const today = new Date();
-            const sevenDaysAgo = new Date(today);
-            sevenDaysAgo.setDate(today.getDate() - 7);
+const today = new Date();
+const sevenDaysAgo = new Date(today);
+sevenDaysAgo.setDate(today.getDate() - 7);
 
-            const categoryArticles = allArticles.filter(article =>
-                article.category === category &&
-                article.date <= sevenDaysAgo &&
-                !article.translatedBy
-            );
+const categoryArticles = allArticles.filter(article => {
+    let articleDate;
+
+    if (article.date) {
+        // Ensure article.date is a valid Date object by converting if necessary
+        if (typeof article.date === 'string') {
+            const [year, month, day] = article.date.split('-').map(Number);
+            articleDate = new Date(year, month - 1, day);
+        } else {
+            articleDate = article.date; // If already a Date object
+        }
+
+        // Check if the article date is within the last 7 days
+        return (
+            article.category === category &&
+            articleDate >= sevenDaysAgo &&
+            !article.translatedBy
+        );
+    } else {
+        // If no date provided, we can skip the date check
+        return article.category === category && !article.translatedBy;
+    }
+});
 
             // Store the latest articles in /articlesListLatest
             const latestArticlesByCategory = {
@@ -127,8 +145,20 @@ const processAllFilesInArticlesDirectory = async () => {
 };
 
 // Run the process
-processAllFilesInArticlesDirectory().then(() => {
+processAllFilesInArticlesDirectory('articles/').then(() => {
     console.log('All files in articles directory processed.');
+}).catch((error) => {
+    console.error('Error processing files:', error);
+});
+
+processAllFilesInArticlesDirectory('upload_from_authors/').then(() => {
+    console.log('All files in upload_from_authors directory processed.');
+}).catch((error) => {
+    console.error('Error processing files:', error);
+});
+
+processAllFilesInArticlesDirectory('early_releases/').then(() => {
+    console.log('All files in early_releases directory processed.');
 }).catch((error) => {
     console.error('Error processing files:', error);
 });
