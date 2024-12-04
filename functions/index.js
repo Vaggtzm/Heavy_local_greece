@@ -5,7 +5,7 @@ const {disableUserFunction, setCustomClaimsFunction, logoutAllDevicesFunction, b
     updateUsernameFunction, sendNotification
 } = require("./utils/handleUsers");
 const {database, bucket} = require("./utils/utils");
-const {DeleteArticle, handleNewArticleFunction} = require("./utils/handleArticles");
+const {DeleteArticle, handleNewArticleFunction, updateLatestArticles} = require("./utils/handleArticles");
 const {toggleCloudflareSecurityLevelFunction} = require("./utils/cloudflare");
 const {getMeetingInfoFunction, createRoomFunction} = require("./utils/meetings");
 const {handlePublishFunction} = require("./utils/handlePublish");
@@ -27,6 +27,7 @@ exports.getMeetingInfo = getMeetingInfoFunction;
 exports.updateUsername = updateUsernameFunction;
 exports.handleNewArticle = handleNewArticleFunction;
 exports.handlePublish = handlePublishFunction;
+exports.updateLatestArticles = updateLatestArticles;
 
 
 exports.saveDeviceToken = functions.https.onCall(async (data, context) => {

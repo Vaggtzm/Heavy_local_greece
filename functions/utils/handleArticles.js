@@ -286,30 +286,6 @@ const handle_single_file = async (file) => {
     // Save the updated articles list to /articlesList/{folder}
     await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
 
-    // Get today's date and the date seven days ago
-    const today = new Date();
-    const sevenDaysAgo = new Date(today);
-    sevenDaysAgo.setDate(today.getDate() - 7);
-
-    // Filter articles that belong to the current category, are from the last 7 days, and are not translated
-    const categoryArticles = allArticles.filter(article =>
-        article.category === category &&
-        article.date >= sevenDaysAgo &&
-        article.date <= today &&
-        !article.translatedBy
-    );
-
-    // Prepare the latest articles data to be uploaded
-    const latestArticlesByCategory = {
-        [category]: categoryArticles.reduce((acc, article) => {
-            acc[article.filename] = article.articleData;
-            return acc;
-        }, {})
-    };
-
-    // Upload the latest articles (from last 7 days) to /articlesListLatest/{folder}/{category}
-    await database.ref(`/articlesListLatest/${directory}/${category}`).set(latestArticlesByCategory);
-
     console.log('Article organized and stored in the database successfully.');
     return null;
 };
@@ -408,6 +384,59 @@ const handleNewArticleFunction = functions.runWith(runtimeOpts).storage
         await Promise.all([sendNotofication(object), getImageDimensions(object), handleArticleCategories(object)])
     });
 
+
+
+// Helper function to calculate the date 7 days ago
+const getSevenDaysAgo = () => {
+    const today = new Date();
+    today.setDate(today.getDate() - 7);
+    return today;
+};
+
+
+// Function to process articles in articlesList and store the last 7 days in articlesListLatest
+const updateLatestArticles = exports.onArticleChange = functions.database.ref('/articles/{articleId}')
+    .onWrite(async (change, context) => {
+    try {
+        const articlesListSnapshot = await database.ref(`/articlesList`).once('value');
+        const articlesList = articlesListSnapshot.val() || {};
+
+        const sevenDaysAgo = getSevenDaysAgo();
+        const latestArticles = {};
+
+        // Iterate over each directory in articlesList
+        Object.entries(articlesList).forEach(([directory, categories]) => {
+            latestArticles[directory] = latestArticles[directory] || {};
+
+            // Iterate over each category
+            Object.entries(categories).forEach(([category, articles]) => {
+                const recentArticles = {};
+
+                // Filter articles within the last 7 days
+                Object.entries(articles).forEach(([filename, articleData]) => {
+                    const articleDate = new Date(articleData.date); // Assuming format is YYYY-MM-DD
+                    if (articleDate >= sevenDaysAgo) {
+                        recentArticles[filename] = articleData;
+                    }
+                });
+
+                // If recent articles found for the category, add them to latestArticles
+                if (Object.keys(recentArticles).length > 0) {
+                    latestArticles[directory][category] = recentArticles;
+                }
+            });
+        });
+
+        // Store latest articles in /articlesListLatest
+        await database.ref(`/articlesListLatest`).set(latestArticles);
+
+        console.log("Updated articlesListLatest with the last 7 days of articles.");
+    } catch (error) {
+        console.error("Error updating articlesListLatest:", error);
+    }
+});
+
+
 module.exports = {
-    DeleteArticle, handleNewArticleFunction
+    DeleteArticle, handleNewArticleFunction, updateLatestArticles
 }
