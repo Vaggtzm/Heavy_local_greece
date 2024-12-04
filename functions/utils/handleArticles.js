@@ -26,65 +26,76 @@ const stream = require("stream");
 const functions = require("firebase-functions");
 const path = require("path");
 const {database} = require("./utils");
+
+const processingFiles = {};
+
+
 const DeleteArticle = functions.runWith(runtimeOpts).storage
     .object().onDelete(async (object) => {
-
         const filePath = object.name;
         // Exit early if the file is not a JSON file
         if (path.extname(filePath) !== '.json') {
             return null;
         }
-        const directory = path.dirname(filePath);
-        const articleName = path.basename(filePath, '.json');
 
-        // Retrieve existing articles from Firebase
-        const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
-        const existingArticlesList = articlesListSnapshot.val() || {};
+        processingFiles[filePath] = new Promise(async (resolve, reject) => {
 
-        let articleCategory = null;
-        let author = null;
-        let translator = null;
-        let updatedArticlesList = {...existingArticlesList};
+            const directory = path.dirname(filePath);
+            const articleName = path.basename(filePath, '.json');
 
-        // Remove the deleted article from articles list
-        for (const category in updatedArticlesList) {
-            if (updatedArticlesList[category][articleName]) {
-                articleCategory = category;
-                author = updatedArticlesList[category][articleName].author;
-                translator = updatedArticlesList[category][articleName].translations
-                    ? updatedArticlesList[category][articleName].translations.translatedBy
-                    : null;
-                delete updatedArticlesList[category][articleName];
-                break;
+            // Retrieve existing articles from Firebase
+            const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
+            const existingArticlesList = articlesListSnapshot.val() || {};
+
+            let articleCategory = null;
+            let author = null;
+            let translator = null;
+            let updatedArticlesList = {...existingArticlesList};
+
+            // Remove the deleted article from articles list
+            for (const category in updatedArticlesList) {
+                if (updatedArticlesList[category][articleName]) {
+                    articleCategory = category;
+                    author = updatedArticlesList[category][articleName].author;
+                    translator = updatedArticlesList[category][articleName].translations
+                        ? updatedArticlesList[category][articleName].translations.translatedBy
+                        : null;
+                    delete updatedArticlesList[category][articleName];
+                    break;
+                }
             }
-        }
 
-        // Update the articles list in Firebase
-        await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
+            // Update the articles list in Firebase
+            await database.ref(`/articlesList/${directory}`).set(updatedArticlesList);
 
-        // Update the latest articles list if necessary
-        if (articleCategory) {
-            const articlesByCategorySnapshot = await database.ref(`/articlesListLatest/${directory}`).once('value');
-            const articlesByCategory = articlesByCategorySnapshot.val() || {};
+            // Update the latest articles list if necessary
+            if (articleCategory) {
+                const articlesByCategorySnapshot = await database.ref(`/articlesListLatest/${directory}`).once('value');
+                const articlesByCategory = articlesByCategorySnapshot.val() || {};
 
-            if (articlesByCategory[articleCategory]) {
-                articlesByCategory[articleCategory] = articlesByCategory[articleCategory].filter(article => article !== articleName);
-                await database.ref(`/articlesListLatest/${directory}`).set(articlesByCategory);
+                if (articlesByCategory[articleCategory]) {
+                    articlesByCategory[articleCategory] = articlesByCategory[articleCategory].filter(article => article !== articleName);
+                    await database.ref(`/articlesListLatest/${directory}`).set(articlesByCategory);
+                }
             }
-        }
 
-        // Update author's written articles
-        if (author) {
-            await removeAuthorArticle(directory, articleCategory, author, articleName);
-        }
+            // Update author's written articles
+            if (author) {
+                await removeAuthorArticle(directory, articleCategory, author, articleName);
+            }
 
-        // Update translator's written articles if applicable
-        if (translator) {
-            await removeAuthorArticle(directory, articleCategory, translator, articleName);
-        }
+            // Update translator's written articles if applicable
+            if (translator) {
+                await removeAuthorArticle(directory, articleCategory, translator, articleName);
+            }
 
-        console.log(`Article ${articleName} deleted and database updated successfully.`);
-        return null;
+            console.log(`Article ${articleName} deleted and database updated successfully.`);
+
+            delete processingFiles[filePath];
+            resolve();
+        })
+
+        return processingFiles[filePath];
     })
 
 const removeAuthorArticle = async (directory, category, author, articleName) => {
@@ -200,18 +211,16 @@ const handleArticleCategories = async (object) => {
     await handle_single_file(object);
 };
 
-/*const categories = {
-    "Top News": 5,
-    "General News": 1,
-    "Interviews": 5,
-    "Collabs and Sponsorships": 2,
-    "Latest Reviews(ENG)": 3,
-    "Latest Reviews(GRE)": 3,
-    "Legends": 1
-};*/
-
 const handle_single_file = async (file) => {
     const filePath = file.name;
+
+
+    if (processingFiles[filePath]) {
+        console.log(`File ${filePath} is being processed by the delete function. Waiting...`);
+        await processingFiles[filePath];
+    }
+
+
     const directory = path.dirname(filePath); // Folder where the file is saved
     const fileContents = await bucket.file(filePath).download();
     const content = JSON.parse(fileContents[0].toString());
