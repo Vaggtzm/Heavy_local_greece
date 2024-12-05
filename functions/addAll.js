@@ -83,7 +83,7 @@ const processAllFilesInArticlesDirectory = async (dir) => {
 
             // Upload current file to /articleList/{folder}/{category}/{filename without .json}
             await ref.child(sanitizeKey(newArticle)).set(articles[category][newArticle]);
-            await database.ref(`/articleList/${directory}/${category}/${newArticle}`).set(articles[category][newArticle]);
+            await database.ref(`/articlesList/${directory}/${category}/${newArticle}`).set(articles[category][newArticle]);
 
             // Retrieve existing articles list for the directory
             const articlesListSnapshot = await database.ref(`/articlesList/${directory}`).once('value');
@@ -145,14 +145,8 @@ const categoryArticles = allArticles.filter(article => {
 };
 
 // Run the process
-processAllFilesInArticlesDirectory('articles/').then(() => {
+/*processAllFilesInArticlesDirectory('articles/').then(() => {
     console.log('All files in articles directory processed.');
-}).catch((error) => {
-    console.error('Error processing files:', error);
-});
-
-processAllFilesInArticlesDirectory('upload_from_authors/').then(() => {
-    console.log('All files in upload_from_authors directory processed.');
 }).catch((error) => {
     console.error('Error processing files:', error);
 });
@@ -162,3 +156,12 @@ processAllFilesInArticlesDirectory('early_releases/').then(() => {
 }).catch((error) => {
     console.error('Error processing files:', error);
 });
+ */
+
+processAllFilesInArticlesDirectory('early_releases/').then(() => {
+    console.log('All files in upload_from_authors directory processed.');
+}).catch((error) => {
+    console.error('Error processing files:', error);
+});
+
+

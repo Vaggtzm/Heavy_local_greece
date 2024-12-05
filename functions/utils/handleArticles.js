@@ -37,6 +37,11 @@ const DeleteArticle = functions.runWith(runtimeOpts).storage
         if (path.extname(filePath) !== '.json') {
             return null;
         }
+        // Check if the file is being edited (you can use metadata or a specific flag)
+        if (object.metadata && object.metadata.isEditing === 'true') {
+            console.log(`File ${filePath} is being edited. Skipping delete operation.`);
+            return null;
+        }
 
         processingFiles[filePath] = new Promise(async (resolve, reject) => {
 
@@ -399,7 +404,7 @@ const updateLatestArticles = exports.onArticleChange = functions.database.ref('/
     .onWrite(async (change, context) => {
     try {
         const articlesListSnapshot = await database.ref(`/articlesList`).once('value');
-        const articlesList = articlesListSnapshot.val() || {};
+        const articlesList = articlesListSnapshot.val(``) || {};
 
         const sevenDaysAgo = getSevenDaysAgo();
         const latestArticles = {};

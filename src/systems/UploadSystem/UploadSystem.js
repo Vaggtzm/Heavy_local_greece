@@ -135,7 +135,7 @@ const ArticleUpload = () => {
                 img01: `https://pulse-of-the-underground.com/assets/${nameWithoutJSON}`,
                 sub: currentUser.uid,
                 date: new Date().toLocaleDateString('en-GB', options),
-                lang: 'en', // Store language as English
+                lang: language, // Store language as English
                 translations: {},
                 category,
                 sponsor,
